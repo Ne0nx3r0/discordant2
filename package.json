@@ -1,0 +1,17 @@
+{
+  "name": "discordant",
+  "version": "2.0.0",
+  "description": "Try number dos of Discordant",
+  "main": "src/Index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ne0nx3r0",
+  "dependencies": {
+    "@types/socket.io": "^1.4.28",
+    "@types/socket.io-client": "^1.4.29",
+    "discord.js": "^11.0.0",
+    "socket.io": "^1.7.3",
+    "socket.io-client": "^1.7.3"
+  }
+}

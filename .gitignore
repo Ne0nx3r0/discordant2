@@ -45,3 +45,16 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+Secrets.js
+
+node_modules/
+
+npm-debug.log
+
+*.js
+*.js.map
+
+Config.ts
+
+npm-debug.log.*
