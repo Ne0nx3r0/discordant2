@@ -1,21 +1,22 @@
-import {createServer} from 'https';
-import * as SocketIO from 'socket.io';
-import {readFileSync} from 'fs';
+import SocketServer from './socket/SocketServer';
+import Logger from './log/Logger';
+import DatabaseService from './db/DatabaseService';
+import Game from './game/Game';
 
 class DiscordantGameServer {
     public static main(): number {
-        const server = createServer({
-            key: readFileSync('test/fixtures/keys/agent2-key.pem'),
-            cert: readFileSync('test/fixtures/keys/agent2-cert.pem')
-        });
-        const io = SocketIO();
+        const logger = new Logger();
 
-        io.on('connection', function(client){
+        const dbService = new DatabaseService();
 
+        const gameService = new Game({
+            db: dbService
         });
 
-        io.listen(3000);
-
+        const socketServer = new SocketServer({
+            port: 3000
+        });
+        
         return 0;
     }
 }

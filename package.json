@@ -4,14 +4,22 @@
   "description": "Try number dos of Discordant",
   "main": "src/Index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "devwin": "start npm run gameserver && start npm run bot",
+    "dev": "concurrently --kill-others \"npm run gameserver\" \"npm run bot\"",
+    "gameserver": "node src/gameserver/Index.js",
+    "bot": "node src/bot/Index.js"
   },
   "author": "Ne0nx3r0",
   "dependencies": {
     "@types/socket.io": "^1.4.28",
     "@types/socket.io-client": "^1.4.29",
     "discord.js": "^11.0.0",
+    "pg": "^6.1.2",
     "socket.io": "^1.7.3",
-    "socket.io-client": "^1.7.3"
+    "socket.io-client": "^1.7.3",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "concurrently": "^3.4.0"
   }
 }
