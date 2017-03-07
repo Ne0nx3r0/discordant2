@@ -7,9 +7,12 @@ class DiscordantGameServer {
     public static main(): number {
         const logger = new Logger();
 
+        //Adds a database transport so we "start" the logger after 
         const dbService = new DatabaseService();
 
-        const gameService = new Game({
+        //
+
+        const game = new Game({
             db: dbService
         });
 
