@@ -1,15 +1,14 @@
 import * as SocketIOClient from 'socket.io-client';
-import { SocketGetPlayerByUID, SocketGetPlayerByUIDResponse } from '../core/socket/SocketEvents';
-import SocketEvents from '../core/socket/SocketEvents';
+import { GetPlayerByUIDRequest, GetPlayerByUIDResponse, SocketRequest } from '../core/socket/SocketRequests';
 
 class DiscordantBotNode {
     public static main(): number {
         const sioc = SocketIOClient('ws://localhost:3000');
 
         sioc.on('connect',function(){
-            const emitData:SocketGetPlayerByUID = {uid:'42'};
+            const emitData:GetPlayerByUIDRequest = {uid:'42'};
 
-            sioc.emit(SocketEvents.GET_PLAYER_BY_UID,emitData,function(response:SocketGetPlayerByUIDResponse){
+            sioc.emit(SocketRequest.GET_PLAYER_BY_UID,emitData,function(response:GetPlayerByUIDResponse){
                 console.log(response);
             });
         });

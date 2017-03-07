@@ -8,9 +8,14 @@ class DiscordantGameServer {
         const logger = new Logger();
 
         //Adds a database transport so we "start" the logger after 
-        const dbService = new DatabaseService();
-
-        //
+        const dbService = new DatabaseService(logger,{
+            host: '192.168.1.12',
+            port: 5432,
+            user: 'discordant',
+            password: 'LKJ3ff5!!!modn@N6%$@f5##d',
+            database: 'discordant',
+            ssl:true,
+        });
 
         const game = new Game({
             db: dbService
