@@ -1,27 +1,27 @@
 import SocketServer from './socket/SocketServer';
 import Logger from './log/Logger';
-import DatabaseService from './db/DatabaseService';
+import DatabaseService, { DBConfig } from './db/DatabaseService';
 import Game from './game/Game';
+import GameServerConfig from '../../Config.GameServer';
+
+
+export interface GameServerConfig{
+    dbConfig:DBConfig;
+}
 
 class DiscordantGameServer {
     public static main(): number {
         const logger = new Logger();
 
         //Adds a database transport so we "start" the logger after 
-        const dbService = new DatabaseService(logger,{
-            host: '192.168.1.12',
-            port: 5432,
-            user: 'discordant',
-            password: 'LKJ3ff5!!!modn@N6%$@f5##d',
-            database: 'discordant',
-            ssl:true,
-        });
+        const dbService = new DatabaseService(logger,GameServerConfig.dbConfig);
 
         const game = new Game({
             db: dbService
         });
 
         const socketServer = new SocketServer({
+            game: game,
             port: 3000
         });
         

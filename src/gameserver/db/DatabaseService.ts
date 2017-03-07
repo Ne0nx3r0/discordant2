@@ -1,11 +1,6 @@
 import Logger from '../log/Logger';
 const pg = require('pg');
 
-interface getPlayerCharacterResult{
-    error?:string;//A friendly error that can be handed to the user, logging handled by this class
-    result?:any;//result rows
-}
-
 interface batchQuery{
     query:string;
     params?:Array<any>;
@@ -19,7 +14,7 @@ interface dbClient{
     query(query:string,params:Array<any>,callback?:dbClientCallback);
 }
 
-interface dbConfig{
+export interface DBConfig{
     host: string;
     port: number;
     user: string;

@@ -4,7 +4,7 @@ export interface GameServerBag{
     db:DatabaseService;
 }
 
-export default class GameServer{
+export default class Game{
     db:DatabaseService;
 
     constructor(bag:GameServerBag){
