@@ -1,4 +1,5 @@
 import ItemEquippable from './ItemEquippable';
+import Weapon from './weapon/Weapon';
 
 export type EquipmentSlot = 
     'amulet' |
