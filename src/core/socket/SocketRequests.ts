@@ -2,7 +2,7 @@ import AttributeSet from '../creature/AttributeSet';
 import { EquipmentSlot } from '../creature/EquipmentSlot';
 
 const socketRequest = {
-    GET_PLAYER_BY_UID: 'getPlayerByUID'
+    GetPlayerByUID: 'getPlayerByUID'
 };
 
 export {socketRequest as SocketRequest};
@@ -21,10 +21,25 @@ export interface SocketPlayerEquipmentItem{
     slot:EquipmentSlot;
 }
 
+export interface SocketPlayer{
+    uid:string;
+    title:string;
+    discriminator:string;
+    xp:number;
+    wishes:number;
+    class:number;
+    attributes:AttributeSet;
+    role:string;
+    karma:number;
+    inventory:Array<SocketPlayerEquipmentItem>;
+    equipment:Array<SocketPlayerEquipmentItem>;
+}
+
 export interface SocketResponse{
     success:boolean;
     error?:string;
 }
+
 //Request pairs
 
 export interface GetPlayerByUIDRequest{
@@ -32,17 +47,5 @@ export interface GetPlayerByUIDRequest{
 }
 
 export interface GetPlayerByUIDResponse extends SocketResponse{
-    player:{
-        uid:string;
-        title:string;
-        discriminator:string;
-        xp:number;
-        wishes:number;
-        class:number;
-        attributes:AttributeSet;
-        role:string;
-        karma:number;
-        inventory:Array<SocketPlayerEquipmentItem>;
-        equipment:Array<SocketPlayerEquipmentItem>;
-    }
+    player:SocketPlayer;
 }

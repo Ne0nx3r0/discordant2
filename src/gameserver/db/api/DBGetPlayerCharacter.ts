@@ -1,5 +1,5 @@
 import DatabaseService from '../DatabaseService';
-import { SocketPlayerInventoryItem } from '../../../core/socket/SocketRequests';
+import { SocketPlayerInventoryItem, SocketPlayer } from '../../../core/socket/SocketRequests';
 
 interface DBInventoryItem{
     player_uid:string;
@@ -24,8 +24,8 @@ const getPlayerQuery = `
     FROM player WHERE uid = $1;
 `;
 
-export default async function(db:DatabaseService,uid:string){
-    const result = await this.db.getPool().query(getPlayerQuery,[uid]);
+export default async function(db:DatabaseService,uid:string):Promise<SocketPlayer>{
+ /*   const result = await this.db.getPool().query(getPlayerQuery,[uid]);
 
     if(result.rows.length == 0){
         return null;
@@ -101,6 +101,6 @@ export default async function(db:DatabaseService,uid:string){
         cachedPlayer.role = row.role;
         cachedPlayer.karma = row.karma;
     }
-
-    return cachedPlayer;
+*/
+    return null;//cachedPlayer;
 }

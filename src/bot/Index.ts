@@ -8,7 +8,7 @@ class DiscordantBotNode {
         sioc.on('connect',function(){
             const emitData:GetPlayerByUIDRequest = {uid:'42'};
 
-            sioc.emit(SocketRequest.GET_PLAYER_BY_UID,emitData,function(response:GetPlayerByUIDResponse){
+            sioc.emit(SocketRequest.GetPlayerByUID,emitData,function(response:GetPlayerByUIDResponse){
                 console.log(response);
             });
         });
@@ -16,7 +16,7 @@ class DiscordantBotNode {
         return 0;
     }
 }
-
+                                                          
 DiscordantBotNode.main();
 
 process.on("unhandledRejection", err => {

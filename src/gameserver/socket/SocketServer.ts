@@ -25,7 +25,7 @@ export default class SocketServer{
         };
 
         this.io.on('connection', (client)=>{
-            this.registerHandler(client,SocketRequest.GET_PLAYER_BY_UID,GetPlayerByUID);
+            this.registerHandler(client,SocketRequest.GetPlayerByUID,GetPlayerByUID);
         });
 
         this.io.listen(bag.port);
@@ -39,8 +39,8 @@ export default class SocketServer{
                 }
                 catch(ex){
                     const result:SocketResponse = {
-                        success:false,
-                        error:ex
+                        success: false,
+                        error: ex
                     }
 
                     handler(result);

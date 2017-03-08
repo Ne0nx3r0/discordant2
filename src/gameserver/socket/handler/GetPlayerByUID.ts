@@ -2,10 +2,8 @@ import { GetPlayerByUIDResponse, GetPlayerByUIDRequest } from '../../../core/soc
 import {SocketRequestHandlerBag} from '../SocketServer';
 
 export default async function(bag:SocketRequestHandlerBag,data:GetPlayerByUIDRequest):Promise<GetPlayerByUIDResponse>{
-    const pc = this.game.getPlayerCharacter(data.uid);
-
     return {
         success: true,
-        player: pc.toSocket(),
+        player: await bag.game.getPlayerCharacter(data.uid)
     };
 }
