@@ -1,5 +1,7 @@
 /// <reference path='../../node_modules/discord.js/typings/index.d.ts' />
 
+import Winston from 'winston';
+
 import{
     Client as DiscordClient,
     Message,
@@ -34,26 +36,26 @@ export default class DiscordantBotNode{
             //Clean up any party channels
             this.client.channels.array()
             .forEach(function(channel:TextChannel,index:number){
-                if(channel.name && (channel.name.startsWith('pvp-') || channel.name.startsWith('party-'))){
+                if(channel.name && (channel.name.startsWith('dpvp-') || channel.name.startsWith('dparty-'))){
                     deleteChannelDelay = deleteChannelDelay + 2000;
 
                     setTimeout(function(){
                         try{
-                            Logger.info('Deleting channel '+channel.name);
+                            Winston.info('Deleting channel '+channel.name);
                             
                             channel.delete();
                         }
                         catch(ex){
                             ex.msg = 'Error deleting channel';
 
-                            Logger.error(ex);
+                            Winston.error(ex);
                         }
                     },deleteChannelDelay);
                 }
             });
         }
         catch(ex){
-            Logger.error(ex);
+            Winston.error(ex);
         }
     }
 
@@ -68,6 +70,6 @@ export default class DiscordantBotNode{
             return;
         }
 
-
+        
     }
 }
