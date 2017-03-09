@@ -1,6 +1,10 @@
 /// <reference path='../../node_modules/discord.js/typings/index.d.ts' />
 
 import Winston from 'winston';
+import Command from './Command';
+import * as Commands from "./ActiveCommands";
+import { PermissionRole } from './permissions/PermissionService';
+import PermissionsService from './permissions/PermissionService';
 
 import{
     Client as DiscordClient,
@@ -12,16 +16,24 @@ export interface BotConfig{
     authToken:string;
     ownerUIDs:Array<string>;
     commandPrefix:string;
+    permissions:PermissionsService;
 }
 
 export default class DiscordantBotNode{
     client:DiscordClient;
     commandPrefix:string;
     ownerUIDs:Array<string>;
+    commands:Map<String,Command>;
 
     constructor(bag:BotConfig){
         this.commandPrefix = bag.commandPrefix;
         this.ownerUIDs = bag.ownerUIDs;
+
+        Object.keys(Commands).forEach((commandName)=>{
+            const command:Command = new Commands[commandName];
+
+            this.commands.set(command.name.toUpperCase(),command);
+        });
 
         this.client = new DiscordClient();
 
@@ -70,6 +82,31 @@ export default class DiscordantBotNode{
             return;
         }
 
-        
+        const msgWithoutPrefix:string = message.content.substr(this.commandPrefix.length);
+        const params:Array<string> = resolveArgs(msgWithoutPrefix);
+        const commandName:string = params.shift();
+
+        const command = this.commands.get(commandName.toUpperCase());
+
+        if(!command){
+            return;
+        }
+
+        //We don't need to look up the player for this command
+        if(this.anonymousRole.has(command.permissionNode)){
+
+
+            return;
+        }
     }
+}
+
+function resolveArgs(msg:string){
+    let regex = /("([^"]+)")|('([^']+)')|\S+/g,
+        matches = [],
+        match;
+
+    while((match = regex.exec(msg)) !== null) matches.push(match[4] || match[2] || match[0]);
+
+    return matches;
 }
