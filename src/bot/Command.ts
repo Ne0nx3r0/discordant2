@@ -1,8 +1,7 @@
-import PermissionId from './permissions/PermissionId';
+import PermissionId from '../core/permissions/PermissionId';
 import SocketClient from '../client/SocketClient';
 
 export interface CommandRunBag{
-    player:;
     socket:SocketClient;
 }
 

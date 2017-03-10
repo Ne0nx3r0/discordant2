@@ -3,8 +3,8 @@
 import Winston from 'winston';
 import Command from './Command';
 import * as Commands from "./ActiveCommands";
-import { PermissionRole } from './permissions/PermissionService';
-import PermissionsService from './permissions/PermissionService';
+import { PermissionRole } from '../core/permissions/PermissionService';
+import PermissionsService from '../core/permissions/PermissionService';
 import SocketClient from '../client/SocketClient';
 
 import{
@@ -27,11 +27,15 @@ export default class DiscordantBotNode{
     ownerUIDs:Array<string>;
     commands:Map<String,Command>;
     socket:SocketClient;
+    permissions:PermissionsService;
+    cachedRoles:Map<string,PermissionRole>;
 
     constructor(bag:BotConfig){
         this.commandPrefix = bag.commandPrefix;
         this.ownerUIDs = bag.ownerUIDs;
+        this.permissions = bag.permissions;
         this.socket = bag.socket;
+        this.cachedRoles = new Map();
 
         Object.keys(Commands).forEach((commandName)=>{
             const command:Command = new Commands[commandName];
@@ -97,14 +101,26 @@ export default class DiscordantBotNode{
         }
 
         try{
-            const player:SocketPlayer = await this.socket.getPlayer();
+            (async ()=>{
+                let playerUID = message.author.id;
+                let playerRole:PermissionRole = this.cachedRoles.get(playerUID);
 
-            //We don't need to look up the player for this command
-            if(this.permi){
+                if(!playerRole){
+                    const playerRoleStr:string = await this.socket.getPlayerRole(playerUID);
 
+                    playerRole = this.permissions.getRole(playerRoleStr);
+                }
 
-                return;
-            }
+                if(!playerRole.has(command.permissionNode)){
+                    message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
+
+                    return;
+                }
+
+                command.run({
+                    socket: this.socket
+                });
+            })();
         }
         catch(ex){
             console.log(ex);

@@ -1,18 +1,33 @@
 import * as SocketIOClient from 'socket.io-client';
 import { GetPlayerByUIDRequest, GetPlayerByUIDResponse, SocketRequest } from '../core/socket/SocketRequests';
+import { PermissionRole } from '../core/permissions/PermissionService';
 
 export default class SocketClient{
+    sioc:SocketIOClient.Socket;
     constructor(){
-        const sioc = SocketIOClient('ws://localhost:3000');
+        this.sioc = SocketIOClient('ws://localhost:3000');
 
-        sioc.on('connect',function(){
+        this.sioc.on('connect',()=>{
             const emitData:GetPlayerByUIDRequest = {uid:'42'};
 
-            sioc.emit(SocketRequest.GetPlayerByUID,emitData,function(response:GetPlayerByUIDResponse){
+            this.sioc.emit(SocketRequest.GetPlayerByUID,emitData,function(response:GetPlayerByUIDResponse){
                 console.log(response);
             });
         });
+    }
 
-        return 0;
+    getPlayerRole(playerUID):Promise<string>{
+        return (async()=>{
+            try{
+                this.sioc.emit(SocketRequest.GetPlayerRole,emitData,function(response:GetPlayerByUIDResponse){
+                    console.log(response);
+                });
+            }
+            catch(ex){
+                console.log(ex);
+
+                throw 'An unexpected socket exception occurred';
+            }
+        })();
     }
 }
