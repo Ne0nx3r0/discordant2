@@ -5,6 +5,7 @@ import Command from './Command';
 import * as Commands from "./ActiveCommands";
 import { PermissionRole } from './permissions/PermissionService';
 import PermissionsService from './permissions/PermissionService';
+import SocketClient from '../client/SocketClient';
 
 import{
     Client as DiscordClient,
@@ -17,6 +18,7 @@ export interface BotConfig{
     ownerUIDs:Array<string>;
     commandPrefix:string;
     permissions:PermissionsService;
+    socket:SocketClient;
 }
 
 export default class DiscordantBotNode{
@@ -24,10 +26,12 @@ export default class DiscordantBotNode{
     commandPrefix:string;
     ownerUIDs:Array<string>;
     commands:Map<String,Command>;
+    socket:SocketClient;
 
     constructor(bag:BotConfig){
         this.commandPrefix = bag.commandPrefix;
         this.ownerUIDs = bag.ownerUIDs;
+        this.socket = bag.socket;
 
         Object.keys(Commands).forEach((commandName)=>{
             const command:Command = new Commands[commandName];
@@ -92,11 +96,20 @@ export default class DiscordantBotNode{
             return;
         }
 
-        //We don't need to look up the player for this command
-        if(this.anonymousRole.has(command.permissionNode)){
+        try{
+            const player:SocketPlayer = await this.socket.getPlayer();
+
+            //We don't need to look up the player for this command
+            if(this.permi){
 
 
-            return;
+                return;
+            }
+        }
+        catch(ex){
+            console.log(ex);
+
+            message.channel.sendMessage(`An unexpected error occurred, ${message.author.username}`);
         }
     }
 }
