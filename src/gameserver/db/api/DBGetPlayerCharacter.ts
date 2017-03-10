@@ -1,12 +1,7 @@
 import DatabaseService from '../DatabaseService';
 import { SocketPlayerInventoryItem, SocketPlayer } from '../../../core/socket/SocketRequests';
 import InventoryItem from '../../../core/item/InventoryItem';
-
-interface DBInventoryItem{
-    player_uid:string;
-    item_id:number;
-    amount:number;
-}
+import { EquipmentSlot } from '../../../core/item/CreatureEquipment';
 
 const getPlayerQuery = `
     SELECT 
@@ -40,8 +35,20 @@ export interface DBPlayer{
     attribute_spirit: number;
     attribute_charisma: number;
     attribute_luck: number;
-    inventory:;
-    equipment:;
+    inventory:Array<DBInventoryItem>;
+    equipment:Array<DBEquipmentItem>;
+}
+
+export interface DBEquipmentItem{
+    player_uid:string;
+    item_id:number;
+    slot:EquipmentSlot;
+}
+
+export interface DBInventoryItem{
+    player_uid:string;
+    item_id:number;
+    amount:number;
 }
 
 export default async function(db:DatabaseService,uid:string):Promise<DBPlayer>{
