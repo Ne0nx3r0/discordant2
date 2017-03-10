@@ -48,6 +48,12 @@ export default class SocketClient{
 
         return response.uid;
     }
+
+
+
+
+
+    
     
     emitPromise<T>(event:SocketRequest,eventData:T):Promise<T>{
         const sioc = this.sioc;
