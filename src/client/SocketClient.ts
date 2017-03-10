@@ -1,5 +1,5 @@
 import * as SocketIOClient from 'socket.io-client';
-import { GetPlayerByUIDRequest, GetPlayerByUIDResponse, SocketRequest, GetPlayerRoleByUIDRequest, GetPlayerRoleByUIDResponse, SocketResponse } from '../core/socket/SocketRequests';
+import { GetPlayerByUIDRequest, GetPlayerByUIDResponse, SocketRequest, GetPlayerRoleByUIDRequest, SocketRequestType } from '../core/socket/SocketRequests';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import { SocketRequestHandlerBag } from '../gameserver/socket/SocketServer';
 
@@ -44,7 +44,9 @@ export default class SocketClient{
             uid:playerUID
         };
 
-        return await this.emitPromise(SocketRequest.GetPlayerRole,eventData);
+        const response = await this.emitPromise(SocketRequestType.GetPlayerRole,eventData);
+
+        return response.uid;
     }
     
     emitPromise<T>(event:SocketRequest,eventData:T):Promise<T>{
@@ -53,8 +55,8 @@ export default class SocketClient{
         return new Promise(function(resolve,reject){
             try{
                 sioc.emit(event.toString(),eventData,function(response:any){
-                    eventData.response = response;
-                    
+                    (eventData as SocketRequest).response  = response;
+
                     if(response.success){
                         eventData
                         resolve(eventData);
