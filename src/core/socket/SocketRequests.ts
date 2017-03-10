@@ -1,14 +1,15 @@
 import AttributeSet from '../creature/AttributeSet';
 import { EquipmentSlot } from '../creature/EquipmentSlot';
 
-const socketRequest = {
-    GetPlayerByUID: 'getPlayerByUID'
+export enum socketRequestType {
+    GetPlayerByUID,
+    GetPlayerRole,
 };
 
-export {socketRequest as SocketRequest};
+export {socketRequestType as SocketRequestType};
 
 //Reusable interfaces
-
+/*
 export interface SocketPlayerInventoryItem{
     id:number;
     metadata:string;
@@ -38,9 +39,35 @@ export interface SocketPlayer{
 export interface SocketResponse{
     success:boolean;
     error?:string;
-}
+    payload:any;
+}*/
 
 //Request pairs
+
+export interface SocketRequest{
+    response?:{
+        success?:boolean;
+        error?:string;
+    };
+}
+
+export interface GetPlayerRoleByUIDRequest extends SocketRequest{
+    uid: string;
+//filled in by response
+    response?:{
+        role:string;
+    };
+}
+
+
+
+
+
+
+
+
+
+
 
 export interface GetPlayerByUIDRequest{
     uid: string;

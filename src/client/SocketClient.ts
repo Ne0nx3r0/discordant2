@@ -1,6 +1,7 @@
 import * as SocketIOClient from 'socket.io-client';
-import { GetPlayerByUIDRequest, GetPlayerByUIDResponse, SocketRequest } from '../core/socket/SocketRequests';
+import { GetPlayerByUIDRequest, GetPlayerByUIDResponse, SocketRequest, GetPlayerRoleByUIDRequest, GetPlayerRoleByUIDResponse, SocketResponse } from '../core/socket/SocketRequests';
 import { PermissionRole } from '../core/permissions/PermissionService';
+import { SocketRequestHandlerBag } from '../gameserver/socket/SocketServer';
 
 export default class SocketClient{
     sioc:SocketIOClient.Socket;
@@ -15,19 +16,57 @@ export default class SocketClient{
             });
         });
     }
-
+/*
     getPlayerRole(playerUID):Promise<string>{
-        return (async()=>{
+        const emitData:GetPlayerRoleByUIDRequest = {
+            uid:playerUID
+        };
+
+        return new Promise((resolve,reject)=>{
             try{
-                this.sioc.emit(SocketRequest.GetPlayerRole,emitData,function(response:GetPlayerByUIDResponse){
-                    console.log(response);
+                this.sioc.emit(SocketRequest.GetPlayerRole,function(response:GetPlayerRoleByUIDResponse){
+                    if(response.success){
+                        resolve(response.role);
+                    }
+                    else{
+                        reject(response.error);
+                    }
                 });
             }
             catch(ex){
-                console.log(ex);
-
-                throw 'An unexpected socket exception occurred';
+                reject(ex);
             }
-        })();
+        });
+    }
+*/
+    async getPlayerRole(playerUID):Promise<string>{
+        const eventData:GetPlayerRoleByUIDRequest = {
+            uid:playerUID
+        };
+
+        return await this.emitPromise(SocketRequest.GetPlayerRole,eventData);
+    }
+    
+    emitPromise<T>(event:SocketRequest,eventData:T):Promise<T>{
+        const sioc = this.sioc;
+
+        return new Promise(function(resolve,reject){
+            try{
+                sioc.emit(event.toString(),eventData,function(response:any){
+                    eventData.response = response;
+                    
+                    if(response.success){
+                        eventData
+                        resolve(eventData);
+                    }
+                    else{
+                        reject(response.error);
+                    }
+                });
+            }
+            catch(ex){
+                reject(ex);
+            }
+        });
     }
 }
