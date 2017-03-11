@@ -3,9 +3,8 @@
 import Winston from 'winston';
 import Command from './Command';
 import * as Commands from "./ActiveCommands";
-import { PermissionRole } from '../core/permissions/PermissionService';
-import PermissionsService from '../core/permissions/PermissionService';
 import SocketClient from '../client/SocketClient';
+import { PermissionRole } from '../core/permissions/PermissionService';
 
 import{
     Client as DiscordClient,
@@ -17,7 +16,6 @@ export interface BotConfig{
     authToken:string;
     ownerUIDs:Array<string>;
     commandPrefix:string;
-    permissions:PermissionsService;
     socket:SocketClient;
 }
 
@@ -27,13 +25,10 @@ export default class DiscordantBotNode{
     ownerUIDs:Array<string>;
     commands:Map<String,Command>;
     socket:SocketClient;
-    permissions:PermissionsService;
-
 
     constructor(bag:BotConfig){
         this.commandPrefix = bag.commandPrefix;
         this.ownerUIDs = bag.ownerUIDs;
-        this.permissions = bag.permissions;
         this.socket = bag.socket;
 
         Object.keys(Commands).forEach((commandName)=>{
@@ -102,13 +97,7 @@ export default class DiscordantBotNode{
         try{
             (async ()=>{
                 let playerUID = message.author.id;
-                let playerRole:PermissionRole = this.cachedRoles.get(playerUID);
-
-                if(!playerRole){
-                    const playerRoleStr:string = await this.socket.getPlayerRole(playerUID);
-
-                    playerRole = this.permissions.getRole(playerRoleStr);
-                }
+                let playerRole:PermissionRole = this.socket.getPlayerRole(playerUID);
 
                 if(!playerRole.has(command.permissionNode)){
                     message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
