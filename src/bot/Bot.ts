@@ -28,14 +28,13 @@ export default class DiscordantBotNode{
     commands:Map<String,Command>;
     socket:SocketClient;
     permissions:PermissionsService;
-    cachedRoles:Map<string,PermissionRole>;
+
 
     constructor(bag:BotConfig){
         this.commandPrefix = bag.commandPrefix;
         this.ownerUIDs = bag.ownerUIDs;
         this.permissions = bag.permissions;
         this.socket = bag.socket;
-        this.cachedRoles = new Map();
 
         Object.keys(Commands).forEach((commandName)=>{
             const command:Command = new Commands[commandName];

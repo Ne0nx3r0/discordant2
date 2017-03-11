@@ -1,12 +1,9 @@
 import AttributeSet from '../creature/AttributeSet';
 import { EquipmentSlot } from '../creature/EquipmentSlot';
 
-export enum socketRequestType {
-    GetPlayerByUID,
-    GetPlayerRole,
-};
+export type SocketPushType = 'PlayerRoleUpdated';
 
-export {socketRequestType as SocketRequestType};
+export type SocketRequestType = 'GetPlayerRole';
 
 //Reusable interfaces
 /*
@@ -51,28 +48,19 @@ export interface SocketRequest{
     };
 }
 
+export interface GetPlayerRoleResponse{
+    role:string;
+}
+
 export interface GetPlayerRoleByUIDRequest extends SocketRequest{
     uid: string;
 //filled in by response
-    response?:{
-        role:string;
-    };
+    response?:GetPlayerRoleResponse;
 }
 
+//Server to client pushes
 
-
-
-
-
-
-
-
-
-
-export interface GetPlayerByUIDRequest{
-    uid: string;
-}
-
-export interface GetPlayerByUIDResponse extends SocketResponse{
-    player:SocketPlayer;
+export interface PlayerRoleUpdatedPush{
+    playerUid:string;
+    newRole:string;
 }
