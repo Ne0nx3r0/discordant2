@@ -16,6 +16,9 @@ export interface BotConfig{
     authToken:string;
     ownerUIDs:Array<string>;
     commandPrefix:string;
+}
+
+export interface BotBag extends BotConfig{
     socket:SocketClient;
 }
 
@@ -26,7 +29,7 @@ export default class DiscordantBotNode{
     commands:Map<String,Command>;
     socket:SocketClient;
 
-    constructor(bag:BotConfig){
+    constructor(bag:BotBag){
         this.commandPrefix = bag.commandPrefix;
         this.ownerUIDs = bag.ownerUIDs;
         this.socket = bag.socket;
@@ -97,16 +100,19 @@ export default class DiscordantBotNode{
         try{
             (async ()=>{
                 let playerUID = message.author.id;
-                let playerRole:PermissionRole = this.socket.getPlayerRole(playerUID);
+                let playerRole:PermissionRole = await this.socket.getPlayerRole(playerUID);
 
-                if(!playerRole.has(command.permissionNode)){
+                if(!playerRole.has(command.permissionNode) && this.ownerUIDs.indexOf(playerUID) == -1){
                     message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
 
                     return;
                 }
 
                 command.run({
-                    socket: this.socket
+                    socket: this.socket,
+                    message: message,
+                    params: params,
+                    playerUID: playerUID
                 });
             })();
         }

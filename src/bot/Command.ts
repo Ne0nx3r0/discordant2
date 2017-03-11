@@ -1,8 +1,12 @@
 import PermissionId from '../core/permissions/PermissionId';
 import SocketClient from '../client/SocketClient';
+import {Message} from 'discord.js';
 
 export interface CommandRunBag{
     socket:SocketClient;
+    message:Message;
+    params:Array<string>;
+    playerUID:string;
 }
 
 export interface CommandBag{

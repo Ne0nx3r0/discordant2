@@ -1,9 +1,11 @@
 import AttributeSet from '../creature/AttributeSet';
 import { EquipmentSlot } from '../creature/EquipmentSlot';
 
-export type SocketPushType = 'PlayerRoleUpdated';
-
+//request goes from client to server with a response
 export type SocketRequestType = 'GetPlayerRole';
+
+//push goes from server to client
+export type SocketPushType = 'PlayerRoleUpdated';
 
 //Reusable interfaces
 /*

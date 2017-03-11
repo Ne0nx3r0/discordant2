@@ -1,5 +1,9 @@
+import BotConfig from '../../Config.Bot';
+
 class DiscordantBotNode {
     public static main(): number {
+        
+
         return 0;
     }
 }

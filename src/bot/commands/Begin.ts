@@ -1,6 +1,6 @@
 import Command from '../Command';
 import { CommandBag, CommandRunBag } from '../Command';
-import PermissionId from '../permissions/PermissionId';
+import PermissionId from '../../core/permissions/PermissionId';
 
 export default class Begin extends Command{
     constructor(bag:CommandBag){
@@ -13,6 +13,9 @@ export default class Begin extends Command{
     }
 
     run(bag:CommandRunBag){
-        
+        bag.message.channel.sendMessage(`begin
+Parameters: ${bag.params.join(',')}
+Sender: ${bag.playerUID}
+        `);
     }
 }
