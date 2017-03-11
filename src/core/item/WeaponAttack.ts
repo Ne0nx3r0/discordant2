@@ -1,4 +1,4 @@
-import Creature from '../../creature/Creature';
+import Creature from '../creature/Creature';
 import WeaponAttackStep from './WeaponAttackStep';
 
 interface AIShouldUseFunc{

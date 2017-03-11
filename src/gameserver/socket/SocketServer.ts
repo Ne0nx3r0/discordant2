@@ -1,7 +1,9 @@
 import * as SocketIO from 'socket.io';
-import { SocketRequest, GetPlayerByUIDRequest, GetPlayerByUIDResponse, SocketResponse } from '../../core/socket/SocketRequests';
+import { SocketRequest, SocketResponse } from '../../core/socket/SocketRequests';
 import Game from '../game/Game';
-import GetPlayerByUID from './handler/GetPlayerByUID';
+import GetPlayerRole from './handler/GetPlayerRole';
+
+export type SocketServerRequestType = 'GetPlayerRole';
 
 interface SocketServerBag{
     game:Game;
@@ -25,7 +27,7 @@ export default class SocketServer{
         };
 
         this.io.on('connection', (client)=>{
-            this.registerHandler(client,SocketRequest.GetPlayerByUID,GetPlayerByUID);
+            this.registerHandler(client,'GetPlayerRole',GetPlayerRole);
         });
 
         this.io.listen(bag.port);

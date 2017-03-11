@@ -41,9 +41,11 @@ const adminPermissions = [
 ].concat(testerPermissions).sort();
 
 export class PermissionRole{
+    title:string;
     permissions:Array<PermissionId>;
 
-    constructor(permissions:Array<PermissionId>){
+    constructor(title:string,permissions:Array<PermissionId>){
+        this.title = title;
         this.permissions = permissions;
     }
 
@@ -59,12 +61,12 @@ export default class PermissionsService{
     constructor(){
         this._roles = new Map();
 
-        this.anonymous = new PermissionRole(anonymousPermissions);
+        this.anonymous = new PermissionRole('anonymous',anonymousPermissions);
 
         this._roles.set('anonymous',this.anonymous);
-        this._roles.set('player',new PermissionRole(playerPermissions));
-        this._roles.set('tester',new PermissionRole(testerPermissions));        
-        this._roles.set('admin',new PermissionRole(adminPermissions));
+        this._roles.set('player',new PermissionRole('player',playerPermissions));
+        this._roles.set('tester',new PermissionRole('tester',testerPermissions));        
+        this._roles.set('admin',new PermissionRole('admin',adminPermissions));
     }
 
     isRole(name:string){

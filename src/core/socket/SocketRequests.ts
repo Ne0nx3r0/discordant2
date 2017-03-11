@@ -1,12 +1,6 @@
 import AttributeSet from '../creature/AttributeSet';
 import { EquipmentSlot } from '../creature/EquipmentSlot';
 
-//request goes from client to server with a response
-export type SocketRequestType = 'GetPlayerRole';
-
-//push goes from server to client
-export type SocketPushType = 'PlayerRoleUpdated';
-
 //Reusable interfaces
 /*
 export interface SocketPlayerInventoryItem{
@@ -41,23 +35,13 @@ export interface SocketResponse{
     payload:any;
 }*/
 
-//Request pairs
+export interface SocketResponse{
+    success:boolean;
+    error?:string;
+}
 
 export interface SocketRequest{
-    response?:{
-        success?:boolean;
-        error?:string;
-    };
-}
-
-export interface GetPlayerRoleResponse{
-    role:string;
-}
-
-export interface GetPlayerRoleByUIDRequest extends SocketRequest{
-    uid: string;
-//filled in by response
-    response?:GetPlayerRoleResponse;
+    response?:SocketResponse;
 }
 
 //Server to client pushes

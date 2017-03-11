@@ -1,19 +1,27 @@
 import * as SocketIOClient from 'socket.io-client';
-import { SocketRequest, GetPlayerRoleByUIDRequest, SocketRequestType, PlayerRoleUpdatedPush, SocketPushType } from '../core/socket/SocketRequests';
-import { SocketRequestHandlerBag } from '../gameserver/socket/SocketServer';
+import { SocketRequest, PlayerRoleUpdatedPush } from '../core/socket/SocketRequests';
+import { SocketRequestHandlerBag, SocketServerRequestType } from '../gameserver/socket/SocketServer';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import PermissionsService from '../core/permissions/PermissionService';
+import { GetPlayerRoleRequest } from '../gameserver/socket/handler/GetPlayerRole';
+
+export type SocketClientPushType = 'PlayerRoleUpdated';
+
+export interface SocketClientBag{
+    permissions:PermissionsService;
+    gameserver:string;
+}
 
 export default class SocketClient{
     sioc:SocketIOClient.Socket;
     cachedRoles:Map<string,PermissionRole>;
     permissions:PermissionsService;
 
-    constructor(permissions:PermissionsService){        
-        this.permissions = permissions; 
+    constructor(bag:SocketClientBag){        
+        this.permissions = bag.permissions; 
         this.cachedRoles = new Map();
 
-        this.sioc = SocketIOClient('ws://localhost:3000');
+        this.sioc = SocketIOClient(bag.gameserver);
 
         this.sioc.on('connect',()=>{
             this.addListener('PlayerRoleUpdated',(e:PlayerRoleUpdatedPush)=>{
@@ -29,7 +37,7 @@ export default class SocketClient{
             return playerRole;
         }
 
-        const eventData:GetPlayerRoleByUIDRequest = {
+        const eventData:GetPlayerRoleRequest = {
             uid:playerUID
         };
 
@@ -54,11 +62,11 @@ export default class SocketClient{
 
 
 // ---------------------------------------------------------
-    addListener(event:SocketPushType,callback:Function){
+    addListener(event:SocketClientPushType,callback:Function){
         this.sioc.on(event,callback);
     }
 
-    emitPromise<T>(event:SocketRequestType,eventData:T):Promise<T>{
+    emitPromise<T>(event:SocketServerRequestType,eventData:T):Promise<T>{
         const sioc = this.sioc;
 
         return new Promise(function(resolve,reject){

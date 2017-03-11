@@ -1,5 +1,4 @@
 import DatabaseService from '../DatabaseService';
-import { SocketPlayerInventoryItem, SocketPlayer } from '../../../core/socket/SocketRequests';
 import InventoryItem from '../../../core/item/InventoryItem';
 import { EquipmentSlot } from '../../../core/item/CreatureEquipment';
 
@@ -29,6 +28,7 @@ export interface DBPlayer{
     wishes: number;
     class: number;
     karma: number;
+    role: string;
     attribute_strength: number;
     attribute_agility: number;
     attribute_vitality: number;

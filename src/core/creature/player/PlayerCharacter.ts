@@ -1,28 +1,31 @@
-import { PermissionRole } from '../../../bot/permissions/PermissionService';
+import { PermissionRole } from '../../permissions/PermissionService';
 import Creature from '../Creature';
 import AttributeSet from '../AttributeSet';
+import WeaponAttackStep from '../../item/WeaponAttackStep';
+import CharacterClass from './CharacterClass';
+import CreatureEquipment from '../../item/CreatureEquipment';
+import PlayerInventory from '../../item/PlayerInventory';
 
 type PlayerStatus = 'inCity' | 'invitedToPVPBattle' | 'inBattle' | 'invitedToParty' | 'inParty';
 
 export {PlayerStatus};
 
 interface BattleData{
-    battle:PlayerBattle;
+   // battle:PlayerBattle;
     defeated:boolean;
     attackExhaustion:number,
-    queuedAttacks:Array<AttackStep>,
+    queuedAttacks:Array<WeaponAttackStep>,
     blocking:boolean,
 }
 
 interface PartyData{
     inviteExpires?:number;
-    party?:PlayerParty;
+    //party?:PlayerParty;
 }
 
 interface PCConfig{
-    id:number,
     uid:string;
-    discriminator:number;
+    discriminator:string;
     title:string;
     description:string;
     attributes:AttributeSet,
@@ -37,9 +40,9 @@ interface PCConfig{
 
 export default class PlayerCharacter extends Creature{
     uid:string;
-    discriminator:number;
-    battle:PlayerBattle;
-    party:PlayerParty;
+    discriminator:string;
+   // battle:PlayerBattle;
+    //party:PlayerParty;
     status:PlayerStatus;
     class:CharacterClass;
     xp:number;
@@ -51,7 +54,7 @@ export default class PlayerCharacter extends Creature{
 
     constructor(o:PCConfig){
         super({
-            id: o.id,
+            id: -1,
             title: o.title,
             description: o.description,
             attributes: o.attributes,
@@ -68,8 +71,8 @@ export default class PlayerCharacter extends Creature{
         this.karma = o.karma;
 
         this.status = 'inCity';
-        this.party = null;
-        this.battle = null;
+        //this.party = null;
+        //this.battle = null;
         this.lastCommand = 0;
     }
 
@@ -82,6 +85,6 @@ export default class PlayerCharacter extends Creature{
     }
 
     get isPartyLeader():boolean{
-        return this.party && this.party.leader == this;
+        return false;//this.party && this.party.leader == this;
     }
 }

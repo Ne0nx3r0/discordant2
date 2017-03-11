@@ -12,13 +12,17 @@ import{
     TextChannel
 } from 'discord.js';
 
-export interface BotConfig{
+export interface BotConfigBase{
     authToken:string;
     ownerUIDs:Array<string>;
     commandPrefix:string;
 }
 
-export interface BotBag extends BotConfig{
+export interface BotConfig extends BotConfigBase{
+    gameserver:string;
+}
+
+export interface BotBag extends BotConfigBase{
     socket:SocketClient;
 }
 
