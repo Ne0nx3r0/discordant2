@@ -15,7 +15,8 @@ export default class Begin extends Command{
     run(bag:CommandRunBag){
         bag.message.channel.sendMessage(`begin
 Parameters: ${bag.params.join(',')}
-Sender: ${bag.playerUID}
+Sender: ${bag.player.uid}
+Role: ${bag.role.title}
         `);
     }
 }

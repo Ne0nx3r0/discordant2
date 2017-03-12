@@ -5,13 +5,16 @@ import WeaponAttackStep from '../../item/WeaponAttackStep';
 import CharacterClass from './CharacterClass';
 import CreatureEquipment from '../../item/CreatureEquipment';
 import PlayerInventory from '../../item/PlayerInventory';
+import { SocketPlayerEquipmentItem } from '../../socket/SocketRequests';
+import { SocketPlayerInventory } from '../../item/PlayerInventory';
+import { SocketCreatureEquipment } from '../../item/CreatureEquipment';
 
 type PlayerStatus = 'inCity' | 'invitedToPVPBattle' | 'inBattle' | 'invitedToParty' | 'inParty';
 
 export {PlayerStatus};
 
 interface BattleData{
-   // battle:PlayerBattle;
+    //battle:PlayerBattle;
     defeated:boolean;
     attackExhaustion:number,
     queuedAttacks:Array<WeaponAttackStep>,
@@ -25,7 +28,6 @@ interface PartyData{
 
 interface PCConfig{
     uid:string;
-    discriminator:string;
     title:string;
     description:string;
     attributes:AttributeSet,
@@ -40,8 +42,7 @@ interface PCConfig{
 
 export default class PlayerCharacter extends Creature{
     uid:string;
-    discriminator:string;
-   // battle:PlayerBattle;
+    //battle:PlayerBattle;
     //party:PlayerParty;
     status:PlayerStatus;
     class:CharacterClass;
@@ -62,7 +63,6 @@ export default class PlayerCharacter extends Creature{
         });
 
         this.uid = o.uid;
-        this.discriminator = o.discriminator;
         this.class = o.class;
         this.xp = o.xp;
         this.wishes = o.wishes;
@@ -87,4 +87,34 @@ export default class PlayerCharacter extends Creature{
     get isPartyLeader():boolean{
         return false;//this.party && this.party.leader == this;
     }
+
+    toSocket():SocketPlayerCharacter{
+        return {
+            uid: this.uid,
+            title: this.title,
+            description: this.description,
+            class: this.class.id,
+            xp: this.xp,
+            karma: this.karma,
+            wishes: this.wishes,
+            role: this.role.title,
+            status: this.status,
+            inventory: this.inventory.toSocket(),
+            equipment: this.equipment.toSocket(),
+        };
+    }
+}
+
+export interface SocketPlayerCharacter{
+    uid: string;
+    title: string;
+    description: string;
+    class: number;
+    xp: number;
+    karma: number;
+    wishes: number;
+    role: string;
+    status: PlayerStatus;
+    inventory: SocketPlayerInventory;
+    equipment: SocketCreatureEquipment;
 }

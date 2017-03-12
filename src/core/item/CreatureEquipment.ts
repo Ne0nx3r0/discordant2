@@ -43,7 +43,7 @@ export default class CreatureEquipment{
 
         Object.keys(this._items).forEach((slot:EquipmentSlot)=>{
             toDb[slot] = {
-                id: this._items[slot].id
+                id: (this._items[slot] as ItemEquippable).id
             };
         });
 
@@ -77,4 +77,22 @@ export default class CreatureEquipment{
     get offhand():Weapon{
         return this._items.offhand;
     }
+
+    toSocket(){
+        const socketEquipment:SocketCreatureEquipment = {};
+
+        return Object.keys(this._items).map((slot)=>{
+            socketEquipment[slot] = (this._items[slot] as ItemEquippable).id
+        });
+    }
+}
+
+export interface SocketCreatureEquipment{
+    amulet?: number;
+    armor?: number;
+    bracer?: number;
+    hat?: number;
+    offhand?: number;
+    ring?: number;
+    weapon?: number;
 }

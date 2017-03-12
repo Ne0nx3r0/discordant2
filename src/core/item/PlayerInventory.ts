@@ -1,5 +1,6 @@
 import InventoryItem from './InventoryItem';
 import ItemBase from './ItemBase';
+import { SocketInventoryItem } from './InventoryItem';
 
 export interface DBItemBag{
     id:number;
@@ -72,4 +73,19 @@ export default class PlayerInventory{
 
         return dbItems;
     }
+
+    toSocket():SocketPlayerInventory{
+        const inventoryItems:SocketPlayerInventory = [];
+
+        this.items.forEach(function(item,itemId){
+            inventoryItems.push({
+                id:itemId,
+                amount:item.amount
+            });
+        });
+
+        return inventoryItems;
+    }
 }
+
+export type SocketPlayerInventory = Array<SocketInventoryItem>;

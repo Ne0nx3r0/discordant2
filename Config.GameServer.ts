@@ -8,7 +8,8 @@ const gameServerConfig:GameServerConfig = {
         password: 'LKJ3ff5!!!modn@N6%$@f5##d',
         database: 'discordant',
         ssl:true,
-    }
+    },
+    port: 3000
 }
 
 export default gameServerConfig;

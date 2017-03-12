@@ -52,8 +52,8 @@ export interface DBInventoryItem{
 }
 
 export default async function(db:DatabaseService,uid:string):Promise<DBPlayer>{
-    const result = await this.db.getPool().query(getPlayerQuery,[uid]);
-    
+    const result = await db.getPool().query(getPlayerQuery,[uid]);
+
     //not found
     if(result.rows.length == 0){
         return null;

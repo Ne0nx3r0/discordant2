@@ -4,10 +4,12 @@ import DatabaseService, { DBConfig } from './db/DatabaseService';
 import Game from './game/Game';
 import GameServerConfig from '../../Config.GameServer';
 import PermissionsService from '../core/permissions/PermissionService';
+import { GameServerBag } from './game/Game';
 
 
 export interface GameServerConfig{
     dbConfig:DBConfig;
+    port:number;
 }
 
 class DiscordantGameServer {
@@ -26,7 +28,7 @@ class DiscordantGameServer {
 
         const socketServer = new SocketServer({
             game: game,
-            port: 3000
+            port: GameServerConfig.port
         });
         
         return 0;

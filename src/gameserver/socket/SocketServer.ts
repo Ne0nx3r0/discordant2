@@ -1,9 +1,9 @@
 import * as SocketIO from 'socket.io';
 import { SocketRequest, SocketResponse } from '../../core/socket/SocketRequests';
 import Game from '../game/Game';
-import GetPlayerRole from './handler/GetPlayerRole';
+import GetPlayer from './handler/GetPlayer';
 
-export type SocketServerRequestType = 'GetPlayerRole';
+export type SocketServerRequestType = 'GetPlayer';
 
 interface SocketServerBag{
     game:Game;
@@ -13,7 +13,6 @@ interface SocketServerBag{
 export interface SocketRequestHandlerBag{
     game:Game;
 }
-
 
 export default class SocketServer{
     io:SocketIO.Server;
@@ -27,7 +26,7 @@ export default class SocketServer{
         };
 
         this.io.on('connection', (client)=>{
-            this.registerHandler(client,'GetPlayerRole',GetPlayerRole);
+            this.registerHandler(client,'GetPlayer',GetPlayer);
         });
 
         this.io.listen(bag.port);
@@ -36,17 +35,19 @@ export default class SocketServer{
     registerHandler(client:any,event:string,handler:Function){
         client.on(event,(data:any,callback:any)=>{
             (async()=>{
+                let result:SocketResponse;
+
                 try{
-                    callback(await handler(this.handlerBag,data));
+                    result = await handler(this.handlerBag,data);
                 }
                 catch(ex){
-                    const result:SocketResponse = {
+                    result = {
                         success: false,
                         error: ex
                     }
-
-                    handler(result);
                 }
+
+                callback(result);
             })();
         });
     }

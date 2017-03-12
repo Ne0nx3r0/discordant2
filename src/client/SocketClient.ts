@@ -3,54 +3,33 @@ import { SocketRequest, PlayerRoleUpdatedPush } from '../core/socket/SocketReque
 import { SocketRequestHandlerBag, SocketServerRequestType } from '../gameserver/socket/SocketServer';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import PermissionsService from '../core/permissions/PermissionService';
-import { GetPlayerRoleRequest } from '../gameserver/socket/handler/GetPlayerRole';
+import { GetPlayerRequest, GetPlayerResponse } from '../gameserver/socket/handler/GetPlayer';
+import { ISocketPlayer } from '../core/socket/ISocketPlayer';
+import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
+import PlayerCharacter from '../core/creature/player/PlayerCharacter';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
 export interface SocketClientBag{
-    permissions:PermissionsService;
     gameserver:string;
 }
 
 export default class SocketClient{
     sioc:SocketIOClient.Socket;
-    cachedRoles:Map<string,PermissionRole>;
-    permissions:PermissionsService;
-
+    
     constructor(bag:SocketClientBag){        
-        this.permissions = bag.permissions; 
-        this.cachedRoles = new Map();
-
         this.sioc = SocketIOClient(bag.gameserver);
-
-        this.sioc.on('connect',()=>{
-            this.addListener('PlayerRoleUpdated',(e:PlayerRoleUpdatedPush)=>{
-                this.cachedRoles.delete(e.playerUid);
-            });
-        });
     }
 
-    async getPlayerRole(playerUID):Promise<PermissionRole>{
-        let playerRole = this.cachedRoles.get(playerUID);
-
-        if(playerRole){
-            return playerRole;
-        }
-
-        const eventData:GetPlayerRoleRequest = {
+    async getPlayer(playerUID):Promise<SocketPlayerCharacter>{
+        const eventData:GetPlayerRequest = {
             uid:playerUID
         };
 
-        const response = await this.emitPromise('GetPlayerRole',eventData);
+        const response:GetPlayerRequest = await this.emitPromise('GetPlayer',eventData);
 
-        const role = this.permissions.getRole(response.response.role);
-
-        this.cachedRoles.set(response.uid,role);
-
-        return role;
+        return response.response.player;
     }
-
-
 
 
 

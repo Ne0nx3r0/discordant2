@@ -22,6 +22,7 @@ export default class Game{
     constructor(bag:GameServerBag){
         this.db = bag.db;
         this.permissions = bag.permissions;
+        this.cachedPCs = new Map();
     }
 
     async getPlayerCharacter(uid:string):Promise<PlayerCharacter>{
@@ -29,6 +30,10 @@ export default class Game{
 
         if(!player){
             const dbPlayer = await DBGetPlayerCharacter(this.db,uid);
+
+            if(!dbPlayer){
+                throw 'That player is not registered yet';
+            }
 /*
             const inventory = new Map<number,InventoryItem>();
 

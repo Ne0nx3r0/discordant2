@@ -5,6 +5,8 @@ import Command from './Command';
 import * as Commands from "./ActiveCommands";
 import SocketClient from '../client/SocketClient';
 import { PermissionRole } from '../core/permissions/PermissionService';
+import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
+import PermissionsService from '../core/permissions/PermissionService';
 
 import{
     Client as DiscordClient,
@@ -24,6 +26,7 @@ export interface BotConfig extends BotConfigBase{
 
 export interface BotBag extends BotConfigBase{
     socket:SocketClient;
+    permissions:PermissionsService;
 }
 
 export default class DiscordantBotNode{
@@ -32,11 +35,15 @@ export default class DiscordantBotNode{
     ownerUIDs:Array<string>;
     commands:Map<String,Command>;
     socket:SocketClient;
+    permissions:PermissionsService;
 
     constructor(bag:BotBag){
         this.commandPrefix = bag.commandPrefix;
         this.ownerUIDs = bag.ownerUIDs;
         this.socket = bag.socket;
+        this.permissions = bag.permissions;
+
+        this.commands = new Map();
 
         Object.keys(Commands).forEach((commandName)=>{
             const command:Command = new Commands[commandName];
@@ -48,6 +55,8 @@ export default class DiscordantBotNode{
 
         this.client.on('ready',this.handleReady.bind(this));
         this.client.on('message',this.handleMessage.bind(this));
+
+        this.client.login(bag.authToken);
     }
 
     handleReady(){
@@ -103,8 +112,9 @@ export default class DiscordantBotNode{
 
         try{
             (async ()=>{
-                let playerUID = message.author.id;
-                let playerRole:PermissionRole = await this.socket.getPlayerRole(playerUID);
+                const playerUID = message.author.id;
+                const socketPlayer:SocketPlayerCharacter = await this.socket.getPlayer(playerUID);
+                const playerRole:PermissionRole = this.permissions.getRole(socketPlayer.role);
 
                 if(!playerRole.has(command.permissionNode) && this.ownerUIDs.indexOf(playerUID) == -1){
                     message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
@@ -116,7 +126,8 @@ export default class DiscordantBotNode{
                     socket: this.socket,
                     message: message,
                     params: params,
-                    playerUID: playerUID
+                    player: socketPlayer,
+                    role: playerRole,
                 });
             })();
         }
