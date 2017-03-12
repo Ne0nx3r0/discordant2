@@ -5,7 +5,6 @@ import WeaponAttackStep from '../../item/WeaponAttackStep';
 import CharacterClass from './CharacterClass';
 import CreatureEquipment from '../../item/CreatureEquipment';
 import PlayerInventory from '../../item/PlayerInventory';
-import { SocketPlayerEquipmentItem } from '../../socket/SocketRequests';
 import { SocketPlayerInventory } from '../../item/PlayerInventory';
 import { SocketCreatureEquipment } from '../../item/CreatureEquipment';
 

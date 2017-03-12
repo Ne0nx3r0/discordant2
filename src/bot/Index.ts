@@ -9,11 +9,11 @@ class DiscordantBotNode {
         const permissions:PermissionsService = new PermissionsService();
 
         const socket:SocketClient = new SocketClient({
-            permissions: permissions,
             gameserver: Config.gameserver
         });
 
         const bot:Bot = new Bot({
+            permissions: permissions,
             authToken: Config.authToken,
             ownerUIDs: Config.ownerUIDs,
             commandPrefix: Config.commandPrefix,
