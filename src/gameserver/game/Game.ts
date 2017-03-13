@@ -57,7 +57,6 @@ export default class Game{
 
             player = new PlayerCharacter({
                 uid: dbPlayer.uid,
-                discriminator: dbPlayer.discriminator,
                 title: dbPlayer.title,
                 description: dbPlayer.description,
                 attributes: new AttributeSet({

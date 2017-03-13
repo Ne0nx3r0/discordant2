@@ -19,8 +19,8 @@ CREATE TABLE public.player
     attribute_charisma smallint NOT NULL DEFAULT 0,
     attribute_luck smallint NOT NULL DEFAULT 0,
     karma integer NOT NULL DEFAULT 1,
+    role character varying COLLATE pg_catalog."default" NOT NULL DEFAULT 'player'::character varying,
     created_at timestamp without time zone DEFAULT now(),
-    role character varying COLLATE pg_catalog."default" NOT NULL DEFAULT 'tester'::character varying,
     CONSTRAINT player_uid PRIMARY KEY (uid)
 )
 WITH (
