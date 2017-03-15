@@ -8,6 +8,7 @@ import CreatureEquipment from '../../core/item/CreatureEquipment';
 import PlayerInventory from '../../core/item/PlayerInventory';
 import PermissionsService from '../../core/permissions/PermissionService';
 import AttributeSet from '../../core/creature/AttributeSet';
+import { SocketResponse } from '../../core/socket/SocketRequests';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -32,7 +33,9 @@ export default class Game{
             const dbPlayer = await DBGetPlayerCharacter(this.db,uid);
 
             if(!dbPlayer){
-                throw 'That player is not registered yet';
+                const response:PlayerCharacter = null;
+
+                return response;
             }
 /*
             const inventory = new Map<number,InventoryItem>();

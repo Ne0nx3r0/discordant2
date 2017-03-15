@@ -6,6 +6,8 @@ import { BotConfig } from './Bot';
 
 class DiscordantBotNode {
     public static main(): number {
+        console.log('Bot');
+
         const permissions:PermissionsService = new PermissionsService();
 
         const socket:SocketClient = new SocketClient({
@@ -28,4 +30,5 @@ DiscordantBotNode.main();
 
 process.on("unhandledRejection", err => {
   console.error("Uncaught Promise Error: \n" + err.stack);
+  console.error(err);
 });

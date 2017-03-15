@@ -110,32 +110,31 @@ export default class DiscordantBotNode{
             return;
         }
 
-        try{
             (async ()=>{
-                const playerUID = message.author.id;
-                const socketPlayer:SocketPlayerCharacter = await this.socket.getPlayer(playerUID);
-                const playerRole:PermissionRole = this.permissions.getRole(socketPlayer.role);
+                try{
+                    const playerUID = message.author.id;
+                    const socketPlayer:SocketPlayerCharacter = await this.socket.getPlayer(playerUID);
+                    const playerRole:PermissionRole = this.permissions.getRole(socketPlayer.role);
 
-                if(!playerRole.has(command.permissionNode) && this.ownerUIDs.indexOf(playerUID) == -1){
-                    message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
+                    if((!playerRole && this.ownerUIDs.indexOf(playerUID) == -1)
+                    || !playerRole.has(command.permissionNode)){
+                        message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
 
-                    return;
+                        return;
+                    }
+
+                    command.run({
+                        socket: this.socket,
+                        message: message,
+                        params: params,
+                        player: socketPlayer,
+                        role: playerRole,
+                    });
                 }
-
-                command.run({
-                    socket: this.socket,
-                    message: message,
-                    params: params,
-                    player: socketPlayer,
-                    role: playerRole,
-                });
+                catch(ex){
+                    message.channel.sendMessage(ex);
+                }
             })();
-        }
-        catch(ex){
-            console.log(ex);
-
-            message.channel.sendMessage(`An unexpected error occurred, ${message.author.username}`);
-        }
     }
 }
 

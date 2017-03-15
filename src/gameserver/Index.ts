@@ -14,6 +14,8 @@ export interface GameServerConfig{
 
 class DiscordantGameServer {
     public static main(): number {
+        console.log('Gameserver');
+
         const logger = new Logger();
 
         //Adds a database transport so we "start" the logger after 
