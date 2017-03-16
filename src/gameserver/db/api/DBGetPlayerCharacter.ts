@@ -1,6 +1,7 @@
 import DatabaseService from '../DatabaseService';
 import InventoryItem from '../../../core/item/InventoryItem';
 import { EquipmentSlot } from '../../../core/item/CreatureEquipment';
+import { DBPlayer } from '../DBInterfaces';
 
 const getPlayerQuery = `
     SELECT 
@@ -18,38 +19,6 @@ const getPlayerQuery = `
         *
     FROM player WHERE uid = $1;
 `;
-
-export interface DBPlayer{
-    uid: string;
-    discriminator: string;
-    title: string;
-    description: string;
-    xp: number;
-    wishes: number;
-    class: number;
-    karma: number;
-    role: string;
-    attribute_strength: number;
-    attribute_agility: number;
-    attribute_vitality: number;
-    attribute_spirit: number;
-    attribute_charisma: number;
-    attribute_luck: number;
-    inventory:Array<DBInventoryItem>;
-    equipment:Array<DBEquipmentItem>;
-}
-
-export interface DBEquipmentItem{
-    player_uid:string;
-    item_id:number;
-    slot:EquipmentSlot;
-}
-
-export interface DBInventoryItem{
-    player_uid:string;
-    item_id:number;
-    amount:number;
-}
 
 export default async function(db:DatabaseService,uid:string):Promise<DBPlayer>{
     const result = await db.getPool().query(getPlayerQuery,[uid]);

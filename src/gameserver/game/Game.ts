@@ -1,14 +1,14 @@
 import DatabaseService from '../db/DatabaseService';
 import DBGetPlayerCharacter from '../db/api/DBGetPlayerCharacter';
 import PlayerCharacter from '../../core/creature/player/PlayerCharacter';
-import { DBInventoryItem, DBEquipmentItem } from '../db/api/DBGetPlayerCharacter';
 import InventoryItem from '../../core/item/InventoryItem';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import CreatureEquipment from '../../core/item/CreatureEquipment';
 import PlayerInventory from '../../core/item/PlayerInventory';
 import PermissionsService from '../../core/permissions/PermissionService';
 import AttributeSet from '../../core/creature/AttributeSet';
-import { SocketResponse } from '../../core/socket/SocketRequests';
+import CharacterClass from '../../core/creature/player/CharacterClass';
+import DBRegisterPlayerCharacter from '../db/api/DBRegisterPlayerCharacter';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -82,4 +82,49 @@ export default class Game{
 
         return player;
     }
+
+    async registerPlayerCharacter(bag:RegisterPlayerCharacterBag):Promise<PlayerCharacter>{
+        let player:PlayerCharacter = this.cachedPCs.get(bag.uid);
+
+        //Try from database if not
+        if(player || await DBGetPlayerCharacter(this.db,bag.uid)){
+            throw 'Already registered';
+        }
+
+        const playerClass:CharacterClass = CharacterClasses.get(bag.classId);
+
+        if(!playerClass){
+            throw 'Invalid class ID "'+bag.classId+'"';
+        }
+
+        await DBRegisterPlayerCharacter(this.db,{
+            uid: bag.uid,
+            username: bag.username,
+            class: playerClass,
+            discriminator: bag.discriminator,
+        });
+
+        player = new PlayerCharacter({
+            uid: bag.uid,
+            title: bag.username,
+            description: playerClass.description,
+            attributes: playerClass.startingAttributes,
+            class: playerClass,
+            equipment: playerClass.startingEquipment,
+            inventory: new PlayerInventory(),
+            xp: 0,
+            wishes: 0,
+            role: this.permissions.getRole('player'),
+            karma: 0,
+        });
+
+        return player;
+    }
+}
+
+export interface RegisterPlayerCharacterBag{
+    uid:string;
+    discriminator:number;
+    username:string;
+    classId:number;
 }

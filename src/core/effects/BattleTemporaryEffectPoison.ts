@@ -1,5 +1,5 @@
 import BattleTemporaryEffect from './BattleTemporaryEffect';
-import EmbedColors from '../../util/EmbedColors';
+//import EmbedColors from '../../util/EmbedColors';
 import EffectId from './EffectId';
 
 export default class BattleTemporaryEffectPoison extends BattleTemporaryEffect{
@@ -10,7 +10,7 @@ export default class BattleTemporaryEffectPoison extends BattleTemporaryEffect{
             onRoundBegin:function(bag){
                 bag.target.HPCurrent -= damagePerRound;
 
-                bag.sendBattleEmbed(`${bag.target.title} ${bag.target.HPCurrent}/${bag.target.stats.HPTotal} lost ${damagePerRound}HP from ${this.title}`,EmbedColors.POISON);
+                //bag.sendBattleEmbed(`${bag.target.title} ${bag.target.HPCurrent}/${bag.target.stats.HPTotal} lost ${damagePerRound}HP from ${this.title}`,EmbedColors.POISON);
             }
         });
     }

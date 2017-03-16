@@ -1,10 +1,9 @@
 import * as SocketIO from 'socket.io';
-import { SocketRequest, SocketResponse } from '../../core/socket/SocketRequests';
 import Game from '../game/Game';
-import GetPlayer from './handler/GetPlayer';
 import Logger from '../log/Logger';
-
-export type SocketServerRequestType = 'GetPlayer';
+import SocketHandler from './SocketHandler';
+import GetPlayer from './handlers/GetPlayer';
+import { SocketResponse } from './SocketHandler';
 
 interface SocketServerBag{
     game:Game;
@@ -31,19 +30,19 @@ export default class SocketServer{
         };
 
         this.io.on('connection', (client)=>{
-            this.registerHandler(client,'GetPlayer',GetPlayer);
+            this.registerHandler(client,GetPlayer);
         });
 
         this.io.listen(bag.port);
     }
 
-    registerHandler(client:any,event:string,handler:Function){
-        client.on(event,(data:any,callback:any)=>{
+    registerHandler(client:any,handler:SocketHandler){
+        client.on(handler.title,(data:any,callback:any)=>{
             (async()=>{
                 let result:SocketResponse;
 
                 try{
-                    result = await handler(this.handlerBag,data);
+                    result = await handler.handlerFunc(this.handlerBag,data);
                 }
                 catch(ex){
                     const did = this.logger.error(ex);
