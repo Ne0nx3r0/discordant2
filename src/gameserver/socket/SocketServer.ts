@@ -2,12 +2,14 @@ import * as SocketIO from 'socket.io';
 import { SocketRequest, SocketResponse } from '../../core/socket/SocketRequests';
 import Game from '../game/Game';
 import GetPlayer from './handler/GetPlayer';
+import Logger from '../log/Logger';
 
 export type SocketServerRequestType = 'GetPlayer';
 
 interface SocketServerBag{
     game:Game;
     port:number;
+    logger:Logger;
 }
 
 export interface SocketRequestHandlerBag{
@@ -17,8 +19,11 @@ export interface SocketRequestHandlerBag{
 export default class SocketServer{
     io:SocketIO.Server;
     handlerBag:SocketRequestHandlerBag;
+    logger:Logger;
 
     constructor(bag:SocketServerBag){
+        this.logger = bag.logger;
+
         this.io = SocketIO();
 
         this.handlerBag = {
@@ -41,13 +46,16 @@ export default class SocketServer{
                     result = await handler(this.handlerBag,data);
                 }
                 catch(ex){
+                    const did = this.logger.error(ex);
+
                     result = {
                         success: false,
-                        error: ex
+                        error: `A server error occurred (${did})`,
                     }
                 }
-
-                callback(result);
+                finally{
+                    callback(result);
+                }
             })();
         });
     }

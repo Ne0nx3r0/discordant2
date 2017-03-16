@@ -16,6 +16,6 @@ export default async function(bag:SocketRequestHandlerBag,data:GetPlayerRequest)
 
     return {
         success: true,
-        player: player.toSocket(),
+        player: player?player.toSocket():null,
     };
 }

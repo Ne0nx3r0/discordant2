@@ -110,31 +110,32 @@ export default class DiscordantBotNode{
             return;
         }
 
-            (async ()=>{
-                try{
-                    const playerUID = message.author.id;
-                    const socketPlayer:SocketPlayerCharacter = await this.socket.getPlayer(playerUID);
-                    const playerRole:PermissionRole = this.permissions.getRole(socketPlayer.role);
+        (async ()=>{
+            try{
+                const playerUID = message.author.id;
+                const socketPlayer:SocketPlayerCharacter = await this.socket.getPlayer(playerUID);
+                const playerRoleStr = socketPlayer?socketPlayer.role:'anonymous';
+                const playerRole:PermissionRole = this.permissions.getRole(playerRoleStr);
 
-                    if((!playerRole && this.ownerUIDs.indexOf(playerUID) == -1)
-                    || !playerRole.has(command.permissionNode)){
-                        message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
+                if((!playerRole && this.ownerUIDs.indexOf(playerUID) == -1)
+                || !playerRole.has(command.permissionNode)){
+                    message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
 
-                        return;
-                    }
-
-                    command.run({
-                        socket: this.socket,
-                        message: message,
-                        params: params,
-                        player: socketPlayer,
-                        role: playerRole,
-                    });
+                    return;
                 }
-                catch(ex){
-                    message.channel.sendMessage(ex);
-                }
-            })();
+
+                command.run({
+                    socket: this.socket,
+                    message: message,
+                    params: params,
+                    player: socketPlayer,
+                    role: playerRole,
+                });
+            }
+            catch(errorMsg){
+                message.channel.sendMessage(errorMsg+', '+message.author.username);
+            }
+        })();
     }
 }
 

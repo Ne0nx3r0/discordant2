@@ -13,10 +13,12 @@ export default class Begin extends Command{
     }
 
     run(bag:CommandRunBag){
-        bag.message.channel.sendMessage(`begin
-Parameters: ${bag.params.join(',')}
-Sender: ${bag.player.uid}
-Role: ${bag.role.title}
-        `);
+        if(bag.player){
+            bag.message.channel.sendMessage('You are already registered, '+bag.player.title);
+            
+            return;
+        }
+
+        bag.message.channel.sendMessage('Ready to do it');
     }
 }

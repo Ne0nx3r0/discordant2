@@ -1,5 +1,5 @@
 import * as SocketIOClient from 'socket.io-client';
-import { SocketRequest, PlayerRoleUpdatedPush } from '../core/socket/SocketRequests';
+import { SocketRequest, PlayerRoleUpdatedPush, SocketResponse } from '../core/socket/SocketRequests';
 import { SocketRequestHandlerBag, SocketServerRequestType } from '../gameserver/socket/SocketServer';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import PermissionsService from '../core/permissions/PermissionService';
@@ -21,19 +21,17 @@ export default class SocketClient{
         this.sioc = SocketIOClient(bag.gameserver);
     }
 
-    async getPlayer(playerUID):Promise<SocketPlayerCharacter>{
-        const eventData:GetPlayerRequest = {
-            uid:playerUID
-        };
+    getPlayer(playerUID):Promise<SocketPlayerCharacter>{
+        return (async()=>{
+            const requestData:GetPlayerRequest = {
+                uid:playerUID
+            };
 
-        const response:GetPlayerRequest = await this.emitPromise('GetPlayer',eventData);
+            const request:GetPlayerRequest = await this.emitPromise('GetPlayer',requestData);
 
-        return response.response.player;
+            return request.response.player;
+        })();
     }
-
-
-
-
 
 
 
@@ -45,17 +43,16 @@ export default class SocketClient{
         this.sioc.on(event,callback);
     }
 
-    emitPromise<T>(event:SocketServerRequestType,eventData:T):Promise<T>{
+    emitPromise<T>(event:SocketServerRequestType,requestData:T):Promise<T>{
         const sioc = this.sioc;
 
         return new Promise(function(resolve,reject){
             try{
-                sioc.emit(event.toString(),eventData,function(response:any){
-                    (eventData as SocketRequest).response  = response;
+                sioc.emit(event.toString(),requestData,function(response:SocketResponse){
+                    (requestData as SocketRequest).response  = response;
 
                     if(response.success){
-                        eventData
-                        resolve(eventData);
+                        resolve(requestData);
                     }
                     else{
                         reject(response.error);

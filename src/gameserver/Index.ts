@@ -30,7 +30,8 @@ class DiscordantGameServer {
 
         const socketServer = new SocketServer({
             game: game,
-            port: GameServerConfig.port
+            port: GameServerConfig.port,
+            logger: logger,
         });
         
         return 0;
