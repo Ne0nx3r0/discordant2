@@ -1,7 +1,6 @@
 import * as SocketIOClient from 'socket.io-client';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import PermissionsService from '../core/permissions/PermissionService';
-import { ISocketPlayer } from '../core/socket/ISocketPlayer';
 import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import PlayerCharacter from '../core/creature/player/PlayerCharacter';
 import { GetPlayerRequest } from '../gameserver/socket/handlers/GetPlayer';
@@ -10,18 +9,36 @@ import SocketHandler from '../gameserver/socket/SocketHandler';
 import { SocketRequest, SocketResponse } from '../gameserver/socket/SocketHandler';
 import RegisterPlayer from '../gameserver/socket/handlers/RegisterPlayer';
 import { RegisterPlayerRequest } from '../gameserver/socket/handlers/RegisterPlayer';
+import GetPlayerRole from '../gameserver/socket/handlers/GetPlayerRole';
+import { GetPlayerRoleRequest } from '../gameserver/socket/handlers/GetPlayerRole';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
 export interface SocketClientBag{
     gameserver:string;
+    permissions:PermissionsService;
 }
 
 export default class SocketClient{
     sioc:SocketIOClient.Socket;
+    permissions:PermissionsService;
     
     constructor(bag:SocketClientBag){        
+        this.permissions = bag.permissions;
         this.sioc = SocketIOClient(bag.gameserver);
+    }
+
+    getPlayerRole(playerUID:string):Promise<PermissionRole>{
+        return (async()=>{
+            const requestData:GetPlayerRoleRequest = {
+                uid: playerUID
+            };
+
+            const request:GetPlayerRoleRequest = await this.gameserverRequest(GetPlayerRole,requestData);
+            const roleStr = request.response.role;
+
+            return this.permissions.getRole(roleStr);
+        })();
     }
 
     getPlayer(playerUID:string):Promise<SocketPlayerCharacter>{

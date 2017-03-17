@@ -15,8 +15,8 @@ export default class Begin extends Command{
     }
 
     run(bag:CommandRunBag){
-        if(bag.player){
-            bag.message.channel.sendMessage('You are already registered, '+bag.player.title);
+        if(bag.role.title != 'anonymous'){
+            bag.message.channel.sendMessage('You are already registered, '+bag.message.author.username);
             
             return;
         }

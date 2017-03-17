@@ -8,7 +8,6 @@ export interface CommandRunBag{
     socket:SocketClient;
     message:Message;
     params:Array<string>;
-    player:SocketPlayerCharacter;
     role:PermissionRole;
 }
 
@@ -30,6 +29,10 @@ export default class Command{
         this.description = bag.description;
         this.usage = bag.usage;
         this.permissionNode = bag.permissionNode;
+    }
+
+    getUsage(){
+        return 'Usage: '+ this.usage;
     }
 
     run(bag:CommandRunBag){

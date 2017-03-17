@@ -1,5 +1,9 @@
 import PermissionId from './PermissionId';
 //Hard coded permissions assigned to each role
+const bannedPermissions = [
+
+];
+
 const anonymousPermissions = [
     PermissionId.Begin,
     PermissionId.Classes,
@@ -64,6 +68,7 @@ export default class PermissionsService{
         this.anonymous = new PermissionRole('anonymous',anonymousPermissions);
 
         this._roles.set('anonymous',this.anonymous);
+        this._roles.set('banned',new PermissionRole('banned',bannedPermissions));
         this._roles.set('player',new PermissionRole('player',playerPermissions));
         this._roles.set('tester',new PermissionRole('tester',testerPermissions));        
         this._roles.set('admin',new PermissionRole('admin',adminPermissions));

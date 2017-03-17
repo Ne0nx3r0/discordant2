@@ -11,7 +11,8 @@ class DiscordantBotNode {
         const permissions:PermissionsService = new PermissionsService();
 
         const socket:SocketClient = new SocketClient({
-            gameserver: Config.gameserver
+            gameserver: Config.gameserver,
+            permissions: permissions
         });
 
         const bot:Bot = new Bot({

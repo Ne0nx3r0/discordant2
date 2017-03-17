@@ -5,6 +5,7 @@ import SocketHandler from './SocketHandler';
 import GetPlayer from './handlers/GetPlayer';
 import RegisterPlayer from './handlers/RegisterPlayer';
 import { SocketResponse } from './SocketHandler';
+import GetPlayerRole from './handlers/GetPlayerRole';
 
 interface SocketServerBag{
     game:Game;
@@ -32,6 +33,7 @@ export default class SocketServer{
 
         this.io.on('connection', (client)=>{
             this.registerHandler(client,GetPlayer);
+            this.registerHandler(client,GetPlayerRole);
             this.registerHandler(client,RegisterPlayer);
         });
 
