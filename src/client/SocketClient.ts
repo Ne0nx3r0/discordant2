@@ -8,6 +8,8 @@ import { GetPlayerRequest } from '../gameserver/socket/handlers/GetPlayer';
 import GetPlayer  from '../gameserver/socket/handlers/GetPlayer';
 import SocketHandler from '../gameserver/socket/SocketHandler';
 import { SocketRequest, SocketResponse } from '../gameserver/socket/SocketHandler';
+import RegisterPlayer from '../gameserver/socket/handlers/RegisterPlayer';
+import { RegisterPlayerRequest } from '../gameserver/socket/handlers/RegisterPlayer';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -22,7 +24,7 @@ export default class SocketClient{
         this.sioc = SocketIOClient(bag.gameserver);
     }
 
-    getPlayer(playerUID):Promise<SocketPlayerCharacter>{
+    getPlayer(playerUID:string):Promise<SocketPlayerCharacter>{
         return (async()=>{
             const requestData:GetPlayerRequest = {
                 uid:playerUID
@@ -34,7 +36,20 @@ export default class SocketClient{
         })();
     }
 
+    registerPlayer(bag:RegisterPlayerRequest):Promise<SocketPlayerCharacter>{
+        return (async()=>{
+            const requestData:RegisterPlayerRequest = {
+                uid: bag.uid,
+                username: bag.username,
+                discriminator: bag.discriminator,
+                classId: bag.classId,
+            };
 
+            const request:RegisterPlayerRequest = await this.gameserverRequest(RegisterPlayer,requestData);
+
+            return request.response.player;
+        })();
+    }
 
 
 

@@ -3,6 +3,7 @@ import Game from '../game/Game';
 import Logger from '../log/Logger';
 import SocketHandler from './SocketHandler';
 import GetPlayer from './handlers/GetPlayer';
+import RegisterPlayer from './handlers/RegisterPlayer';
 import { SocketResponse } from './SocketHandler';
 
 interface SocketServerBag{
@@ -31,6 +32,7 @@ export default class SocketServer{
 
         this.io.on('connection', (client)=>{
             this.registerHandler(client,GetPlayer);
+            this.registerHandler(client,RegisterPlayer);
         });
 
         this.io.listen(bag.port);

@@ -8,7 +8,7 @@ export interface RegisterPlayerRequest extends SocketRequest{
     uid: string;
     classId: number;
     username: string;
-    discriminator: number;
+    discriminator: string;
     response?:RegisterPlayerResponse;
 }
 

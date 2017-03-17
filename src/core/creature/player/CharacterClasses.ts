@@ -5,6 +5,7 @@ import WornLeathers from '../../item/clothing/WornLeathers';
 import WoodRoundShield from '../../item/weapons/WoodRoundShield';
 import HuntingSword from '../../item/weapons/HuntingSword';
 import TabletOfHealing from '../../item/weapons/TabletOfHealing';
+import Collection from '../../../util/Collection';
 
 enum CharacterClassId{
     Nobody,
@@ -14,7 +15,7 @@ enum CharacterClassId{
 
 export {CharacterClassId};
 
-const classes = new Map();
+const classes = new Collection();
 
 export default classes;
 

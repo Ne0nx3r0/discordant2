@@ -65,7 +65,9 @@ export default class Creature{
         };
 
         this.equipment.forEach(function(item:ItemEquippable,slot:EquipmentSlot){
-            item.onAddBonuses(stats);
+            if(item.onAddBonuses){
+               item.onAddBonuses(stats);
+            }
         });
 
         this.tempEffects.forEach(function(roundsLeft:number,effect:BattleTemporaryEffect){

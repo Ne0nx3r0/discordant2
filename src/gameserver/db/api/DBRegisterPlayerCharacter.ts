@@ -3,6 +3,7 @@ import InventoryItem from '../../../core/item/InventoryItem';
 import { EquipmentSlot } from '../../../core/item/CreatureEquipment';
 import { DBPlayer } from '../DBInterfaces';
 import CharacterClass from '../../../core/creature/player/CharacterClass';
+import GetPlayer from './DBGetPlayerCharacter';
 
 
 const registerPlayerQuery = `
@@ -25,7 +26,7 @@ const registerPlayerQuery = `
 export interface DBRegisterPlayerBag{
     uid: string;
     username:string;
-    discriminator: number;
+    discriminator: string;
     class: CharacterClass;
 }
 
@@ -43,14 +44,10 @@ export default async function(db:DatabaseService,bag:DBRegisterPlayerBag):Promis
         bag.class.startingAttributes.Luck,
         'player'
     ]);
-console.log(result);
-throw 'we are here';
-    //not found
- /*   if(result.rows.length == 0){
-        return null;
-    }    
 
-    const row:DBPlayer = result.rows[0];
+    if(result.rowCount == 1){
+        return await GetPlayer(db,bag.uid);
+    }
 
-    return row;*/
+    return null;
 }

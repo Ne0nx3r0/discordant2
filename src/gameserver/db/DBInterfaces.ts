@@ -3,7 +3,7 @@ import { EquipmentSlot } from '../../core/item/CreatureEquipment';
 export interface DBPlayer{
     uid: string;
     discriminator: string;
-    title: string;
+    username: string;
     description: string;
     xp: number;
     wishes: number;

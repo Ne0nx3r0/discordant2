@@ -60,7 +60,7 @@ export default class Game{
 
             player = new PlayerCharacter({
                 uid: dbPlayer.uid,
-                title: dbPlayer.title,
+                title: dbPlayer.username,
                 description: dbPlayer.description,
                 attributes: new AttributeSet({
                     strength: dbPlayer.attribute_strength,
@@ -124,7 +124,7 @@ export default class Game{
 
 export interface RegisterPlayerCharacterBag{
     uid:string;
-    discriminator:number;
+    discriminator:string;
     username:string;
     classId:number;
 }
