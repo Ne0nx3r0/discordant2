@@ -48,7 +48,7 @@ export default class Begin extends Command{
                     discriminator: author.discriminator,
                     classId: characterClass.id,
                 });
-                console.log(player);
+
                 bag.message.channel.sendMessage(`You were successfully registered, ${player.title}!`);
             }
             catch(ex){
