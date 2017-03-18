@@ -31,6 +31,12 @@ export interface DBRegisterPlayerBag{
 }
 
 export default async function(db:DatabaseService,bag:DBRegisterPlayerBag):Promise<DBPlayer>{
+    const existingPlayer = await GetPlayer(db,bag.uid);
+
+    if(existingPlayer){
+        throw 'You are already registered';
+    }
+
     const result = await db.getPool().query(registerPlayerQuery,[
         bag.uid,
         bag.discriminator,

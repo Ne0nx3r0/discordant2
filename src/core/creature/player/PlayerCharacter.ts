@@ -7,6 +7,7 @@ import CreatureEquipment from '../../item/CreatureEquipment';
 import PlayerInventory from '../../item/PlayerInventory';
 import { SocketPlayerInventory } from '../../item/PlayerInventory';
 import { SocketCreatureEquipment } from '../../item/CreatureEquipment';
+import { ICreatureStatSet } from '../Creature';
 
 type PlayerStatus = 'inCity' | 'invitedToPVPBattle' | 'inBattle' | 'invitedToParty' | 'inParty';
 
@@ -100,6 +101,8 @@ export default class PlayerCharacter extends Creature{
             status: this.status,
             inventory: this.inventory.toSocket(),
             equipment: this.equipment.toSocket(),
+            HPCurrent: this.HPCurrent,
+            stats: this.stats,
         };
     }
 }
@@ -116,4 +119,6 @@ export interface SocketPlayerCharacter{
     status: PlayerStatus;
     inventory: SocketPlayerInventory;
     equipment: SocketCreatureEquipment;
+    stats: ICreatureStatSet;
+    HPCurrent: number;
 }

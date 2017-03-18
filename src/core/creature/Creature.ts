@@ -10,6 +10,7 @@ export interface ICreatureStatSet{
     Agility: number,
     Vitality: number,
     Spirit: number,
+    Charisma: number,
     Luck: number,
     HPTotal: number,
     Resistances: IDamageSet,
@@ -52,6 +53,7 @@ export default class Creature{
             Strength:this.attributes.Strength,
             Agility:this.attributes.Agility,
             Vitality:this.attributes.Vitality,
+            Charisma:this.attributes.Charisma,
             Spirit:this.attributes.Spirit,
             Luck:this.attributes.Luck,
             Resistances:{

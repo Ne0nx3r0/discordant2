@@ -18,28 +18,30 @@ export default class Begin extends Command{
     }
 
     run(bag:CommandRunBag){
-        if(bag.params.length == 0){
-            bag.message.channel.sendMessage("",getEmbed(bag.player) as MessageOptions);
-
-            return;
-        }
-
-        const tagUserId = bag.message.mentions.users.first().id;
-
-        if(!tagUserId){
-            bag.message.channel.sendMessage(this.getUsage());
-
-            return;
-        }
-
         (async()=>{
             try{
+                if(bag.params.length == 0){
+                    const player = await bag.socket.getPlayer(bag.message.author.id);
+
+                    bag.message.channel.sendMessage("",getEmbed(player) as MessageOptions);
+
+                    return;
+                }
+
+                const tagUserId = bag.message.mentions.users.first().id;
+
+                if(!tagUserId){
+                    bag.message.channel.sendMessage(this.getUsage());
+
+                    return;
+                }
+
                 const otherPlayer = await bag.socket.getPlayer(tagUserId);
 
                 bag.message.channel.sendMessage("",getEmbed(otherPlayer) as MessageOptions);
             }
             catch(ex){
-                bag.message.channel.sendMessage(`${ex}, ${bag.player.title}`);
+                bag.message.channel.sendMessage(`${ex}, ${bag.message.author.username}`);
             }
         })();
     }
@@ -51,6 +53,7 @@ function getEmbed(pc:SocketPlayerCharacter){
     +'\n'+pc.stats.Agility+' Agility'
     +'\n'+pc.stats.Vitality+' Vitality'
     +'\n'+pc.stats.Spirit+' Spirit'
+    +'\n'+pc.stats.Charisma+' Charisma'
     +'\n'+pc.stats.Luck+' Luck';
 
     const resistancesStr = ''
@@ -88,7 +91,7 @@ function getEmbed(pc:SocketPlayerCharacter){
                     value: pc.karma,
                     inline: true,
                 },
-                {
+                /*{
                     name: 'Primary Weapon',
                     value: pc.equipment.primaryweapon.title,
                     inline: true,
@@ -102,7 +105,7 @@ function getEmbed(pc:SocketPlayerCharacter){
                     name: 'Class',
                     value: pc.class.title,
                     inline: true,
-                },
+                },*/
                 {
                     name: 'Attributes',
                     value: pcAttributesStr,
