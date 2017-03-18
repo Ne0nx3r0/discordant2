@@ -64,7 +64,7 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     +'\n'+(pc.stats.Resistances.Thunder*100)+'% Thunder';
 
     const characterClass = CharacterClasses.get(pc.class);
-console.log(pc.equipment);
+
     return {
         embed: {
             color: 3447003,
