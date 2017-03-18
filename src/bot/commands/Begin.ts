@@ -15,7 +15,7 @@ export default class Begin extends Command{
         });
     }
 
-    run(bag:CommandRunBag){
+    async run(bag:CommandRunBag){
         if(bag.role.title != 'anonymous'){
             bag.message.channel.sendMessage('You are already registered, '+bag.message.author.username);
             
@@ -41,20 +41,13 @@ export default class Begin extends Command{
             return;
         }
 
-        (async()=>{
-            try{
-                const player = await bag.socket.registerPlayer({
-                    uid: author.id,
-                    username: author.username,
-                    discriminator: author.discriminator,
-                    classId: characterClass.id,
-                });
+        const player = await bag.socket.registerPlayer({
+            uid: author.id,
+            username: author.username,
+            discriminator: author.discriminator,
+            classId: characterClass.id,
+        });
 
-                bag.message.channel.sendMessage(`You were successfully registered, ${player.title}!`);
-            }
-            catch(ex){
-                bag.message.channel.sendMessage(`${ex}, ${bag.message.author.username}`);
-            }
-        })();
+        bag.message.channel.sendMessage(`You were successfully registered, ${player.title}!`);
     }
 }

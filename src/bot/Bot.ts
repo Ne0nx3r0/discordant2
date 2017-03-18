@@ -131,7 +131,7 @@ export default class DiscordantBotNode{
                     return;
                 }
 
-                command.run({
+                await command.run({
                     socket: this.socket,
                     message: message,
                     params: params,

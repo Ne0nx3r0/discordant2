@@ -40,7 +40,7 @@ export default class Command{
         return 'Usage: '+ this.usage;
     }
 
-    run(bag:CommandRunBag){
+    async run(bag:CommandRunBag):Promise<void>{
         throw this.name+' does not properly implment run(bag:CommandRunBag)';
     }
 }
