@@ -7,6 +7,7 @@ import SocketClient from '../client/SocketClient';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import PermissionsService from '../core/permissions/PermissionService';
+import AllItems from '../core/item/AllItems';
 
 import{
     Client as DiscordClient,
@@ -36,12 +37,14 @@ export default class DiscordantBotNode{
     commands:Map<String,Command>;
     socket:SocketClient;
     permissions:PermissionsService;
+    items: AllItems;
 
     constructor(bag:BotBag){
         this.commandPrefix = bag.commandPrefix;
         this.ownerUIDs = bag.ownerUIDs;
         this.socket = bag.socket;
         this.permissions = bag.permissions;
+        this.items = new AllItems();
 
         this.commands = new Map();
 
@@ -127,6 +130,7 @@ export default class DiscordantBotNode{
                     message: message,
                     params: params,
                     role: playerRole,
+                    items: this.items,
                 });
             }
             catch(errorMsg){

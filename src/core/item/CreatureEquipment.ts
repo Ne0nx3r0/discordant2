@@ -81,9 +81,11 @@ export default class CreatureEquipment{
     toSocket(){
         const socketEquipment:SocketCreatureEquipment = {};
 
-        return Object.keys(this._items).map((slot)=>{
+        Object.keys(this._items).forEach((slot)=>{
             socketEquipment[slot] = (this._items[slot] as ItemEquippable).id
         });
+
+        return socketEquipment;
     }
 }
 

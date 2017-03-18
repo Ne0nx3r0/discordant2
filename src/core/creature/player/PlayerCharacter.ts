@@ -99,7 +99,7 @@ export default class PlayerCharacter extends Creature{
             wishes: this.wishes,
             role: this.role.title,
             status: this.status,
-            inventory: this.inventory.toSocket(),
+            //inventory: this.inventory.toSocket(),
             equipment: this.equipment.toSocket(),
             HPCurrent: this.HPCurrent,
             stats: this.stats,
@@ -117,7 +117,6 @@ export interface SocketPlayerCharacter{
     wishes: number;
     role: string;
     status: PlayerStatus;
-    inventory: SocketPlayerInventory;
     equipment: SocketCreatureEquipment;
     stats: ICreatureStatSet;
     HPCurrent: number;

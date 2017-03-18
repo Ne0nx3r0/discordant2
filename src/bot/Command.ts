@@ -3,12 +3,14 @@ import SocketClient from '../client/SocketClient';
 import {Message} from 'discord.js';
 import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import { PermissionRole } from '../core/permissions/PermissionService';
+import AllItems from '../core/item/AllItems';
 
 export interface CommandRunBag{
     socket:SocketClient;
     message:Message;
     params:Array<string>;
     role:PermissionRole;
+    items:AllItems;
 }
 
 export interface CommandBag{

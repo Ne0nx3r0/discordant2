@@ -9,6 +9,8 @@ import PermissionsService from '../../core/permissions/PermissionService';
 import AttributeSet from '../../core/creature/AttributeSet';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import DBRegisterPlayerCharacter from '../db/api/DBRegisterPlayerCharacter';
+import { EquipmentSlot } from '../../core/item/CreatureEquipment';
+import AllItems from '../../core/item/AllItems';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -19,11 +21,13 @@ export default class Game{
     db: DatabaseService;
     permissions:PermissionsService;
     cachedPCs: Map<string,PlayerCharacter>;
+    items: AllItems;
 
     constructor(bag:GameServerBag){
         this.db = bag.db;
         this.permissions = bag.permissions;
         this.cachedPCs = new Map();
+        this.items = new AllItems();
     }
 
     async getPlayerCharacter(uid:string):Promise<PlayerCharacter>{
@@ -37,7 +41,7 @@ export default class Game{
 
                 return response;
             }
-/*
+
             const inventory = new Map<number,InventoryItem>();
 
             if(dbPlayer.inventory){
@@ -56,7 +60,7 @@ export default class Game{
                 });
             }
 
-            const pcEquipment = new CreatureEquipment(equipment);*/
+            const pcEquipment = new CreatureEquipment(equipment);
 
             player = new PlayerCharacter({
                 uid: dbPlayer.uid,
@@ -71,13 +75,15 @@ export default class Game{
                     luck: dbPlayer.attribute_luck,
                 }),
                 class: CharacterClasses.get(dbPlayer.class),
-                equipment: new CreatureEquipment({}),
-                inventory: new PlayerInventory(),
+                equipment: pcEquipment,
+                inventory: pcInventory,
                 xp: dbPlayer.xp,
                 wishes: dbPlayer.wishes,
                 role: this.permissions.getRole(dbPlayer.role),
                 karma: dbPlayer.karma
             });
+
+            this.cachedPCs.set(player.uid,player);
         }
 
         return player;
@@ -127,4 +133,16 @@ export interface RegisterPlayerCharacterBag{
     discriminator:string;
     username:string;
     classId:number;
+}
+
+interface DBEquipmentItem{
+    player_uid:string;
+    item_id:number;
+    slot:EquipmentSlot;
+}
+
+interface DBInventoryItem{
+    player_uid:string;
+    item_id:number;
+    amount:number;
 }

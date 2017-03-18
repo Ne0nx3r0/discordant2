@@ -56,7 +56,7 @@ export default class DatabaseService{
     }
 
     //https://github.com/brianc/node-postgres/wiki/Transactions
-    runBatch(queries:Array<batchQuery>){
+    runBatch(queries:Array<batchQuery>):any{
         const pool = this.pool;
 
         return new Promise((resolve,reject)=>{

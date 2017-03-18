@@ -6,6 +6,7 @@ import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import PlayerCharacter from '../../core/creature/player/PlayerCharacter';
 import { MessageOptions } from "discord.js";
 import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
+import AllItems from '../../core/item/AllItems';
 
 export default class Begin extends Command{
     constructor(bag:CommandBag){
@@ -23,7 +24,7 @@ export default class Begin extends Command{
                 if(bag.params.length == 0){
                     const player = await bag.socket.getPlayer(bag.message.author.id);
 
-                    bag.message.channel.sendMessage("",getEmbed(player) as MessageOptions);
+                    bag.message.channel.sendMessage("",getEmbed(player,bag.items) as MessageOptions);
 
                     return;
                 }
@@ -38,7 +39,7 @@ export default class Begin extends Command{
 
                 const otherPlayer = await bag.socket.getPlayer(tagUserId);
 
-                bag.message.channel.sendMessage("",getEmbed(otherPlayer) as MessageOptions);
+                bag.message.channel.sendMessage("",getEmbed(otherPlayer,bag.items) as MessageOptions);
             }
             catch(ex){
                 bag.message.channel.sendMessage(`${ex}, ${bag.message.author.username}`);
@@ -47,7 +48,7 @@ export default class Begin extends Command{
     }
 }
 
-function getEmbed(pc:SocketPlayerCharacter){
+function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     const pcAttributesStr = ''
     +'\n'+pc.stats.Strength+' Strength'
     +'\n'+pc.stats.Agility+' Agility'
@@ -62,6 +63,8 @@ function getEmbed(pc:SocketPlayerCharacter){
     +'\n'+(pc.stats.Resistances.Cold*100)+'%'+' Cold'
     +'\n'+(pc.stats.Resistances.Thunder*100)+'% Thunder';
 
+    const characterClass = CharacterClasses.get(pc.class);
+console.log(pc.equipment);
     return {
         embed: {
             color: 3447003,
@@ -91,21 +94,21 @@ function getEmbed(pc:SocketPlayerCharacter){
                     value: pc.karma,
                     inline: true,
                 },
-                /*{
+                {
                     name: 'Primary Weapon',
-                    value: pc.equipment.primaryweapon.title,
+                    value: items.get(pc.equipment.weapon).title,
                     inline: true,
                 },
                 {
                     name: 'Offhand Weapon',
-                    value: pc.equipment.offhandweapon.title,
+                    value: items.get(pc.equipment.offhand).title,
                     inline: true,
                 },
                 {
                     name: 'Class',
-                    value: pc.class.title,
+                    value: characterClass.title,
                     inline: true,
-                },*/
+                },
                 {
                     name: 'Attributes',
                     value: pcAttributesStr,
