@@ -51,9 +51,11 @@ export default async function(db:DatabaseService,bag:DBRegisterPlayerBag):Promis
         'player'
     ]);
 
-    if(result.rowCount == 1){
-        return await GetPlayer(db,bag.uid);
+    if(result.rowCount == 0){
+        throw 'A database problem occurred';
     }
 
-    return null;
+    
+    
+    return await GetPlayer(db,bag.uid);
 }
