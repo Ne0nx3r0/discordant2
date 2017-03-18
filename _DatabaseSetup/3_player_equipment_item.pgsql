@@ -15,13 +15,14 @@ ALTER TYPE public.equipmentslot
 
 CREATE TABLE public.player_equipment_item
 (
-    player_uid bigint NOT NULL,
-    item_id integer NOT NULL,
-    slot equipmentslot NOT NULL DEFAULT 'armor'::equipmentslot,
-    CONSTRAINT player_equipment_player_uid_fkey FOREIGN KEY (player_uid)
-        REFERENCES public.player (uid) MATCH SIMPLE
-        ON UPDATE RESTRICT
-        ON DELETE RESTRICT
+  player_uid bigint NOT NULL,
+  item_id integer NOT NULL,
+  slot equipmentslot NOT NULL DEFAULT 'armor'::equipmentslot,
+  CONSTRAINT primary_key_slot_player PRIMARY KEY (slot, player_uid),
+  CONSTRAINT player_equipment_player_uid_fkey FOREIGN KEY (player_uid)
+      REFERENCES public.player (uid) MATCH SIMPLE
+      ON UPDATE RESTRICT 
+      ON DELETE RESTRICT
 )
 WITH (
     OIDS = FALSE
