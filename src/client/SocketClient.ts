@@ -14,6 +14,13 @@ import { GetPlayerRoleRequest } from '../gameserver/socket/handlers/GetPlayerRol
 import { SocketPlayerInventory } from '../core/item/PlayerInventory';
 import { GetPlayerInventoryRequest } from '../gameserver/socket/handlers/GetPlayerInventory';
 import GetPlayerInventory from '../gameserver/socket/handlers/GetPlayerInventory';
+import ItemBase from '../core/item/ItemBase';
+import { GrantPlayerWishesRequest } from '../gameserver/socket/handlers/GrantPlayerWishes';
+import GrantPlayerWishes from '../gameserver/socket/handlers/GrantPlayerWishes';
+import { GrantPlayerXPRequest } from '../gameserver/socket/handlers/GrantPlayerXP';
+import GrantPlayerXP from '../gameserver/socket/handlers/GrantPlayerXP';
+import { GrantPlayerItemRequest } from '../gameserver/socket/handlers/GrantPlayerItem';
+import GrantPlayerItem from '../gameserver/socket/handlers/GrantPlayerItem';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -83,6 +90,39 @@ export default class SocketClient{
         })();
     }
 
+    grantItem(playerUID:string,item:ItemBase,amount:number):Promise<void>{
+        return (async()=>{
+            const requestData:GrantPlayerItemRequest = {
+                uid: playerUID,
+                itemId: item.id,
+                amount: amount,
+            };
+
+            await this.gameserverRequest(GrantPlayerItem,requestData);
+        })();
+    }
+
+    grantWishes(playerUID:string,amount:number):Promise<void>{
+        return (async()=>{
+            const requestData:GrantPlayerWishesRequest = {
+                uid: playerUID,
+                amount: amount,
+            };
+
+            await this.gameserverRequest(GrantPlayerWishes,requestData);
+        })();
+    }
+
+    grantXP(playerUID:string,amount:number):Promise<void>{
+        return (async()=>{
+            const requestData:GrantPlayerXPRequest = {
+                uid: playerUID,
+                amount: amount,
+            };
+
+            await this.gameserverRequest(GrantPlayerXP,requestData);
+        })();
+    }
 
 // ---------------------------------------------------------
     addListener(event:SocketClientPushType,callback:Function){

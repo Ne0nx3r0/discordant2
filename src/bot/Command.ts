@@ -18,6 +18,7 @@ export interface CommandBag{
     description:string;
     usage:string;
     permissionNode:PermissionId;
+    minParams:number;
 }
 
 export default class Command{
@@ -25,12 +26,14 @@ export default class Command{
     description:string;
     usage:string;
     permissionNode:PermissionId;
+    minParams:number;
 
     constructor(bag:CommandBag){
         this.name = bag.name;
         this.description = bag.description;
         this.usage = bag.usage;
         this.permissionNode = bag.permissionNode;
+        this.minParams = bag.minParams;
     }
 
     getUsage(){

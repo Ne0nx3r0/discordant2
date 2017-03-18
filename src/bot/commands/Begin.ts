@@ -10,7 +10,8 @@ export default class Begin extends Command{
             name: 'begin',
             description: 'Start your adventure!',
             usage: 'begin [className]',
-            permissionNode: PermissionId.Begin
+            permissionNode: PermissionId.Begin,
+            minParams: 1,
         });
     }
 

@@ -125,6 +125,12 @@ export default class DiscordantBotNode{
                     return;
                 }
 
+                if(command.minParams > params.length){
+                    message.channel.sendMessage(command.getUsage());
+
+                    return;
+                }
+
                 command.run({
                     socket: this.socket,
                     message: message,

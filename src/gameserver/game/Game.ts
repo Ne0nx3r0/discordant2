@@ -9,8 +9,12 @@ import PermissionsService from '../../core/permissions/PermissionService';
 import AttributeSet from '../../core/creature/AttributeSet';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import DBRegisterPlayerCharacter from '../db/api/DBRegisterPlayerCharacter';
+import DBGrantPlayerWishes from '../db/api/DBGrantPlayerWishes';
 import { EquipmentSlot } from '../../core/item/CreatureEquipment';
 import AllItems from '../../core/item/AllItems';
+import DBGrantPlayerXP from '../db/api/DBGrantPlayerXP';
+import ItemBase from '../../core/item/ItemBase';
+import DBGrantPlayerItem from '../db/api/DBGrantPlayerItem';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -125,6 +129,42 @@ export default class Game{
         });
 
         return player;
+    }
+
+    async grantPlayerWishes(uid:string,amount:number):Promise<number>{
+        const player = await this.getPlayerCharacter(uid);
+
+        const leftOver = await DBGrantPlayerWishes(this.db,uid,amount);
+
+        return leftOver;
+    }
+
+    async grantPlayerXP(uid:string,amount:number):Promise<number>{
+        const player = await this.getPlayerCharacter(uid);
+
+        const leftOver = await DBGrantPlayerXP(this.db,uid,amount);
+
+        return leftOver;
+    }
+
+    async grantPlayerItem(uid:string,itemId:number,amount:number):Promise<number>{
+        const player = await this.getPlayerCharacter(uid);
+
+        if(!player){
+            throw 'Player is not registered';
+        }
+        
+        const itemBase = this.items.get(itemId);
+
+        if(!itemBase){
+            throw 'Invalid item id '+itemId;
+        }
+
+        await DBGrantPlayerItem(this.db,uid,itemId,amount);
+
+        player.inventory._addItem(itemBase,amount);
+
+        return player.inventory.getItemAmount(itemBase);
     }
 }
 

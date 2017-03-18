@@ -10,7 +10,8 @@ export default class Inventory extends Command{
             name: 'inv',
             description: 'Show your inventory',
             usage: 'inv',
-            permissionNode: PermissionId.Inventory
+            permissionNode: PermissionId.Inventory,
+            minParams: 0,
         });
     }
 

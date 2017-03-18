@@ -14,7 +14,8 @@ export default class Begin extends Command{
             name: 'stats',
             description: 'Check stats',
             usage: 'stats [\@user]',
-            permissionNode: PermissionId.Stats
+            permissionNode: PermissionId.Stats,
+            minParams: 0,
         });
     }
 
