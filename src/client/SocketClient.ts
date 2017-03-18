@@ -11,6 +11,9 @@ import RegisterPlayer from '../gameserver/socket/handlers/RegisterPlayer';
 import { RegisterPlayerRequest } from '../gameserver/socket/handlers/RegisterPlayer';
 import GetPlayerRole from '../gameserver/socket/handlers/GetPlayerRole';
 import { GetPlayerRoleRequest } from '../gameserver/socket/handlers/GetPlayerRole';
+import { SocketPlayerInventory } from '../core/item/PlayerInventory';
+import { GetPlayerInventoryRequest } from '../gameserver/socket/handlers/GetPlayerInventory';
+import GetPlayerInventory from '../gameserver/socket/handlers/GetPlayerInventory';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -53,6 +56,18 @@ export default class SocketClient{
         })();
     }
 
+    getPlayerInventory(playerUID:string):Promise<SocketPlayerInventory>{
+        return (async()=>{
+            const requestData:GetPlayerInventoryRequest = {
+                uid:playerUID
+            };
+
+            const request:GetPlayerInventoryRequest = await this.gameserverRequest(GetPlayerInventory,requestData);
+
+            return request.response.inventory;
+        })();
+    }
+
     registerPlayer(bag:RegisterPlayerRequest):Promise<SocketPlayerCharacter>{
         return (async()=>{
             const requestData:RegisterPlayerRequest = {
@@ -67,8 +82,6 @@ export default class SocketClient{
             return request.response.player;
         })();
     }
-
-
 
 
 // ---------------------------------------------------------

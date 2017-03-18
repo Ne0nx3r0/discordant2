@@ -8,6 +8,13 @@ export default class InventoryItem{
         this.base = base;
         this.amount = amount;
     }
+
+    toSocket():SocketInventoryItem{
+        return {
+            id: this.base.id,
+            amount: this.amount,
+        };
+    }
 }
 
 export interface SocketInventoryItem {

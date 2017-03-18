@@ -79,7 +79,7 @@ export default class PlayerInventory{
 
         this.items.forEach(function(item,itemId){
             inventoryItems.push({
-                id:itemId,
+                id:item.base.id,
                 amount:item.amount
             });
         });
