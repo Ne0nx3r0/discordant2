@@ -5,8 +5,8 @@ import { DBPlayer } from '../DBInterfaces';
 
 const queryStr = `
     UPDATE player 
-    SET wishes = wishes + $1
-    WHERE uid = $2
+    SET wishes = wishes + $2
+    WHERE uid = $1
     RETURNING wishes;
 `;
 

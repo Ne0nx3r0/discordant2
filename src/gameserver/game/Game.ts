@@ -136,6 +136,8 @@ export default class Game{
 
         const leftOver = await DBGrantPlayerWishes(this.db,uid,amount);
 
+        player.wishes += amount;
+
         return leftOver;
     }
 
@@ -143,6 +145,8 @@ export default class Game{
         const player = await this.getPlayerCharacter(uid);
 
         const leftOver = await DBGrantPlayerXP(this.db,uid,amount);
+
+        player.xp += amount;
 
         return leftOver;
     }

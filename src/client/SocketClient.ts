@@ -90,7 +90,7 @@ export default class SocketClient{
         })();
     }
 
-    grantItem(playerUID:string,item:ItemBase,amount:number):Promise<void>{
+    grantItem(playerUID:string,item:ItemBase,amount:number):Promise<number>{
         return (async()=>{
             const requestData:GrantPlayerItemRequest = {
                 uid: playerUID,
@@ -98,29 +98,35 @@ export default class SocketClient{
                 amount: amount,
             };
 
-            await this.gameserverRequest(GrantPlayerItem,requestData);
+            const request:GrantPlayerItemRequest = await this.gameserverRequest(GrantPlayerItem,requestData);
+
+            return request.response.amountLeft;
         })();
     }
 
-    grantWishes(playerUID:string,amount:number):Promise<void>{
+    grantWishes(playerUID:string,amount:number):Promise<number>{
         return (async()=>{
             const requestData:GrantPlayerWishesRequest = {
                 uid: playerUID,
                 amount: amount,
             };
 
-            await this.gameserverRequest(GrantPlayerWishes,requestData);
+            const request:GrantPlayerWishesRequest = await this.gameserverRequest(GrantPlayerWishes,requestData);
+
+            return request.response.wishesLeft;
         })();
     }
 
-    grantXP(playerUID:string,amount:number):Promise<void>{
+    grantXP(playerUID:string,amount:number):Promise<number>{
         return (async()=>{
             const requestData:GrantPlayerXPRequest = {
                 uid: playerUID,
                 amount: amount,
             };
 
-            await this.gameserverRequest(GrantPlayerXP,requestData);
+            const request:GrantPlayerXPRequest = await this.gameserverRequest(GrantPlayerXP,requestData);
+
+            return request.response.xpLeft;
         })();
     }
 

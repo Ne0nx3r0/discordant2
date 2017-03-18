@@ -31,6 +31,8 @@ export default class Inventory extends Command{
 
                 if(!giveTo){
                     bag.message.channel.sendMessage(this.getUsage());
+
+                    return;
                 }
 
                 //The last param may be part of the request or it might be a number
@@ -48,12 +50,12 @@ export default class Inventory extends Command{
                 }
 
                 if(itemWantedStr == 'wishes'){
-                    await bag.socket.grantWishes(giveTo.uid,amountWanted);
+                    const newWishAmount = await bag.socket.grantWishes(giveTo.uid,amountWanted);
 
                     bag.message.channel.sendMessage(`${bag.message.author.username} created ${amountWanted} wishes for ${giveTo.title}`);
                 }
                 else if(itemWantedStr == 'xp'){
-                    await bag.socket.grantXP(giveTo.uid,amountWanted);
+                    const newXPAmount = await bag.socket.grantXP(giveTo.uid,amountWanted);
 
                     bag.message.channel.sendMessage(`${bag.message.author.username} created ${amountWanted} xp for ${giveTo.title}`);
                 }
@@ -72,7 +74,7 @@ export default class Inventory extends Command{
                         return;
                     }
 
-                    await bag.socket.grantItem(giveTo.uid,itemWanted,amountWanted);
+                    const newItemAmount = await bag.socket.grantItem(giveTo.uid,itemWanted,amountWanted);
                 
                     bag.message.channel.sendMessage(`${bag.message.author.username} created ${amountWanted} ${itemWanted.title} for ${giveTo.title}`);
                 }

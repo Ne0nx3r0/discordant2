@@ -8,10 +8,7 @@ const queryStr = `
 `;
 
 const DBGrantPlayerItem = async function(db:DatabaseService,uid:string,itemId:number,amount:number):Promise<void>{
-    const result = await db.getPool().query(queryStr,[uid+'1',itemId,amount]);
-
-    console.log(result);
-    
+    const result = await db.getPool().query(queryStr,[uid,itemId,amount]);
 }
 
 export default DBGrantPlayerItem;
