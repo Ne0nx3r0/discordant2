@@ -11,7 +11,7 @@ export default class Inventory extends Command{
             name: 'grant',
             description: 'Give a player an item',
             usage: 'grant <\@username> <item name|wishes|xp> [amount]',
-            permissionNode: PermissionId.Inventory,
+            permissionNode: PermissionId.Grant,
             minParams: 2,
         });
     }
