@@ -10,6 +10,8 @@ import GetPlayerInventory from './handlers/GetPlayerInventory';
 import GrantPlayerItem from './handlers/GrantPlayerItem';
 import GrantPlayerXP from './handlers/GrantPlayerXP';
 import GrantPlayerWishes from './handlers/GrantPlayerWishes';
+import EquipPlayerItem from './handlers/EquipPlayerItem';
+import UnequipPlayerItem from './handlers/UnequipPlayerItem';
 
 interface SocketServerBag{
     game:Game;
@@ -43,6 +45,8 @@ export default class SocketServer{
             this.registerHandler(client,GrantPlayerItem);
             this.registerHandler(client,GrantPlayerWishes);
             this.registerHandler(client,GrantPlayerXP);
+            this.registerHandler(client,EquipPlayerItem);
+            this.registerHandler(client,UnequipPlayerItem);
         });
 
         this.io.listen(bag.port);
@@ -57,12 +61,22 @@ export default class SocketServer{
                     result = await handler.handlerFunc(this.handlerBag,data);
                 }
                 catch(ex){
-                    const did = this.logger.error(ex);
-
-                    result = {
-                        success: false,
-                        error: `A server error occurred (${did})`,
+                    //If it's a string send it back to the client, otherwise create a did and send that back
+                    if(typeof ex === 'string' || ex instanceof String){
+                        result = {
+                            success: false,
+                            error: ex as string,
+                        }
                     }
+                    else{
+                        const did = this.logger.error(ex);
+
+                        result = {
+                            success: false,
+                            error: `A server error occurred (${did})`,
+                        }
+                    }
+
                 }
                 finally{
                     callback(result);

@@ -10,11 +10,15 @@ import AttributeSet from '../../core/creature/AttributeSet';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import DBRegisterPlayerCharacter from '../db/api/DBRegisterPlayerCharacter';
 import DBGrantPlayerWishes from '../db/api/DBGrantPlayerWishes';
-import { EquipmentSlot } from '../../core/item/CreatureEquipment';
+import { EquipmentSlot, EquipmentBag } from '../../core/item/CreatureEquipment';
 import AllItems from '../../core/item/AllItems';
 import DBGrantPlayerXP from '../db/api/DBGrantPlayerXP';
 import ItemBase from '../../core/item/ItemBase';
 import DBGrantPlayerItem from '../db/api/DBGrantPlayerItem';
+import DBEquipPlayerItem from '../db/api/DBEquipPlayerItem';
+import DBUnequipPlayerItem from '../db/api/DBUnequipPlayerItem';
+import ItemEquippable from '../../core/item/ItemEquippable';
+import Weapon from '../../core/item/Weapon';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -169,6 +173,77 @@ export default class Game{
         player.inventory._addItem(itemBase,amount);
 
         return player.inventory.getItemAmount(itemBase);
+    }
+
+    async equipPlayerItem(uid:string,itemId:number,offhand:boolean):Promise<number>{
+        const player = await this.getPlayerCharacter(uid);
+
+        if(!player){
+            throw 'Player is not registered';
+        }
+        
+        const itemBase = this.items.get(itemId);
+
+        if(!itemBase){
+            throw 'Invalid item id '+itemId;
+        }
+
+        if(!player.inventory.hasItem(itemBase)){
+            throw `You have no ${itemBase.title}`;
+        }
+        
+        if(!(itemBase instanceof ItemEquippable)){
+            throw `${itemBase.title} is not equippable`;
+        }
+
+        const itemEquippable:ItemEquippable = itemBase as ItemEquippable;
+
+        if(offhand && !(itemBase instanceof Weapon)){
+            throw `${itemBase.title} cannot be equipped as an offhand weapon`;
+        }
+
+        const slot:EquipmentSlot = offhand ? 'offhand' : itemEquippable.slotType;
+
+        const itemUnequippedId = await DBEquipPlayerItem(this.db,uid,itemBase.id,slot);
+
+        player.inventory._removeItem(itemBase,1);
+        
+        player.equipment._items[slot] = itemBase;
+
+        if(itemUnequippedId){
+            const itemUnequipped = this.items.get(itemUnequippedId);
+
+            if(itemUnequipped){
+                player.inventory._addItem(itemUnequipped,1);
+            }
+        }
+
+        return itemUnequippedId;
+    }
+
+    async unequipPlayerItem(uid:string,slot:EquipmentSlot):Promise<number>{
+        const player = await this.getPlayerCharacter(uid);
+
+        if(!player){
+            throw 'You are not registered yet';
+        }
+
+        const itemToUnequip = player.equipment._items[slot];
+
+        if(!itemToUnequip){
+            throw `No ${slot} item equipped`;
+        }
+
+        //this one is from the database so we trust it
+        const itemUnequippedId = await DBUnequipPlayerItem(this.db,player.uid,slot);
+
+        const itemUnequipped:ItemEquippable = this.items.get(itemUnequippedId) as ItemEquippable;
+        
+        delete player.equipment._items[slot];
+
+        player.inventory._addItem(itemUnequipped,1);
+
+        return itemUnequipped.id;
     }
 }
 

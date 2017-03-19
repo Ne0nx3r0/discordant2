@@ -90,12 +90,12 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                 },
                 {
                     name: 'Primary Weapon',
-                    value: items.get(pc.equipment.weapon).title,
+                    value: items.get(pc.equipment.weapon || 0).title,
                     inline: true,
                 },
                 {
                     name: 'Offhand Weapon',
-                    value: items.get(pc.equipment.offhand).title,
+                    value: items.get(pc.equipment.offhand || 0).title,
                     inline: true,
                 },
                 {

@@ -118,10 +118,14 @@ export default class DiscordantBotNode{
                 const playerUID = message.author.id;
                 const playerRole:PermissionRole = await this.socket.getPlayerRole(playerUID);
 
-                if((!playerRole && this.ownerUIDs.indexOf(playerUID) == -1)
+                if((this.ownerUIDs.indexOf(playerUID) == -1)
                 || !playerRole.has(command.permissionNode)){
-                    message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
-
+                    if(playerRole.title == 'anonymous'){
+                        message.channel.sendMessage(`You can register with \`dbegin\``);
+                    }
+                    else{
+                        message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
+                    }
                     return;
                 }
 

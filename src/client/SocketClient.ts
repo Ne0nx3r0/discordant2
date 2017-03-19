@@ -21,6 +21,11 @@ import { GrantPlayerXPRequest } from '../gameserver/socket/handlers/GrantPlayerX
 import GrantPlayerXP from '../gameserver/socket/handlers/GrantPlayerXP';
 import { GrantPlayerItemRequest } from '../gameserver/socket/handlers/GrantPlayerItem';
 import GrantPlayerItem from '../gameserver/socket/handlers/GrantPlayerItem';
+import { EquipPlayerItemRequest } from '../gameserver/socket/handlers/EquipPlayerItem';
+import EquipPlayerItem from '../gameserver/socket/handlers/EquipPlayerItem';
+import { EquipmentSlot } from '../core/item/CreatureEquipment';
+import UnequipPlayerItem from '../gameserver/socket/handlers/UnequipPlayerItem';
+import { UnequipPlayerItemRequest } from '../gameserver/socket/handlers/UnequipPlayerItem';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -38,97 +43,108 @@ export default class SocketClient{
         this.sioc = SocketIOClient(bag.gameserver);
     }
 
-    getPlayerRole(playerUID:string):Promise<PermissionRole>{
-        return (async()=>{
-            const requestData:GetPlayerRoleRequest = {
-                uid: playerUID
-            };
+    async getPlayerRole(playerUID:string):Promise<PermissionRole>{
+        const requestData:GetPlayerRoleRequest = {
+            uid: playerUID
+        };
 
-            const request:GetPlayerRoleRequest = await this.gameserverRequest(GetPlayerRole,requestData);
-            const roleStr = request.response.role;
+        const request:GetPlayerRoleRequest = await this.gameserverRequest(GetPlayerRole,requestData);
+        const roleStr = request.response.role;
 
-            return this.permissions.getRole(roleStr);
-        })();
+        return this.permissions.getRole(roleStr);
     }
 
-    getPlayer(playerUID:string):Promise<SocketPlayerCharacter>{
-        return (async()=>{
-            const requestData:GetPlayerRequest = {
-                uid:playerUID
-            };
+    async getPlayer(playerUID:string):Promise<SocketPlayerCharacter>{
+        const requestData:GetPlayerRequest = {
+            uid:playerUID
+        };
 
-            const request:GetPlayerRequest = await this.gameserverRequest(GetPlayer,requestData);
+        const request:GetPlayerRequest = await this.gameserverRequest(GetPlayer,requestData);
 
-            return request.response.player;
-        })();
+        return request.response.player;
     }
 
-    getPlayerInventory(playerUID:string):Promise<SocketPlayerInventory>{
-        return (async()=>{
-            const requestData:GetPlayerInventoryRequest = {
-                uid:playerUID
-            };
+    async getPlayerInventory(playerUID:string):Promise<SocketPlayerInventory>{
+        const requestData:GetPlayerInventoryRequest = {
+            uid:playerUID
+        };
 
-            const request:GetPlayerInventoryRequest = await this.gameserverRequest(GetPlayerInventory,requestData);
+        const request:GetPlayerInventoryRequest = await this.gameserverRequest(GetPlayerInventory,requestData);
 
-            return request.response.inventory;
-        })();
+        return request.response.inventory;
     }
 
-    registerPlayer(bag:RegisterPlayerRequest):Promise<SocketPlayerCharacter>{
-        return (async()=>{
-            const requestData:RegisterPlayerRequest = {
-                uid: bag.uid,
-                username: bag.username,
-                discriminator: bag.discriminator,
-                classId: bag.classId,
-            };
+    async registerPlayer(bag:RegisterPlayerRequest):Promise<SocketPlayerCharacter>{
+        const requestData:RegisterPlayerRequest = {
+            uid: bag.uid,
+            username: bag.username,
+            discriminator: bag.discriminator,
+            classId: bag.classId,
+        };
 
-            const request:RegisterPlayerRequest = await this.gameserverRequest(RegisterPlayer,requestData);
+        const request:RegisterPlayerRequest = await this.gameserverRequest(RegisterPlayer,requestData);
 
-            return request.response.player;
-        })();
+        return request.response.player;
     }
 
-    grantItem(playerUID:string,item:ItemBase,amount:number):Promise<number>{
-        return (async()=>{
-            const requestData:GrantPlayerItemRequest = {
-                uid: playerUID,
-                itemId: item.id,
-                amount: amount,
-            };
+    async grantItem(playerUID:string,item:ItemBase,amount:number):Promise<number>{
+        const requestData:GrantPlayerItemRequest = {
+            uid: playerUID,
+            itemId: item.id,
+            amount: amount,
+        };
 
-            const request:GrantPlayerItemRequest = await this.gameserverRequest(GrantPlayerItem,requestData);
+        const request:GrantPlayerItemRequest = await this.gameserverRequest(GrantPlayerItem,requestData);
 
-            return request.response.amountLeft;
-        })();
+        return request.response.amountLeft;
     }
 
-    grantWishes(playerUID:string,amount:number):Promise<number>{
-        return (async()=>{
-            const requestData:GrantPlayerWishesRequest = {
-                uid: playerUID,
-                amount: amount,
-            };
+    async grantWishes(playerUID:string,amount:number):Promise<number>{
+        const requestData:GrantPlayerWishesRequest = {
+            uid: playerUID,
+            amount: amount,
+        };
 
-            const request:GrantPlayerWishesRequest = await this.gameserverRequest(GrantPlayerWishes,requestData);
+        const request:GrantPlayerWishesRequest = await this.gameserverRequest(GrantPlayerWishes,requestData);
 
-            return request.response.wishesLeft;
-        })();
+        return request.response.wishesLeft;
     }
 
-    grantXP(playerUID:string,amount:number):Promise<number>{
-        return (async()=>{
-            const requestData:GrantPlayerXPRequest = {
-                uid: playerUID,
-                amount: amount,
-            };
+    async grantXP(playerUID:string,amount:number):Promise<number>{
+        const requestData:GrantPlayerXPRequest = {
+            uid: playerUID,
+            amount: amount,
+        };
 
-            const request:GrantPlayerXPRequest = await this.gameserverRequest(GrantPlayerXP,requestData);
+        const request:GrantPlayerXPRequest = await this.gameserverRequest(GrantPlayerXP,requestData);
 
-            return request.response.xpLeft;
-        })();
+        return request.response.xpLeft;
     }
+
+    async equipItem(playerUID:string,itemId:number,offhand:boolean):Promise<number>{
+        const requestData:EquipPlayerItemRequest = {
+            uid: playerUID,
+            itemId: itemId,
+            offhand:offhand,
+        };
+
+        const request:EquipPlayerItemRequest = await this.gameserverRequest(EquipPlayerItem,requestData);
+
+        return request.response.unequipped;
+    }
+
+    async unequipItem(playerUID:string,slot:EquipmentSlot){
+        const requestData:UnequipPlayerItemRequest = {
+            uid: playerUID,
+            slot: slot,
+        };
+
+        const request:UnequipPlayerItemRequest = await this.gameserverRequest(UnequipPlayerItem,requestData);
+
+        return request.response.unequipped;
+    }
+
+    
 
 // ---------------------------------------------------------
     addListener(event:SocketClientPushType,callback:Function){

@@ -11,6 +11,18 @@ export type EquipmentSlot =
     'weapon'
 ;
 
+const ValidEquipmentSlots = [
+    'amulet',
+    'armor',
+    'bracer',
+    'hat',
+    'offhand',
+    'ring',
+    'weapon'
+];
+
+export {ValidEquipmentSlots};
+
 export interface EquipmentBag{
     amulet?: ItemEquippable;//element resistance, item find, critical hits
     armor?: ItemEquippable;//physical resistance

@@ -40,6 +40,19 @@ export default class Equip extends Command{
             throw `You cannot equip ${itemBaseToEquip.title} as an offhand weapon, ${bag.message.author.username}`;
         }
 
-        we are here, time for server stuff
+        const itemUnequippedId:number = await bag.socket.equipItem(
+            bag.message.author.id,
+            itemBaseToEquip.id,
+            offhand,
+        );
+
+        const itemUnequipped = bag.items.get(itemUnequippedId);
+
+        if(itemUnequipped){
+            bag.message.channel.sendMessage(`Equipped ${itemBaseToEquip.title}, unequipped ${itemUnequipped.title}`);
+        }
+        else{
+            bag.message.channel.sendMessage(`Equipped ${itemBaseToEquip.title} `);
+        }
     }
 }
