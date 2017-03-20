@@ -20,6 +20,7 @@ import DBUnequipPlayerItem from '../db/api/DBUnequipPlayerItem';
 import ItemEquippable from '../../core/item/ItemEquippable';
 import Weapon from '../../core/item/Weapon';
 import DBTransferPlayerItem from '../db/api/DBTransferPlayerItem';
+import DBSetPlayerRole from '../db/api/DBSetPlayerRole';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -275,6 +276,16 @@ export default class Game{
         player.inventory._addItem(itemUnequipped,1);
 
         return itemUnequipped.id;
+    }
+
+    async setPlayerRole(uid:string,role:string):Promise<void>{
+        const player = await this.getPlayerCharacter(uid);
+
+        if(!this.permissions.isRole(role)){
+            throw `${role} is not a valid role`;
+        }
+
+        await DBSetPlayerRole(this.db,player.uid,role);
     }
 }
 

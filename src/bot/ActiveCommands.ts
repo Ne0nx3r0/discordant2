@@ -8,3 +8,5 @@ export { default as Give } from './commands/Give';
 export { default as Classes } from './commands/Classes';
 export { default as Help } from './commands/Help';
 export { default as Item } from './commands/Item';
+export { default as SetBotStatus } from './commands/SetBotStatus';
+export { default as SetRole } from './commands/SetRole';

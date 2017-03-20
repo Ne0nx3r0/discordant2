@@ -33,12 +33,13 @@ const playerPermissions = [
     PermissionId.Echo,
     PermissionId.Embed,
     PermissionId.Grant,
-].concat(anonymousPermissions).sort();
-
-const testerPermissions = [
     PermissionId.ChannelId,
     PermissionId.Shutdown,
     PermissionId.SetPlayingGame,
+    PermissionId.SetRole,
+].concat(anonymousPermissions).sort();
+
+const testerPermissions = [
 ].concat(playerPermissions).sort();
 
 const adminPermissions = [

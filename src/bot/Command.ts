@@ -4,15 +4,26 @@ import {Message} from 'discord.js';
 import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import AllItems from '../core/item/AllItems';
+import PermissionsService from '../core/permissions/PermissionService';
+
+export interface SetPlayingFunc{
+    (msg:string):void;
+}
+
+export interface BotHandlers{
+    setPlayingGame: SetPlayingFunc;
+}
 
 export interface CommandRunBag{
-    socket:SocketClient;
-    message:Message;
-    params:Array<string>;
-    role:PermissionRole;
+    message: Message;
+    params: Array<string>;
+    role: PermissionRole;
     items:AllItems;
     commandPrefix:string;
     commands:Map<String,Command>;
+    socket: SocketClient;
+    handlers: BotHandlers;
+    permissions: PermissionsService;
 }
 
 export interface CommandBag{

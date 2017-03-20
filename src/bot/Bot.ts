@@ -154,13 +154,21 @@ export default class DiscordantBotNode{
                     role: playerRole,
                     items: this.items,
                     commandPrefix: this.commandPrefix,
-                    commands: this.commands
+                    commands: this.commands,
+                    handlers:{
+                        setPlayingGame: this.setPlayingGame.bind(this)
+                    },
+                    permissions: this.permissions
                 });
             }
             catch(errorMsg){
                 message.channel.sendMessage(errorMsg+', '+message.author.username);
             }
         })();
+    }
+
+    setPlayingGame(msg:string){
+        this.client.user.setGame(msg);
     }
 }
 

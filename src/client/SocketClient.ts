@@ -28,6 +28,8 @@ import UnequipPlayerItem from '../gameserver/socket/handlers/UnequipPlayerItem';
 import { UnequipPlayerItemRequest } from '../gameserver/socket/handlers/UnequipPlayerItem';
 import { TransferPlayerItemRequest } from '../gameserver/socket/handlers/TransferPlayerItem';
 import TransferPlayerItem from '../gameserver/socket/handlers/TransferPlayerItem';
+import { SetPlayerRoleRequest } from '../gameserver/socket/handlers/SetPlayerRole';
+import SetPlayerRole from '../gameserver/socket/handlers/SetPlayerRole';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -155,6 +157,15 @@ export default class SocketClient{
         const request:UnequipPlayerItemRequest = await this.gameserverRequest(UnequipPlayerItem,requestData);
 
         return request.response.unequipped;
+    }
+
+    async setPlayerRole(playerUID:string,role:string):Promise<void>{
+        const requestData:SetPlayerRoleRequest = {
+            uid: playerUID,
+            role: role,
+        };
+
+        const request:SetPlayerRoleRequest = await this.gameserverRequest(SetPlayerRole,requestData);
     }
 
     
