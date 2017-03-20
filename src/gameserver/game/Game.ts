@@ -19,6 +19,7 @@ import DBEquipPlayerItem from '../db/api/DBEquipPlayerItem';
 import DBUnequipPlayerItem from '../db/api/DBUnequipPlayerItem';
 import ItemEquippable from '../../core/item/ItemEquippable';
 import Weapon from '../../core/item/Weapon';
+import DBTransferPlayerItem from '../db/api/DBTransferPlayerItem';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -156,6 +157,10 @@ export default class Game{
     }
 
     async grantPlayerItem(uid:string,itemId:number,amount:number):Promise<number>{
+        if(amount < 1){
+            throw 'Cannot give a negative item';
+        }
+
         const player = await this.getPlayerCharacter(uid);
 
         if(!player){
@@ -173,6 +178,32 @@ export default class Game{
         player.inventory._addItem(itemBase,amount);
 
         return player.inventory.getItemAmount(itemBase);
+    }
+
+    async transferPlayerItem(fromUID:string,toUID:string,itemId:number,amount:number):Promise<void>{
+        if(amount < 1){
+            throw 'Cannot transfer a negative item';
+        }
+        
+        const fromPlayer = await this.getPlayerCharacter(fromUID);
+
+        if(!fromPlayer){
+            throw 'You are not registered';
+        }
+
+        const toPlayer = await this.getPlayerCharacter(toUID);
+
+        if(!toPlayer){
+            throw 'That player is not registered';
+        }
+        
+        const itemBase = this.items.get(itemId);
+
+        if(!itemBase){
+            throw 'Invalid item id '+itemId;
+        }
+
+        await DBTransferPlayerItem(this.db,fromPlayer.uid,toPlayer.uid,itemBase.id,amount);
     }
 
     async equipPlayerItem(uid:string,itemId:number,offhand:boolean):Promise<number>{

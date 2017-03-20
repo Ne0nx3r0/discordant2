@@ -12,6 +12,7 @@ import GrantPlayerXP from './handlers/GrantPlayerXP';
 import GrantPlayerWishes from './handlers/GrantPlayerWishes';
 import EquipPlayerItem from './handlers/EquipPlayerItem';
 import UnequipPlayerItem from './handlers/UnequipPlayerItem';
+import TransferPlayerItem from './handlers/TransferPlayerItem';
 
 interface SocketServerBag{
     game:Game;
@@ -47,6 +48,7 @@ export default class SocketServer{
             this.registerHandler(client,GrantPlayerXP);
             this.registerHandler(client,EquipPlayerItem);
             this.registerHandler(client,UnequipPlayerItem);
+            this.registerHandler(client,TransferPlayerItem);
         });
 
         this.io.listen(bag.port);

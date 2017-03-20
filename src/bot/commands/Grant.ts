@@ -9,7 +9,7 @@ export default class Inventory extends Command{
     constructor(bag:CommandBag){
         super({
             name: 'grant',
-            description: 'Give a player an item',
+            description: 'Create an item for a player',
             usage: 'grant <\@username> <item name|wishes|xp> [amount]',
             permissionNode: PermissionId.Grant,
             minParams: 2,
@@ -66,7 +66,7 @@ export default class Inventory extends Command{
                 return;
             }
 
-            if(amountWanted < 0){
+            if(amountWanted < 1){
                 bag.message.channel.sendMessage('You cannot give someone a negative item, '+bag.message.author.username);
 
                 return;

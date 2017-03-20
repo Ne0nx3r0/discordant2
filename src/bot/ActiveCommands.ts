@@ -4,3 +4,4 @@ export { default as Inventory } from './commands/Inventory';
 export { default as Grant } from './commands/Grant';
 export { default as Equip } from './commands/Equip';
 export { default as Unequip } from './commands/Unequip';
+export { default as Give } from './commands/Give';

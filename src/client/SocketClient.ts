@@ -26,6 +26,8 @@ import EquipPlayerItem from '../gameserver/socket/handlers/EquipPlayerItem';
 import { EquipmentSlot } from '../core/item/CreatureEquipment';
 import UnequipPlayerItem from '../gameserver/socket/handlers/UnequipPlayerItem';
 import { UnequipPlayerItemRequest } from '../gameserver/socket/handlers/UnequipPlayerItem';
+import { TransferPlayerItemRequest } from '../gameserver/socket/handlers/TransferPlayerItem';
+import TransferPlayerItem from '../gameserver/socket/handlers/TransferPlayerItem';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -85,6 +87,17 @@ export default class SocketClient{
         const request:RegisterPlayerRequest = await this.gameserverRequest(RegisterPlayer,requestData);
 
         return request.response.player;
+    }
+
+    async giveItem(fromUID:string,toUID:string,item:ItemBase,amount:number):Promise<void>{
+        const requestData:TransferPlayerItemRequest = {
+            fromUid: fromUID,
+            toUid: toUID,
+            itemId: item.id,
+            amount: amount,
+        };
+
+        const request:TransferPlayerItemRequest = await this.gameserverRequest(TransferPlayerItem,requestData);
     }
 
     async grantItem(playerUID:string,item:ItemBase,amount:number):Promise<number>{
