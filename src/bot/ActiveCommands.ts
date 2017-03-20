@@ -5,3 +5,6 @@ export { default as Grant } from './commands/Grant';
 export { default as Equip } from './commands/Equip';
 export { default as Unequip } from './commands/Unequip';
 export { default as Give } from './commands/Give';
+export { default as Classes } from './commands/Classes';
+export { default as Help } from './commands/Help';
+export { default as Item } from './commands/Item';

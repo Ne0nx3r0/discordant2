@@ -11,6 +11,8 @@ export interface CommandRunBag{
     params:Array<string>;
     role:PermissionRole;
     items:AllItems;
+    commandPrefix:string;
+    commands:Map<String,Command>;
 }
 
 export interface CommandBag{
@@ -27,6 +29,7 @@ export default class Command{
     usage:string;
     permissionNode:PermissionId;
     minParams:number;
+    aliases:Array<string>;
 
     constructor(bag:CommandBag){
         this.name = bag.name;
@@ -34,10 +37,20 @@ export default class Command{
         this.usage = bag.usage;
         this.permissionNode = bag.permissionNode;
         this.minParams = bag.minParams;
+        this.aliases = [];
     }
 
     getUsage(){
         return 'Usage: '+ this.usage;
+    }
+
+    getEmbed(msg:string,color?:number){
+        return {
+            embed: {
+                color: color || 0xFF6347, 
+                description: msg,           
+            }
+        }
     }
 
     async run(bag:CommandRunBag):Promise<void>{

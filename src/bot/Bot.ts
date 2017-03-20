@@ -38,6 +38,7 @@ export default class DiscordantBotNode{
     socket:SocketClient;
     permissions:PermissionsService;
     items: AllItems;
+    aliases: Map<string,string>;
 
     constructor(bag:BotBag){
         this.commandPrefix = bag.commandPrefix;
@@ -45,6 +46,7 @@ export default class DiscordantBotNode{
         this.socket = bag.socket;
         this.permissions = bag.permissions;
         this.items = new AllItems();
+        this.aliases = new Map();
 
         this.commands = new Map();
 
@@ -52,6 +54,10 @@ export default class DiscordantBotNode{
             const command:Command = new Commands[commandName];
 
             this.commands.set(command.name.toUpperCase(),command);
+
+            command.aliases.forEach((alias)=>{
+                this.aliases.set(alias,command.name);
+            });
         });
 
         this.client = new DiscordClient();
@@ -105,7 +111,13 @@ export default class DiscordantBotNode{
 
         const msgWithoutPrefix:string = message.content.substr(this.commandPrefix.length);
         const params:Array<string> = resolveArgs(msgWithoutPrefix);
-        const commandName:string = params.shift();
+        let commandName:string = params.shift();
+
+        this.aliases.forEach(function(commandStr,alias){
+            if(alias == commandName){
+                commandName = commandStr;
+            }
+        });
 
         const command = this.commands.get(commandName.toUpperCase());
 
@@ -141,6 +153,8 @@ export default class DiscordantBotNode{
                     params: params,
                     role: playerRole,
                     items: this.items,
+                    commandPrefix: this.commandPrefix,
+                    commands: this.commands
                 });
             }
             catch(errorMsg){

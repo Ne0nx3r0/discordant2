@@ -13,6 +13,8 @@ export default class Inventory extends Command{
             permissionNode: PermissionId.Inventory,
             minParams: 0,
         });
+
+        this.aliases = ['inventory'];
     }
 
     async run(bag:CommandRunBag){
