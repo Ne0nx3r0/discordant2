@@ -171,9 +171,6 @@ export default class SocketClient{
     
 
 // ---------------------------------------------------------
-    addListener(event:SocketClientPushType,callback:Function){
-        this.sioc.on(event,callback);
-    }
 
     gameserverRequest<T>(handler:SocketHandler,requestData:T):Promise<T>{
         const sioc = this.sioc;
