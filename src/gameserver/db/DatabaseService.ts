@@ -31,7 +31,7 @@ export default class DatabaseService{
         this.logger = logger;
 
         //Force SSL
-        dbConfig.ssl = true;
+        //dbConfig.ssl = true;
         
         this.pool = new pg.Pool(dbConfig);
 
