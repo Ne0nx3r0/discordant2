@@ -30,21 +30,28 @@ import { TransferPlayerItemRequest } from '../gameserver/socket/handlers/Transfe
 import TransferPlayerItem from '../gameserver/socket/handlers/TransferPlayerItem';
 import { SetPlayerRoleRequest } from '../gameserver/socket/handlers/SetPlayerRole';
 import SetPlayerRole from '../gameserver/socket/handlers/SetPlayerRole';
+import SocketClientHandler from './SocketClientHandler';
+import Logger from '../gameserver/log/Logger';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
 export interface SocketClientBag{
     gameserver:string;
     permissions:PermissionsService;
+    logger: Logger;
 }
 
 export default class SocketClient{
     sioc:SocketIOClient.Socket;
     permissions:PermissionsService;
+    logger: Logger;
     
     constructor(bag:SocketClientBag){        
         this.permissions = bag.permissions;
+        this.logger = bag.logger;
         this.sioc = SocketIOClient(bag.gameserver);
+
+        this.registerHandler();
     }
 
     async getPlayerRole(playerUID:string):Promise<PermissionRole>{
@@ -191,6 +198,19 @@ export default class SocketClient{
             catch(ex){
                 reject(ex);
             }
+        });
+    }
+
+    registerHandler(handler:SocketClientHandler){
+        this.sioc.on(handler.title,(data:any)=>{
+            (async()=>{
+                try{
+                    await handler.handlerFunc({},data);
+                }
+                catch(ex){
+                    const did = this.logger.error(ex);
+                }
+            })();
         });
     }
 }
