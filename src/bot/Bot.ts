@@ -8,7 +8,6 @@ import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import PermissionsService from '../core/permissions/PermissionService';
 import AllItems from '../core/item/AllItems';
 import SocketClientRequester from '../client/SocketClientRequester';
-
 import{
     Client as DiscordClient,
     Message,
@@ -48,6 +47,8 @@ export default class DiscordantBotNode{
         this.aliases = new Map();
 
         this.socket = bag.socket;
+
+        this.getChannelById = this.getChannelById.bind(this);
 
         this.commands = new Map();
 
@@ -170,6 +171,10 @@ export default class DiscordantBotNode{
 
     setPlayingGame(msg:string){
         this.client.user.setGame(msg);
+    }
+
+    getChannelById(channelId:string):TextChannel{
+        return this.client.channels.get(channelId) as TextChannel;
     }
 }
 

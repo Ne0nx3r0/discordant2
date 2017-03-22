@@ -1,23 +1,24 @@
 import { TextChannel } from "discord.js";
 
-export interface ChatRequestBag {
-    channel:TextChannel;
-}
-
 export interface ChatRequestData{
     channelId: string;
+    channel?: TextChannel;//Filled in by SocketClientListener
 }
 
 export interface ChatRequestHandlerFunc{
-    (bag:ChatRequestBag,data:ChatRequestData):Promise<void>;
+    (data:ChatRequestData):Promise<void>;
 }
 
 export default class ChatRequest{
     title:string;
-    handlerFunc:ChatRequestHandlerFunc;
+    data:ChatRequestData;
 
-    constructor(title:string,handler:ChatRequestHandlerFunc){
+    constructor(title:string,data:ChatRequestData){
         this.title = title;
-        this.handlerFunc = handler;
+        this.data = data;
+    }
+
+    async run(bag:ChatRequestData){
+        throw this.title +' does not implement run';
     }
 }

@@ -1,4 +1,4 @@
-import { ChatRequestData, ChatRequestBag } from '../ChatRequest';
+import { ChatRequestData } from '../ChatRequest';
 import ChatRequest from '../ChatRequest';
 import { TextChannel } from 'discord.js';
 
@@ -6,8 +6,12 @@ export interface ChatRequestRoundBeginData extends ChatRequestData{
     
 }
 
-export default new ChatRequest('RoundBegin',async function(bag:ChatRequestBag,data:ChatRequestRoundBeginData){
-    //const channel:TextChannel = bag.getChannel(data.channelId);
+export default class RoundBegin extends ChatRequest{
+    constructor(data:ChatRequestRoundBeginData){
+        super('RoundBegin',data);
+    }
     
-    //channel.sendMessage('```css\n--- NEW ROUND ---\n```');
-});
+    async run(bag:ChatRequestRoundBeginData){
+        bag.channel.sendMessage('```css\n--- NEW ROUND ---\n```');
+    }
+}

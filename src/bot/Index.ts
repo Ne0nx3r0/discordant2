@@ -32,6 +32,7 @@ class DiscordantBotNode {
         });
 
         const listener:SocketClientListener = new SocketClientListener({
+            channelLookup: bot.getChannelById,
             sioc: sioc,
             logger: logger,
         });
