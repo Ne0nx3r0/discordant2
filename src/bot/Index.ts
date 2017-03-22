@@ -1,9 +1,10 @@
 import Config from '../../Config.Bot';
-import SocketClient from '../client/SocketClient';
 import PermissionsService from '../core/permissions/PermissionService';
 import Bot from './Bot';
 import { BotConfig } from './Bot';
 import Logger from '../gameserver/log/Logger';
+import * as SocketIOClient from 'socket.io-client';
+import SocketClientRequester from '../client/SocketClientRequester';
 
 class DiscordantBotNode {
     public static main(): number {
@@ -13,9 +14,11 @@ class DiscordantBotNode {
 
         const permissions:PermissionsService = new PermissionsService();
 
-        const socket:SocketClient = new SocketClient({
-            gameserver: Config.gameserver,
-            permissions: permissions
+        const sioc = SocketIOClient(Config.gameserver);
+
+        const socket:SocketClientRequester = new SocketClientRequester({
+            sioc: sioc,
+            permissions: permissions,
             logger: logger,
         });
 
@@ -24,7 +27,7 @@ class DiscordantBotNode {
             authToken: Config.authToken,
             ownerUIDs: Config.ownerUIDs,
             commandPrefix: Config.commandPrefix,
-            socket:socket
+            socket:socket,
         });
 
         return 0;

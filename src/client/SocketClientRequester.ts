@@ -30,18 +30,20 @@ import { TransferPlayerItemRequest } from '../gameserver/socket/handlers/Transfe
 import TransferPlayerItem from '../gameserver/socket/handlers/TransferPlayerItem';
 import { SetPlayerRoleRequest } from '../gameserver/socket/handlers/SetPlayerRole';
 import SetPlayerRole from '../gameserver/socket/handlers/SetPlayerRole';
-import SocketClientHandler from './SocketClientHandler';
 import Logger from '../gameserver/log/Logger';
+import ChatRequest from './ChatRequest';
+import { ChatRequestData } from './ChatRequest';
+import { Client as DiscordClient } from "discord.js";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
 export interface SocketClientBag{
-    gameserver:string;
+    sioc:SocketIOClient.Socket;
     permissions:PermissionsService;
     logger: Logger;
 }
 
-export default class SocketClient{
+export default class SocketClientRequester{
     sioc:SocketIOClient.Socket;
     permissions:PermissionsService;
     logger: Logger;
@@ -49,9 +51,29 @@ export default class SocketClient{
     constructor(bag:SocketClientBag){        
         this.permissions = bag.permissions;
         this.logger = bag.logger;
-        this.sioc = SocketIOClient(bag.gameserver);
+        this.sioc = bag.sioc;
+    }
 
-        this.registerHandler();
+    gameserverRequest<T>(handler:SocketHandler,requestData:T):Promise<T>{
+        const sioc = this.sioc;
+
+        return new Promise(function(resolve,reject){
+            try{
+                sioc.emit(handler.title,requestData,function(response:SocketResponse){
+                    (requestData as SocketRequest).response  = response;
+
+                    if(response.success){
+                        resolve(requestData);
+                    }
+                    else{
+                        reject(response.error);
+                    }
+                });
+            }
+            catch(ex){
+                reject(ex);
+            }
+        });
     }
 
     async getPlayerRole(playerUID:string):Promise<PermissionRole>{
@@ -173,44 +195,5 @@ export default class SocketClient{
         };
 
         const request:SetPlayerRoleRequest = await this.gameserverRequest(SetPlayerRole,requestData);
-    }
-
-    
-
-// ---------------------------------------------------------
-
-    gameserverRequest<T>(handler:SocketHandler,requestData:T):Promise<T>{
-        const sioc = this.sioc;
-
-        return new Promise(function(resolve,reject){
-            try{
-                sioc.emit(handler.title,requestData,function(response:SocketResponse){
-                    (requestData as SocketRequest).response  = response;
-
-                    if(response.success){
-                        resolve(requestData);
-                    }
-                    else{
-                        reject(response.error);
-                    }
-                });
-            }
-            catch(ex){
-                reject(ex);
-            }
-        });
-    }
-
-    registerHandler(handler:SocketClientHandler){
-        this.sioc.on(handler.title,(data:any)=>{
-            (async()=>{
-                try{
-                    await handler.handlerFunc({},data);
-                }
-                catch(ex){
-                    const did = this.logger.error(ex);
-                }
-            })();
-        });
     }
 }

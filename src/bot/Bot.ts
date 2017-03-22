@@ -3,11 +3,11 @@
 import Winston from 'winston';
 import Command from './Command';
 import * as Commands from "./ActiveCommands";
-import SocketClient from '../client/SocketClient';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import PermissionsService from '../core/permissions/PermissionService';
 import AllItems from '../core/item/AllItems';
+import SocketClientRequester from '../client/SocketClientRequester';
 
 import{
     Client as DiscordClient,
@@ -26,7 +26,7 @@ export interface BotConfig extends BotConfigBase{
 }
 
 export interface BotBag extends BotConfigBase{
-    socket:SocketClient;
+    socket:SocketClientRequester;
     permissions:PermissionsService;
 }
 
@@ -35,7 +35,7 @@ export default class DiscordantBotNode{
     commandPrefix:string;
     ownerUIDs:Array<string>;
     commands:Map<String,Command>;
-    socket:SocketClient;
+    socket:SocketClientRequester;
     permissions:PermissionsService;
     items: AllItems;
     aliases: Map<string,string>;
@@ -43,10 +43,11 @@ export default class DiscordantBotNode{
     constructor(bag:BotBag){
         this.commandPrefix = bag.commandPrefix;
         this.ownerUIDs = bag.ownerUIDs;
-        this.socket = bag.socket;
         this.permissions = bag.permissions;
         this.items = new AllItems();
         this.aliases = new Map();
+
+        this.socket = bag.socket;
 
         this.commands = new Map();
 

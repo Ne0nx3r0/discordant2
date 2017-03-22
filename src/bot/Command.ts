@@ -1,10 +1,10 @@
 import PermissionId from '../core/permissions/PermissionId';
-import SocketClient from '../client/SocketClient';
 import {Message} from 'discord.js';
 import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import AllItems from '../core/item/AllItems';
 import PermissionsService from '../core/permissions/PermissionService';
+import SocketClientRequester from '../client/SocketClientRequester';
 
 export interface SetPlayingFunc{
     (msg:string):void;
@@ -21,7 +21,7 @@ export interface CommandRunBag{
     items:AllItems;
     commandPrefix:string;
     commands:Map<String,Command>;
-    socket: SocketClient;
+    socket: SocketClientRequester;
     handlers: BotHandlers;
     permissions: PermissionsService;
 }

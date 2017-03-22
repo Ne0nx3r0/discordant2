@@ -14,8 +14,6 @@ import EquipPlayerItem from './handlers/EquipPlayerItem';
 import UnequipPlayerItem from './handlers/UnequipPlayerItem';
 import TransferPlayerItem from './handlers/TransferPlayerItem';
 import SetPlayerRole from './handlers/SetPlayerRole';
-import SocketClientHandler from '../../client/SocketClientHandler';
-import { SocketClientRequest, SocketClientResponse } from '../../client/SocketClientHandler';
 
 interface SocketServerBag{
     game:Game;
@@ -56,32 +54,6 @@ export default class SocketServer{
         });
 
         this.io.listen(bag.port);
-    }
-
-    clientRequest<T>(handler:SocketClientHandler,requestData:T):Promise<T>{
-        const clientIds:Array<string> = Object.keys(this.io.sockets.sockets);
-
-        const randomClientId = clientIds[Math.floor(Math.random()*clientIds.length)];
-
-        const randomClient = this.io.sockets.sockets[randomClientId];
-
-        return new Promise(function(resolve,reject){
-            try{
-                randomClient.emit(handler.title,requestData,function(response:SocketClientResponse){
-                    (requestData as SocketClientRequest).response  = response;
-
-                    if(response.success){
-                        resolve(requestData);
-                    }
-                    else{
-                        reject(response.error);
-                    }
-                });
-            }
-            catch(ex){
-                reject(ex);
-            }
-        });
     }
 
     registerHandler(client:any,handler:SocketHandler){
