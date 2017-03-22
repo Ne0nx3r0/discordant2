@@ -6,11 +6,12 @@ interface SocketClientListenerBag{
 }
 
 export default class SocketClientListener{
-    sioc:SocketIOClient.Socket;
     logger: Logger;
 
     constructor(bag:SocketClientListenerBag){
-        this.sioc = bag.sioc;
         this.logger = bag.logger;
+
+        bag.sioc.on();
+        RoundBegin
     }
 }

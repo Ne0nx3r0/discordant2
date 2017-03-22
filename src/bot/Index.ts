@@ -23,17 +23,17 @@ class DiscordantBotNode {
             logger: logger,
         });
 
-        const listener:SocketClientListener = new SocketClientListener({
-            sioc: sioc,
-            logger: logger,
-        });
-
         const bot:Bot = new Bot({
             permissions: permissions,
             authToken: Config.authToken,
             ownerUIDs: Config.ownerUIDs,
             commandPrefix: Config.commandPrefix,
             socket:socket,
+        });
+
+        const listener:SocketClientListener = new SocketClientListener({
+            sioc: sioc,
+            logger: logger,
         });
 
         return 0;
