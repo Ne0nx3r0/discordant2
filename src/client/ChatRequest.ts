@@ -5,10 +5,6 @@ export interface ChatRequestData{
     channel?: TextChannel;//Filled in by SocketClientListener
 }
 
-export interface ChatRequestHandlerFunc{
-    (data:ChatRequestData):Promise<void>;
-}
-
 export default class ChatRequest{
     title:string;
     data:ChatRequestData;
