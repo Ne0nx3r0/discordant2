@@ -5,6 +5,7 @@ import { BotConfig } from './Bot';
 import Logger from '../gameserver/log/Logger';
 import * as SocketIOClient from 'socket.io-client';
 import SocketClientRequester from '../client/SocketClientRequester';
+import SocketClientListener from '../client/SocketClientListener';
 
 class DiscordantBotNode {
     public static main(): number {
@@ -19,6 +20,11 @@ class DiscordantBotNode {
         const socket:SocketClientRequester = new SocketClientRequester({
             sioc: sioc,
             permissions: permissions,
+            logger: logger,
+        });
+
+        const listener:SocketClientListener = new SocketClientListener({
+            sioc: sioc,
             logger: logger,
         });
 
