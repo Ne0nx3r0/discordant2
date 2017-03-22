@@ -1,8 +1,8 @@
 import Logger from '../gameserver/log/Logger';
-import ChatRequest from './ChatRequest';
-import RoundBegin from './chatRequests/RoundBegin';
+import ClientRequest from './ClientRequest';
+import RoundBegin from './requests/RoundBegin';
 import { TextChannel } from 'discord.js';
-import { ChatRequestData } from './ChatRequest';
+import { ClientRequestData } from './ClientRequest';
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -20,21 +20,23 @@ export default class SocketClientListener{
         this.registerHandler(bag,new RoundBegin(null));
     }
 
-    registerHandler(bag:SocketClientListenerBag,handler:ChatRequest){
+    registerHandler(bag:SocketClientListenerBag,handler:ClientRequest){
         const title = handler.title;
         const run = handler.run;
         const logger = bag.logger;
         const channelLookup = bag.channelLookup;
 
-        bag.sioc.on(title,(data:ChatRequestData)=>{
+        bag.sioc.on(title,(data:ClientRequestData)=>{
             try{
-                data.channel = channelLookup(data.channelId);
-
-                if(!data.channel){
+                const channel = channelLookup(data.channelId);
+                
+                if(!channel){
                     throw 'Invalid channel id '+data.channelId+' in request '+title;
                 }
 
-                run(data);
+                run({
+                    channel: channel
+                });
             }
             catch(ex){
                 logger.error(ex);

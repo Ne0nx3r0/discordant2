@@ -1,5 +1,9 @@
 import Game from '../game/Game';
 
+export interface ServerRequestRunBag{
+    game:Game;
+}
+
 export interface ServerRequestData{
     
 }
@@ -7,10 +11,6 @@ export interface ServerRequestData{
 export interface ServerResponse{
     success:boolean;
     error?:string;
-}
-
-export interface ServerRequestHandlerBag{
-    game:Game;
 }
 
 export default class ServerRequest{
@@ -22,7 +22,7 @@ export default class ServerRequest{
         this.data = data;
     }
 
-    async run(bag:ServerRequestData):Promise<ServerResponse>{
+    async run(bag:ServerRequestRunBag):Promise<ServerResponse>{
         throw this.title +' does not implement run';
     }
 }

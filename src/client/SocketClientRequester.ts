@@ -31,8 +31,6 @@ import TransferPlayerItem from '../gameserver/socket/handlers/TransferPlayerItem
 import { SetPlayerRoleRequest } from '../gameserver/socket/handlers/SetPlayerRole';
 import SetPlayerRole from '../gameserver/socket/handlers/SetPlayerRole';
 import Logger from '../gameserver/log/Logger';
-import ChatRequest from './ChatRequest';
-import { ChatRequestData } from './ChatRequest';
 import { Client as DiscordClient } from "discord.js";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
