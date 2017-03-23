@@ -1,6 +1,6 @@
 import Game from '../game/Game';
 
-export interface ServerRequestRunBag{
+export interface ServerRequestReceiveBag{
     game:Game;
 }
 
@@ -40,7 +40,11 @@ export default class ServerRequest{
         });
     }
 
-    async receive(bag:ServerRequestRunBag):Promise<ServerResponse>{
+    async send(sioc:SocketIOClient.Socket):Promise<any>{
+        throw this.title +' does not implement send';
+    }
+
+    async receive(bag:ServerRequestReceiveBag):Promise<ServerResponse>{
         throw this.title +' does not implement receive';
     }
 }

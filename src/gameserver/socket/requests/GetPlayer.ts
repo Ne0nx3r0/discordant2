@@ -1,4 +1,4 @@
-import { ServerResponse, ServerRequestData, ServerRequestRunBag } from '../ServerRequest';
+import { ServerResponse, ServerRequestData, ServerRequestReceiveBag } from '../ServerRequest';
 import ServerRequest from '../ServerRequest';
 import { SocketPlayerCharacter } from '../../../core/creature/player/PlayerCharacter';
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
@@ -14,16 +14,22 @@ export interface GetPlayerResponse extends ServerResponse{
 export default class GetPlayer extends ServerRequest{
     data:GetPlayerData;
 
-    constructor(data:GetPlayerData){
-        super('GetPlayer',data);
+    constructor(playerUID:string){
+        super('GetPlayer',{
+            uid:playerUID
+        });
     }
 
-    async run(bag:ServerRequestRunBag):Promise<ServerResponse>{
+    async send(sioc:SocketIOClient.Socket):Promise<SocketPlayerCharacter>{
+        return (await this._send(sioc) as GetPlayerResponse).player;
+    }
+
+    async receive(bag:ServerRequestReceiveBag):Promise<GetPlayerResponse>{
         const player:PlayerCharacter = await bag.game.getPlayerCharacter(this.data.uid);
 
         return {
             success: true,
-            player: player?player.toSocket():null,
+            player: player.toSocket()
         };
     }
 }

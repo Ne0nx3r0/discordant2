@@ -5,6 +5,8 @@ import ServerRequest from '../gameserver/socket/ServerRequest';
 import { ServerResponse } from '../gameserver/socket/ServerRequest';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import GetPlayerRole from '../gameserver/socket/requests/GetPlayerRole';
+import GetPlayer from '../gameserver/socket/requests/GetPlayer';
+import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -14,7 +16,7 @@ export interface SocketClientBag{
     logger: Logger;
 }
 
-export default class SocketClientRequester{
+export default class SocketClientServerRequester{
     sioc:SocketIOClient.Socket;
     permissions:PermissionsService;
     logger: Logger;
@@ -25,44 +27,18 @@ export default class SocketClientRequester{
         this.sioc = bag.sioc;
     }
 
-    gameserverRequest<T>(handler:ServerRequest):Promise<T>{
-        const sioc = this.sioc;
-
-        return new Promise(function(resolve,reject){
-            try{
-                sioc.emit(handler.title,handler.data,function(response:ServerResponse){
-                    if(response.success){
-                        resolve(response);
-                    }
-                    else{
-                        reject(response.error);
-                    }
-                });
-            }
-            catch(ex){
-                reject(ex);
-            }
-        });
-    }
-
     async getPlayerRole(playerUID:string):Promise<PermissionRole>{
         const request = new GetPlayerRole(playerUID);
 
-        const response = await request.send(this.sioc);
-
-        const roleStr = response.role;
+        const roleStr = await request.send(this.sioc);
 
         return this.permissions.getRole(roleStr);
     }
 
     async getPlayer(playerUID:string):Promise<SocketPlayerCharacter>{
-        const requestData:GetPlayerRequest = {
-            uid:playerUID
-        };
+        const request = new GetPlayer(playerUID);
 
-        const request:GetPlayerRequest = await this.gameserverRequest(GetPlayer,requestData);
-
-        return request.response.player;
+        return await request.send(this.sioc);
     }
 
     async getPlayerInventory(playerUID:string):Promise<SocketPlayerInventory>{

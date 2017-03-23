@@ -1,4 +1,4 @@
-import { ServerResponse, ServerRequestData, ServerRequestRunBag } from '../ServerRequest';
+import { ServerResponse, ServerRequestData, ServerRequestReceiveBag } from '../ServerRequest';
 import ServerRequest from '../ServerRequest';
 import { SocketPlayerCharacter } from '../../../core/creature/player/PlayerCharacter';
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
@@ -20,11 +20,11 @@ export default class GetPlayerRole extends ServerRequest{
         });
     }
 
-    send(sioc:SocketIOClient.Socket):Promise<GetPlayerRoleResponse>{
-        return this._send(sioc);
+    async send(sioc:SocketIOClient.Socket):Promise<string>{
+        return (await this._send(sioc) as GetPlayerRoleResponse).role;
     }
 
-    async receive(bag:ServerRequestRunBag):Promise<GetPlayerRoleResponse>{
+    async receive(bag:ServerRequestReceiveBag):Promise<GetPlayerRoleResponse>{
         const player:PlayerCharacter = await bag.game.getPlayerCharacter(this.data.uid);
 
         return {
