@@ -13,10 +13,8 @@ export interface SetPlayerRoleResponse extends ServerResponse{
 }
 
 export default class SetPlayerRoleRequest extends ServerRequest{
-    constructor(playerUID:string,){
-        super('SetPlayerRole',{
-            uid:playerUID,
-        });
+    constructor(data:SetPlayerRoleData){
+        super('SetPlayerRole',data);
     }
 
     async send(sioc:SocketIOClient.Socket):Promise<void>{

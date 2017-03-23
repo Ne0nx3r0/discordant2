@@ -12,10 +12,8 @@ export interface GetPlayerInventoryResponse extends ServerResponse{
 }
 
 export default class GetPlayerInventoryRequest extends ServerRequest{
-    constructor(playerUID:string){
-        super('GetPlayerInventory',{
-            uid: playerUID
-        });
+    constructor(data:GetPlayerInventoryData){
+        super('GetPlayerInventory',data);
     }
 
     async send(sioc:SocketIOClient.Socket):Promise<SocketPlayerInventory>{

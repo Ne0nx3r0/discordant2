@@ -12,10 +12,8 @@ export interface GetPlayerRoleResponse extends ServerResponse{
 }
 
 export default class GetPlayerRoleRequest extends ServerRequest{
-    constructor(playerUID:string){
-        super('GetPlayerRole',{
-            uid:playerUID
-        });
+    constructor(data:GetPlayerRoleData){
+        super('GetPlayerRole',data);
     }
 
     async send(sioc:SocketIOClient.Socket):Promise<string>{

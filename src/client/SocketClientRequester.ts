@@ -9,6 +9,7 @@ import GetPlayerRequest from '../gameserver/socket/requests/GetPlayerRequest';
 import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import GetPlayerInventoryRequest from '../gameserver/socket/requests/GetPlayerInventoryRequest';
 import { SocketPlayerInventory } from '../core/item/PlayerInventory';
+import SetPlayerRoleRequest from '../gameserver/socket/requests/SetPlayerRoleRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -30,21 +31,36 @@ export default class SocketClientServerRequester{
     }
 
     async getPlayerRole(playerUID:string):Promise<PermissionRole>{
-        const request = new GetPlayerRoleRequest(playerUID);
+        const request = new GetPlayerRoleRequest({
+            uid: playerUID
+        });
 
         const roleStr = await request.send(this.sioc);
 
         return this.permissions.getRole(roleStr);
     }
 
+    async setPlayerRole(playerUID:string,role:string):Promise<void>{
+        const request = new SetPlayerRoleRequest({
+            uid: playerUID,
+            role: role
+        });
+    
+        request.send(this.sioc);
+    }
+
     async getPlayer(playerUID:string):Promise<SocketPlayerCharacter>{
-        const request = new GetPlayerRequest(playerUID);
+        const request = new GetPlayerRequest({
+            uid: playerUID
+        });
 
         return await request.send(this.sioc);
     }
 
     async getPlayerInventory(playerUID:string):Promise<SocketPlayerInventory>{
-        const request = new GetPlayerInventoryRequest(playerUID);
+        const request = new GetPlayerInventoryRequest({
+            uid: playerUID
+        });
 
         return await request.send(this.sioc);
     }
@@ -128,14 +144,5 @@ export default class SocketClientServerRequester{
         const request:UnequipPlayerItemRequest = await this.gameserverRequest(UnequipPlayerItem,requestData);
 
         return request.response.unequipped;
-    }
-
-    async setPlayerRole(playerUID:string,role:string):Promise<void>{
-        const requestData:SetPlayerRoleRequest = {
-            uid: playerUID,
-            role: role,
-        };
-
-        const request:SetPlayerRoleRequest = await this.gameserverRequest(SetPlayerRole,requestData);
     }
 }

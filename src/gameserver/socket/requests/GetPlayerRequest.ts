@@ -12,10 +12,8 @@ export interface GetPlayerResponse extends ServerResponse{
 }
 
 export default class GetPlayerRequest extends ServerRequest{
-    constructor(playerUID:string){
-        super('GetPlayer',{
-            uid:playerUID
-        });
+    constructor(data:GetPlayerData){
+        super('GetPlayer',data);
     }
 
     async send(sioc:SocketIOClient.Socket):Promise<SocketPlayerCharacter>{
