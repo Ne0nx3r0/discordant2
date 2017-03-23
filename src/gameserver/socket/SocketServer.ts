@@ -7,6 +7,7 @@ import ServerRequestRequest from './ServerRequest';
 import { ServerResponse } from './ServerRequest';
 import GetPlayerInventoryRequest from './requests/GetPlayerInventoryRequest';
 import ServerRequest from './ServerRequest';
+import SetPlayerRoleRequest from './requests/SetPlayerRoleRequest';
 
 interface SocketServerBag{
     game:Game;
@@ -39,6 +40,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new GetPlayerRequest(null));
             this.registerHandler(registeredEvents,client,new GetPlayerRoleRequest(null));
             this.registerHandler(registeredEvents,client,new GetPlayerInventoryRequest(null));
+            this.registerHandler(registeredEvents,client,new SetPlayerRoleRequest(null));
         });
 
         this.io.listen(bag.port);
@@ -56,9 +58,10 @@ export default class SocketServer{
                 let result:ServerResponse;
 
                 try{
-                    result = await receiveFunc(this.handlerBag);
+                    result = await receiveFunc(this.handlerBag,data);
                 }
                 catch(ex){
+                    console.log(ex);
                     //If it's a string send it back to the client, otherwise create a did and send that back
                     if(typeof ex === 'string' || ex instanceof String){
                         result = {

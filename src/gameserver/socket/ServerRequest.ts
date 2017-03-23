@@ -23,7 +23,7 @@ export default class ServerRequest{
     }
 
     _send(sioc:SocketIOClient.Socket):Promise<ServerResponse>{
-        return new Promise(function(resolve,reject){
+        return new Promise((resolve,reject)=>{
             try{
                 sioc.emit(this.title,this.data,function(response:ServerResponse){
                     if(response.success){
@@ -44,7 +44,7 @@ export default class ServerRequest{
         throw this.title +' does not implement send';
     }
 
-    async receive(bag:ServerRequestReceiveBag):Promise<ServerResponse>{
+    async receive(bag:ServerRequestReceiveBag,data:ServerRequestData):Promise<ServerResponse>{
         throw this.title +' does not implement receive';
     }
 }

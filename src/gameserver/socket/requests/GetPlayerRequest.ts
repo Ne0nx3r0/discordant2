@@ -12,8 +12,6 @@ export interface GetPlayerResponse extends ServerResponse{
 }
 
 export default class GetPlayerRequest extends ServerRequest{
-    data:GetPlayerData;
-
     constructor(playerUID:string){
         super('GetPlayer',{
             uid:playerUID
@@ -24,8 +22,8 @@ export default class GetPlayerRequest extends ServerRequest{
         return (await this._send(sioc) as GetPlayerResponse).player;
     }
 
-    async receive(bag:ServerRequestReceiveBag):Promise<GetPlayerResponse>{
-        const player:PlayerCharacter = await bag.game.getPlayerCharacter(this.data.uid);
+    async receive(bag:ServerRequestReceiveBag,data:GetPlayerData):Promise<GetPlayerResponse>{
+        const player:PlayerCharacter = await bag.game.getPlayerCharacter(data.uid);
 
         return {
             success: true,

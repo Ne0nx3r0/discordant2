@@ -12,8 +12,6 @@ export interface GetPlayerRoleResponse extends ServerResponse{
 }
 
 export default class GetPlayerRoleRequest extends ServerRequest{
-    data:GetPlayerRoleData;
-
     constructor(playerUID:string){
         super('GetPlayerRole',{
             uid:playerUID
@@ -24,8 +22,8 @@ export default class GetPlayerRoleRequest extends ServerRequest{
         return (await this._send(sioc) as GetPlayerRoleResponse).role;
     }
 
-    async receive(bag:ServerRequestReceiveBag):Promise<GetPlayerRoleResponse>{
-        const player:PlayerCharacter = await bag.game.getPlayerCharacter(this.data.uid);
+    async receive(bag:ServerRequestReceiveBag,data:GetPlayerRoleData):Promise<GetPlayerRoleResponse>{
+        const player:PlayerCharacter = await bag.game.getPlayerCharacter(data.uid);
 
         return {
             success: true,

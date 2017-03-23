@@ -12,8 +12,6 @@ export interface GetPlayerInventoryResponse extends ServerResponse{
 }
 
 export default class GetPlayerInventoryRequest extends ServerRequest{
-    data:GetPlayerInventoryData;
-
     constructor(playerUID:string){
         super('GetPlayerInventory',{
             uid: playerUID
@@ -24,8 +22,8 @@ export default class GetPlayerInventoryRequest extends ServerRequest{
         return (await this._send(sioc) as GetPlayerInventoryResponse).inventory;
     }
 
-    async receive(bag:ServerRequestReceiveBag):Promise<GetPlayerInventoryResponse>{
-        const player:PlayerCharacter = await bag.game.getPlayerCharacter(this.data.uid);
+    async receive(bag:ServerRequestReceiveBag,data:GetPlayerInventoryData):Promise<GetPlayerInventoryResponse>{
+        const player:PlayerCharacter = await bag.game.getPlayerCharacter(data.uid);
 
         if(!player){
             throw 'Player not found';
