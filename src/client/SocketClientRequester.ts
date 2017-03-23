@@ -1,37 +1,10 @@
-import * as SocketIOClient from 'socket.io-client';
-import { PermissionRole } from '../core/permissions/PermissionService';
-import PermissionsService from '../core/permissions/PermissionService';
-import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
-import PlayerCharacter from '../core/creature/player/PlayerCharacter';
-import { GetPlayerRequest } from '../gameserver/socket/handlers/GetPlayer';
-import GetPlayer  from '../gameserver/socket/handlers/GetPlayer';
-import SocketHandler from '../gameserver/socket/SocketHandler';
-import { SocketRequest, SocketResponse } from '../gameserver/socket/SocketHandler';
-import RegisterPlayer from '../gameserver/socket/handlers/RegisterPlayer';
-import { RegisterPlayerRequest } from '../gameserver/socket/handlers/RegisterPlayer';
-import GetPlayerRole from '../gameserver/socket/handlers/GetPlayerRole';
-import { GetPlayerRoleRequest } from '../gameserver/socket/handlers/GetPlayerRole';
-import { SocketPlayerInventory } from '../core/item/PlayerInventory';
-import { GetPlayerInventoryRequest } from '../gameserver/socket/handlers/GetPlayerInventory';
-import GetPlayerInventory from '../gameserver/socket/handlers/GetPlayerInventory';
-import ItemBase from '../core/item/ItemBase';
-import { GrantPlayerWishesRequest } from '../gameserver/socket/handlers/GrantPlayerWishes';
-import GrantPlayerWishes from '../gameserver/socket/handlers/GrantPlayerWishes';
-import { GrantPlayerXPRequest } from '../gameserver/socket/handlers/GrantPlayerXP';
-import GrantPlayerXP from '../gameserver/socket/handlers/GrantPlayerXP';
-import { GrantPlayerItemRequest } from '../gameserver/socket/handlers/GrantPlayerItem';
-import GrantPlayerItem from '../gameserver/socket/handlers/GrantPlayerItem';
-import { EquipPlayerItemRequest } from '../gameserver/socket/handlers/EquipPlayerItem';
-import EquipPlayerItem from '../gameserver/socket/handlers/EquipPlayerItem';
-import { EquipmentSlot } from '../core/item/CreatureEquipment';
-import UnequipPlayerItem from '../gameserver/socket/handlers/UnequipPlayerItem';
-import { UnequipPlayerItemRequest } from '../gameserver/socket/handlers/UnequipPlayerItem';
-import { TransferPlayerItemRequest } from '../gameserver/socket/handlers/TransferPlayerItem';
-import TransferPlayerItem from '../gameserver/socket/handlers/TransferPlayerItem';
-import { SetPlayerRoleRequest } from '../gameserver/socket/handlers/SetPlayerRole';
-import SetPlayerRole from '../gameserver/socket/handlers/SetPlayerRole';
 import Logger from '../gameserver/log/Logger';
 import { Client as DiscordClient } from "discord.js";
+import PermissionsService from '../core/permissions/PermissionService';
+import ServerRequest from '../gameserver/socket/ServerRequest';
+import { ServerResponse } from '../gameserver/socket/ServerRequest';
+import { PermissionRole } from '../core/permissions/PermissionService';
+import GetPlayerRole from '../gameserver/socket/requests/GetPlayerRole';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -52,16 +25,14 @@ export default class SocketClientRequester{
         this.sioc = bag.sioc;
     }
 
-    gameserverRequest<T>(handler:SocketHandler,requestData:T):Promise<T>{
+    gameserverRequest<T>(handler:ServerRequest):Promise<T>{
         const sioc = this.sioc;
 
         return new Promise(function(resolve,reject){
             try{
-                sioc.emit(handler.title,requestData,function(response:SocketResponse){
-                    (requestData as SocketRequest).response  = response;
-
+                sioc.emit(handler.title,handler.data,function(response:ServerResponse){
                     if(response.success){
-                        resolve(requestData);
+                        resolve(response);
                     }
                     else{
                         reject(response.error);
@@ -75,12 +46,11 @@ export default class SocketClientRequester{
     }
 
     async getPlayerRole(playerUID:string):Promise<PermissionRole>{
-        const requestData:GetPlayerRoleRequest = {
-            uid: playerUID
-        };
+        const request = new GetPlayerRole(playerUID);
 
-        const request:GetPlayerRoleRequest = await this.gameserverRequest(GetPlayerRole,requestData);
-        const roleStr = request.response.role;
+        const response = await request.send(this.sioc);
+
+        const roleStr = response.role;
 
         return this.permissions.getRole(roleStr);
     }

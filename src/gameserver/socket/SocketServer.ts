@@ -1,19 +1,10 @@
 import * as SocketIO from 'socket.io';
 import Game from '../game/Game';
 import Logger from '../log/Logger';
-import SocketHandler from './SocketHandler';
-import GetPlayer from './handlers/GetPlayer';
-import RegisterPlayer from './handlers/RegisterPlayer';
-import { SocketResponse } from './SocketHandler';
-import GetPlayerRole from './handlers/GetPlayerRole';
-import GetPlayerInventory from './handlers/GetPlayerInventory';
-import GrantPlayerItem from './handlers/GrantPlayerItem';
-import GrantPlayerXP from './handlers/GrantPlayerXP';
-import GrantPlayerWishes from './handlers/GrantPlayerWishes';
-import EquipPlayerItem from './handlers/EquipPlayerItem';
-import UnequipPlayerItem from './handlers/UnequipPlayerItem';
-import TransferPlayerItem from './handlers/TransferPlayerItem';
-import SetPlayerRole from './handlers/SetPlayerRole';
+import GetPlayer from './requests/GetPlayer';
+import GetPlayerRole from './requests/GetPlayerRole';
+import ServerRequest from './ServerRequest';
+import { ServerResponse } from './ServerRequest';
 
 interface SocketServerBag{
     game:Game;
@@ -40,29 +31,22 @@ export default class SocketServer{
         };
 
         this.io.on('connection', (client)=>{
-            this.registerHandler(client,GetPlayer);
-            this.registerHandler(client,GetPlayerRole);
-            this.registerHandler(client,RegisterPlayer);
-            this.registerHandler(client,GetPlayerInventory);
-            this.registerHandler(client,GrantPlayerItem);
-            this.registerHandler(client,GrantPlayerWishes);
-            this.registerHandler(client,GrantPlayerXP);
-            this.registerHandler(client,EquipPlayerItem);
-            this.registerHandler(client,UnequipPlayerItem);
-            this.registerHandler(client,TransferPlayerItem);
-            this.registerHandler(client,SetPlayerRole);
+            this.registerHandler(client,new GetPlayer(null));
+            this.registerHandler(client,new GetPlayerRole(null));
         });
 
         this.io.listen(bag.port);
     }
 
-    registerHandler(client:any,handler:SocketHandler){
+    registerHandler(client:any,handler:ServerRequest){
+        const receiveFunc = handler.receive;
+
         client.on(handler.title,(data:any,callback:any)=>{
             (async()=>{
-                let result:SocketResponse;
+                let result:ServerResponse;
 
                 try{
-                    result = await handler.handlerFunc(this.handlerBag,data);
+                    result = await receiveFunc(this.handlerBag);
                 }
                 catch(ex){
                     //If it's a string send it back to the client, otherwise create a did and send that back

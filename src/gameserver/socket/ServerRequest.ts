@@ -22,7 +22,25 @@ export default class ServerRequest{
         this.data = data;
     }
 
-    async run(bag:ServerRequestRunBag):Promise<ServerResponse>{
-        throw this.title +' does not implement run';
+    _send(sioc:SocketIOClient.Socket):Promise<ServerResponse>{
+        return new Promise(function(resolve,reject){
+            try{
+                sioc.emit(this.title,this.data,function(response:ServerResponse){
+                    if(response.success){
+                        resolve(response);
+                    }
+                    else{
+                        reject(response.error);
+                    }
+                });
+            }
+            catch(ex){
+                reject(ex);
+            }
+        });
+    }
+
+    async receive(bag:ServerRequestRunBag):Promise<ServerResponse>{
+        throw this.title +' does not implement receive';
     }
 }
