@@ -11,7 +11,7 @@ export interface GetPlayerResponse extends ServerResponse{
     player:SocketPlayerCharacter;
 }
 
-export default class GetPlayer extends ServerRequest{
+export default class GetPlayerRequest extends ServerRequest{
     data:GetPlayerData;
 
     constructor(playerUID:string){

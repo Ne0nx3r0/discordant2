@@ -4,9 +4,11 @@ import PermissionsService from '../core/permissions/PermissionService';
 import ServerRequest from '../gameserver/socket/ServerRequest';
 import { ServerResponse } from '../gameserver/socket/ServerRequest';
 import { PermissionRole } from '../core/permissions/PermissionService';
-import GetPlayerRole from '../gameserver/socket/requests/GetPlayerRole';
-import GetPlayer from '../gameserver/socket/requests/GetPlayer';
+import GetPlayerRoleRequest from '../gameserver/socket/requests/GetPlayerRoleRequest';
+import GetPlayerRequest from '../gameserver/socket/requests/GetPlayerRequest';
 import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
+import GetPlayerInventoryRequest from '../gameserver/socket/requests/GetPlayerInventoryRequest';
+import { SocketPlayerInventory } from '../core/item/PlayerInventory';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -28,7 +30,7 @@ export default class SocketClientServerRequester{
     }
 
     async getPlayerRole(playerUID:string):Promise<PermissionRole>{
-        const request = new GetPlayerRole(playerUID);
+        const request = new GetPlayerRoleRequest(playerUID);
 
         const roleStr = await request.send(this.sioc);
 
@@ -36,19 +38,15 @@ export default class SocketClientServerRequester{
     }
 
     async getPlayer(playerUID:string):Promise<SocketPlayerCharacter>{
-        const request = new GetPlayer(playerUID);
+        const request = new GetPlayerRequest(playerUID);
 
         return await request.send(this.sioc);
     }
 
     async getPlayerInventory(playerUID:string):Promise<SocketPlayerInventory>{
-        const requestData:GetPlayerInventoryRequest = {
-            uid:playerUID
-        };
+        const request = new GetPlayerInventoryRequest(playerUID);
 
-        const request:GetPlayerInventoryRequest = await this.gameserverRequest(GetPlayerInventory,requestData);
-
-        return request.response.inventory;
+        return await request.send(this.sioc);
     }
 
     async registerPlayer(bag:RegisterPlayerRequest):Promise<SocketPlayerCharacter>{

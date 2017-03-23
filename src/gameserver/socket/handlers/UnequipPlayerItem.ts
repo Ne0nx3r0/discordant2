@@ -1,8 +1,6 @@
 import {SocketRequestHandlerBag} from '../SocketServer';
 import { SocketPlayerCharacter } from '../../../core/creature/player/PlayerCharacter';
-import SocketHandler from '../SocketHandler';
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
-import { SocketResponse, SocketRequest } from '../SocketHandler';
 import { EquipmentSlot } from '../../../core/item/CreatureEquipment';
 
 export interface UnequipPlayerItemRequest extends SocketRequest{

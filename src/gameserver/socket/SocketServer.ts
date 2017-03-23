@@ -1,10 +1,12 @@
 import * as SocketIO from 'socket.io';
 import Game from '../game/Game';
 import Logger from '../log/Logger';
-import GetPlayer from './requests/GetPlayer';
-import GetPlayerRole from './requests/GetPlayerRole';
-import ServerRequest from './ServerRequest';
+import GetPlayerRequest from './requests/GetPlayerRequest';
+import GetPlayerRoleRequest from './requests/GetPlayerRoleRequest';
+import ServerRequestRequest from './ServerRequest';
 import { ServerResponse } from './ServerRequest';
+import GetPlayerInventoryRequest from './requests/GetPlayerInventoryRequest';
+import ServerRequest from './ServerRequest';
 
 interface SocketServerBag{
     game:Game;
@@ -30,15 +32,23 @@ export default class SocketServer{
             game: bag.game
         };
 
+        //Mainly protects against typos
+        const registeredEvents = [];
+
         this.io.on('connection', (client)=>{
-            this.registerHandler(client,new GetPlayer(null));
-            this.registerHandler(client,new GetPlayerRole(null));
+            this.registerHandler(registeredEvents,client,new GetPlayerRequest(null));
+            this.registerHandler(registeredEvents,client,new GetPlayerRoleRequest(null));
+            this.registerHandler(registeredEvents,client,new GetPlayerInventoryRequest(null));
         });
 
         this.io.listen(bag.port);
     }
 
-    registerHandler(client:any,handler:ServerRequest){
+    registerHandler(registeredEvents:Array<string>,client:any,handler:ServerRequest){
+        if(registeredEvents.indexOf(handler.title) > -1){
+            throw `SocketServer tried to register event "${handler.title}" twice!`;
+        }
+
         const receiveFunc = handler.receive;
 
         client.on(handler.title,(data:any,callback:any)=>{

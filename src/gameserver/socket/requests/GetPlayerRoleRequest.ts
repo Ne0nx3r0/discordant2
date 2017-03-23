@@ -11,7 +11,7 @@ export interface GetPlayerRoleResponse extends ServerResponse{
     role:string;
 }
 
-export default class GetPlayerRole extends ServerRequest{
+export default class GetPlayerRoleRequest extends ServerRequest{
     data:GetPlayerRoleData;
 
     constructor(playerUID:string){
