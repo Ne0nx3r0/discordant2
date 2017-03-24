@@ -6,7 +6,7 @@ export interface ClientRequestRoundBeginData extends ClientRequestData{
     
 }
 
-export default class RoundBegin extends ClientRequest{
+export default class RoundBeginRequest extends ClientRequest{
     constructor(data:ClientRequestRoundBeginData){
         super('RoundBegin',data);
     }
