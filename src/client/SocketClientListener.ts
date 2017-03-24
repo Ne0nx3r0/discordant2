@@ -22,7 +22,7 @@ export default class SocketClientListener{
 
     registerHandler(bag:SocketClientListenerBag,handler:ClientRequest){
         const title = handler.title;
-        const run = handler.run;
+        const receive = handler.receive;
         const logger = bag.logger;
         const channelLookup = bag.channelLookup;
 
@@ -34,7 +34,7 @@ export default class SocketClientListener{
                     throw 'Invalid channel id '+data.channelId+' in request '+title;
                 }
 
-                run({
+                receive({
                     channel: channel
                 });
             }
