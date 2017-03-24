@@ -15,6 +15,7 @@ import RegisterPlayerRequest from './requests/RegisterPlayerRequest';
 import EquipPlayerItemRequest from './requests/EquipPlayerItemRequest';
 import TransferPlayerItemRequest from './requests/TransferPlayerItemRequest';
 import UnequipPlayerItemRequest from './requests/UnequipPlayerItemRequest';
+import RoundBeginRequest from '../../client/requests/RoundBeginRequest';
 
 interface SocketServerBag{
     game:Game;
@@ -55,6 +56,12 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new SetPlayerRoleRequest(null));
             this.registerHandler(registeredEvents,client,new TransferPlayerItemRequest(null));
             this.registerHandler(registeredEvents,client,new UnequipPlayerItemRequest(null));
+
+            setTimeout(function(){
+                const request = new RoundBeginRequest({channelId: '288157600854310912'});       
+
+                request.send(client);     
+            },10000);
         });
 
         this.io.listen(bag.port);

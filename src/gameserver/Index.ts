@@ -6,7 +6,6 @@ import GameServerConfig from '../../Config.GameServer';
 import PermissionsService from '../core/permissions/PermissionService';
 import { GameServerBag } from './game/Game';
 
-
 export interface GameServerConfig{
     dbConfig:DBConfig;
     port:number;
