@@ -12,6 +12,9 @@ import GrantPlayerXPRequest from './requests/GrantPlayerXPRequest';
 import GrantPlayerWishesRequest from './requests/GrantPlayerWishesRequest';
 import GrantPlayerItemRequest from './requests/GrantPlayerItemRequest';
 import RegisterPlayerRequest from './requests/RegisterPlayerRequest';
+import EquipPlayerItemRequest from './requests/EquipPlayerItemRequest';
+import TransferPlayerItemRequest from './requests/TransferPlayerItemRequest';
+import UnequipPlayerItemRequest from './requests/UnequipPlayerItemRequest';
 
 interface SocketServerBag{
     game:Game;
@@ -41,6 +44,7 @@ export default class SocketServer{
         const registeredEvents = [];
 
         this.io.on('connection', (client)=>{
+            this.registerHandler(registeredEvents,client,new EquipPlayerItemRequest(null));
             this.registerHandler(registeredEvents,client,new GetPlayerInventoryRequest(null));
             this.registerHandler(registeredEvents,client,new GetPlayerRequest(null));
             this.registerHandler(registeredEvents,client,new GetPlayerRoleRequest(null));
@@ -49,6 +53,8 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new GrantPlayerXPRequest(null));
             this.registerHandler(registeredEvents,client,new RegisterPlayerRequest(null));
             this.registerHandler(registeredEvents,client,new SetPlayerRoleRequest(null));
+            this.registerHandler(registeredEvents,client,new TransferPlayerItemRequest(null));
+            this.registerHandler(registeredEvents,client,new UnequipPlayerItemRequest(null));
         });
 
         this.io.listen(bag.port);
