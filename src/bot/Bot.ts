@@ -133,8 +133,7 @@ export default class DiscordantBotNode{
                 const playerRoleStr = await this.socket.getPlayerRole(playerUID);
                 const playerRole:PermissionRole = this.permissions.getRole(playerRoleStr);
 
-                if((this.ownerUIDs.indexOf(playerUID) == -1)
-                || !playerRole.has(command.permissionNode)){
+                if(!playerRole.has(command.permissionNode) && (this.ownerUIDs.indexOf(playerUID) == -1)){
                     if(playerRole.title == 'anonymous'){
                         message.channel.sendMessage(`You can register with \`dbegin\``);
                     }
