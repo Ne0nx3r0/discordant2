@@ -1,148 +1,107 @@
-import Logger from '../gameserver/log/Logger';
-import { Client as DiscordClient } from "discord.js";
-import PermissionsService from '../core/permissions/PermissionService';
-import ServerRequest from '../gameserver/socket/ServerRequest';
-import { ServerResponse } from '../gameserver/socket/ServerRequest';
-import { PermissionRole } from '../core/permissions/PermissionService';
 import GetPlayerRoleRequest from '../gameserver/socket/requests/GetPlayerRoleRequest';
 import GetPlayerRequest from '../gameserver/socket/requests/GetPlayerRequest';
 import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import GetPlayerInventoryRequest from '../gameserver/socket/requests/GetPlayerInventoryRequest';
 import { SocketPlayerInventory } from '../core/item/PlayerInventory';
 import SetPlayerRoleRequest from '../gameserver/socket/requests/SetPlayerRoleRequest';
+import RegisterPlayerRequest from '../gameserver/socket/requests/RegisterPlayerRequest';
+import { RegisterPlayerData } from '../gameserver/socket/requests/RegisterPlayerRequest';
+import { GrantPlayerItemData } from '../gameserver/socket/requests/GrantPlayerItemRequest';
+import GrantPlayerItemRequest from '../gameserver/socket/requests/GrantPlayerItemRequest';
+import TransferPlayerItemRequest from '../gameserver/socket/requests/TransferPlayerItemRequest';
+import { TransferPlayerItemData } from '../gameserver/socket/requests/TransferPlayerItemRequest';
+import GrantPlayerWishesRequest from '../gameserver/socket/requests/GrantPlayerWishesRequest';
+import { GrantPlayerWishesData } from '../gameserver/socket/requests/GrantPlayerWishesRequest';
+import { UnequipPlayerItemData } from '../gameserver/socket/requests/UnequipPlayerItemRequest';
+import EquipPlayerItemRequest from '../gameserver/socket/requests/EquipPlayerItemRequest';
+import { EquipPlayerItemData } from '../gameserver/socket/requests/EquipPlayerItemRequest';
+import UnequipPlayerItemRequest from '../gameserver/socket/requests/UnequipPlayerItemRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
 export interface SocketClientBag{
     sioc:SocketIOClient.Socket;
-    permissions:PermissionsService;
-    logger: Logger;
 }
 
 export default class SocketClientServerRequester{
     sioc:SocketIOClient.Socket;
-    permissions:PermissionsService;
-    logger: Logger;
     
     constructor(bag:SocketClientBag){        
-        this.permissions = bag.permissions;
-        this.logger = bag.logger;
         this.sioc = bag.sioc;
     }
 
-    async getPlayerRole(playerUID:string):Promise<PermissionRole>{
+    getPlayerRole(playerUID:string):Promise<string>{
         const request = new GetPlayerRoleRequest({
             uid: playerUID
         });
 
-        const roleStr = await request.send(this.sioc);
-
-        return this.permissions.getRole(roleStr);
+        return request.send(this.sioc);
     }
 
-    async setPlayerRole(playerUID:string,role:string):Promise<void>{
+    setPlayerRole(playerUID:string,role:string):Promise<void>{
         const request = new SetPlayerRoleRequest({
             uid: playerUID,
             role: role
         });
     
-        request.send(this.sioc);
+        return request.send(this.sioc);
     }
 
-    async getPlayer(playerUID:string):Promise<SocketPlayerCharacter>{
+    getPlayer(playerUID:string):Promise<SocketPlayerCharacter>{
         const request = new GetPlayerRequest({
             uid: playerUID
         });
 
-        return await request.send(this.sioc);
+        return request.send(this.sioc);
     }
 
-    async getPlayerInventory(playerUID:string):Promise<SocketPlayerInventory>{
+    getPlayerInventory(playerUID:string):Promise<SocketPlayerInventory>{
         const request = new GetPlayerInventoryRequest({
             uid: playerUID
         });
 
-        return await request.send(this.sioc);
+        return request.send(this.sioc);
     }
 
-    async registerPlayer(bag:RegisterPlayerRequest):Promise<SocketPlayerCharacter>{
-        const requestData:RegisterPlayerRequest = {
-            uid: bag.uid,
-            username: bag.username,
-            discriminator: bag.discriminator,
-            classId: bag.classId,
-        };
+    registerPlayer(data:RegisterPlayerData):Promise<SocketPlayerCharacter>{
+        const request = new RegisterPlayerRequest(data);
 
-        const request:RegisterPlayerRequest = await this.gameserverRequest(RegisterPlayer,requestData);
-
-        return request.response.player;
+        return request.send(this.sioc);
     }
 
-    async giveItem(fromUID:string,toUID:string,item:ItemBase,amount:number):Promise<void>{
-        const requestData:TransferPlayerItemRequest = {
-            fromUid: fromUID,
-            toUid: toUID,
-            itemId: item.id,
-            amount: amount,
-        };
+    grantItem(data:GrantPlayerItemData):Promise<number>{
+        const request = new GrantPlayerItemRequest(data);
 
-        const request:TransferPlayerItemRequest = await this.gameserverRequest(TransferPlayerItem,requestData);
+        return request.send(this.sioc);
     }
 
-    async grantItem(playerUID:string,item:ItemBase,amount:number):Promise<number>{
-        const requestData:GrantPlayerItemRequest = {
-            uid: playerUID,
-            itemId: item.id,
-            amount: amount,
-        };
+    transferItem(data:TransferPlayerItemData):Promise<void>{
+        const request = new TransferPlayerItemRequest(data);
 
-        const request:GrantPlayerItemRequest = await this.gameserverRequest(GrantPlayerItem,requestData);
-
-        return request.response.amountLeft;
+        return request.send(this.sioc);
     }
 
-    async grantWishes(playerUID:string,amount:number):Promise<number>{
-        const requestData:GrantPlayerWishesRequest = {
-            uid: playerUID,
-            amount: amount,
-        };
+    grantWishes(data:GrantPlayerWishesData):Promise<number>{
+        const request = new GrantPlayerWishesRequest(data);
 
-        const request:GrantPlayerWishesRequest = await this.gameserverRequest(GrantPlayerWishes,requestData);
-
-        return request.response.wishesLeft;
+        return request.send(this.sioc);
     }
 
-    async grantXP(playerUID:string,amount:number):Promise<number>{
-        const requestData:GrantPlayerXPRequest = {
-            uid: playerUID,
-            amount: amount,
-        };
+    grantXP(data:GrantPlayerWishesData):Promise<number>{
+        const request = new GrantPlayerWishesRequest(data);
 
-        const request:GrantPlayerXPRequest = await this.gameserverRequest(GrantPlayerXP,requestData);
-
-        return request.response.xpLeft;
+        return request.send(this.sioc);
     }
 
-    async equipItem(playerUID:string,itemId:number,offhand:boolean):Promise<number>{
-        const requestData:EquipPlayerItemRequest = {
-            uid: playerUID,
-            itemId: itemId,
-            offhand:offhand,
-        };
+    equipItem(data:EquipPlayerItemData):Promise<number>{
+        const request = new EquipPlayerItemRequest(data);
 
-        const request:EquipPlayerItemRequest = await this.gameserverRequest(EquipPlayerItem,requestData);
-
-        return request.response.unequipped;
+        return request.send(this.sioc);
     }
 
-    async unequipItem(playerUID:string,slot:EquipmentSlot){
-        const requestData:UnequipPlayerItemRequest = {
-            uid: playerUID,
-            slot: slot,
-        };
+    unequipItem(data:UnequipPlayerItemData):Promise<number>{
+        const request = new UnequipPlayerItemRequest(data);
 
-        const request:UnequipPlayerItemRequest = await this.gameserverRequest(UnequipPlayerItem,requestData);
-
-        return request.response.unequipped;
+        return request.send(this.sioc);
     }
 }
