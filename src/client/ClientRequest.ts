@@ -1,11 +1,11 @@
 import { TextChannel } from "discord.js";
 
-export interface ClientRequestRunBag{
+export interface ClientRequestReceiveBag{
     channel?: TextChannel;
 }
 
 export interface ClientRequestData{
-    channelId: string;
+
 }
 
 export default class ClientRequest{
@@ -17,7 +17,11 @@ export default class ClientRequest{
         this.data = data;
     }
 
-    async run(bag:ClientRequestRunBag):Promise<void>{
-        throw this.title +' does not implement run';
+    send(client:SocketIO.Socket){
+        client.emit(this.title,this.data);
+    }
+
+    async receive():Promise<void>{
+        throw this.title +' does not implement receive';
     }
 }
