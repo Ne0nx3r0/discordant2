@@ -1,7 +1,7 @@
 import { TextChannel } from "discord.js";
 
 export interface ClientRequestReceiveBag{
-    channel?: TextChannel;
+    channel: TextChannel;
 }
 
 export interface ClientRequestData{
