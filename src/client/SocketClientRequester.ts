@@ -18,6 +18,7 @@ import { EquipPlayerItemData } from '../gameserver/socket/requests/EquipPlayerIt
 import UnequipPlayerItemRequest from '../gameserver/socket/requests/UnequipPlayerItemRequest';
 import { EquipmentSlot } from '../core/item/CreatureEquipment';
 import ItemBase from '../core/item/ItemBase';
+import GrantPlayerXPRequest from '../gameserver/socket/requests/GrantPlayerXPRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -97,7 +98,7 @@ export default class SocketClientServerRequester{
     }
 
     grantXP(playerUid:string,amount:number):Promise<number>{
-        const request = new GrantPlayerWishesRequest({
+        const request = new GrantPlayerXPRequest({
             uid: playerUid,
             amount: amount
         });
