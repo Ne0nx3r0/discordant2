@@ -1,6 +1,6 @@
 import Logger from '../gameserver/log/Logger';
 import ClientRequest from './ClientRequest';
-import RoundBegin from './requests/RoundBegin';
+import RoundBeginRequest from './requests/RoundBeginRequest';
 import { TextChannel } from 'discord.js';
 import { ClientRequestData } from './ClientRequest';
 
@@ -17,7 +17,7 @@ interface SocketClientListenerBag{
 export default class SocketClientListener{
     constructor(bag:SocketClientListenerBag){
         //we can pass null in here because we just want the title
-        this.registerHandler(bag,new RoundBegin(null));
+        this.registerHandler(bag,new RoundBeginRequest(null));
     }
 
     registerHandler(bag:SocketClientListenerBag,handler:ClientRequest){

@@ -1,6 +1,6 @@
 import ClientRequest from '../ClientRequest';
 import { TextChannel } from 'discord.js';
-import { ClientRequestData, ClientRequestRunBag } from '../ClientRequest';
+import { ClientRequestData, ClientRequestReceiveBag } from '../ClientRequest';
 
 export interface ClientRequestRoundBeginData extends ClientRequestData{
     
@@ -11,7 +11,7 @@ export default class RoundBegin extends ClientRequest{
         super('RoundBegin',data);
     }
     
-    async run(bag:ClientRequestRunBag):Promise<void>{
+    async receive(bag:ClientRequestReceiveBag):Promise<void>{
         //this.data;
         bag.channel.sendMessage('```css\n--- NEW ROUND ---\n```');
     }

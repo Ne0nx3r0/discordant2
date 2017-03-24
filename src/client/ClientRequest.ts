@@ -5,7 +5,7 @@ export interface ClientRequestReceiveBag{
 }
 
 export interface ClientRequestData{
-
+    channelId: string;
 }
 
 export default class ClientRequest{
@@ -21,7 +21,7 @@ export default class ClientRequest{
         client.emit(this.title,this.data);
     }
 
-    async receive():Promise<void>{
+    async receive(bag:ClientRequestReceiveBag):Promise<void>{
         throw this.title +' does not implement receive';
     }
 }
