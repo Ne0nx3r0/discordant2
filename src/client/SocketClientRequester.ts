@@ -26,7 +26,7 @@ export interface SocketClientBag{
     sioc:SocketIOClient.Socket;
 }
 
-export default class SocketClientServerRequester{
+export default class SocketClientRequester{
     sioc:SocketIOClient.Socket;
     
     constructor(bag:SocketClientBag){        
