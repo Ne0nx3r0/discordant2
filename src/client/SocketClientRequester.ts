@@ -16,6 +16,8 @@ import { UnequipPlayerItemData } from '../gameserver/socket/requests/UnequipPlay
 import EquipPlayerItemRequest from '../gameserver/socket/requests/EquipPlayerItemRequest';
 import { EquipPlayerItemData } from '../gameserver/socket/requests/EquipPlayerItemRequest';
 import UnequipPlayerItemRequest from '../gameserver/socket/requests/UnequipPlayerItemRequest';
+import { EquipmentSlot } from '../core/item/CreatureEquipment';
+import ItemBase from '../core/item/ItemBase';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -69,8 +71,12 @@ export default class SocketClientServerRequester{
         return request.send(this.sioc);
     }
 
-    grantItem(data:GrantPlayerItemData):Promise<number>{
-        const request = new GrantPlayerItemRequest(data);
+    grantItem(playerUid:string,item:ItemBase,amount:number):Promise<number>{
+        const request = new GrantPlayerItemRequest({
+            uid: playerUid,
+            itemId: item.id,
+            amount: amount,
+        });
 
         return request.send(this.sioc);
     }
@@ -81,26 +87,39 @@ export default class SocketClientServerRequester{
         return request.send(this.sioc);
     }
 
-    grantWishes(data:GrantPlayerWishesData):Promise<number>{
-        const request = new GrantPlayerWishesRequest(data);
+    grantWishes(playerUid:string,amount:number):Promise<number>{
+        const request = new GrantPlayerWishesRequest({
+            uid: playerUid,
+            amount: amount
+        });
 
         return request.send(this.sioc);
     }
 
-    grantXP(data:GrantPlayerWishesData):Promise<number>{
-        const request = new GrantPlayerWishesRequest(data);
+    grantXP(playerUid:string,amount:number):Promise<number>{
+        const request = new GrantPlayerWishesRequest({
+            uid: playerUid,
+            amount: amount
+        });
 
         return request.send(this.sioc);
     }
 
-    equipItem(data:EquipPlayerItemData):Promise<number>{
-        const request = new EquipPlayerItemRequest(data);
+    equipItem(uid:string,itemId:number,offhand:boolean):Promise<number>{
+        const request = new EquipPlayerItemRequest({
+            uid: uid,
+            itemId: itemId,
+            offhand: offhand
+        });
 
         return request.send(this.sioc);
     }
 
-    unequipItem(data:UnequipPlayerItemData):Promise<number>{
-        const request = new UnequipPlayerItemRequest(data);
+    unequipItem(uid:string,slot:EquipmentSlot):Promise<number>{
+        const request = new UnequipPlayerItemRequest({
+            uid: uid,
+            slot: slot,
+        });
 
         return request.send(this.sioc);
     }

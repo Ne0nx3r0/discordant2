@@ -19,8 +19,6 @@ class DiscordantBotNode {
 
         const socket:SocketClientRequester = new SocketClientRequester({
             sioc: sioc,
-            permissions: permissions,
-            logger: logger,
         });
 
         const bot:Bot = new Bot({

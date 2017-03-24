@@ -43,7 +43,7 @@ export default class Equip extends Command{
         const itemUnequippedId:number = await bag.socket.equipItem(
             bag.message.author.id,
             itemBaseToEquip.id,
-            offhand,
+            offhand
         );
 
         const itemUnequipped = bag.items.get(itemUnequippedId);

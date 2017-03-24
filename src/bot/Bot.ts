@@ -130,7 +130,8 @@ export default class DiscordantBotNode{
         (async ()=>{
             try{
                 const playerUID = message.author.id;
-                const playerRole:PermissionRole = await this.socket.getPlayerRole(playerUID);
+                const playerRoleStr = await this.socket.getPlayerRole(playerUID);
+                const playerRole:PermissionRole = this.permissions.getRole(playerRoleStr);
 
                 if((this.ownerUIDs.indexOf(playerUID) == -1)
                 || !playerRole.has(command.permissionNode)){

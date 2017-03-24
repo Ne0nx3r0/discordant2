@@ -59,7 +59,12 @@ export default class Give extends Command{
             return;
         }
 
-        const newItemAmount = await bag.socket.giveItem(bag.message.author.id,giveTo.uid,itemWanted,amountWanted);
+        const newItemAmount = await bag.socket.transferItem({
+            fromUid: bag.message.author.id,
+            toUid: giveTo.uid,
+            itemId: itemWanted.id,
+            amount: amountWanted,
+        });
     
         bag.message.channel.sendMessage(`${bag.message.author.username} gave ${giveTo.title} ${amountWanted} ${itemWanted.title}`);
     }
