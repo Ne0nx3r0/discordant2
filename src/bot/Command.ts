@@ -1,17 +1,23 @@
 import PermissionId from '../core/permissions/PermissionId';
-import {Message} from 'discord.js';
+import { Message, Guild, TextChannel } from 'discord.js';
 import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import { PermissionRole } from '../core/permissions/PermissionService';
 import AllItems from '../core/item/AllItems';
 import PermissionsService from '../core/permissions/PermissionService';
 import SocketClientRequester from '../client/SocketClientRequester';
+import { SocketPvPInvite } from '../core/battle/PvPInvite';
 
 export interface SetPlayingFunc{
     (msg:string):void;
 }
 
+export interface CreatePvPChannelFunc{
+    (guild:Guild,invite:SocketPvPInvite):TextChannel;
+}
+
 export interface BotHandlers{
     setPlayingGame: SetPlayingFunc;
+    createPvPChannel: CreatePvPChannelFunc;
 }
 
 export interface CommandRunBag{

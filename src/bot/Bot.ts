@@ -8,10 +8,12 @@ import { SocketPlayerCharacter } from '../core/creature/player/PlayerCharacter';
 import PermissionsService from '../core/permissions/PermissionService';
 import AllItems from '../core/item/AllItems';
 import SocketClientRequester from '../client/SocketClientRequester';
+import { SocketPvPInvite } from '../core/battle/PvPInvite';
 import{
     Client as DiscordClient,
     Message,
-    TextChannel
+    TextChannel,
+    Guild
 } from 'discord.js';
 
 export interface BotConfigBase{
@@ -158,7 +160,8 @@ export default class DiscordantBotNode{
                     commandPrefix: this.commandPrefix,
                     commands: this.commands,
                     handlers:{
-                        setPlayingGame: this.setPlayingGame.bind(this)
+                        setPlayingGame: this.setPlayingGame.bind(this),
+                        createPvPChannel: this.createPvPChannel.bind(this),
                     },
                     permissions: this.permissions
                 });
@@ -175,6 +178,10 @@ export default class DiscordantBotNode{
 
     getChannelById(channelId:string):TextChannel{
         return this.client.channels.get(channelId) as TextChannel;
+    }
+
+    async createPvPChannel(guild:Guild,invite:SocketPvPInvite):Promise<TextChannel>{
+        const channelName = 
     }
 }
 

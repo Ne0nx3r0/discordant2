@@ -4,6 +4,7 @@ import PermissionId from '../../core/permissions/PermissionId';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import { TextChannel } from 'discord.js';
+import { SocketPvPInvite } from '../../core/battle/PvPInvite';
 
 export default class Challenge extends Command{
     constructor(bag:CommandBag){
@@ -28,7 +29,7 @@ export default class Challenge extends Command{
 
         //Accepting a pending challenge
         if(bag.params[0] == 'accept' || bag.params[0] == 'a'){
-            const invite = await bag.socket.getPvPInvite(player.uid);
+            const invite:SocketPvPInvite = await bag.socket.getPvPInvite(player.uid);
 
             if(!invite){
                 bag.message.channel.sendMessage('You do not have a pending invite, '+bag.message.author.username);
@@ -37,7 +38,7 @@ export default class Challenge extends Command{
             }
 
             //It's time to D-D-D-D-D-D-D-D-duuuuel
-            const channel:TextChannel = await bag.bot.createPvPChannel(bag.message.guild,invite);
+            const channel:TextChannel = await bag.handlers.createPvPChannel(bag.message.guild,invite);
 
             const battle = bag.socket.createPvPBattle(invite,channel.id);
 
