@@ -37,7 +37,7 @@ export default class Challenge extends Command{
             }
 
             //It's time to D-D-D-D-D-D-D-D-duuuuel
-            const channel:TextChannel = await bag.bot.createPvPChannel(message.guild,invite);
+            const channel:TextChannel = await bag.bot.createPvPChannel(bag.message.guild,invite);
 
             const battle = bag.socket.createPvPBattle(invite,channel.id);
 
