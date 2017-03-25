@@ -19,6 +19,7 @@ import UnequipPlayerItemRequest from '../gameserver/socket/requests/UnequipPlaye
 import { EquipmentSlot } from '../core/item/CreatureEquipment';
 import ItemBase from '../core/item/ItemBase';
 import GrantPlayerXPRequest from '../gameserver/socket/requests/GrantPlayerXPRequest';
+import CreatePvPInviteRequest from "../gameserver/socket/requests/CreatePvPInviteRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 

@@ -22,7 +22,7 @@ export default class CreatePvPInviteRequest extends ServerRequest{
     }
 
     async receive(bag:ServerRequestReceiveBag,data:CreatePvPInviteData):Promise<CreatePvPInviteResponse>{
-        bag.game.createPvPInvite(sender,receiver);
+        bag.game.createPvPInvite(data.sender,data.receiver);
 
         return {
             success: true,
