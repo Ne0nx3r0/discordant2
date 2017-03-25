@@ -21,6 +21,7 @@ import ItemEquippable from '../../core/item/ItemEquippable';
 import Weapon from '../../core/item/Weapon';
 import DBTransferPlayerItem from '../db/api/DBTransferPlayerItem';
 import DBSetPlayerRole from '../db/api/DBSetPlayerRole';
+import { PvPInvite, PVP_INVITE_TIMEOUT } from '../../core/battle/PvPInvite';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -31,12 +32,14 @@ export default class Game{
     db: DatabaseService;
     permissions:PermissionsService;
     cachedPCs: Map<string,PlayerCharacter>;
+    pvpInvites: Map<string,PvPInvite>;
     items: AllItems;
 
     constructor(bag:GameServerBag){
         this.db = bag.db;
         this.permissions = bag.permissions;
         this.cachedPCs = new Map();
+        this.pvpInvites = new Map();
         this.items = new AllItems();
     }
 
@@ -286,6 +289,42 @@ export default class Game{
         }
 
         await DBSetPlayerRole(this.db,player.uid,role);
+    }
+
+    async createPvPInvite(senderUid:string,receiverUid:string){
+        const sender = await this.getPlayerCharacter(senderUid);
+        const receiver = await this.getPlayerCharacter(receiverUid);
+
+        if(!sender){
+            throw 'You are not registered';
+        }
+
+        if(!receiver){
+            throw 'That player is not registered';
+        }
+
+        const invite = {
+            sender: sender,
+            receiver: receiver,
+            expires: Date.now()+PVP_INVITE_TIMEOUT
+        };
+
+        this.pvpInvites.set(sender.uid,invite);
+        this.pvpInvites.set(receiver.uid,invite);
+
+        setTimeout(()=>{
+            const maybeSameInviteSent = this.pvpInvites.get(sender.uid);
+
+            if(maybeSameInviteSent == invite){
+                this.pvpInvites.delete(sender.uid);
+            }
+
+            const maybeSameInviteReceived = this.pvpInvites.get(receiver.uid);
+
+            if(maybeSameInviteReceived == invite){
+                this.pvpInvites.delete(receiver.uid);
+            }
+        },PVP_INVITE_TIMEOUT+100);//+100 ensures the invite will be expired
     }
 }
 

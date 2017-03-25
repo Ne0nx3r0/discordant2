@@ -124,4 +124,13 @@ export default class SocketClientRequester{
 
         return request.send(this.sioc);
     }
+
+    createPvPInvite(senderUid:string,receiverUid:string):Promise<void>{
+        const request = new CreatePvPInviteRequest({
+            sender: senderUid,
+            receiver: receiverUid
+        });
+
+        return request.send(this.sioc);
+    }
 }

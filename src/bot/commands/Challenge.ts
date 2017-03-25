@@ -18,18 +18,9 @@ export default class Challenge extends Command{
     }
 
     async run(bag:CommandRunBag){
-        const player = await bag.socket.getPlayer(bag.message.author.id);
-
-        //Can't duel
-        if(player.status != 'inCity'){
-            bag.message.channel.sendMessage(`You cannot PvP right now, ${bag.message.author.username}`);
-
-            return;
-        }
-
         //Accepting a pending challenge
         if(bag.params[0] == 'accept' || bag.params[0] == 'a'){
-            const invite:SocketPvPInvite = await bag.socket.getPvPInvite(player.uid);
+            const invite:SocketPvPInvite = await bag.socket.getPvPInvite(bag.message.author.id);
 
             if(!invite){
                 bag.message.channel.sendMessage('You do not have a pending invite, '+bag.message.author.username);
@@ -40,7 +31,14 @@ export default class Challenge extends Command{
             //It's time to D-D-D-D-D-D-D-D-duuuuel
             const channel:TextChannel = await bag.handlers.createPvPChannel(bag.message.guild,invite);
 
-            const battle = bag.socket.createPvPBattle(invite,channel.id);
+            try{
+                await bag.socket.createPvPBattle(invite,channel.id);
+            }
+            catch(ex){
+                bag.handlers.deletePvPChannel(channel.id);
+
+                throw ex;
+            }
 
             bag.message.channel.sendMessage(`The duel between <@${invite.sender.uid}> and <@${invite.receiver.uid}> begins in 30 seconds in <#${channel.id}>`);
 
