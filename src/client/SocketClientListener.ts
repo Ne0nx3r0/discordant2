@@ -3,6 +3,13 @@ import ClientRequest from './ClientRequest';
 import RoundBeginRequest from './requests/RoundBeginRequest';
 import { TextChannel } from 'discord.js';
 import { ClientRequestData } from './ClientRequest';
+import AttackedRequest from './requests/AttackedRequest';
+import BlockedRequest from './requests/BlockedRequest';
+import CoopBattleEndedRequest from './requests/CoopBattleEndedRequest';
+import EffectMessageRequest from './requests/EffectMessageRequest';
+import PassedOutRequest from './requests/PassedOutRequest';
+import PvPBattleExpiredRequest from './requests/PvPBattleExpired';
+import PvPBattleEndedRequest from './requests/PvPBattleEnded';
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -17,6 +24,13 @@ interface SocketClientListenerBag{
 export default class SocketClientListener{
     constructor(bag:SocketClientListenerBag){
         //we can pass null in here because we just want the title
+        this.registerHandler(bag,new AttackedRequest(null));
+        this.registerHandler(bag,new BlockedRequest(null));
+        this.registerHandler(bag,new CoopBattleEndedRequest(null));
+        this.registerHandler(bag,new EffectMessageRequest(null));
+        this.registerHandler(bag,new PassedOutRequest(null));
+        this.registerHandler(bag,new PvPBattleEndedRequest(null));
+        this.registerHandler(bag,new PvPBattleExpiredRequest(null));
         this.registerHandler(bag,new RoundBeginRequest(null));
     }
 
@@ -36,7 +50,7 @@ export default class SocketClientListener{
 
                 receive({
                     channel: channel
-                });
+                },data);
             }
             catch(ex){
                 logger.error(ex);
