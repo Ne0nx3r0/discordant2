@@ -20,6 +20,7 @@ import { EquipmentSlot } from '../core/item/CreatureEquipment';
 import ItemBase from '../core/item/ItemBase';
 import GrantPlayerXPRequest from '../gameserver/socket/requests/GrantPlayerXPRequest';
 import CreatePvPInviteRequest from "../gameserver/socket/requests/CreatePvPInviteRequest";
+import { PvPInvite, SocketPvPInvite } from '../core/battle/PvPInvite';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -133,5 +134,13 @@ export default class SocketClientRequester{
         });
 
         return request.send(this.sioc);
+    }
+
+    createPvPBattle(invite:SocketPvPInvite,channelId:string):Promise<void>{
+        
+    }
+
+    getPvPInvite(playerUid:string):Promise<SocketPvPInvite>{
+
     }
 }

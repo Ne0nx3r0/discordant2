@@ -13,8 +13,10 @@ import{
     Client as DiscordClient,
     Message,
     TextChannel,
-    Guild
+    Guild,
+    PermissionOverwrites
 } from 'discord.js';
+import Logger from "../gameserver/log/Logger";
 
 export interface BotConfigBase{
     authToken:string;
@@ -29,6 +31,7 @@ export interface BotConfig extends BotConfigBase{
 export interface BotBag extends BotConfigBase{
     socket:SocketClientRequester;
     permissions:PermissionsService;
+    logger:Logger;
 }
 
 export default class DiscordantBotNode{
@@ -37,6 +40,7 @@ export default class DiscordantBotNode{
     ownerUIDs:Array<string>;
     commands:Map<String,Command>;
     socket:SocketClientRequester;
+    logger:Logger;
     permissions:PermissionsService;
     items: AllItems;
     aliases: Map<string,string>;
@@ -47,6 +51,8 @@ export default class DiscordantBotNode{
         this.permissions = bag.permissions;
         this.items = new AllItems();
         this.aliases = new Map();
+
+        this.logger = bag.logger;
 
         this.socket = bag.socket;
 
@@ -162,6 +168,7 @@ export default class DiscordantBotNode{
                     handlers:{
                         setPlayingGame: this.setPlayingGame.bind(this),
                         createPvPChannel: this.createPvPChannel.bind(this),
+                        deleteChannel: this.deleteChannel.bind(this),
                     },
                     permissions: this.permissions
                 });
@@ -181,7 +188,41 @@ export default class DiscordantBotNode{
     }
 
     async createPvPChannel(guild:Guild,invite:SocketPvPInvite):Promise<TextChannel>{
-        const channelName = 
+        const channelname = ('pvp-'+invite.sender.title.substr(0,invite.sender.title.length/2)+invite.receiver.title.substr(invite.receiver.title.length/2))
+            .replace(/[^A-Za-z0-9-]+/g,'')
+            .substr(0,20);
+
+        const overwrites = [     
+            {
+                id: guild.id, 
+                type: 'role', 
+                deny: 0x00000800/*send_msg*/ + 0x00001000/*send_tts*/, 
+                allow: 0x00000400/*read_msgs*/ + 0x00000040/*reactions*/,
+                //Need these strictly for typescript
+                channel: null,
+                delete: null,
+            } as PermissionOverwrites
+        ];
+
+        const channel:TextChannel = await guild.createChannel(channelname,'text',overwrites) as TextChannel;
+
+        await channel.overwritePermissions(invite.sender.uid,{
+            SEND_MESSAGES: true
+        });
+
+        await channel.overwritePermissions(invite.receiver.uid,{
+            SEND_MESSAGES: true
+        });
+
+        return channel;
+    }
+
+    deleteChannel(channelId:string){
+        const channel = this.getChannelById(channelId);
+
+        if(channel){
+            channel.delete();
+        }
     }
 }
 

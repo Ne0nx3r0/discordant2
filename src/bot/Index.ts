@@ -27,6 +27,7 @@ class DiscordantBotNode {
             ownerUIDs: Config.ownerUIDs,
             commandPrefix: Config.commandPrefix,
             socket:socket,
+            logger: logger,
         });
 
         const listener:SocketClientListener = new SocketClientListener({

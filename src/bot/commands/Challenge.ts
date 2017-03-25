@@ -35,7 +35,7 @@ export default class Challenge extends Command{
                 await bag.socket.createPvPBattle(invite,channel.id);
             }
             catch(ex){
-                bag.handlers.deletePvPChannel(channel.id);
+                bag.handlers.deleteChannel(channel.id);
 
                 throw ex;
             }
