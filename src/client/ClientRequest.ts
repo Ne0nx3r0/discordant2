@@ -21,7 +21,7 @@ export default class ClientRequest{
         client.emit(this.title,this.data);
     }
 
-    async receive(bag:ClientRequestReceiveBag):Promise<void>{
+    async receive(bag:ClientRequestReceiveBag,data:ClientRequestData):Promise<void>{
         throw this.title +' does not implement receive';
     }
 }

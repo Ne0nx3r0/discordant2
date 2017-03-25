@@ -2,7 +2,7 @@ import AttributeSet from './AttributeSet';
 import IDamageSet from '../damage/IDamageSet';
 import CreatureEquipment from '../item/CreatureEquipment';
 import ItemEquippable from '../item/ItemEquippable';
-import { EquipmentSlot } from '../item/CreatureEquipment';
+import { EquipmentSlot, SocketCreatureEquipment } from '../item/CreatureEquipment';
 import BattleTemporaryEffect from '../battle/BattleTemporaryEffect';
 
 export interface ICreatureStatSet{
@@ -122,4 +122,17 @@ export default class Creature{
     get damagePercentBlocked():number{
         return Math.min(0.95,this.equipment.weapon.damageBlocked + this.equipment.offhand.damageBlocked);
     }
+
+    toSocket(){
+
+    }
+}
+
+export interface SocketCreature{
+    uid: string;
+    equipment: SocketCreatureEquipment;
+    stats: ICreatureStatSet;
+    title: string;
+    description: string;
+    HPCurrent: number;
 }

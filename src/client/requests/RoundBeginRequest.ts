@@ -11,7 +11,7 @@ export default class RoundBeginRequest extends ClientRequest{
         super('RoundBegin',data);
     }
     
-    async receive(bag:ClientRequestReceiveBag):Promise<void>{
+    async receive(bag:ClientRequestReceiveBag,data:ClientRequestRoundBeginData):Promise<void>{
         //this.data;
         bag.channel.sendMessage('```css\n--- NEW ROUND ---\n```');
     }

@@ -7,7 +7,7 @@ import CreatureEquipment from '../../item/CreatureEquipment';
 import PlayerInventory from '../../item/PlayerInventory';
 import { SocketPlayerInventory } from '../../item/PlayerInventory';
 import { SocketCreatureEquipment } from '../../item/CreatureEquipment';
-import { ICreatureStatSet } from '../Creature';
+import { ICreatureStatSet, SocketCreature } from '../Creature';
 
 type PlayerStatus = 'inCity' | 'invitedToPVPBattle' | 'inBattle' | 'invitedToParty' | 'inParty';
 
@@ -107,17 +107,11 @@ export default class PlayerCharacter extends Creature{
     }
 }
 
-export interface SocketPlayerCharacter{
-    uid: string;
-    title: string;
-    description: string;
+export interface SocketPlayerCharacter extends SocketCreature{
     class: number;
     xp: number;
     karma: number;
     wishes: number;
     role: string;
     status: PlayerStatus;
-    equipment: SocketCreatureEquipment;
-    stats: ICreatureStatSet;
-    HPCurrent: number;
 }
