@@ -21,6 +21,8 @@ import ItemBase from '../core/item/ItemBase';
 import GrantPlayerXPRequest from '../gameserver/socket/requests/GrantPlayerXPRequest';
 import CreatePvPInviteRequest from "../gameserver/socket/requests/CreatePvPInviteRequest";
 import { PvPInvite, SocketPvPInvite } from '../core/battle/PvPInvite';
+import GetPvPInviteRequest from "../gameserver/socket/requests/GetPvPInviteRequest";
+import CreatePvPBattleRequest from "../gameserver/socket/requests/CreatePvPBattleRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -136,11 +138,20 @@ export default class SocketClientRequester{
         return request.send(this.sioc);
     }
 
-    createPvPBattle(invite:SocketPvPInvite,channelId:string):Promise<void>{
-        
+    getPvPInvite(playerUid:string):Promise<SocketPvPInvite>{
+        const request = new GetPvPInviteRequest({
+            participant: playerUid
+        });
+
+        return request.send(this.sioc);
     }
 
-    getPvPInvite(playerUid:string):Promise<SocketPvPInvite>{
+    createPvPBattle(invite:SocketPvPInvite,channelId:string):Promise<void>{
+        const request = new CreatePvPBattleRequest({
+            player1: invite.sender.uid,
+            player2: invite.receiver.uid
+        });
 
+        return request.send(this.sioc);
     }
 }

@@ -21,7 +21,7 @@ import ItemEquippable from '../../core/item/ItemEquippable';
 import Weapon from '../../core/item/Weapon';
 import DBTransferPlayerItem from '../db/api/DBTransferPlayerItem';
 import DBSetPlayerRole from '../db/api/DBSetPlayerRole';
-import { PvPInvite, PVP_INVITE_TIMEOUT } from '../../core/battle/PvPInvite';
+import { PvPInvite, PVP_INVITE_TIMEOUT, SocketPvPInvite } from '../../core/battle/PvPInvite';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -325,6 +325,25 @@ export default class Game{
                 this.pvpInvites.delete(receiver.uid);
             }
         },PVP_INVITE_TIMEOUT+100);//+100 ensures the invite will be expired
+    }
+
+    async getPvPInvite(playerUid:string):Promise<PvPInvite>{
+        return this.pvpInvites.get(playerUid);
+    }
+
+    async createPvPBattle(player1Uid:string,player2Uid:string):Promise<void>{
+        const sender = await this.getPlayerCharacter(player1Uid);
+        const receiver = await this.getPlayerCharacter(player2Uid);
+
+        if(!sender){
+            throw 'You are not registered';
+        }
+
+        if(!receiver){
+            throw 'That player is not registered';
+        }
+
+        
     }
 }
 
