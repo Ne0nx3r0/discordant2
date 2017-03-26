@@ -343,7 +343,12 @@ export default class Game{
             throw 'That player is not registered';
         }
 
-        
+        const battle = new PvPBattle();
+
+        this.pvpInvites.delete(sender.uid);
+        this.pvpInvites.delete(receiver.uid);
+
+
     }
 }
 
