@@ -1,6 +1,8 @@
 import { IBattlePlayerCharacter, ATTACK_TICK_MS } from '../../../core/battle/PlayerBattle';
 import PlayerBattle from '../../../core/battle/PlayerBattle';
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
+import BattleTemporaryEffect from '../../../core/effects/BattleTemporaryEffect';
+import IDamageSet from '../../../core/damage/IDamageSet';
 
 const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
 
@@ -57,7 +59,7 @@ export default class PvPBattle extends PlayerBattle{
                 }
 
                 if(roundsLeft==1){
-                    bpc.pc._removeTemporaryEffect(effect);
+                    bpc.pc.removeTemporaryEffect(effect);
 
                     if(effect.onRemoved){
                         effect.onRemoved({
@@ -67,7 +69,7 @@ export default class PvPBattle extends PlayerBattle{
                     }
                 }
                 else{
-                    bpc.pc._tempEffects.set(effect,roundsLeft-1);
+                    bpc.pc.tempEffects.set(effect,roundsLeft-1);
                 }
             });
         });
@@ -122,7 +124,7 @@ export default class PvPBattle extends PlayerBattle{
 
         let attackCancelled = false;
 
-        attacker.pc._tempEffects.forEach((rounds:number,effect:BattleTemporaryEffect)=>{
+        attacker.pc.tempEffects.forEach((rounds:number,effect:BattleTemporaryEffect)=>{
             if(effect.onAttack && !effect.onAttack({
                 target:attacker.pc,
                 sendBattleEmbed:this.sendEffectApplied
@@ -139,7 +141,7 @@ export default class PvPBattle extends PlayerBattle{
             return;
         }
 
-        defender.pc._tempEffects.forEach((rounds:number,effect:BattleTemporaryEffect)=>{
+        defender.pc.tempEffects.forEach((rounds:number,effect:BattleTemporaryEffect)=>{
             if(effect.onAttacked && !effect.onAttacked({
                 target:defender.pc,
                 sendBattleEmbed:this.sendEffectApplied
@@ -209,7 +211,7 @@ export default class PvPBattle extends PlayerBattle{
         this.bpcs.forEach(function(bpc){
             bpc.pc.battle = null;
             bpc.pc.status = 'inCity';
-            bpc.pc._clearTemporaryEffects();
+            bpc.pc.clearTemporaryEffects();
             bpc.pc.HPCurrent = bpc.pc.stats.HPTotal;
         });
 

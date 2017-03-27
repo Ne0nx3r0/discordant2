@@ -22,6 +22,7 @@ import Weapon from '../../core/item/Weapon';
 import DBTransferPlayerItem from '../db/api/DBTransferPlayerItem';
 import DBSetPlayerRole from '../db/api/DBSetPlayerRole';
 import { PvPInvite, PVP_INVITE_TIMEOUT, SocketPvPInvite } from '../../core/battle/PvPInvite';
+import PvPBattle from './battle/PvPBattle';
 
 export interface GameServerBag{
     db: DatabaseService;

@@ -4,7 +4,7 @@ import PlayerCharacter from '../creature/player/PlayerCharacter';
 import Creature from '../creature/Creature';
 import IDamageSet from '../damage/IDamageSet';
 import CreatureAIControlled from '../creature/CreatureAIControlled';
-import EventDispatcher from '../../util/EventDispatcher';
+
 import ItemUsable from '../item/ItemUsable';
 import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
 
@@ -14,14 +14,13 @@ export default class PlayerBattle{
     id:number;
     bpcs:Map<Creature,IBattlePlayerCharacter>;
     _battleEnded:boolean;
-    _events:EventDispatcher;
+
     channelId:string;
     lastActionRoundsAgo:number;
 
     constructor(id:number,channelId:string,pcs:Array<PlayerCharacter>){
         this.id = id;
         this._battleEnded = false;
-        this._events = new EventDispatcher();
         this.channelId = channelId;
         this.lastActionRoundsAgo = 0;
 
@@ -150,7 +149,7 @@ export default class PlayerBattle{
     }
 
     addTemporaryEffect(target:Creature,effect:BattleTemporaryEffect,rounds:number){
-        target._addTemporaryEffect(effect,rounds);
+        target.addTemporaryEffect(effect,rounds);
 
         if(effect.onAdded){
             effect.onAdded({
@@ -168,13 +167,8 @@ export default class PlayerBattle{
             });
         }
 
-        target._removeTemporaryEffect(effect);
+        target.removeTemporaryEffect(effect);
     }
-
-    //Event methods
-    on(event:BattleEvent,handler:Function){ this._events.on(event,handler); }
-    off(event:BattleEvent,handler:Function){ this._events.off(event,handler); }
-    dispatch<T>(event:BattleEvent,eventData:T){ this._events.dispatch(event,eventData); }
 }
 
 export enum BattleEvent{

@@ -8,7 +8,7 @@ export interface GetPlayerRoleData extends ServerRequestData{
 }
 
 export interface GetPlayerRoleResponse extends ServerResponse{
-    role:string;
+    role: string;
 }
 
 export default class GetPlayerRoleRequest extends ServerRequest{

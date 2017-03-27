@@ -3,7 +3,7 @@ import IDamageSet from '../damage/IDamageSet';
 import CreatureEquipment from '../item/CreatureEquipment';
 import ItemEquippable from '../item/ItemEquippable';
 import { EquipmentSlot, SocketCreatureEquipment } from '../item/CreatureEquipment';
-import BattleTemporaryEffect from '../battle/BattleTemporaryEffect';
+import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
 
 export interface ICreatureStatSet{
     Strength: number,
