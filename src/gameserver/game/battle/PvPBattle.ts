@@ -1,11 +1,15 @@
+import { IBattlePlayerCharacter, ATTACK_TICK_MS } from '../../../core/battle/PlayerBattle';
+import PlayerBattle from '../../../core/battle/PlayerBattle';
+import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
+
 const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
 
 export default class PvPBattle extends PlayerBattle{
     bpc1:IBattlePlayerCharacter;
     bpc2:IBattlePlayerCharacter;
 
-    constructor(id:number,channel:DiscordTextChannel,pc1:PlayerCharacter,pc2:PlayerCharacter){
-        super(id,channel,[pc1,pc2]);
+    constructor(id:number,channelId:string,pc1:PlayerCharacter,pc2:PlayerCharacter){
+        super(id,channelId,[pc1,pc2]);
 
         this.bpc1 = this.bpcs.get(pc1);
         this.bpc2 = this.bpcs.get(pc2);
