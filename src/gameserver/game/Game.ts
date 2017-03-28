@@ -23,10 +23,11 @@ import DBTransferPlayerItem from '../db/api/DBTransferPlayerItem';
 import DBSetPlayerRole from '../db/api/DBSetPlayerRole';
 import { PvPInvite, PVP_INVITE_TIMEOUT, SocketPvPInvite } from '../../core/battle/PvPInvite';
 import PvPBattle from './battle/PvPBattle';
+import { IGetRandomClientFunc } from '../socket/SocketServer';
 
 export interface GameServerBag{
     db: DatabaseService;
-    permissions:PermissionsService;
+    getRandomClient:IGetRandomClientFunc;
 }
 
 export default class Game{
@@ -35,13 +36,17 @@ export default class Game{
     cachedPCs: Map<string,PlayerCharacter>;
     pvpInvites: Map<string,PvPInvite>;
     items: AllItems;
+    battleCardinality: number;
+    getClient: IGetRandomClientFunc;
 
     constructor(bag:GameServerBag){
         this.db = bag.db;
-        this.permissions = bag.permissions;
+        this.permissions = new PermissionsService();
         this.cachedPCs = new Map();
         this.pvpInvites = new Map();
         this.items = new AllItems();
+        this.battleCardinality = 1;
+        this.getClient = bag.getRandomClient;
     }
 
     async getPlayerCharacter(uid:string):Promise<PlayerCharacter>{
@@ -332,7 +337,7 @@ export default class Game{
         return this.pvpInvites.get(playerUid);
     }
 
-    async createPvPBattle(player1Uid:string,player2Uid:string):Promise<void>{
+    async createPvPBattle(player1Uid:string,player2Uid:string,channelId:string):Promise<void>{
         const sender = await this.getPlayerCharacter(player1Uid);
         const receiver = await this.getPlayerCharacter(player2Uid);
 
@@ -344,12 +349,16 @@ export default class Game{
             throw 'That player is not registered';
         }
 
-        const battle = new PvPBattle();
+        const battle = new PvPBattle({
+            id: this.battleCardinality++,
+            channelId: channelId,
+            pc1: sender,
+            pc2: receiver,
+            getClient: this.getClient
+        });
 
         this.pvpInvites.delete(sender.uid);
         this.pvpInvites.delete(receiver.uid);
-
-
     }
 }
 

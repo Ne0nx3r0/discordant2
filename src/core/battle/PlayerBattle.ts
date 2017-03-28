@@ -42,7 +42,7 @@ export default class PlayerBattle{
 
         this.sendEffectApplied = this.sendEffectApplied.bind(this);
     }
-
+    
     playerActionAttack(pc:PlayerCharacter,attack:WeaponAttack){
         return (async()=>{
             const bpc = this.bpcs.get(pc);

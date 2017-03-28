@@ -20,17 +20,10 @@ class DiscordantGameServer {
         //Adds a database transport so we "start" the logger after 
         const db = new DatabaseService(logger,GameServerConfig.dbConfig);
 
-        const permissions = new PermissionsService();
-
-        const game = new Game({
-            db: db,
-            permissions: permissions,
-        });
-
         const socketServer = new SocketServer({
-            game: game,
             port: GameServerConfig.port,
             logger: logger,
+            db: db,
         });
         
         return 0;

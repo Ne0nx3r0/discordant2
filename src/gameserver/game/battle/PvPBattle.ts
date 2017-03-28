@@ -3,18 +3,28 @@ import PlayerBattle from '../../../core/battle/PlayerBattle';
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 import BattleTemporaryEffect from '../../../core/effects/BattleTemporaryEffect';
 import IDamageSet from '../../../core/damage/IDamageSet';
+import { IGetRandomClientFunc } from '../../socket/SocketServer';
 
 const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
+
+interface PvPBattleBag{
+    id:number;
+    channelId:string;
+    pc1:PlayerCharacter;
+    pc2:PlayerCharacter;
+    getClient:IGetRandomClientFunc;
+}
 
 export default class PvPBattle extends PlayerBattle{
     bpc1:IBattlePlayerCharacter;
     bpc2:IBattlePlayerCharacter;
+    getClient:IGetRandomClientFunc;
 
-    constructor(id:number,channelId:string,pc1:PlayerCharacter,pc2:PlayerCharacter){
-        super(id,channelId,[pc1,pc2]);
+    constructor(bag:PvPBattleBag){
+        super(bag.id,bag.channelId,[bag.pc1,bag.pc2]);
 
-        this.bpc1 = this.bpcs.get(pc1);
-        this.bpc2 = this.bpcs.get(pc2);
+        this.bpc1 = this.bpcs.get(bag.pc1);
+        this.bpc2 = this.bpcs.get(bag.pc2);
 
         setTimeout(this.tick.bind(this),ATTACK_TICK_MS);
     }
@@ -38,6 +48,7 @@ export default class PvPBattle extends PlayerBattle{
         const bpc2 = orderedAttacks[1];
 
 //Dispatch round begin
+
         const eventData:IBattleRoundBeginEvent = {
             battle:this
         };

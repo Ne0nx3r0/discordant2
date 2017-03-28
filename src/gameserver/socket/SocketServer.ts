@@ -16,30 +16,36 @@ import EquipPlayerItemRequest from './requests/EquipPlayerItemRequest';
 import TransferPlayerItemRequest from './requests/TransferPlayerItemRequest';
 import UnequipPlayerItemRequest from './requests/UnequipPlayerItemRequest';
 import RoundBeginRequest from '../../client/requests/RoundBeginRequest';
+import DatabaseService from '../db/DatabaseService';
 
 interface SocketServerBag{
-    game:Game;
     port:number;
     logger:Logger;
+    db:DatabaseService;
 }
 
 export interface SocketRequestHandlerBag{
     game:Game;
 }
 
+export interface IGetRandomClientFunc{
+    ():Promise<SocketIO.Client>;
+}
+
 export default class SocketServer{
     io:SocketIO.Server;
-    handlerBag:SocketRequestHandlerBag;
     logger:Logger;
+    game: Game;
 
     constructor(bag:SocketServerBag){
         this.logger = bag.logger;
 
         this.io = SocketIO();
 
-        this.handlerBag = {
-            game: bag.game
-        };
+        this.game = new Game({
+            db: bag.db,
+            getRandomClient: this.getRandomClient.bind(this) as IGetRandomClientFunc
+        });
 
         //Mainly protects against typos
         const registeredEvents = [];
@@ -67,6 +73,18 @@ export default class SocketServer{
         this.io.listen(bag.port);
     }
 
+    getRandomClient():Promise<SocketIO.Client>{
+        return new Promise((resolve,reject)=>{
+            this.io.clients((error, clients)=>{
+                if(error){
+                    this.logger.error(error);
+
+                    reject(error);
+                }
+            });
+        });
+    }
+
     registerHandler(registeredEvents:Array<string>,client:any,handler:ServerRequest){
         if(registeredEvents.indexOf(handler.title) > -1){
             throw `SocketServer tried to register event "${handler.title}" twice!`;
@@ -79,7 +97,9 @@ export default class SocketServer{
                 let result:ServerResponse;
 
                 try{
-                    result = await receiveFunc(this.handlerBag,data);
+                    result = await receiveFunc({
+                        game: this.game
+                    },data);
                 }
                 catch(ex){
                     console.log(ex);

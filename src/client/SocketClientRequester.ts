@@ -149,7 +149,8 @@ export default class SocketClientRequester{
     createPvPBattle(invite:SocketPvPInvite,channelId:string):Promise<void>{
         const request = new CreatePvPBattleRequest({
             player1: invite.sender.uid,
-            player2: invite.receiver.uid
+            player2: invite.receiver.uid,
+            channelId: channelId
         });
 
         return request.send(this.sioc);

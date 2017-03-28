@@ -6,6 +6,7 @@ import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 export interface CreatePvPBattleData extends ServerRequestData{
     player1: string;
     player2: string;
+    channelId: string;
 }
 
 export interface CreatePvPBattleResponse extends ServerResponse{
@@ -22,7 +23,11 @@ export default class CreatePvPBattleRequest extends ServerRequest{
     }
 
     async receive(bag:ServerRequestReceiveBag,data:CreatePvPBattleData):Promise<CreatePvPBattleResponse>{
-        await bag.game.createPvPBattle(data.player1,data.player2);
+        await bag.game.createPvPBattle(
+            data.player1,
+            data.player2,
+            data.channelId
+        );
 
         return {
             success: true,
