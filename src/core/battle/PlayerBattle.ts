@@ -7,26 +7,37 @@ import CreatureAIControlled from '../creature/CreatureAIControlled';
 
 import ItemUsable from '../item/ItemUsable';
 import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
+import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
+import BlockedRequest from '../../client/requests/BlockedRequest';
+import EffectMessageRequest from '../../client/requests/EffectMessageRequest';
 
 export const ATTACK_TICK_MS = 10000;
+
+interface PlayerBattleBag{
+    id:number;
+    channelId:string;
+    pcs:Array<PlayerCharacter>;
+    getClient:IGetRandomClientFunc;
+}
 
 export default class PlayerBattle{
     id:number;
     bpcs:Map<Creature,IBattlePlayerCharacter>;
     _battleEnded:boolean;
-
+    getClient:IGetRandomClientFunc;
     channelId:string;
     lastActionRoundsAgo:number;
 
-    constructor(id:number,channelId:string,pcs:Array<PlayerCharacter>){
-        this.id = id;
+    constructor(bag: PlayerBattleBag){
+        this.id = bag.id;
         this._battleEnded = false;
-        this.channelId = channelId;
+        this.channelId = bag.channelId;
         this.lastActionRoundsAgo = 0;
+        this.getClient = bag.getClient;
 
         this.bpcs = new Map();
         
-        pcs.forEach((pc)=>{
+        bag.pcs.forEach((pc)=>{
             this.bpcs.set(pc,{
                 pc:pc,
                 battle: this,
@@ -100,12 +111,12 @@ export default class PlayerBattle{
             bpc.exhaustion++;
             bpc.blocking = true;
 
-            const eventData:IBattleBlockEvent = {
-                battle:this,
-                blocker:bpc,
-            };
-
-            this.dispatch(BattleEvent.Block,eventData);
+            const request = new BlockedRequest({
+                channelId: this.channelId,
+                blockerTitle: bpc.pc.title
+            });
+            
+            request.send(this.getClient());
 
             this.lastActionRoundsAgo = 0;
         })();
@@ -139,13 +150,13 @@ export default class PlayerBattle{
     }
 
     sendEffectApplied(msg:string,color:number){
-        const eventData:IBattleEffectEvent = {
-            battle: this,
-            message: msg,
+        const request = new EffectMessageRequest({
+            channelId: this.channelId,
+            msg: msg,
             color: color,
-        };
+        });
 
-        this.dispatch(BattleEvent.EffectApplied,eventData);
+        request.send(this.getClient());
     }
 
     addTemporaryEffect(target:Creature,effect:BattleTemporaryEffect,rounds:number){

@@ -8,6 +8,8 @@ import RoundBeginRequest from '../../../client/requests/RoundBeginRequest';
 import WeaponAttackStep from '../../../core/item/WeaponAttackStep';
 import PvPBattleEndedRequest from '../../../client/requests/PvPBattleEnded';
 import DeleteChannelRequest from "../../../client/requests/DeleteChannelRequest";
+import PvPBattleExpiredRequest from '../../../client/requests/PvPBattleExpired';
+import AttackedRequest from '../../../client/requests/AttackedRequest';
 
 const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
 
@@ -22,10 +24,14 @@ interface PvPBattleBag{
 export default class PvPBattle extends PlayerBattle{
     bpc1:IBattlePlayerCharacter;
     bpc2:IBattlePlayerCharacter;
-    getClient:IGetRandomClientFunc;
 
     constructor(bag:PvPBattleBag){
-        super(bag.id,bag.channelId,[bag.pc1,bag.pc2]);
+        super({
+            id: bag.id,
+            channelId: bag.channelId,
+            pcs: [bag.pc1,bag.pc2],
+            getClient: bag.getClient
+        });
 
         this.bpc1 = this.bpcs.get(bag.pc1);
         this.bpc2 = this.bpcs.get(bag.pc2);
@@ -175,21 +181,21 @@ export default class PvPBattle extends PlayerBattle{
 
         defender.pc.HPCurrent -= Math.round(damagesTotal(damages));
 
-        const bpc1EventData:IBattleAttackEvent = {
-            attacker:attacker.pc,
-            battle:this,
-            message:step.attackMessage
+        const request = new AttackedRequest({
+            channelId: this.channelId,
+            attacker: attacker.pc.toSocket(),
+            message: step.attackMessage
                 .replace('{attacker}',attacker.pc.title)
                 .replace('{defender}',defender.pc.title),
             attacked: [{
-                creature: defender.pc,
+                creature: defender.pc.toSocket(),
                 damages: damages,
                 blocked: defender.blocking,
                 exhaustion: defender.exhaustion,
-            }],
-        };
+            }]
+        });
 
-        this.dispatch(BattleEvent.Attack,bpc1EventData);
+        request.send(this.getClient());
 
         if(defender.pc.HPCurrent<1){
             this.endBattle(attacker,defender);
@@ -209,11 +215,11 @@ export default class PvPBattle extends PlayerBattle{
     }
 
     expireBattle(){
-        const eventData:IPvPBattleExpiredEvent = {
-            battle: this,
-        };
+        const request = new PvPBattleExpiredRequest({
+            channelId: this.channelId
+        });
 
-        this.dispatch(BattleEvent.PvPBattleExpired,eventData);
+        request.send(this.getClient());
 
         this.cleanupBattle();
     }
