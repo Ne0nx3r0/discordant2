@@ -2,8 +2,12 @@ import { IBattlePlayerCharacter, ATTACK_TICK_MS } from '../../../core/battle/Pla
 import PlayerBattle from '../../../core/battle/PlayerBattle';
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 import BattleTemporaryEffect from '../../../core/effects/BattleTemporaryEffect';
-import IDamageSet from '../../../core/damage/IDamageSet';
+import IDamageSet, { damagesTotal } from '../../../core/damage/IDamageSet';
 import { IGetRandomClientFunc } from '../../socket/SocketServer';
+import RoundBeginRequest from '../../../client/requests/RoundBeginRequest';
+import WeaponAttackStep from '../../../core/item/WeaponAttackStep';
+import PvPBattleEndedRequest from '../../../client/requests/PvPBattleEnded';
+import DeleteChannelRequest from "../../../client/requests/DeleteChannelRequest";
 
 const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
 
@@ -48,16 +52,15 @@ export default class PvPBattle extends PlayerBattle{
         const bpc2 = orderedAttacks[1];
 
 //Dispatch round begin
+        const request = new RoundBeginRequest({
+            channelId: this.channelId
+        });
 
-        const eventData:IBattleRoundBeginEvent = {
-            battle:this
-        };
-
-        this.dispatch(BattleEvent.RoundBegin,eventData);
+        request.send(this.getClient());
 
 //Run any temporary effects onRoundBegin
         orderedAttacks.forEach((bpc:IBattlePlayerCharacter)=>{
-            bpc.pc._tempEffects.forEach((roundsLeft:number,effect:BattleTemporaryEffect)=>{
+            bpc.pc.tempEffects.forEach((roundsLeft:number,effect:BattleTemporaryEffect)=>{
                 if(!this._battleEnded && effect.onRoundBegin){
                     effect.onRoundBegin({
                         target: bpc.pc,
@@ -130,7 +133,6 @@ export default class PvPBattle extends PlayerBattle{
         const damages:IDamageSet = step.getDamages({
             attacker:attacker.pc,
             defender:defender.pc,
-            battle:this,
         });
 
         let attackCancelled = false;
@@ -195,13 +197,13 @@ export default class PvPBattle extends PlayerBattle{
     }
 
     endBattle(winner:IBattlePlayerCharacter,loser:IBattlePlayerCharacter){
-        const eventData:IPvPBattleEndEvent = {
-            battle: this,
-            winner: winner,
-            loser: loser,
-        };
+        const request = new PvPBattleEndedRequest({
+            winner: winner.pc.toSocket(),
+            loser: loser.pc.toSocket(),
+            channelId: this.channelId
+        });
 
-        this.dispatch(BattleEvent.PvPBattleEnd,eventData);
+        request.send(this.getClient());
 
         this.cleanupBattle();
     }
@@ -227,7 +229,11 @@ export default class PvPBattle extends PlayerBattle{
         });
 
         setTimeout(()=>{
-            this.channel.delete();
+            const request = new DeleteChannelRequest({
+                channelId: this.channelId
+            });
+
+            request.send(this.getClient());
         },60000);
     }
 }

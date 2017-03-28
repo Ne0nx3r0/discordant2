@@ -29,7 +29,7 @@ export interface SocketRequestHandlerBag{
 }
 
 export interface IGetRandomClientFunc{
-    ():Promise<SocketIO.Client>;
+    ():SocketIO.Socket;
 }
 
 export default class SocketServer{
@@ -62,27 +62,17 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new SetPlayerRoleRequest(null));
             this.registerHandler(registeredEvents,client,new TransferPlayerItemRequest(null));
             this.registerHandler(registeredEvents,client,new UnequipPlayerItemRequest(null));
-
-            setTimeout(function(){
-                const request = new RoundBeginRequest({channelId: '288157600854310912'});       
-
-                request.send(client);     
-            },10000);
         });
 
         this.io.listen(bag.port);
     }
 
-    getRandomClient():Promise<SocketIO.Client>{
-        return new Promise((resolve,reject)=>{
-            this.io.clients((error, clients)=>{
-                if(error){
-                    this.logger.error(error);
+    getRandomClient():SocketIO.Socket{
+        const connectedSocketIds = Object.keys(this.io.sockets.sockets);
+        const randomSocketId = connectedSocketIds[Math.floor(Math.random() * connectedSocketIds.length)];
+        const randomSocket = this.io.sockets.sockets[randomSocketId] as SocketIO.Socket;
 
-                    reject(error);
-                }
-            });
-        });
+        return randomSocket;
     }
 
     registerHandler(registeredEvents:Array<string>,client:any,handler:ServerRequest){
