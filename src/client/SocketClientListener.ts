@@ -10,6 +10,7 @@ import EffectMessageRequest from './requests/EffectMessageRequest';
 import PassedOutRequest from './requests/PassedOutRequest';
 import PvPBattleExpiredRequest from './requests/PvPBattleExpired';
 import PvPBattleEndedRequest from './requests/PvPBattleEnded';
+import DeleteChannelRequest from './requests/DeleteChannelRequest';
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -27,6 +28,7 @@ export default class SocketClientListener{
         this.registerHandler(bag,new AttackedRequest(null));
         this.registerHandler(bag,new BlockedRequest(null));
         this.registerHandler(bag,new CoopBattleEndedRequest(null));
+        this.registerHandler(bag,new DeleteChannelRequest(null));
         this.registerHandler(bag,new EffectMessageRequest(null));
         this.registerHandler(bag,new PassedOutRequest(null));
         this.registerHandler(bag,new PvPBattleEndedRequest(null));

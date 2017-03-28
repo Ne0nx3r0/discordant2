@@ -1,6 +1,4 @@
 /// <reference path='../../node_modules/discord.js/typings/index.d.ts' />
-
-import Winston from 'winston';
 import Command from './Command';
 import * as Commands from "./ActiveCommands";
 import { PermissionRole } from '../core/permissions/PermissionService';
@@ -84,27 +82,27 @@ export default class DiscordantBotNode{
         try{
             //Clean up any party channels
             this.client.channels.array()
-            .forEach(function(channel:TextChannel,index:number){
+            .forEach((channel:TextChannel,index:number)=>{
                 if(channel.name && (channel.name.startsWith('dpvp-') || channel.name.startsWith('dparty-'))){
                     deleteChannelDelay = deleteChannelDelay + 2000;
 
-                    setTimeout(function(){
+                    setTimeout(()=>{
                         try{
-                            Winston.info('Deleting channel '+channel.name);
+                            this.logger.info('Deleting channel '+channel.name);
                             
                             channel.delete();
                         }
                         catch(ex){
                             ex.msg = 'Error deleting channel';
 
-                            Winston.error(ex);
+                            this.logger.error(ex);
                         }
                     },deleteChannelDelay);
                 }
             });
         }
         catch(ex){
-            Winston.error(ex);
+            this.logger.error(ex);
         }
     }
 
@@ -188,7 +186,7 @@ export default class DiscordantBotNode{
     }
 
     async createPvPChannel(guild:Guild,invite:SocketPvPInvite):Promise<TextChannel>{
-        const channelname = ('pvp-'+invite.sender.title.substr(0,invite.sender.title.length/2)+invite.receiver.title.substr(invite.receiver.title.length/2))
+        const channelname = ('dpvp-'+invite.sender.title.substr(0,invite.sender.title.length/2)+invite.receiver.title.substr(invite.receiver.title.length/2))
             .replace(/[^A-Za-z0-9-]+/g,'')
             .substr(0,20);
 
