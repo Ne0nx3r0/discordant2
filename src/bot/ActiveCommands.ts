@@ -11,3 +11,4 @@ export { default as Item } from './commands/Item';
 export { default as SetBotStatus } from './commands/SetBotStatus';
 export { default as SetRole } from './commands/SetRole';
 export { default as Shutdown } from './commands/Shutdown';
+export { default as Challenge } from './commands/Challenge';

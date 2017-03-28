@@ -17,6 +17,10 @@ import TransferPlayerItemRequest from './requests/TransferPlayerItemRequest';
 import UnequipPlayerItemRequest from './requests/UnequipPlayerItemRequest';
 import RoundBeginRequest from '../../client/requests/RoundBeginRequest';
 import DatabaseService from '../db/DatabaseService';
+import CreatePvPBattleRequest from './requests/CreatePvPBattleRequest';
+import { CreatePvPInviteData } from './requests/CreatePvPInviteRequest';
+import CreatePvPInviteRequest from './requests/CreatePvPInviteRequest';
+import GetPvPInviteRequest from './requests/GetPvPInviteRequest';
 
 interface SocketServerBag{
     port:number;
@@ -51,10 +55,13 @@ export default class SocketServer{
         const registeredEvents = [];
 
         this.io.on('connection', (client)=>{
+            this.registerHandler(registeredEvents,client,new CreatePvPBattleRequest(null));
+            this.registerHandler(registeredEvents,client,new CreatePvPInviteRequest(null));
             this.registerHandler(registeredEvents,client,new EquipPlayerItemRequest(null));
             this.registerHandler(registeredEvents,client,new GetPlayerInventoryRequest(null));
             this.registerHandler(registeredEvents,client,new GetPlayerRequest(null));
             this.registerHandler(registeredEvents,client,new GetPlayerRoleRequest(null));
+            this.registerHandler(registeredEvents,client,new GetPvPInviteRequest(null));
             this.registerHandler(registeredEvents,client,new GrantPlayerItemRequest(null));
             this.registerHandler(registeredEvents,client,new GrantPlayerWishesRequest(null));
             this.registerHandler(registeredEvents,client,new GrantPlayerXPRequest(null));

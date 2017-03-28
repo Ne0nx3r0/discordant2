@@ -46,12 +46,16 @@ export default class Challenge extends Command{
         }
 
         //Sending a challenge
-        const tagUser = bag.message.mentions.users.first()
+        const tagUser = bag.message.mentions.users.first();
         
         if(!tagUser){
             bag.message.channel.sendMessage(this.getUsage());
 
             return;
+        }
+
+        if(tagUser.id == bag.message.author.id){
+            throw 'You cannot challenge yourself';
         }
 
         //Will throw error if something goes wrong
