@@ -23,7 +23,7 @@ export default class BattleAttackRequest extends ServerRequest{
     }
 
     async receive(bag:ServerRequestReceiveBag,data:BattleAttackData):Promise<BattleAttackResponse>{
-        bag.game.sendBattleAttack(data.uid,data.attackTitle,data.offhand);
+        await bag.game.sendBattleAttack(data.uid,data.attackTitle,data.offhand);
 
         return {
             success: true,

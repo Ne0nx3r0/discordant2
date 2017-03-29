@@ -55,33 +55,31 @@ export default class PlayerBattle{
     }
     
     playerActionAttack(pc:PlayerCharacter,attack:WeaponAttack){
-        return (async()=>{
-            const bpc = this.bpcs.get(pc);
+        const bpc = this.bpcs.get(pc);
 
-            if(!bpc){
-                throw 'You are not in this battle';
-            }
-            
-            if(bpc.defeated){
-                throw 'You have already been defeated';
-            }
+        if(!bpc){
+            throw 'You are not in this battle';
+        }
+        
+        if(bpc.defeated){
+            throw 'You have already been defeated';
+        }
 
-            if(bpc.blocking){
-                throw 'You are currently blocking';
-            }
+        if(bpc.blocking){
+            throw 'You are currently blocking';
+        }
 
-            if(bpc.exhaustion > 0){
-                throw 'You are too exhausted to attack!';
-            }
+        if(bpc.exhaustion > 0){
+            throw 'You are too exhausted to attack!';
+        }
 
-            this._sendAttackStep(bpc,attack.steps[0]);
+        this._sendAttackStep(bpc,attack.steps[0]);
 
-            this.lastActionRoundsAgo = 0;
+        this.lastActionRoundsAgo = 0;
 
-            if(!this._battleEnded && attack.steps.length>1){
-                bpc.queuedAttacks = attack.steps.slice(1);
-            }
-        })();
+        if(!this._battleEnded && attack.steps.length>1){
+            bpc.queuedAttacks = attack.steps.slice(1);
+        }
     }
 
     _sendAttackStep(bpc:IBattlePlayerCharacter,step:WeaponAttackStep){
