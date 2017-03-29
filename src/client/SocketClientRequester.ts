@@ -23,6 +23,7 @@ import CreatePvPInviteRequest from "../gameserver/socket/requests/CreatePvPInvit
 import { PvPInvite, SocketPvPInvite } from '../core/battle/PvPInvite';
 import GetPvPInviteRequest from "../gameserver/socket/requests/GetPvPInviteRequest";
 import CreatePvPBattleRequest from "../gameserver/socket/requests/CreatePvPBattleRequest";
+import BattleAttackRequest from '../gameserver/socket/requests/BattleAttackRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -151,6 +152,16 @@ export default class SocketClientRequester{
             player1: invite.sender.uid,
             player2: invite.receiver.uid,
             channelId: channelId
+        });
+
+        return request.send(this.sioc);
+    }
+
+    sendBattleAttack(playerUid:string,attackTitle:string,offhand:boolean):Promise<void>{
+        const request = new BattleAttackRequest({
+            uid: playerUid,
+            attackTitle: attackTitle,
+            offhand: offhand
         });
 
         return request.send(this.sioc);

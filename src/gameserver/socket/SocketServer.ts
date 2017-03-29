@@ -21,6 +21,7 @@ import CreatePvPBattleRequest from './requests/CreatePvPBattleRequest';
 import { CreatePvPInviteData } from './requests/CreatePvPInviteRequest';
 import CreatePvPInviteRequest from './requests/CreatePvPInviteRequest';
 import GetPvPInviteRequest from './requests/GetPvPInviteRequest';
+import BattleAttackRequest from './requests/BattleAttackRequest';
 
 interface SocketServerBag{
     port:number;
@@ -55,6 +56,7 @@ export default class SocketServer{
         const registeredEvents = [];
 
         this.io.on('connection', (client)=>{
+            this.registerHandler(registeredEvents,client,new BattleAttackRequest(null));
             this.registerHandler(registeredEvents,client,new CreatePvPBattleRequest(null));
             this.registerHandler(registeredEvents,client,new CreatePvPInviteRequest(null));
             this.registerHandler(registeredEvents,client,new EquipPlayerItemRequest(null));
@@ -115,7 +117,6 @@ export default class SocketServer{
                             error: `A server error occurred (${did})`,
                         }
                     }
-
                 }
                 finally{
                     callback(result);

@@ -104,6 +104,7 @@ export default class PlayerCharacter extends Creature{
             equipment: this.equipment.toSocket(),
             HPCurrent: this.HPCurrent,
             stats: this.stats,
+            battleChannelId: this.battle?this.battle.channelId:null,
         };
     }
 }
@@ -115,4 +116,5 @@ export interface SocketPlayerCharacter extends SocketCreature{
     wishes: number;
     role: string;
     status: PlayerStatus;
+    battleChannelId: string;
 }

@@ -34,4 +34,5 @@ DiscordantGameServer.main();
 
 process.on("unhandledRejection", err => {
   console.error("Uncaught Promise Error: \n" + err.stack);
+  console.error(err);
 });

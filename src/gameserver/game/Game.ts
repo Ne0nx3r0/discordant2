@@ -360,6 +360,32 @@ export default class Game{
         this.pvpInvites.delete(sender.uid);
         this.pvpInvites.delete(receiver.uid);
     }
+
+    async sendBattleAttack(uid:string,attackTitle:string,offhand:boolean):Promise<void>{
+        const attacker = await this.getPlayerCharacter(uid);
+
+        if(!attacker){
+            throw 'You are not registered yet';
+        }
+
+        if(attacker.status != 'inBattle'){
+            throw 'You are not currently in a battle';
+        }
+
+        const weapon = offhand ? attacker.equipment.offhand : attacker.equipment.weapon;
+
+        if(!weapon){
+            throw 'Weapon not found whaaa';
+        }
+
+        const weaponAttack = weapon.findAttack(attackTitle);
+
+        if(!weaponAttack){
+            throw attackTitle+' is not a valid attack for '+weapon.title;
+        }
+
+        attacker.battle.playerActionAttack(attacker,weaponAttack);
+    }
 }
 
 export interface RegisterPlayerCharacterBag{

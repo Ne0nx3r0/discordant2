@@ -24,9 +24,6 @@ export default class AttackedRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestAttackedData):Promise<void>{
-        //this.data;
-        bag.channel.sendMessage('```css\n--- NEW ROUND ---\n```');
-
         let embed = data.message;
 
         data.attacked.forEach(function(attacked){

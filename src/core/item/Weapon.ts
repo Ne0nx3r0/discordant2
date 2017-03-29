@@ -43,6 +43,8 @@ export default class Weapon extends ItemEquippable{
     }
 
     findAttack(attackName:string):WeaponAttack{
+        attackName = attackName.toUpperCase();
+        
         for(var i=0;i<this.attacks.length;i++){
             const attack = this.attacks[i];
 
