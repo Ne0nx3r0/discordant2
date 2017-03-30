@@ -386,6 +386,20 @@ export default class Game{
 
         attacker.battle.playerActionAttack(attacker,weaponAttack);
     }
+
+    async sendBattleBlock(uid:string){
+        const blocker = await this.getPlayerCharacter(uid);
+
+        if(!blocker){
+            throw 'You are not registered yet';
+        }
+
+        if(blocker.status != 'inBattle'){
+            throw 'You are not currently in a battle';
+        }
+
+        blocker.battle.playerActionBlock(blocker);
+    }
 }
 
 export interface RegisterPlayerCharacterBag{

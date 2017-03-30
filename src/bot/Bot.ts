@@ -204,6 +204,10 @@ export default class DiscordantBotNode{
 
         const channel:TextChannel = await guild.createChannel(channelname,'text',overwrites) as TextChannel;
 
+        await channel.overwritePermissions(this.client.user.id,{
+            SEND_MESSAGES: true
+        });
+
         await channel.overwritePermissions(invite.sender.uid,{
             SEND_MESSAGES: true
         });
