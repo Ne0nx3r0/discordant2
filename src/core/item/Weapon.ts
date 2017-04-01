@@ -27,7 +27,7 @@ interface ItemWeaponBag{
 export default class Weapon extends ItemEquippable{
     attacks:Array<WeaponAttack>;
     useRequirements:useRequirements;
-    damageBlocked:number;//0.0 to 0.5 describing how much damage this weapon blocks when the player blocks
+    damageBlocked:number;//0.0 to 0.45 describing the % of damage this weapon blocks when the player blocks
 
     constructor(bag:ItemWeaponBag){
         super({
@@ -37,7 +37,7 @@ export default class Weapon extends ItemEquippable{
             slotType:'weapon'//also offhand, but for slot type they are all primary
         });
 
-        this.damageBlocked = bag.damageBlocked;
+        this.damageBlocked = Math.min(bag.damageBlocked,0.45);
         this.attacks = bag.attacks;
         this.useRequirements = bag.useRequirements || {};
     }

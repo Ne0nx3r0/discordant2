@@ -56,7 +56,7 @@ export default class PlayerBattle{
     
     playerActionAttack(pc:PlayerCharacter,attack:WeaponAttack){
         const bpc = this.bpcs.get(pc);
-
+        
         if(!bpc){
             throw 'You are not in this battle';
         }

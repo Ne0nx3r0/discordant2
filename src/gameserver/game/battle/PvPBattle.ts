@@ -141,6 +141,14 @@ export default class PvPBattle extends PlayerBattle{
             defender:defender.pc,
         });
 
+        if(defender.blocking){
+            const afterBlockedPercent = 1 - defender.pc.equipment.weapon.damageBlocked - defender.pc.equipment.offhand.damageBlocked;
+
+            Object.keys(damages).forEach(function(damageType){
+                damages[damageType] = Math.round(damages[damageType] * afterBlockedPercent);
+            });
+        }
+
         let attackCancelled = false;
 
         attacker.pc.tempEffects.forEach((rounds:number,effect:BattleTemporaryEffect)=>{
