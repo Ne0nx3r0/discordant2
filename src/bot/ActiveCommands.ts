@@ -14,3 +14,4 @@ export { default as Shutdown } from './commands/Shutdown';
 export { default as Challenge } from './commands/Challenge';
 export { default as BattleAttack } from './commands/BattleAttack';
 export { default as BattleOffhand } from './commands/BattleOffhand';
+export { default as BattleBlock } from './commands/BattleBlock';
