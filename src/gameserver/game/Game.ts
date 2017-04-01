@@ -334,7 +334,13 @@ export default class Game{
     }
 
     async getPvPInvite(playerUid:string):Promise<PvPInvite>{
-        return this.pvpInvites.get(playerUid);
+        const invite = this.pvpInvites.get(playerUid);
+
+        if(!invite){
+            throw 'No pending PvP invitation found (maybe it expired?)';
+        }
+
+        return invite;
     }
 
     async createPvPBattle(player1Uid:string,player2Uid:string,channelId:string):Promise<void>{
