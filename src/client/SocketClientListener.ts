@@ -11,6 +11,7 @@ import PassedOutRequest from './requests/PassedOutRequest';
 import PvPBattleExpiredRequest from './requests/PvPBattleExpired';
 import PvPBattleEndedRequest from './requests/PvPBattleEnded';
 import DeleteChannelRequest from './requests/DeleteChannelRequest';
+import LogOrphanedEmits from '../util/filthy_hacks/LogOrphanedEmits';
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -34,6 +35,8 @@ export default class SocketClientListener{
         this.registerHandler(bag,new PvPBattleEndedRequest(null));
         this.registerHandler(bag,new PvPBattleExpiredRequest(null));
         this.registerHandler(bag,new RoundBeginRequest(null));
+
+        LogOrphanedEmits(bag.sioc);
     }
 
     registerHandler(bag:SocketClientListenerBag,handler:ClientRequest){
