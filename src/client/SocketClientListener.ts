@@ -11,7 +11,6 @@ import PassedOutRequest from './requests/PassedOutRequest';
 import PvPBattleExpiredRequest from './requests/PvPBattleExpired';
 import PvPBattleEndedRequest from './requests/PvPBattleEnded';
 import DeleteChannelRequest from './requests/DeleteChannelRequest';
-import LogOrphanedEmits from '../util/filthy_hacks/LogOrphanedEmits';
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -36,7 +35,21 @@ export default class SocketClientListener{
         this.registerHandler(bag,new PvPBattleExpiredRequest(null));
         this.registerHandler(bag,new RoundBeginRequest(null));
 
-        LogOrphanedEmits(bag.sioc);
+        var socket = bag.sioc;//using this syntax to avoid pissing off typescript
+        var onevent = socket['onevent'];
+        var eventNames = Object.keys(socket['_callbacks']).map(function(callback){
+            return callback.substr(1);
+        });
+
+        socket['onevent'] = function (packet) {
+            onevent.call(this, packet);// original call
+            
+            var handlerName = packet.data[0];
+
+            if(eventNames.indexOf(handlerName) == -1){
+                console.error('No handler for emitted event: '+handlerName);
+            }
+        };
     }
 
     registerHandler(bag:SocketClientListenerBag,handler:ClientRequest){

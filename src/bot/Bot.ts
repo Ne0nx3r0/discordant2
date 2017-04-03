@@ -166,6 +166,7 @@ export default class DiscordantBotNode{
                     handlers:{
                         setPlayingGame: this.setPlayingGame.bind(this),
                         createPvPChannel: this.createPvPChannel.bind(this),
+                        createPartyChannel: this.createPartyChannel.bind(this),
                         deleteChannel: this.deleteChannel.bind(this),
                     },
                     permissions: this.permissions
@@ -217,6 +218,10 @@ export default class DiscordantBotNode{
         });
 
         return channel;
+    }
+
+    async createPartyChannel(guild:Guild,partyName:string,leaderUid:string):Promise<TextChannel>{
+        throw 'butt';
     }
 
     deleteChannel(channelId:string){

@@ -11,17 +11,14 @@ export interface SetPlayingFunc{
     (msg:string):void;
 }
 
-export interface CreatePvPChannelFunc{
-    (guild:Guild,invite:SocketPvPInvite):TextChannel;
-}
-
 export interface DeleteChannelFunc{
     (channelId:string):void;
 }
 
 export interface BotHandlers{
     setPlayingGame: SetPlayingFunc;
-    createPvPChannel: CreatePvPChannelFunc;
+    createPvPChannel(guild:Guild,invite:SocketPvPInvite):TextChannel;
+    createPartyChannel(guild:Guild,partyName:string,leaderUid:string):TextChannel;
     deleteChannel: DeleteChannelFunc;
 }
 
