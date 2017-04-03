@@ -38,12 +38,14 @@ export default class Game{
     items: AllItems;
     battleCardinality: number;
     getClient: IGetRandomClientFunc;
+    playerParties:Map<string,PlayerParty>;
 
     constructor(bag:GameServerBag){
         this.db = bag.db;
         this.permissions = new PermissionsService();
         this.cachedPCs = new Map();
         this.pvpInvites = new Map();
+        this.playerParties = new Map();
         this.items = new AllItems();
         this.battleCardinality = 1;
         this.getClient = bag.getRandomClient;
@@ -295,6 +297,16 @@ export default class Game{
         }
 
         await DBSetPlayerRole(this.db,player.uid,role);
+    }
+
+    async createParty(leaderUid:string,channelUid:string):Promise<void>{
+        const leader = await this.getPlayerCharacter(leaderUid);
+
+        if(leader.status != 'inCity'){
+            throw 'You cannot create a party right now';
+        }
+
+
     }
 
     async createPvPInvite(senderUid:string,receiverUid:string){

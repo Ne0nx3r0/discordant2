@@ -25,6 +25,7 @@ import GetPvPInviteRequest from "../gameserver/socket/requests/GetPvPInviteReque
 import CreatePvPBattleRequest from "../gameserver/socket/requests/CreatePvPBattleRequest";
 import BattleAttackRequest from '../gameserver/socket/requests/BattleAttackRequest';
 import BattleBlockRequest from "../gameserver/socket/requests/BattleBlockRequest";
+import CreatePartyRequest from "../gameserver/socket/requests/CreatePartyRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 

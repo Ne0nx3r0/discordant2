@@ -29,7 +29,7 @@ export default class PartyNew extends Command{
         const partyChannel = await bag.handlers.createPartyChannel(bag.message.guild,partyName,bag.message.author.id);
 
         try{
-            await bag.socket.createParty(bag.message.author.id);
+            await bag.socket.createParty(bag.message.author.id,partyChannel.id);
         }
         catch(ex){
             //Rollback channel if it fails
