@@ -14,7 +14,6 @@ import EffectMessageRequest from '../../client/requests/EffectMessageRequest';
 export const ATTACK_TICK_MS = 10000;
 
 interface PlayerBattleBag{
-    id:number;
     channelId:string;
     pcs:Array<PlayerCharacter>;
     getClient:IGetRandomClientFunc;
@@ -29,7 +28,6 @@ export default class PlayerBattle{
     lastActionRoundsAgo:number;
 
     constructor(bag: PlayerBattleBag){
-        this.id = bag.id;
         this._battleEnded = false;
         this.channelId = bag.channelId;
         this.lastActionRoundsAgo = 0;

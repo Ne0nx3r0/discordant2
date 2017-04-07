@@ -4,6 +4,7 @@ import { SocketPlayerCharacter } from '../../../core/creature/player/PlayerChara
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 
 export interface CreatePartyData extends ServerRequestData{
+    title: string;
     leader: string;
     channel: string;
 }
@@ -22,7 +23,7 @@ export default class CreatePartyRequest extends ServerRequest{
     }
 
     async receive(bag:ServerRequestReceiveBag,data:CreatePartyData):Promise<CreatePartyResponse>{
-        await bag.game.createParty(data.leader,data.channel);
+        await bag.game.createParty(data.title,data.leader,data.channel);
 
         return {
             success: true,

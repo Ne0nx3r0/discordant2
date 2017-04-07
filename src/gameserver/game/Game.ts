@@ -24,6 +24,7 @@ import DBSetPlayerRole from '../db/api/DBSetPlayerRole';
 import { PvPInvite, PVP_INVITE_TIMEOUT, SocketPvPInvite } from '../../core/battle/PvPInvite';
 import PvPBattle from './battle/PvPBattle';
 import { IGetRandomClientFunc } from '../socket/SocketServer';
+import PlayerParty from "../../core/party/PlayerParty";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -36,7 +37,6 @@ export default class Game{
     cachedPCs: Map<string,PlayerCharacter>;
     pvpInvites: Map<string,PvPInvite>;
     items: AllItems;
-    battleCardinality: number;
     getClient: IGetRandomClientFunc;
     playerParties:Map<string,PlayerParty>;
 
@@ -47,7 +47,6 @@ export default class Game{
         this.pvpInvites = new Map();
         this.playerParties = new Map();
         this.items = new AllItems();
-        this.battleCardinality = 1;
         this.getClient = bag.getRandomClient;
     }
 
@@ -299,14 +298,22 @@ export default class Game{
         await DBSetPlayerRole(this.db,player.uid,role);
     }
 
-    async createParty(leaderUid:string,channelUid:string):Promise<void>{
+    async createParty(title:string, leaderUid:string,channelId:string):Promise<void>{
         const leader = await this.getPlayerCharacter(leaderUid);
 
         if(leader.status != 'inCity'){
             throw 'You cannot create a party right now';
         }
 
+        const party = new PlayerParty({
+            leader:leader,
+            game: this,
+            title: title,
+            channelId: channelId,
+            getClient: this.getClient.bind(this)
+        });
 
+        this.playerParties.set(leader.uid,party);
     }
 
     async createPvPInvite(senderUid:string,receiverUid:string){
@@ -368,7 +375,6 @@ export default class Game{
         }
 
         const battle = new PvPBattle({
-            id: this.battleCardinality++,
             channelId: channelId,
             pc1: sender,
             pc2: receiver,

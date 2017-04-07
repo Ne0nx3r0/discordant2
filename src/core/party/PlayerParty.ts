@@ -1,6 +1,7 @@
 import PlayerCharacter from "../creature/player/PlayerCharacter";
 import PartyExploringMap from "./PartyExploringMap";
 import Game from "../../gameserver/game/Game";
+import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -17,6 +18,14 @@ interface PlayerCharacterInvited{
 
 export {PartyStatus};
 
+interface PlayerPartyBag{
+    title:string;
+    leader:PlayerCharacter;
+    channelId:string;
+    game:Game;
+    getClient:IGetRandomClientFunc;
+}
+
 export default class PlayerParty{
     leader:PlayerCharacter;
     title: string;
@@ -26,25 +35,25 @@ export default class PlayerParty{
     partyStatus:PartyStatus;
     exploration:PartyExploringMap;
     currentBattle:CoopBattle;
+    getClient:IGetRandomClientFunc;
     game:Game;
 
-    constructor(title:string,leader:PlayerCharacter,channelId:string,game:Game){
-        this.leader = leader;
-        this.title = title;
-        this.channelId = channelId;
+    constructor(bag:PlayerPartyBag){
+        this.leader = bag.leader;
+        this.title = bag.title;
+        this.channelId = bag.channelId;
+        this.getClient = bag.getClient;
 
         this.members = new Map();
-        this.members.set(leader.uid,leader);
+        this.members.set(bag.leader.uid,bag.leader);
 
         this.invited = new Map();
         this.partyStatus = PartyStatus.InTown;
-        this.game = game;
+        this.game = bag.game;
         this.currentBattle = null;
 
         this.leader.party = this;
         this.leader.status = 'inParty';
-        
-        this._events = new EventDispatcher();
     }
 
     get id():string{

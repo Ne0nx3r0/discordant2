@@ -14,7 +14,6 @@ import AttackedRequest from '../../../client/requests/AttackedRequest';
 const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
 
 interface PvPBattleBag{
-    id:number;
     channelId:string;
     pc1:PlayerCharacter;
     pc2:PlayerCharacter;
@@ -27,7 +26,6 @@ export default class PvPBattle extends PlayerBattle{
 
     constructor(bag:PvPBattleBag){
         super({
-            id: bag.id,
             channelId: bag.channelId,
             pcs: [bag.pc1,bag.pc2],
             getClient: bag.getClient

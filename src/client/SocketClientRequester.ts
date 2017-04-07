@@ -177,8 +177,9 @@ export default class SocketClientRequester{
         return request.send(this.sioc);
     }
 
-    createParty(leaderUid:string,channelId:string):Promise<void>{
+    createParty(title:string,leaderUid:string,channelId:string):Promise<void>{
         const request = new CreatePartyRequest({
+            title: title,
             leader: leaderUid,
             channel: channelId,
         });
