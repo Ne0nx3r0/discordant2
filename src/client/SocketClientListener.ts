@@ -1,16 +1,16 @@
 import Logger from '../gameserver/log/Logger';
-import ClientRequest from './ClientRequest';
-import RoundBeginRequest from './requests/RoundBeginRequest';
+import ClientClientRequest from './ClientRequest';
+import RoundBeginClientRequest from './Requests/RoundBeginClientRequest';
 import { TextChannel } from 'discord.js';
 import { ClientRequestData } from './ClientRequest';
-import AttackedRequest from './requests/AttackedRequest';
-import BlockedRequest from './requests/BlockedRequest';
-import CoopBattleEndedRequest from './requests/CoopBattleEndedRequest';
-import EffectMessageRequest from './requests/EffectMessageRequest';
-import PassedOutRequest from './requests/PassedOutRequest';
-import PvPBattleExpiredRequest from './requests/PvPBattleExpired';
-import PvPBattleEndedRequest from './requests/PvPBattleEnded';
-import DeleteChannelRequest from './requests/DeleteChannelRequest';
+import AttackedClientRequest from './Requests/AttackedClientRequest';
+import BlockedClientRequest from './Requests/BlockedClientRequest';
+import CoopBattleEndedClientRequest from './Requests/CoopBattleEndedClientRequest';
+import EffectMessageClientRequest from './Requests/EffectMessageClientRequest';
+import PassedOutClientRequest from './Requests/PassedOutClientRequest';
+import PvPBattleExpiredClientRequest from './Requests/PvPBattleExpiredClientRequest';
+import PvPBattleEndedClientRequest from './Requests/PvPBattleEndedClientRequest';
+import DeleteChannelClientRequest from './Requests/DeleteChannelClientRequest';
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -25,15 +25,15 @@ interface SocketClientListenerBag{
 export default class SocketClientListener{
     constructor(bag:SocketClientListenerBag){
         //we can pass null in here because we just want the title
-        this.registerHandler(bag,new AttackedRequest(null));
-        this.registerHandler(bag,new BlockedRequest(null));
-        this.registerHandler(bag,new CoopBattleEndedRequest(null));
-        this.registerHandler(bag,new DeleteChannelRequest(null));
-        this.registerHandler(bag,new EffectMessageRequest(null));
-        this.registerHandler(bag,new PassedOutRequest(null));
-        this.registerHandler(bag,new PvPBattleEndedRequest(null));
-        this.registerHandler(bag,new PvPBattleExpiredRequest(null));
-        this.registerHandler(bag,new RoundBeginRequest(null));
+        this.registerHandler(bag,new AttackedClientRequest(null));
+        this.registerHandler(bag,new BlockedClientRequest(null));
+        this.registerHandler(bag,new CoopBattleEndedClientRequest(null));
+        this.registerHandler(bag,new DeleteChannelClientRequest(null));
+        this.registerHandler(bag,new EffectMessageClientRequest(null));
+        this.registerHandler(bag,new PassedOutClientRequest(null));
+        this.registerHandler(bag,new PvPBattleEndedClientRequest(null));
+        this.registerHandler(bag,new PvPBattleExpiredClientRequest(null));
+        this.registerHandler(bag,new RoundBeginClientRequest(null));
 
         var socket = bag.sioc;//using this syntax to avoid pissing off typescript
         var onevent = socket['onevent'];
@@ -52,7 +52,7 @@ export default class SocketClientListener{
         };
     }
 
-    registerHandler(bag:SocketClientListenerBag,handler:ClientRequest){
+    registerHandler(bag:SocketClientListenerBag,handler:ClientClientRequest){
         const title = handler.title;
         const receive = handler.receive;
         const logger = bag.logger;
@@ -63,7 +63,7 @@ export default class SocketClientListener{
                 const channel = channelLookup(data.channelId);
                 
                 if(!channel){
-                    throw 'Invalid channel id '+data.channelId+' in request '+title;
+                    throw 'Invalid channel id '+data.channelId+' in ClientRequest '+title;
                 }
 
                 receive({

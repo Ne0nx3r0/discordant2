@@ -8,8 +8,8 @@ import CreatureAIControlled from '../creature/CreatureAIControlled';
 import ItemUsable from '../item/ItemUsable';
 import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
 import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
-import BlockedRequest from '../../client/requests/BlockedRequest';
-import EffectMessageRequest from '../../client/requests/EffectMessageRequest';
+import BlockedClientRequest from '../../client/requests/BlockedClientRequest';
+import EffectMessageClientRequest from '../../client/requests/EffectMessageClientRequest';
 
 export const ATTACK_TICK_MS = 10000;
 
@@ -106,7 +106,7 @@ export default class PlayerBattle{
         bpc.exhaustion++;
         bpc.blocking = true;
 
-        const request = new BlockedRequest({
+        const request = new BlockedClientRequest({
             channelId: this.channelId,
             blockerTitle: bpc.pc.title
         });
@@ -144,7 +144,7 @@ export default class PlayerBattle{
     }
 
     sendEffectApplied(msg:string,color:number){
-        const request = new EffectMessageRequest({
+        const request = new EffectMessageClientRequest({
             channelId: this.channelId,
             msg: msg,
             color: color,

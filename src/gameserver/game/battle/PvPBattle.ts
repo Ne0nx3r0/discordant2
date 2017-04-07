@@ -4,12 +4,12 @@ import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 import BattleTemporaryEffect from '../../../core/effects/BattleTemporaryEffect';
 import IDamageSet, { damagesTotal } from '../../../core/damage/IDamageSet';
 import { IGetRandomClientFunc } from '../../socket/SocketServer';
-import RoundBeginRequest from '../../../client/requests/RoundBeginRequest';
+import RoundBeginClientRequest from '../../../client/Requests/RoundBeginClientRequest';
 import WeaponAttackStep from '../../../core/item/WeaponAttackStep';
-import PvPBattleEndedRequest from '../../../client/requests/PvPBattleEnded';
-import DeleteChannelRequest from "../../../client/requests/DeleteChannelRequest";
-import PvPBattleExpiredRequest from '../../../client/requests/PvPBattleExpired';
-import AttackedRequest from '../../../client/requests/AttackedRequest';
+import PvPBattleEndedClientRequest from '../../../client/Requests/PvPBattleEndedClientRequest';
+import DeleteChannelClientRequest from "../../../client/Requests/DeleteChannelClientRequest";
+import PvPBattleExpiredClientRequest from '../../../client/Requests/PvPBattleExpiredClientRequest';
+import AttackedClientRequest from '../../../client/Requests/AttackedClientRequest';
 
 const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
 
@@ -56,11 +56,11 @@ export default class PvPBattle extends PlayerBattle{
         const bpc2 = orderedAttacks[1];
 
 //Dispatch round begin
-        const request = new RoundBeginRequest({
+        const ClientRequest = new RoundBeginClientRequest({
             channelId: this.channelId
         });
 
-        request.send(this.getClient());
+        ClientRequest.send(this.getClient());
 
 //Run any temporary effects onRoundBegin
         orderedAttacks.forEach((bpc:IBattlePlayerCharacter)=>{
@@ -187,7 +187,7 @@ export default class PvPBattle extends PlayerBattle{
 
         defender.pc.HPCurrent -= Math.round(damagesTotal(damages));
 
-        const request = new AttackedRequest({
+        const ClientRequest = new AttackedClientRequest({
             channelId: this.channelId,
             attacker: attacker.pc.toSocket(),
             message: step.attackMessage
@@ -201,7 +201,7 @@ export default class PvPBattle extends PlayerBattle{
             }]
         });
 
-        request.send(this.getClient());
+        ClientRequest.send(this.getClient());
 
         if(defender.pc.HPCurrent<1){
             this.endBattle(attacker,defender);
@@ -209,23 +209,23 @@ export default class PvPBattle extends PlayerBattle{
     }
 
     endBattle(winner:IBattlePlayerCharacter,loser:IBattlePlayerCharacter){
-        const request = new PvPBattleEndedRequest({
+        const ClientRequest = new PvPBattleEndedClientRequest({
             winner: winner.pc.toSocket(),
             loser: loser.pc.toSocket(),
             channelId: this.channelId
         });
 
-        request.send(this.getClient());
+        ClientRequest.send(this.getClient());
 
         this.cleanupBattle();
     }
 
     expireBattle(){
-        const request = new PvPBattleExpiredRequest({
+        const ClientRequest = new PvPBattleExpiredClientRequest({
             channelId: this.channelId
         });
 
-        request.send(this.getClient());
+        ClientRequest.send(this.getClient());
 
         this.cleanupBattle();
     }
@@ -241,11 +241,11 @@ export default class PvPBattle extends PlayerBattle{
         });
 
         setTimeout(()=>{
-            const request = new DeleteChannelRequest({
+            const ClientRequest = new DeleteChannelClientRequest({
                 channelId: this.channelId
             });
 
-            request.send(this.getClient());
+            ClientRequest.send(this.getClient());
         },60000);
     }
 }

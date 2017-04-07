@@ -6,7 +6,7 @@ export interface ClientRequestDeleteChannelData extends ClientRequestData{
     
 }
 
-export default class DeleteChannelRequest extends ClientRequest{
+export default class DeleteChannelClientRequest extends ClientRequest{
     constructor(data:ClientRequestDeleteChannelData){
         super('DeleteChannel',data);
     }

@@ -9,6 +9,7 @@ import { SocketPlayerInventory } from '../../item/PlayerInventory';
 import { SocketCreatureEquipment } from '../../item/CreatureEquipment';
 import { ICreatureStatSet, SocketCreature } from '../Creature';
 import PlayerBattle from '../../battle/PlayerBattle';
+import PlayerParty from '../../party/PlayerParty';
 
 type PlayerStatus = 'inCity' | 'invitedToPVPBattle' | 'inBattle' | 'invitedToParty' | 'inParty';
 
@@ -44,7 +45,7 @@ interface PCConfig{
 export default class PlayerCharacter extends Creature{
     uid:string;
     battle:PlayerBattle;
-    //party:PlayerParty;
+    party:PlayerParty;
     status:PlayerStatus;
     class:CharacterClass;
     xp:number;
@@ -72,7 +73,7 @@ export default class PlayerCharacter extends Creature{
         this.karma = o.karma;
 
         this.status = 'inCity';
-        //this.party = null;
+        this.party = null;
         this.battle = null;
         this.lastCommand = 0;
     }

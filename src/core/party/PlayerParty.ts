@@ -1,7 +1,10 @@
 import PlayerCharacter from "../creature/player/PlayerCharacter";
-import PartyExploringMap from "./PartyExploringMap";
+import PartyExploringMap, { PartyMoveDirection } from "./PartyExploringMap";
 import Game from "../../gameserver/game/Game";
 import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
+import CoopBattle from "../battle/CoopBattle";
+import ExplorableMap from "../map/ExplorableMap";
+import DeleteChannelClientRequest from '../../client/requests/DeleteChannelClientRequest';
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -266,7 +269,9 @@ export default class PlayerParty{
 
         this.dispatch(PlayerPartyEvent.PartyDisbanded,eventData);
 
-        this.channel.delete();
+        new DeleteChannelClientRequest({
+            channelId: this.channelId
+        }).send(this.getClient());
     }
 
     get isInBattle():boolean{
@@ -280,46 +285,4 @@ export default class PlayerParty{
     get isExploring():boolean{
         return this.partyStatus == PartyStatus.Exploring;
     }
-
-    //Event methods
-    on(event:PlayerPartyEvent,handler:Function){ this._events.on(event,handler); }
-    off(event:PlayerPartyEvent,handler:Function){ this._events.off(event,handler); }
-    dispatch<T>(event:PlayerPartyEvent,eventData:T){ this._events.dispatch(event,eventData); }
-}
-
-export enum PlayerPartyEvent{
-    PlayerJoined,
-    PlayerInvited,
-    PlayerDeclined,
-    PlayerLeft,
-    PartyDisbanded,
-    PartyAtNewLocation,
-}
-
-export interface PlayerJoinedEvent{
-    party:PlayerParty,
-    pc:PlayerCharacter,
-}
-
-export interface PlayerInvitedEvent{
-    party:PlayerParty,
-    pc:PlayerCharacter,
-}
-
-export interface PlayerDeclinedToJoinEvent{
-    party:PlayerParty,
-    pc:PlayerCharacter,
-}
-
-export interface PlayerLeftEvent{
-    party:PlayerParty,
-    pc:PlayerCharacter,
-}
-
-export interface PartyDisbandedEvent{
-    party:PlayerParty
-}
-
-export interface PartyAtNewLocationEvent{
-    imageSrc:string;
 }

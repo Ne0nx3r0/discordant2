@@ -8,11 +8,12 @@ import AttackStep from '../item/WeaponAttackStep';
 import PlayerBattle from './PlayerBattle';
 import { IBattlePlayerCharacter, ICoopBattleEndEvent, ATTACK_TICK_MS, BattleEvent, IBattleAttackEvent, IBattlePlayerDefeatedEvent, IBattleBlockEvent, IAttacked, IBattleRoundBeginEvent } from './PlayerBattle';
 import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
-import RoundBeginRequest from '../../client/requests/RoundBeginRequest';
-import BattleAttackRequest from '../../gameserver/socket/requests/BattleAttackRequest';
-import AttackedRequest from '../../client/requests/AttackedRequest';
-import { ClientRequestAttackedData, IAttackedSocket } from '../../client/requests/AttackedRequest';
-import PassedOutRequest from '../../client/requests/PassedOutRequest';
+import RoundBeginClientRequest from '../../client/requests/RoundBeginClientRequest';
+import BattleAttackClientRequest from '../../gameserver/socket/requests/BattleAttackRequest';
+import AttackedClientRequest from '../../client/requests/AttackedClientRequest';
+import { ClientRequestAttackedData, IAttackedSocket } from '../../client/requests/AttackedClientRequest';
+import PassedOutClientRequest from '../../client/requests/PassedOutClientRequest';
+import CoopBattleEndedClientRequest from "../../client/requests/CoopBattleEndedClientRequest";
 
 const dummyAttack = new WeaponAttackStep({
     attackMessage: '{attacker} doesn\'t know what to do!',
@@ -58,7 +59,7 @@ export default class CoopBattle extends PlayerBattle{
         }
 
 //Dispatch round begin
-        new RoundBeginRequest({
+        new RoundBeginClientRequest({
             channelId: this.channelId
         })
         .send(this.getClient());
@@ -209,7 +210,7 @@ export default class CoopBattle extends PlayerBattle{
             exhaustion:playerToAttack.exhaustion,
         });
 
-        new AttackedRequest(eventData).send(this.getClient());
+        new AttackedClientRequest(eventData).send(this.getClient());
 
 //check if anybody died
         this.bpcs.forEach((bpc:IBattlePlayerCharacter)=>{
@@ -218,7 +219,7 @@ export default class CoopBattle extends PlayerBattle{
             if(bpc.pc.HPCurrent < 1){
                 bpc.defeated = true;
 
-                new PassedOutRequest({
+                new PassedOutClientRequest({
                     channelId: this.channelId,
                     creatureTitle: bpc.pc.title,
                 })
@@ -290,7 +291,7 @@ export default class CoopBattle extends PlayerBattle{
 
         this.opponent.HPCurrent -= Math.round(damagesTotal(damages));
 
-        new AttackedRequest({
+        new AttackedClientRequest({
             channelId: this.channelId,
             attacker: bpc.pc.toSocket(),            
             attacked: [{
@@ -322,17 +323,17 @@ export default class CoopBattle extends PlayerBattle{
 
         this.bpcs.forEach(function(bpc){
             bpcs.push({
-                bpc: bpc,
+                player: bpc.pc.toSocket(),
                 //xpEarned: xpEarned,
             });
         });
 
         new CoopBattleEndedClientRequest({
-            battle:this,
+            channelId: this.channelId,
             players: bpcs,
-            opponent: this.opponent,
+            opponent: this.opponent.toSocket(),
             victory: victory,
-            killer: killer,
+            killer: killer ? null : killer.pc.toSocket(),
         })
         .send(this.getClient());
 

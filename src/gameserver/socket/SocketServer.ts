@@ -15,7 +15,6 @@ import RegisterPlayerRequest from './requests/RegisterPlayerRequest';
 import EquipPlayerItemRequest from './requests/EquipPlayerItemRequest';
 import TransferPlayerItemRequest from './requests/TransferPlayerItemRequest';
 import UnequipPlayerItemRequest from './requests/UnequipPlayerItemRequest';
-import RoundBeginRequest from '../../client/requests/RoundBeginRequest';
 import DatabaseService from '../db/DatabaseService';
 import CreatePvPBattleRequest from './requests/CreatePvPBattleRequest';
 import { CreatePvPInviteData } from './requests/CreatePvPInviteRequest';

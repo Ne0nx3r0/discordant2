@@ -2,12 +2,21 @@ import ClientRequest from '../ClientRequest';
 import { TextChannel } from 'discord.js';
 import { ClientRequestData, ClientRequestReceiveBag } from '../ClientRequest';
 import { getEmbed, EMBED_COLORS } from '../../bot/util/ChatHelpers';
+import { SocketCreature } from '../../core/creature/Creature';
+import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
+
 
 export interface ClientRequestCoopBattleEndedData extends ClientRequestData{
-    victory: boolean;
+    players: Array<{
+        player: SocketPlayerCharacter;
+        //xpEarned: xpEarned,
+    }>,
+    opponent: SocketCreature;
+    victory: boolean,
+    killer?: SocketPlayerCharacter;//required if victory is true
 }
 
-export default class CoopBattleEndedRequest extends ClientRequest{
+export default class CoopBattleEndedClientRequest extends ClientRequest{
     constructor(data:ClientRequestCoopBattleEndedData){
         super('CoopBattleEnded',data);
     }

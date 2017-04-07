@@ -37,7 +37,7 @@ interface MapDataJson{
     portals:Array<MapDataTrigger>;
 }
 
-export default class{
+export default class ExplorableMap{
     name:string;
     triggersLayer:number;
     mapJson:MapJson;
