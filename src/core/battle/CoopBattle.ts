@@ -8,6 +8,11 @@ import AttackStep from '../item/WeaponAttackStep';
 import PlayerBattle from './PlayerBattle';
 import { IBattlePlayerCharacter, ICoopBattleEndEvent, ATTACK_TICK_MS, BattleEvent, IBattleAttackEvent, IBattlePlayerDefeatedEvent, IBattleBlockEvent, IAttacked, IBattleRoundBeginEvent } from './PlayerBattle';
 import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
+import RoundBeginRequest from '../../client/requests/RoundBeginRequest';
+import BattleAttackRequest from '../../gameserver/socket/requests/BattleAttackRequest';
+import AttackedRequest from '../../client/requests/AttackedRequest';
+import { ClientRequestAttackedData, IAttackedSocket } from '../../client/requests/AttackedRequest';
+import PassedOutRequest from '../../client/requests/PassedOutRequest';
 
 const dummyAttack = new WeaponAttackStep({
     attackMessage: '{attacker} doesn\'t know what to do!',
@@ -53,14 +58,13 @@ export default class CoopBattle extends PlayerBattle{
         }
 
 //Dispatch round begin
-        const eventData:IBattleRoundBeginEvent = {
-            battle:this
-        };
-
-        this.dispatch(BattleEvent.RoundBegin,eventData);
+        new RoundBeginRequest({
+            channelId: this.channelId
+        })
+        .send(this.getClient());
 
         this.bpcs.forEach((bpc)=>{
-            bpc.pc._tempEffects.forEach((roundsLeft,effect)=>{
+            bpc.pc.tempEffects.forEach((roundsLeft,effect)=>{
                 if(effect.onRoundBegin){
                     effect.onRoundBegin({
                         target:this.opponent,
@@ -69,7 +73,7 @@ export default class CoopBattle extends PlayerBattle{
                 }
 
                 if(roundsLeft==1){
-                    bpc.pc._removeTemporaryEffect(effect);
+                    bpc.pc.removeTemporaryEffect(effect);
 
                     if(effect.onRemoved){
                         effect.onRemoved({
@@ -79,12 +83,12 @@ export default class CoopBattle extends PlayerBattle{
                     }
                 }
                 else{
-                    bpc.pc._tempEffects.set(effect,roundsLeft-1);
+                    bpc.pc.tempEffects.set(effect,roundsLeft-1);
                 }
             });
         });
 
-        this.opponent._tempEffects.forEach((roundsLeft,effect)=>{
+        this.opponent.tempEffects.forEach((roundsLeft,effect)=>{
             if(effect.onRoundBegin){
                 effect.onRoundBegin({
                     target:this.opponent,
@@ -93,7 +97,7 @@ export default class CoopBattle extends PlayerBattle{
             }
 
             if(roundsLeft==1){
-                this.opponent._removeTemporaryEffect(effect);
+                this.opponent.removeTemporaryEffect(effect);
 
                 if(effect.onRemoved){
                     effect.onRemoved({
@@ -103,7 +107,7 @@ export default class CoopBattle extends PlayerBattle{
                 }
             }
             else{
-                this.opponent._tempEffects.set(effect,roundsLeft-1);
+                this.opponent.tempEffects.set(effect,roundsLeft-1);
             }
         });
 
@@ -142,10 +146,10 @@ export default class CoopBattle extends PlayerBattle{
 
         const playerToAttack = survivingPlayers[Math.floor(Math.random() * survivingPlayers.length)];
 
-        const eventData:IBattleAttackEvent = {
-            attacker: this.opponent,
-            battle:this,
-            attacked: [] as Array<IAttacked>,
+        const eventData:ClientRequestAttackedData = {
+            channelId: this.channelId,
+            attacker: this.opponent.toSocket(),
+            attacked: [] as Array<IAttackedSocket>,
             message:attackStep.attackMessage
                 .replace('{attacker}',this.opponent.title)
                 .replace('{defender}',playerToAttack.pc.title)
@@ -155,12 +159,11 @@ export default class CoopBattle extends PlayerBattle{
         const pcDamages:IDamageSet = attackStep.getDamages({
             attacker: this.opponent,
             defender: playerToAttack.pc,
-            battle: this,
         });
 
         let attackCancelled = false;
 
-        this.opponent._tempEffects.forEach((roundsLeft,effect)=>{
+        this.opponent.tempEffects.forEach((roundsLeft,effect)=>{
             if (effect.onAttack && !effect.onAttack({
                 target: this.opponent,
                 sendBattleEmbed: this.sendEffectApplied
@@ -173,7 +176,7 @@ export default class CoopBattle extends PlayerBattle{
             return;
         }
 
-        playerToAttack.pc._tempEffects.forEach((roundsLeft,effect)=>{
+        playerToAttack.pc.tempEffects.forEach((roundsLeft,effect)=>{
             if (effect.onAttacked && !effect.onAttacked({
                 target: playerToAttack.pc,
                 sendBattleEmbed: this.sendEffectApplied
@@ -188,7 +191,7 @@ export default class CoopBattle extends PlayerBattle{
 
         if(playerToAttack.blocking){
             Object.keys(pcDamages).forEach(function(type){
-                pcDamages[type] = Math.round(pcDamages[type] * (1-playerToAttack.pc.damageBlocked));
+                pcDamages[type] = Math.round(pcDamages[type] * (1-playerToAttack.pc.damagePercentBlocked));
             });
 
             const eventData:IBattleBlockEvent = {
@@ -200,27 +203,26 @@ export default class CoopBattle extends PlayerBattle{
         playerToAttack.pc.HPCurrent -= Math.round(damagesTotal(pcDamages));
 
         eventData.attacked.push({
-            creature:playerToAttack.pc,
+            creature:playerToAttack.pc.toSocket(),
             damages:pcDamages,
             blocked:playerToAttack.blocking,
             exhaustion:playerToAttack.exhaustion,
         });
 
-        this.dispatch(BattleEvent.Attack,eventData);
+        new AttackedRequest(eventData).send(this.getClient());
 
 //check if anybody died
         this.bpcs.forEach((bpc:IBattlePlayerCharacter)=>{
             if(bpc.defeated) return;
 
             if(bpc.pc.HPCurrent < 1){
-                const eventData:IBattlePlayerDefeatedEvent = {
-                    battle: this,
-                    player: bpc,
-                };
-
                 bpc.defeated = true;
-                
-                this.dispatch(BattleEvent.PlayerDefeated,eventData);
+
+                new PassedOutRequest({
+                    channelId: this.channelId,
+                    creatureTitle: bpc.pc.title,
+                })
+                .send(this.getClient());
             }
         });
 
@@ -254,14 +256,13 @@ export default class CoopBattle extends PlayerBattle{
         const damages:IDamageSet = step.getDamages({
             attacker: bpc.pc,
             defender: this.opponent,
-            battle: this,
         });
 
         bpc.exhaustion += step.exhaustion;
 
         let attackCancelled = false;
 
-        bpc.pc._tempEffects.forEach((roundsLeft,effect)=>{
+        bpc.pc.tempEffects.forEach((roundsLeft,effect)=>{
             if (effect.onAttack && !effect.onAttack({
                 target: bpc.pc,
                 sendBattleEmbed: this.sendEffectApplied
@@ -274,7 +275,7 @@ export default class CoopBattle extends PlayerBattle{
             return;
         }
 
-        this.opponent._tempEffects.forEach((roundsLeft,effect)=>{
+        this.opponent.tempEffects.forEach((roundsLeft,effect)=>{
             if (effect.onAttacked && !effect.onAttacked({
                 target: this.opponent,
                 sendBattleEmbed: this.sendEffectApplied
@@ -289,21 +290,20 @@ export default class CoopBattle extends PlayerBattle{
 
         this.opponent.HPCurrent -= Math.round(damagesTotal(damages));
 
-        const eventData:IBattleAttackEvent = {
-            attacker: bpc.pc,
-            battle: this,
-            message:step.attackMessage
-                .replace('{defender}',this.opponent.title)
-                .replace('{attacker}',bpc.pc.title),
+        new AttackedRequest({
+            channelId: this.channelId,
+            attacker: bpc.pc.toSocket(),            
             attacked: [{
-                creature: this.opponent,
+                creature: this.opponent.toSocket(),
                 damages: damages,
                 blocked: false,
                 exhaustion: 0,
             }],
-        };
-
-        this.dispatch(BattleEvent.Attack,eventData);
+            message: step.attackMessage
+                .replace('{defender}',this.opponent.title)
+                .replace('{attacker}',bpc.pc.title),
+        })
+        .send(this.getClient());
 
         if(this.opponent.HPCurrent<1){
             this.endBattle(true,bpc);
@@ -312,10 +312,8 @@ export default class CoopBattle extends PlayerBattle{
 
     endBattle(victory:boolean,killer?:IBattlePlayerCharacter){
         this._battleEnded = true;
-/*
+/* TODO: give player the xp they earned
         let xpEarned = 0;
-
-        //Note: Game is responsible for listening for and adjusting player stats based on this event
         if(victory){
             xpEarned = this.opponent.xpDropped;
         }*/
@@ -329,21 +327,20 @@ export default class CoopBattle extends PlayerBattle{
             });
         });
 
-        const eventData:ICoopBattleEndEvent = {
+        new CoopBattleEndedClientRequest({
             battle:this,
             players: bpcs,
             opponent: this.opponent,
             victory: victory,
             killer: killer,
-        };
-
-        this.dispatch(BattleEvent.CoopBattleEnd,eventData);
+        })
+        .send(this.getClient());
 
         //release players from the battle lock
         this.bpcs.forEach((bpc)=>{
             bpc.pc.battle = null;
             bpc.pc.status = 'inParty';
-            bpc.pc._clearTemporaryEffects();
+            bpc.pc.clearTemporaryEffects();
         });
     }
 

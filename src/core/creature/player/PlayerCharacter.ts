@@ -91,6 +91,7 @@ export default class PlayerCharacter extends Creature{
 
     toSocket():SocketPlayerCharacter{
         return {
+            id: null,
             uid: this.uid,
             title: this.title,
             description: this.description,

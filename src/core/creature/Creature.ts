@@ -123,13 +123,22 @@ export default class Creature{
         return Math.min(0.95,this.equipment.weapon.damageBlocked + this.equipment.offhand.damageBlocked);
     }
 
-    toSocket(){
-
+    toSocket():SocketCreature{
+        return {
+            uid: null,
+            id: this.id,
+            equipment: this.equipment.toSocket(),
+            stats: this.stats,
+            title: this.title,
+            description: this.description,
+            HPCurrent: this.HPCurrent
+        };
     }
 }
 
 export interface SocketCreature{
     uid: string;
+    id: number;
     equipment: SocketCreatureEquipment;
     stats: ICreatureStatSet;
     title: string;

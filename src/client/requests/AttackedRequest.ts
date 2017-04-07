@@ -5,7 +5,7 @@ import { SocketCreature } from '../../core/creature/Creature';
 import IDamageSet from '../../core/damage/IDamageSet';
 import { getDamagesLine, getEmbed, EMBED_COLORS } from '../../bot/util/ChatHelpers';
 
-export interface IAttacked{
+export interface IAttackedSocket{
     creature: SocketCreature;
     damages: IDamageSet;
     blocked: boolean;
@@ -15,7 +15,7 @@ export interface IAttacked{
 export interface ClientRequestAttackedData extends ClientRequestData{
     attacker: SocketCreature;
     message: string;
-    attacked: Array<IAttacked>;
+    attacked: Array<IAttackedSocket>;
 }
 
 export default class AttackedRequest extends ClientRequest{
