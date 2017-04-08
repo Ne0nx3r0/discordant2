@@ -34,6 +34,7 @@ class DiscordantBotNode {
             channelLookup: bot.getChannelById,
             sioc: sioc,
             logger: logger,
+            socket: socket,
         });
 
         return 0;

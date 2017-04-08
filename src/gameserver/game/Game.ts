@@ -28,6 +28,7 @@ import PlayerParty from "../../core/party/PlayerParty";
 import AllCreaturesAIControlled from "../../core/creature/AllCreaturesAIControlled";
 import CoopBattle from '../../core/battle/CoopBattle';
 import PlayerBattle from '../../core/battle/PlayerBattle';
+import MapUrlCache from '../../core/map/MapUrlCache';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -44,6 +45,7 @@ export default class Game {
     getClient: IGetRandomClientFunc;
     playerParties:Map<string,PlayerParty>;
     activeBattles:Map<string,PlayerBattle>;
+    mapUrlCache: MapUrlCache;
 
     constructor(bag:GameServerBag){
         this.db = bag.db;
@@ -53,6 +55,7 @@ export default class Game {
         this.playerParties = new Map();
         this.activeBattles = new Map();
         this.items = new AllItems();
+        this.mapUrlCache = new MapUrlCache();
         this.creatures = new AllCreaturesAIControlled();
         this.getClient = bag.getRandomClient;
     }
@@ -454,8 +457,16 @@ export default class Game {
         return battle;
     }
 
-    removeBattle(battleId:string){
+    removeBattle(battleId:string):void{
         this.activeBattles.delete(battleId);
+    }
+
+    setSliceRemoteUrl(imageSrc:string,remoteUrl:string):void{
+        this.mapUrlCache.setSliceRemoteUrl(imageSrc,remoteUrl);
+    }
+
+    getSliceRemoteUrl(imageSrc:string):string{
+        return this.mapUrlCache.getSliceRemoteUrl(imageSrc);
     }
 }
 

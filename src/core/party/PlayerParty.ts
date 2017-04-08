@@ -7,6 +7,8 @@ import ExplorableMap from "../map/ExplorableMap";
 import DeleteChannelClientRequest from '../../client/requests/DeleteChannelClientRequest';
 import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
 import SendPMClientRequest from '../../client/requests/SendPMClientRequest';
+import SendImageClientRequest from '../../client/requests/SendImageClientRequest';
+import SendLocalImageClientRequest from "../../client/requests/SendLocalImageClientRequest";
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -151,36 +153,21 @@ export default class PlayerParty{
 
     sendCurrentMapImageFile(msg:string){
         const localUrl = this.exploration.getCurrentLocationImage();
-        const cachedCDNUrl = MapUrlCache.getSliceRemoteUrl(localUrl);
+        const cachedCDNUrl = this.game.getSliceRemoteUrl(localUrl);
 
         if(cachedCDNUrl){
-            this.sendChannelMessage('',{
-                embed: {
-                    color: 0x36393E,
-                    image: { 
-                        url: cachedCDNUrl, 
-                        height: 288, 
-                        width: 288,
-                    },   
-                    description: msg,      
-                }
-            });
+            new SendImageClientRequest({
+                channelId: this.channelId,
+                imageUrl: cachedCDNUrl,
+                message: msg,
+            }).send(this.getClient());
         }
         else{
-            (async()=>{        
-                try{
-                    const resultMessage = await this.channel.sendFile(localUrl,'slice.png',msg);
-
-                    const cacheUrl = resultMessage.attachments.first().url;      
-
-                    MapUrlCache.setSliceRemoteUrl(localUrl,cacheUrl);              
-                }
-                catch(ex){
-                    const did = Logger.error(ex);
-
-                    this.sendChannelMessage("error loading map image "+did);
-                }
-            })();
+            new SendLocalImageClientRequest({
+                channelId: this.channelId,
+                imageSrc: localUrl,
+                message: msg,
+            }).send(this.getClient());
         }
     }
 

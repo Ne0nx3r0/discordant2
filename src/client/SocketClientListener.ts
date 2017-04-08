@@ -13,6 +13,8 @@ import PvPBattleEndedClientRequest from './Requests/PvPBattleEndedClientRequest'
 import DeleteChannelClientRequest from './Requests/DeleteChannelClientRequest';
 import SendMessageClientRequest from './requests/SendMessageClientRequest';
 import SendPMClientRequest from './requests/SendPMClientRequest';
+import SendImageClientRequest from './requests/SendImageClientRequest';
+import SocketClientRequester from './SocketClientRequester';
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -21,6 +23,7 @@ interface ChannelLookupFunc{
 interface SocketClientListenerBag{
     sioc:SocketIOClient.Socket;
     logger: Logger;
+    socket: SocketClientRequester;
     channelLookup: ChannelLookupFunc;
 }
 
@@ -38,6 +41,7 @@ export default class SocketClientListener{
         this.registerHandler(bag,new RoundBeginClientRequest(null));
         this.registerHandler(bag,new SendMessageClientRequest(null));
         this.registerHandler(bag,new SendPMClientRequest(null));
+        this.registerHandler(bag,new SendImageClientRequest(null));
 
         var socket = bag.sioc;//using this syntax to avoid pissing off typescript
         var onevent = socket['onevent'];
@@ -71,7 +75,10 @@ export default class SocketClientListener{
                 }
 
                 receive({
-                    channel: channel
+                    channel: channel,
+                    logger: logger,
+                    socket: bag.socket,
+                    sioc: bag.sioc,
                 },data);
             }
             catch(ex){

@@ -1,4 +1,4 @@
-class MapUrlCache{
+export default class MapUrlCache{
     urlCache:Map<string,string>;
 
     constructor(){
@@ -13,5 +13,3 @@ class MapUrlCache{
         return this.urlCache.get(localUrl);
     }
 }
-
-export default new MapUrlCache();
