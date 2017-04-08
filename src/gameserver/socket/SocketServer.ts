@@ -23,6 +23,8 @@ import GetPvPInviteRequest from './requests/GetPvPInviteRequest';
 import BattleAttackRequest from './requests/BattleAttackRequest';
 import BattleBlockRequest from './requests/BattleBlockRequest';
 import CreatePartyRequest from './requests/CreatePartyRequest';
+import SetPartyExploringRequest from './requests/SetPartyExploringRequest';
+import SetSliceRemoteUrlRequest from './requests/SetSliceRemoteUrlRequest';
 
 interface SocketServerBag{
     port:number;
@@ -71,7 +73,9 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new GrantPlayerWishesRequest(null));
             this.registerHandler(registeredEvents,client,new GrantPlayerXPRequest(null));
             this.registerHandler(registeredEvents,client,new RegisterPlayerRequest(null));
+            this.registerHandler(registeredEvents,client,new SetPartyExploringRequest(null));
             this.registerHandler(registeredEvents,client,new SetPlayerRoleRequest(null));
+            this.registerHandler(registeredEvents,client,new SetSliceRemoteUrlRequest(null));
             this.registerHandler(registeredEvents,client,new TransferPlayerItemRequest(null));
             this.registerHandler(registeredEvents,client,new UnequipPlayerItemRequest(null));
 
