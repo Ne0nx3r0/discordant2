@@ -5,6 +5,8 @@ import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
 import CoopBattle from "../battle/CoopBattle";
 import ExplorableMap from "../map/ExplorableMap";
 import DeleteChannelClientRequest from '../../client/requests/DeleteChannelClientRequest';
+import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
+import SendPMClientRequest from '../../client/requests/SendPMClientRequest';
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -59,6 +61,13 @@ export default class PlayerParty{
         this.leader.status = 'inParty';
     }
 
+    sendChannelMessage(msg:string){
+        new SendMessageClientRequest({
+            channelId: this.channelId,
+            message: msg
+        });
+    }
+
     get id():string{
         return this.leader.uid;
     }
@@ -76,7 +85,7 @@ export default class PlayerParty{
 
     move(direction:PartyMoveDirection){
         if(!this.exploration.canMove(direction)){
-            this.channel.sendMessage('The party cannot move '+direction+', the way is impassably blocked by a small bush or something.');
+            this.sendChannelMessage('The party cannot move '+direction+', the way is impassably blocked by a small bush or something.');
 
             return;
         }
@@ -105,7 +114,7 @@ export default class PlayerParty{
 
         const opponent = this.game.createMonsterFromId(opponentId);
 
-        this.channel.sendMessage(`The party is attacked by ${opponent.title}!`);
+        this.sendChannelMessage(`The party is attacked by ${opponent.title}!`);
 
         this.game.createMonsterBattle(partyMembers,this.channel,opponent)
         .then((battle:CoopBattle)=>{
@@ -119,11 +128,15 @@ export default class PlayerParty{
                     this.sendCurrentMapImageFile('Your party survived!');
                 }
                 else{
-                    this.channel.sendMessage('Your party was defeated!');
+                    this.sendChannelMessage('Your party was defeated!');
 
                     setTimeout(()=>{
                         this.members.forEach((pc)=>{
-                            this.channel.client.users.get(pc.uid).sendMessage('Your party was defeated!');
+                            new SendPMClientRequest({
+                                channelId: null,
+                                playerUid: pc.uid,
+                                message: 'Your party was defeated!'
+                            }).send(this.getClient());
                         });
                         
                         this.playerActionDisband();
@@ -137,7 +150,7 @@ export default class PlayerParty{
             });
         })
         .catch((err)=>{
-            this.channel.sendMessage('Error occured while finding encounter: '+err);
+            this.sendChannelMessage('Error occured while finding encounter: '+err);
         });
     }
 
@@ -146,7 +159,7 @@ export default class PlayerParty{
         const cachedCDNUrl = MapUrlCache.getSliceRemoteUrl(localUrl);
 
         if(cachedCDNUrl){
-            this.channel.sendMessage('',{
+            this.sendChannelMessage('',{
                 embed: {
                     color: 0x36393E,
                     image: { 
@@ -170,7 +183,7 @@ export default class PlayerParty{
                 catch(ex){
                     const did = Logger.error(ex);
 
-                    this.channel.sendMessage("error loading map image "+did);
+                    this.sendChannelMessage("error loading map image "+did);
                 }
             })();
         }
@@ -185,16 +198,13 @@ export default class PlayerParty{
         pc.party = this;
         pc.status = 'invitedToParty';
 
-        const eventData:PlayerInvitedEvent = {
-            party: this,
-            pc:pc,
-        };
-
-        this.dispatch(PlayerPartyEvent.PlayerInvited,eventData);
+        this.sendChannelMessage(`${pc.title} was invited to the party`);
 
         setTimeout(()=>{
             //invite is still pending
             if(this.invited.has(pc.uid)){
+                this.sendChannelMessage(`${pc.title}'s invitation expired`);
+
                 this.invited.delete(pc.uid);
 
                 //They didn't accept the invite
@@ -209,12 +219,10 @@ export default class PlayerParty{
     playerActionDecline(pc:PlayerCharacter){
         this.invited.delete(pc.uid);
 
-        const eventData:PlayerDeclinedToJoinEvent = {
-            party:this,
-            pc:pc,
-        };
-
-        this.dispatch(PlayerPartyEvent.PlayerDeclined,eventData);
+        new SendMessageClientRequest({
+            channelId: this.channelId,
+            message: `${pc.title} declined the party invite`,
+        }).send(this.getClient());
     }
 
     playerActionJoin(pc:PlayerCharacter){
@@ -225,12 +233,10 @@ export default class PlayerParty{
         pc.party = this;
         pc.status = 'inParty';
 
-        const eventData:PlayerJoinedEvent = {
-            party:this,
-            pc:pc,
-        };
-
-        this.dispatch(PlayerPartyEvent.PlayerJoined,eventData);
+        new SendMessageClientRequest({
+            channelId: this.channelId,
+            message: `${pc.title} joined the party!`,
+        }).send(this.getClient());
     }
 
     playerActionLeave(pc:PlayerCharacter){
@@ -239,12 +245,10 @@ export default class PlayerParty{
         pc.party = null;
         pc.status = 'inCity';
 
-        const eventData:PlayerLeftEvent = {
-            party:this,
-            pc:pc,
-        };
-
-        this.dispatch(PlayerPartyEvent.PlayerLeft,eventData);
+        new SendMessageClientRequest({
+            channelId: this.channelId,
+            message: `${pc.title} left the party`,
+        }).send(this.getClient());
     }
 
     playerActionDisband(){
@@ -263,15 +267,16 @@ export default class PlayerParty{
         this.leader.party = null;
         this.leader.status = 'inCity';
 
-        const eventData:PartyDisbandedEvent = {
-            party:this
-        };
-
-        this.dispatch(PlayerPartyEvent.PartyDisbanded,eventData);
-
-        new DeleteChannelClientRequest({
-            channelId: this.channelId
+        new SendMessageClientRequest({
+            channelId: this.channelId,
+            message: `The party has been disbanded!`,
         }).send(this.getClient());
+
+        setTimeout(()=>{
+            new DeleteChannelClientRequest({
+                channelId: this.channelId
+            }).send(this.getClient());
+        },20000);
     }
 
     get isInBattle():boolean{

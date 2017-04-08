@@ -11,6 +11,8 @@ import PassedOutClientRequest from './Requests/PassedOutClientRequest';
 import PvPBattleExpiredClientRequest from './Requests/PvPBattleExpiredClientRequest';
 import PvPBattleEndedClientRequest from './Requests/PvPBattleEndedClientRequest';
 import DeleteChannelClientRequest from './Requests/DeleteChannelClientRequest';
+import SendMessageClientRequest from './requests/SendMessageClientRequest';
+import SendPMClientRequest from './requests/SendPMClientRequest';
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -34,6 +36,8 @@ export default class SocketClientListener{
         this.registerHandler(bag,new PvPBattleEndedClientRequest(null));
         this.registerHandler(bag,new PvPBattleExpiredClientRequest(null));
         this.registerHandler(bag,new RoundBeginClientRequest(null));
+        this.registerHandler(bag,new SendMessageClientRequest(null));
+        this.registerHandler(bag,new SendPMClientRequest(null));
 
         var socket = bag.sioc;//using this syntax to avoid pissing off typescript
         var onevent = socket['onevent'];
