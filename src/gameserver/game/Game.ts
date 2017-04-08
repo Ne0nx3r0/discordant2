@@ -25,13 +25,15 @@ import { PvPInvite, PVP_INVITE_TIMEOUT, SocketPvPInvite } from '../../core/battl
 import PvPBattle from './battle/PvPBattle';
 import { IGetRandomClientFunc } from '../socket/SocketServer';
 import PlayerParty from "../../core/party/PlayerParty";
+import AllCreaturesAIControlled from "../../core/creature/AllCreaturesAIControlled";
 
 export interface GameServerBag{
     db: DatabaseService;
     getRandomClient:IGetRandomClientFunc;
 }
 
-export default class Game{
+export default class Game {
+    creatures: AllCreaturesAIControlled;
     db: DatabaseService;
     permissions:PermissionsService;
     cachedPCs: Map<string,PlayerCharacter>;
@@ -47,6 +49,7 @@ export default class Game{
         this.pvpInvites = new Map();
         this.playerParties = new Map();
         this.items = new AllItems();
+        this.creatures = new AllCreaturesAIControlled();
         this.getClient = bag.getRandomClient;
     }
 
@@ -423,6 +426,10 @@ export default class Game{
         }
 
         blocker.battle.playerActionBlock(blocker);
+    }
+
+    createMonsterFromId(creatureId:number){
+        return this.creatures.create(creatureId);
     }
 }
 
