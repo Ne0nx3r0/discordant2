@@ -29,6 +29,7 @@ import AllCreaturesAIControlled from "../../core/creature/AllCreaturesAIControll
 import CoopBattle from '../../core/battle/CoopBattle';
 import PlayerBattle from '../../core/battle/PlayerBattle';
 import MapUrlCache from '../../core/map/MapUrlCache';
+import { WesternGateMap } from "../../core/map/Maps";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -467,6 +468,26 @@ export default class Game {
 
     getSliceRemoteUrl(imageSrc:string):string{
         return this.mapUrlCache.getSliceRemoteUrl(imageSrc);
+    }
+
+    async setPartyExploring(leaderUid:string):Promise<void>{
+        const player = await this.getPlayerCharacter(leaderUid);
+
+        if(!player){
+            throw 'You are not registered';
+        }
+
+        if(player.status != 'inParty'){
+            throw 'Only the party leader can direct the party';
+        }
+
+        const party = this.playerParties.get(player.uid);
+
+        if(!party){
+            throw 'Only the party leader can direct the party!';
+        }
+
+        party.explore(WesternGateMap);
     }
 }
 

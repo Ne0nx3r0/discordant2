@@ -34,7 +34,7 @@ export default class PartyNew extends Command{
         catch(ex){
             //Rollback channel if it fails
             partyChannel.delete();
-
+console.log(ex);
             throw ex;
         }
 

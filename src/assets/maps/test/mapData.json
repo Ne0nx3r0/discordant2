@@ -1,0 +1,25 @@
+{
+    "encounterChance": 0.3,
+    "encounters":[
+        { "id": 1, "weight": 0.7 },
+        { "id": 2, "weight": 100 }
+    ],
+    "portals":[
+        {
+            "x": 5,
+            "y": 5,
+            "map": "northArea",
+            "mapX": 0,
+            "mapY": 2
+        }
+    ],
+    "scavengeItems":[
+
+    ],
+    "forageItems":[
+
+    ],
+    "scryItems":[
+
+    ]
+}

@@ -26,6 +26,7 @@ import CreatePvPBattleRequest from "../gameserver/socket/requests/CreatePvPBattl
 import BattleAttackRequest from '../gameserver/socket/requests/BattleAttackRequest';
 import BattleBlockRequest from "../gameserver/socket/requests/BattleBlockRequest";
 import CreatePartyRequest from "../gameserver/socket/requests/CreatePartyRequest";
+import SetPartyExploringRequest from '../gameserver/socket/requests/SetPartyExploringRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -185,5 +186,12 @@ export default class SocketClientRequester{
         });
 
         return request.send(this.sioc);
+    }
+    
+    setPartyExploring(leaderUid:string):Promise<void>{
+        return new SetPartyExploringRequest({
+            uid:leaderUid
+        })
+        .send(this.sioc);
     }
 }

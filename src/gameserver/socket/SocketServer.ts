@@ -22,6 +22,7 @@ import CreatePvPInviteRequest from './requests/CreatePvPInviteRequest';
 import GetPvPInviteRequest from './requests/GetPvPInviteRequest';
 import BattleAttackRequest from './requests/BattleAttackRequest';
 import BattleBlockRequest from './requests/BattleBlockRequest';
+import CreatePartyRequest from './requests/CreatePartyRequest';
 
 interface SocketServerBag{
     port:number;
@@ -58,6 +59,7 @@ export default class SocketServer{
         this.io.on('connection', (client)=>{
             this.registerHandler(registeredEvents,client,new BattleAttackRequest(null));
             this.registerHandler(registeredEvents,client,new BattleBlockRequest(null));
+            this.registerHandler(registeredEvents,client,new CreatePartyRequest(null));
             this.registerHandler(registeredEvents,client,new CreatePvPBattleRequest(null));
             this.registerHandler(registeredEvents,client,new CreatePvPInviteRequest(null));
             this.registerHandler(registeredEvents,client,new EquipPlayerItemRequest(null));

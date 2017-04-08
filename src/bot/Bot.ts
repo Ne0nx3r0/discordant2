@@ -221,7 +221,35 @@ export default class DiscordantBotNode{
     }
 
     async createPartyChannel(guild:Guild,partyName:string,leaderUid:string):Promise<TextChannel>{
-        throw 'butt';
+        const channelname = ('dparty-'+partyName)
+            .replace(/[^A-Za-z0-9-]+/g,'')
+            .substr(0,20);
+
+        const overwrites = [     
+            {
+                id: guild.id, 
+                type: 'role', 
+                 deny: 0x00000400, 
+                allow: 0x00000000,
+                //Need these strictly for typescript
+                channel: null,
+                delete: null,
+            } as PermissionOverwrites
+        ];
+
+        const channel:TextChannel = await guild.createChannel(channelname,'text',overwrites) as TextChannel;
+
+        await channel.overwritePermissions(this.client.user.id,{
+            READ_MESSAGES: true,
+            SEND_MESSAGES: true,
+        });
+
+        await channel.overwritePermissions(leaderUid,{
+            READ_MESSAGES: true,
+            SEND_MESSAGES: true,
+        });
+
+        return channel;
     }
 
     deleteChannel(channelId:string){

@@ -1,0 +1,25 @@
+{
+    "encounterChance": 0.2,
+    "encounters":[
+        { "id": 1, "weight": 0.8 },
+        { "id": 2, "weight": 0.2 }
+    ],
+    "portals":[
+        {
+            "x": 6,
+            "y": 19,
+            "map": "SouthOfWesternGate",
+            "mapX": 0,
+            "mapY": 2
+        }
+    ],
+    "scavengeItems":[
+
+    ],
+    "forageItems":[
+
+    ],
+    "scryItems":[
+
+    ]
+}
