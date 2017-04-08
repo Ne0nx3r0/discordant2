@@ -10,6 +10,7 @@ import PvPBattleEndedClientRequest from '../../../client/Requests/PvPBattleEnded
 import DeleteChannelClientRequest from "../../../client/Requests/DeleteChannelClientRequest";
 import PvPBattleExpiredClientRequest from '../../../client/Requests/PvPBattleExpiredClientRequest';
 import AttackedClientRequest from '../../../client/Requests/AttackedClientRequest';
+import { IRemoveBattleFunc } from "../Game";
 
 const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
 
@@ -18,6 +19,7 @@ interface PvPBattleBag{
     pc1:PlayerCharacter;
     pc2:PlayerCharacter;
     getClient:IGetRandomClientFunc;
+    removeBattle:IRemoveBattleFunc;
 }
 
 export default class PvPBattle extends PlayerBattle{
@@ -28,7 +30,8 @@ export default class PvPBattle extends PlayerBattle{
         super({
             channelId: bag.channelId,
             pcs: [bag.pc1,bag.pc2],
-            getClient: bag.getClient
+            getClient: bag.getClient,
+            removeBattle: bag.removeBattle,
         });
 
         this.bpc1 = this.bpcs.get(bag.pc1);
@@ -221,11 +224,9 @@ export default class PvPBattle extends PlayerBattle{
     }
 
     expireBattle(){
-        const ClientRequest = new PvPBattleExpiredClientRequest({
+        new PvPBattleExpiredClientRequest({
             channelId: this.channelId
-        });
-
-        ClientRequest.send(this.getClient());
+        }).send(this.getClient());
 
         this.cleanupBattle();
     }
@@ -239,6 +240,8 @@ export default class PvPBattle extends PlayerBattle{
             bpc.pc.clearTemporaryEffects();
             bpc.pc.HPCurrent = bpc.pc.stats.HPTotal;
         });
+
+        this.removeBattle(this.channelId);
 
         setTimeout(()=>{
             const ClientRequest = new DeleteChannelClientRequest({

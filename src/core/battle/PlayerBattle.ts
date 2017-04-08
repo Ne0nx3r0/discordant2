@@ -10,6 +10,7 @@ import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
 import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
 import BlockedClientRequest from '../../client/requests/BlockedClientRequest';
 import EffectMessageClientRequest from '../../client/requests/EffectMessageClientRequest';
+import { IRemoveBattleFunc } from '../../gameserver/game/Game';
 
 export const ATTACK_TICK_MS = 10000;
 
@@ -17,10 +18,11 @@ interface PlayerBattleBag{
     channelId:string;
     pcs:Array<PlayerCharacter>;
     getClient:IGetRandomClientFunc;
+    removeBattle:IRemoveBattleFunc;
 }
 
-export default class PlayerBattle{
-    id:number;
+export default class PlayerBattle {
+    removeBattle: IRemoveBattleFunc;
     bpcs:Map<Creature,IBattlePlayerCharacter>;
     _battleEnded:boolean;
     getClient:IGetRandomClientFunc;
@@ -32,6 +34,7 @@ export default class PlayerBattle{
         this.channelId = bag.channelId;
         this.lastActionRoundsAgo = 0;
         this.getClient = bag.getClient;
+        this.removeBattle = bag.removeBattle;
 
         this.bpcs = new Map();
         

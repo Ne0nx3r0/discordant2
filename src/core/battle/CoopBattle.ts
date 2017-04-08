@@ -14,6 +14,8 @@ import AttackedClientRequest from '../../client/requests/AttackedClientRequest';
 import { ClientRequestAttackedData, IAttackedSocket } from '../../client/requests/AttackedClientRequest';
 import PassedOutClientRequest from '../../client/requests/PassedOutClientRequest';
 import CoopBattleEndedClientRequest from "../../client/requests/CoopBattleEndedClientRequest";
+import PlayerParty from '../party/PlayerParty';
+import { IRemoveBattleFunc } from '../../gameserver/game/Game';
 
 const dummyAttack = new WeaponAttackStep({
     attackMessage: '{attacker} doesn\'t know what to do!',
@@ -27,11 +29,12 @@ interface PlayerDamaged{
 }
 
 interface CoopBattleBag{
-    id:number;
-    channelId:string;
-    pcs:Array<PlayerCharacter>;
+    id:string;
+    party: PlayerParty;
+    partyMembers: Array<PlayerCharacter>;
     opponent:CreatureAIControlled;
     getClient:IGetRandomClientFunc;
+    removeBattle:IRemoveBattleFunc;
 }
 
 export default class CoopBattle extends PlayerBattle{
@@ -41,9 +44,10 @@ export default class CoopBattle extends PlayerBattle{
 
     constructor(bag:CoopBattleBag){
         super({
-            channelId: bag.channelId,
-            pcs: bag.pcs,
+            channelId: bag.party.channelId,
+            pcs: bag.partyMembers,
             getClient: bag.getClient,
+            removeBattle: bag.removeBattle,
         });
 
         this.opponent = bag.opponent;
@@ -343,6 +347,8 @@ export default class CoopBattle extends PlayerBattle{
             bpc.pc.status = 'inParty';
             bpc.pc.clearTemporaryEffects();
         });
+
+        this.removeBattle(this.channelId);
     }
 
     getPlayerExhaustion(pc:PlayerCharacter):number{

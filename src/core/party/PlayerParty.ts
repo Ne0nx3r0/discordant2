@@ -112,45 +112,40 @@ export default class PlayerParty{
 
         const opponentId = this.exploration.getRandomEncounterMonsterId();
 
-        const opponent = this.game.createMonsterFromId(opponentId);
+        this.currentBattle = this.game.createMonsterBattle({
+            party: this,
+            partyMembers: partyMembers,
+            opponentId: opponentId
+        });
 
-        this.sendChannelMessage(`The party is attacked by ${opponent.title}!`);
+        this.partyStatus = PartyStatus.Battling;
+    }
 
-        this.game.createMonsterBattle(partyMembers,this.channel,opponent)
-        .then((battle:CoopBattle)=>{
-            this.currentBattle = battle; 
-            this.partyStatus = PartyStatus.Battling;
+    returnFromBattle(victory:boolean){
+        if(victory){
+            this.partyStatus = PartyStatus.Exploring;
+        
+            this.sendCurrentMapImageFile('Your party survived!');
+        }
+        else{
+            this.sendChannelMessage('Your party was defeated!');
 
-            battle.on(BattleEvent.CoopBattleEnd,(e:ICoopBattleEndEvent)=>{
-                if(e.victory){
-                    this.partyStatus = PartyStatus.Exploring;
-                
-                    this.sendCurrentMapImageFile('Your party survived!');
-                }
-                else{
-                    this.sendChannelMessage('Your party was defeated!');
-
-                    setTimeout(()=>{
-                        this.members.forEach((pc)=>{
-                            new SendPMClientRequest({
-                                channelId: null,
-                                playerUid: pc.uid,
-                                message: 'Your party was defeated!'
-                            }).send(this.getClient());
-                        });
-                        
-                        this.playerActionDisband();
-                    },10000);
-                }
-
-                this.currentBattle = null;
-                this.members.forEach(function(member){
-                    member.status = 'inParty';
+            setTimeout(()=>{
+                this.members.forEach((pc)=>{
+                    new SendPMClientRequest({
+                        channelId: null,
+                        playerUid: pc.uid,
+                        message: 'Your party was defeated!'
+                    }).send(this.getClient());
                 });
-            });
-        })
-        .catch((err)=>{
-            this.sendChannelMessage('Error occured while finding encounter: '+err);
+                
+                this.playerActionDisband();
+            },10000);
+        }
+
+        this.currentBattle = null;
+        this.members.forEach(function(member){
+            member.status = 'inParty';
         });
     }
 

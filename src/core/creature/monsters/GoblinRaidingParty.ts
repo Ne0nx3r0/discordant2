@@ -12,7 +12,14 @@ export default class GoblinRaidingParty extends CreatureAIControlled{
             id: CreatureId.GoblinRaidingParty,
             title: 'Goblin Raiding Party',
             description: 'A roaming party of goblins looking for careless adventurer\'s to rob... or worse.',
-            attributes: new AttributeSet(18, 10, 20, 0, 0),
+            attributes: new AttributeSet({
+                strength: 18,
+                agility: 10,
+                vitality: 20,
+                spirit: 0,
+                luck: 0,
+                charisma: 0,
+            }),
             equipment: new CreatureEquipment({
                 weapon: GoblinRaidingPartyWeapon
             }),

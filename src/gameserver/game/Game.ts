@@ -26,6 +26,8 @@ import PvPBattle from './battle/PvPBattle';
 import { IGetRandomClientFunc } from '../socket/SocketServer';
 import PlayerParty from "../../core/party/PlayerParty";
 import AllCreaturesAIControlled from "../../core/creature/AllCreaturesAIControlled";
+import CoopBattle from '../../core/battle/CoopBattle';
+import PlayerBattle from '../../core/battle/PlayerBattle';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -41,6 +43,7 @@ export default class Game {
     items: AllItems;
     getClient: IGetRandomClientFunc;
     playerParties:Map<string,PlayerParty>;
+    activeBattles:Map<string,PlayerBattle>;
 
     constructor(bag:GameServerBag){
         this.db = bag.db;
@@ -48,6 +51,7 @@ export default class Game {
         this.cachedPCs = new Map();
         this.pvpInvites = new Map();
         this.playerParties = new Map();
+        this.activeBattles = new Map();
         this.items = new AllItems();
         this.creatures = new AllCreaturesAIControlled();
         this.getClient = bag.getRandomClient;
@@ -369,6 +373,10 @@ export default class Game {
         const sender = await this.getPlayerCharacter(player1Uid);
         const receiver = await this.getPlayerCharacter(player2Uid);
 
+        if(this.activeBattles.has(channelId)){
+            throw 'A battle is already going on in that channel!';
+        }
+
         if(!sender){
             throw 'You are not registered';
         }
@@ -381,8 +389,11 @@ export default class Game {
             channelId: channelId,
             pc1: sender,
             pc2: receiver,
-            getClient: this.getClient
+            getClient: this.getClient.bind(this),
+            removeBattle: this.removeBattle.bind(this)
         });
+
+        this.activeBattles.set(channelId,battle);
 
         this.pvpInvites.delete(sender.uid);
         this.pvpInvites.delete(receiver.uid);
@@ -428,9 +439,34 @@ export default class Game {
         blocker.battle.playerActionBlock(blocker);
     }
 
-    createMonsterFromId(creatureId:number){
-        return this.creatures.create(creatureId);
+    createMonsterBattle(bag:CreateMonsterBattleBag){
+        const opponent = this.creatures.create(bag.opponentId);
+
+        const battle = new CoopBattle({
+            id: bag.party.channelId,
+            party: bag.party,
+            partyMembers: bag.partyMembers,
+            getClient: this.getClient.bind(this),
+            opponent: opponent,
+            removeBattle: this.removeBattle.bind(this),
+        });
+
+        return battle;
     }
+
+    removeBattle(battleId:string){
+        this.activeBattles.delete(battleId);
+    }
+}
+
+export interface IRemoveBattleFunc{
+    (battleId:string):void;
+}
+
+interface CreateMonsterBattleBag{
+    party: PlayerParty;
+    partyMembers: Array<PlayerCharacter>;
+    opponentId: number;
 }
 
 export interface RegisterPlayerCharacterBag{
