@@ -22,3 +22,4 @@ export { default as PartyInvite } from './commands/PartyInvite';
 export { default as PartyDecline } from './commands/PartyDecline';
 export { default as PartyAccept } from './commands/PartyAccept';
 export { default as PartyMove } from './commands/PartyMove';
+export { default as PartyDisband } from './commands/PartyDisband';
