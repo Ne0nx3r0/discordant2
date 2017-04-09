@@ -547,6 +547,20 @@ export default class Game {
 
         invited.party.playerActionJoin(invited);
     }
+
+    async leaveParty(playerUid:string):Promise<void>{
+        const player = await this.getPlayerCharacter(playerUid);
+
+        if(!player){
+            throw 'That player is not registered yet';
+        }
+
+        if(player.party == null){
+            throw 'You are not currently in a party';
+        }
+
+        player.party.playerActionLeave(player);
+    }
 }
 
 export interface IRemoveBattleFunc{

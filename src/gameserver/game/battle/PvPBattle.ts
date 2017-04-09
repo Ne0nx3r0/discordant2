@@ -149,6 +149,11 @@ export default class PvPBattle extends PlayerBattle{
                 damages[damageType] = Math.round(damages[damageType] * afterBlockedPercent);
             });
         }
+        else{
+            Object.keys(damages).forEach(function(damageType){
+                damages[damageType] = Math.round(damages[damageType]);
+            });
+        }
 
         let attackCancelled = false;
 

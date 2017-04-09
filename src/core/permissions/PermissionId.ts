@@ -16,6 +16,7 @@ enum PermissionId{
     PartyNew,
     PartyInvite,
     PartyJoin,
+    PartyLeave,
     PartyExplore,
     PartyMove,
 
