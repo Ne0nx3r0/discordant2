@@ -226,6 +226,10 @@ export default class PlayerParty{
     }
 
     playerActionLeave(pc:PlayerCharacter){
+        if(this.leader.uid == pc.uid){
+            throw 'Party leaders cannot leave, they must disband the party';
+        }
+
         this.members.delete(pc.uid);
 
         pc.party = null;

@@ -31,6 +31,7 @@ import InvitePlayerToPartyRequest from '../gameserver/socket/requests/InvitePlay
 import DeclinePartyInvitationRequest from "../gameserver/socket/requests/DeclinePartyInvitationRequest";
 import AcceptPartyInvitationRequest from '../gameserver/socket/requests/AcceptPartyInvitationRequest';
 import LeavePartyRequest from '../gameserver/socket/requests/LeavePartyRequest';
+import DisbandPartyRequest from "../gameserver/socket/requests/DisbandPartyRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -223,6 +224,13 @@ export default class SocketClientRequester{
 
     leaveParty(playerUid:string):Promise<void>{
         return new LeavePartyRequest({
+            uid: playerUid
+        })
+        .send(this.sioc);
+    }
+
+    disbandParty(playerUid:string):Promise<void>{
+        return new DisbandPartyRequest({
             uid: playerUid
         })
         .send(this.sioc);

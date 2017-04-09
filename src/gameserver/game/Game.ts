@@ -561,6 +561,26 @@ export default class Game {
 
         player.party.playerActionLeave(player);
     }
+
+    async disbandParty(leaderUid:string):Promise<void>{
+        const player = await this.getPlayerCharacter(leaderUid);
+
+        if(!player){
+            throw 'You are not registered';
+        }
+
+        if(player.status != 'inParty'){
+            throw 'Only the party leader can disband the party';
+        }
+
+        const party = this.playerParties.get(player.uid);
+
+        if(!party){
+            throw 'Only the party leader can disband the party';
+        }
+
+        party.playerActionDisband();
+    }
 }
 
 export interface IRemoveBattleFunc{
