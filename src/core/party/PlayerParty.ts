@@ -121,6 +121,12 @@ export default class PlayerParty{
         });
 
         this.partyStatus = PartyStatus.Battling;
+
+        new SendMessageClientRequest({
+            channelId: this.channelId,
+            message: `${this.currentBattle.opponent.title} attacks!`
+        })
+        .send(this.getClient());
     }
 
     returnFromBattle(victory:boolean){

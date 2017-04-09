@@ -37,7 +37,8 @@ interface CoopBattleBag{
     removeBattle:IRemoveBattleFunc;
 }
 
-export default class CoopBattle extends PlayerBattle{
+export default class CoopBattle extends PlayerBattle {
+    party: PlayerParty;
     opponent:CreatureAIControlled;
     _opponentCurrentAttack:WeaponAttack;
     _opponentCurrentAttackStep:number;
@@ -51,6 +52,7 @@ export default class CoopBattle extends PlayerBattle{
         });
 
         this.opponent = bag.opponent;
+        this.party = bag.party;
 
         this._tick = this._tick.bind(this);
 
@@ -349,6 +351,8 @@ export default class CoopBattle extends PlayerBattle{
         });
 
         this.removeBattle(this.channelId);
+        
+        this.party.returnFromBattle(victory);
     }
 
     getPlayerExhaustion(pc:PlayerCharacter):number{
