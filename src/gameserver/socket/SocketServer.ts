@@ -29,6 +29,7 @@ import AcceptPartyInvitationRequest from './requests/AcceptPartyInvitationReques
 import DeclinePartyInvitationRequest from "./requests/DeclinePartyInvitationRequest";
 import InvitePlayerToPartyRequest from './requests/InvitePlayerToPartyRequest';
 import MovePartyRequest from './requests/MovePartyRequest';
+import DisbandPartyRequest from './requests/DisbandPartyRequest';
 
 interface SocketServerBag{
     port:number;
@@ -86,6 +87,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new DeclinePartyInvitationRequest(null));
             this.registerHandler(registeredEvents,client,new InvitePlayerToPartyRequest(null));
             this.registerHandler(registeredEvents,client,new MovePartyRequest(null));
+            this.registerHandler(registeredEvents,client,new DisbandPartyRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript
