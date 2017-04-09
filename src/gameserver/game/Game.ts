@@ -30,6 +30,7 @@ import CoopBattle from '../../core/battle/CoopBattle';
 import PlayerBattle from '../../core/battle/PlayerBattle';
 import MapUrlCache from '../../core/map/MapUrlCache';
 import { WesternGateMap } from "../../core/map/Maps";
+import { PartyMoveDirection } from "../../core/party/PartyExploringMap";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -580,6 +581,26 @@ export default class Game {
         }
 
         party.playerActionDisband();
+    }
+
+    async moveParty(leaderUid:string,direction:PartyMoveDirection):Promise<void>{
+        const player = await this.getPlayerCharacter(leaderUid);
+
+        if(!player){
+            throw 'You are not registered';
+        }
+
+        if(player.status != 'inParty'){
+            throw 'Only the party leader can move the party';
+        }
+
+        const party = this.playerParties.get(player.uid);
+
+        if(!party){
+            throw 'Only the party leader can move the party';
+        }
+        
+        party.move(direction);
     }
 }
 

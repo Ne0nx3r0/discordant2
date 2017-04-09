@@ -1,6 +1,6 @@
 import ExplorableMap from '../map/ExplorableMap';
 
-type PartyMoveDirection = 'up' | 'left' | 'down' | 'right';
+type PartyMoveDirection = 'U' | 'L' | 'D' | 'R';
 
 export {PartyMoveDirection}
 
@@ -23,17 +23,17 @@ export default class PartyExploringMap{
     }
 
     canMove(direction:PartyMoveDirection){
-                if(direction == 'up') return this.map.isWalkable(this.currentX,this.currentY-1);
-         else if(direction == 'down') return this.map.isWalkable(this.currentX,this.currentY+1);
-         else if(direction == 'left') return this.map.isWalkable(this.currentX-1,this.currentY);
-        else if(direction == 'right') return this.map.isWalkable(this.currentX+1,this.currentY);
+                if(direction == 'U') return this.map.isWalkable(this.currentX,this.currentY-1);
+         else if(direction == 'D') return this.map.isWalkable(this.currentX,this.currentY+1);
+         else if(direction == 'L') return this.map.isWalkable(this.currentX-1,this.currentY);
+        else if(direction == 'R') return this.map.isWalkable(this.currentX+1,this.currentY);
     }
 
     move(direction:PartyMoveDirection){
-        if(direction == 'up') this.currentY -= 1;
-        else if(direction == 'down') this.currentY += 1;
-        else if(direction == 'left') this.currentX -= 1;
-        else if(direction == 'right') this.currentX += 1;
+        if(direction == 'U') this.currentY -= 1;
+        else if(direction == 'D') this.currentY += 1;
+        else if(direction == 'L') this.currentX -= 1;
+        else if(direction == 'R') this.currentX += 1;
     }
 
     getEncounterChance():number{

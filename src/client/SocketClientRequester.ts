@@ -32,6 +32,8 @@ import DeclinePartyInvitationRequest from "../gameserver/socket/requests/Decline
 import AcceptPartyInvitationRequest from '../gameserver/socket/requests/AcceptPartyInvitationRequest';
 import LeavePartyRequest from '../gameserver/socket/requests/LeavePartyRequest';
 import DisbandPartyRequest from "../gameserver/socket/requests/DisbandPartyRequest";
+import MovePartyRequest from '../gameserver/socket/requests/MovePartyRequest';
+import { PartyMoveDirection } from "../core/party/PartyExploringMap";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -232,6 +234,14 @@ export default class SocketClientRequester{
     disbandParty(playerUid:string):Promise<void>{
         return new DisbandPartyRequest({
             uid: playerUid
+        })
+        .send(this.sioc);
+    }
+
+    moveParty(leaderUid:string,direction:PartyMoveDirection):Promise<void>{
+        return new MovePartyRequest({
+            uid: leaderUid,
+            direction: direction
         })
         .send(this.sioc);
     }
