@@ -221,7 +221,7 @@ export default class PlayerParty{
 
         new SendMessageClientRequest({
             channelId: this.channelId,
-            message: `${pc.title} joined the party!`,
+            message: `<@${pc.uid}> joined the party!`,
         }).send(this.getClient());
     }
 

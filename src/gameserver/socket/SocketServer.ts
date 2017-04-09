@@ -25,6 +25,9 @@ import BattleBlockRequest from './requests/BattleBlockRequest';
 import CreatePartyRequest from './requests/CreatePartyRequest';
 import SetPartyExploringRequest from './requests/SetPartyExploringRequest';
 import SetSliceRemoteUrlRequest from './requests/SetSliceRemoteUrlRequest';
+import AcceptPartyInvitationRequest from './requests/AcceptPartyInvitationRequest';
+import DeclinePartyInvitationRequest from "./requests/DeclinePartyInvitationRequest";
+import InvitePlayerToPartyRequest from './requests/InvitePlayerToPartyRequest';
 
 interface SocketServerBag{
     port:number;
@@ -78,6 +81,9 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new SetSliceRemoteUrlRequest(null));
             this.registerHandler(registeredEvents,client,new TransferPlayerItemRequest(null));
             this.registerHandler(registeredEvents,client,new UnequipPlayerItemRequest(null));
+            this.registerHandler(registeredEvents,client,new AcceptPartyInvitationRequest(null));
+            this.registerHandler(registeredEvents,client,new DeclinePartyInvitationRequest(null));
+            this.registerHandler(registeredEvents,client,new InvitePlayerToPartyRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

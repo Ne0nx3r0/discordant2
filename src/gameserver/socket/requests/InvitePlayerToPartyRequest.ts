@@ -22,7 +22,7 @@ export default class InvitePlayerToPartyRequest extends ServerRequest{
     }
 
     async receive(bag:ServerRequestReceiveBag,data:InvitePlayerToPartyData):Promise<InvitePlayerToPartyResponse>{
-        bag.game.invitePlayerToParty(data.uid,data.invitedUid);
+        await bag.game.invitePlayerToParty(data.uid,data.invitedUid);
 
         return {
             success: true,
