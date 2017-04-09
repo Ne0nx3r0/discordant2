@@ -28,6 +28,7 @@ import SetSliceRemoteUrlRequest from './requests/SetSliceRemoteUrlRequest';
 import AcceptPartyInvitationRequest from './requests/AcceptPartyInvitationRequest';
 import DeclinePartyInvitationRequest from "./requests/DeclinePartyInvitationRequest";
 import InvitePlayerToPartyRequest from './requests/InvitePlayerToPartyRequest';
+import MovePartyRequest from './requests/MovePartyRequest';
 
 interface SocketServerBag{
     port:number;
@@ -84,6 +85,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new AcceptPartyInvitationRequest(null));
             this.registerHandler(registeredEvents,client,new DeclinePartyInvitationRequest(null));
             this.registerHandler(registeredEvents,client,new InvitePlayerToPartyRequest(null));
+            this.registerHandler(registeredEvents,client,new MovePartyRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript
