@@ -122,7 +122,6 @@ export default class DiscordantBotNode{
         let commandName:string = params.shift();
 
         this.aliases.forEach(function(commandStr,alias){
-            figure_out_whats_up_with_aliases;
             if(alias == commandName){
                 commandName = commandStr;
             }

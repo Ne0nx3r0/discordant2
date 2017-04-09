@@ -14,7 +14,7 @@ export default class PartyNew extends Command{
             minParams: 1,
         });
 
-        this.aliases = ['dpn','dpnew'];
+        this.aliases = ['pn','pnew'];
     }
 
     async run(bag:CommandRunBag){
