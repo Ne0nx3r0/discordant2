@@ -172,6 +172,10 @@ export default class PlayerParty{
     }
 
     playerActionInvite(pc:PlayerCharacter){
+        if(this.members.size + this.invited.size >= 4){
+            throw 'Party is full (max 4)';
+        }
+
         this.invited.set(pc.uid,{
             pc:pc,
             expires: new Date().getTime()+INVITE_EXPIRES_MS,

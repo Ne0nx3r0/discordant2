@@ -489,6 +489,64 @@ export default class Game {
 
         party.explore(WesternGateMap);
     }
+
+    async invitePlayerToParty(leaderUid:string,inviteUid:string):Promise<void>{
+        const player = await this.getPlayerCharacter(leaderUid);
+
+        if(!player){
+            throw 'You are not registered';
+        }
+
+        if(player.status != 'inParty'){
+            throw 'Only the party leader can invite people to the party';
+        }
+
+        const party = this.playerParties.get(player.uid);
+
+        if(!party){
+            throw 'Only the party leader can direct the party!';
+        }
+
+        const invited = await this.getPlayerCharacter(inviteUid);
+
+        if(!invited){
+            throw 'That player is not registered yet';
+        }
+
+        if(invited.status != 'inCity'){
+            throw 'That player cannot be invited to join a party right now';
+        }
+
+        party.playerActionInvite(invited);
+    }
+
+    async declinePartyInvitation(playerUid:string):Promise<void>{
+        const invited = await this.getPlayerCharacter(playerUid);
+
+        if(!invited){
+            throw 'That player is not registered yet';
+        }
+
+        if(invited.status != 'invitedToParty' || invited.party == null){
+            throw 'No pending invitation';
+        }
+
+        invited.party.playerActionDecline(invited);
+    }
+
+    async acceptPartyInvitation(playerUid:string):Promise<void>{
+        const invited = await this.getPlayerCharacter(playerUid);
+
+        if(!invited){
+            throw 'That player is not registered yet';
+        }
+
+        if(invited.status != 'invitedToParty' || invited.party == null){
+            throw 'No pending invitation';
+        }
+
+        invited.party.playerActionJoin(invited);
+    }
 }
 
 export interface IRemoveBattleFunc{

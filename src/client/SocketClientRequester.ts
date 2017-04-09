@@ -27,6 +27,9 @@ import BattleAttackRequest from '../gameserver/socket/requests/BattleAttackReque
 import BattleBlockRequest from "../gameserver/socket/requests/BattleBlockRequest";
 import CreatePartyRequest from "../gameserver/socket/requests/CreatePartyRequest";
 import SetPartyExploringRequest from '../gameserver/socket/requests/SetPartyExploringRequest';
+import InvitePlayerToPartyRequest from '../gameserver/socket/requests/InvitePlayerToPartyRequest';
+import DeclinePartyInvitationRequest from "../gameserver/socket/requests/DeclinePartyInvitationRequest";
+import AcceptPartyInvitationRequest from '../gameserver/socket/requests/AcceptPartyInvitationRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -191,6 +194,28 @@ export default class SocketClientRequester{
     setPartyExploring(leaderUid:string):Promise<void>{
         return new SetPartyExploringRequest({
             uid:leaderUid
+        })
+        .send(this.sioc);
+    }
+
+    invitePlayerToJoinParty(leaderUid:string,invitedUid:string):Promise<void>{
+        return new InvitePlayerToPartyRequest({
+            uid: leaderUid,
+            invitedUid: invitedUid
+        })
+        .send(this.sioc);
+    }
+
+    declinePartyInvitation(playerUid:string):Promise<void>{
+        return new DeclinePartyInvitationRequest({
+            uid: playerUid
+        })
+        .send(this.sioc);
+    }
+
+    acceptPartyInvitation(playerUid:string):Promise<void>{
+        return new AcceptPartyInvitationRequest({
+            uid: playerUid
         })
         .send(this.sioc);
     }

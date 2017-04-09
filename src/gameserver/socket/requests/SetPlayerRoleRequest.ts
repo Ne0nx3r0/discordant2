@@ -22,7 +22,7 @@ export default class SetPlayerRoleRequest extends ServerRequest{
     }
 
     async receive(bag:ServerRequestReceiveBag,data:SetPlayerRoleData):Promise<SetPlayerRoleResponse>{
-        bag.game.setPlayerRole(data.uid,data.role);
+        await bag.game.setPlayerRole(data.uid,data.role);
 
         return {
             success: true,
