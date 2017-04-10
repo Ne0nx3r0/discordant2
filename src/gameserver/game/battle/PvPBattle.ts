@@ -4,12 +4,12 @@ import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 import BattleTemporaryEffect from '../../../core/effects/BattleTemporaryEffect';
 import IDamageSet, { damagesTotal } from '../../../core/damage/IDamageSet';
 import { IGetRandomClientFunc } from '../../socket/SocketServer';
-import RoundBeginClientRequest from '../../../client/Requests/RoundBeginClientRequest';
+import RoundBeginClientRequest from '../../../client/requests/RoundBeginClientRequest';
 import WeaponAttackStep from '../../../core/item/WeaponAttackStep';
-import PvPBattleEndedClientRequest from '../../../client/Requests/PvPBattleEndedClientRequest';
-import DeleteChannelClientRequest from "../../../client/Requests/DeleteChannelClientRequest";
-import PvPBattleExpiredClientRequest from '../../../client/Requests/PvPBattleExpiredClientRequest';
-import AttackedClientRequest from '../../../client/Requests/AttackedClientRequest';
+import PvPBattleEndedClientRequest from '../../../client/requests/PvPBattleEndedClientRequest';
+import DeleteChannelClientRequest from "../../../client/requests/DeleteChannelClientRequest";
+import PvPBattleExpiredClientRequest from '../../../client/requests/PvPBattleExpiredClientRequest';
+import AttackedClientRequest from '../../../client/requests/AttackedClientRequest';
 import { IRemoveBattleFunc } from "../Game";
 
 const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
