@@ -18,7 +18,18 @@ export default class Inventory extends Command{
     async run(bag:CommandRunBag){
         if(bag.params.length > 0){
             const commandStr = bag.params[0];
-            const command = bag.commands.get(commandStr.toUpperCase());
+            let command = bag.commands.get(commandStr.toUpperCase());
+
+            if(!command){
+                bag.commands.forEach((c)=>{
+                    c.aliases.forEach((alias)=>{
+                        console.log(commandStr,alias);
+                        if(commandStr == alias){
+                            command = c;
+                        }
+                    });
+                });
+            }
 
             if(!command){
                 bag.message.channel.sendMessage('Unknown command: '+commandStr);

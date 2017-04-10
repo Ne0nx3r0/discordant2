@@ -83,7 +83,7 @@ export default class DiscordantBotNode{
             //Clean up any party channels
             this.client.channels.array()
             .forEach((channel:TextChannel,index:number)=>{
-                if(channel.name && (channel.name.startsWith('dpvp-') || channel.name.startsWith('dparty-'))){
+                if(channel.name && (channel.name.startsWith(this.commandPrefix+'pvp-') || channel.name.startsWith(this.commandPrefix+'party-'))){
                     deleteChannelDelay = deleteChannelDelay + 2000;
 
                     setTimeout(()=>{
@@ -187,7 +187,7 @@ export default class DiscordantBotNode{
     }
 
     async createPvPChannel(guild:Guild,invite:SocketPvPInvite):Promise<TextChannel>{
-        const channelname = ('dpvp-'+invite.sender.title.substr(0,invite.sender.title.length/2)+invite.receiver.title.substr(invite.receiver.title.length/2))
+        const channelname = (this.commandPrefix+'pvp-'+invite.sender.title.substr(0,invite.sender.title.length/2)+invite.receiver.title.substr(invite.receiver.title.length/2))
             .replace(/[^A-Za-z0-9-]+/g,'')
             .substr(0,20);
 
@@ -221,7 +221,7 @@ export default class DiscordantBotNode{
     }
 
     async createPartyChannel(guild:Guild,partyName:string,leaderUid:string):Promise<TextChannel>{
-        const channelname = ('dparty-'+partyName)
+        const channelname = (this.commandPrefix+'party-'+partyName)
             .replace(/[^A-Za-z0-9-]+/g,'')
             .substr(0,20);
 
