@@ -2,7 +2,7 @@ import SocketServer from './socket/SocketServer';
 import Logger from './log/Logger';
 import DatabaseService, { DBConfig } from './db/DatabaseService';
 import Game from './game/Game';
-import GameServerConfig from '../../Config.GameServer';
+import GameServerConfig from '../../Config.Gameserver';
 import PermissionsService from '../core/permissions/PermissionService';
 import { GameServerBag } from './game/Game';
 
