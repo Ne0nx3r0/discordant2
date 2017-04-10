@@ -62,4 +62,4 @@ npm-debug.log.*
 logs/*
 
 Config.Bot.ts
-Config.GameServer.ts
+Config.Gameserver.ts
