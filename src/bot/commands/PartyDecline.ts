@@ -14,7 +14,7 @@ export default class PartyDecline extends Command{
             minParams: 0,
         });
 
-        this.aliases = ['partydec','pdec'];
+        this.aliases = ['pdecline'];
     }
 
     async run(bag:CommandRunBag){

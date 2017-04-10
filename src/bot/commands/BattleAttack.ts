@@ -15,6 +15,8 @@ export default class BattleAttack extends Command{
             permissionNode: PermissionId.BattleAttack,
             minParams: 0,
         });
+
+        this.aliases = ['a'];
     }
 
     async run(bag:CommandRunBag){

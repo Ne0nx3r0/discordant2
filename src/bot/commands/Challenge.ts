@@ -15,6 +15,8 @@ export default class Challenge extends Command{
             permissionNode: PermissionId.Inventory,
             minParams: 1,
         });
+
+        this.aliases = ['c'];
     }
 
     async run(bag:CommandRunBag){

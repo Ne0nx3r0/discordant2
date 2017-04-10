@@ -14,7 +14,7 @@ export default class PartyInvite extends Command{
             minParams: 1,
         });
 
-        this.aliases = ['pinvite','pi'];
+        this.aliases = ['pinvite'];
     }
 
     async run(bag:CommandRunBag){

@@ -7,14 +7,14 @@ import CharacterClasses from '../../core/creature/player/CharacterClasses';
 export default class Inventory extends Command{
     constructor(bag:CommandBag){
         super({
-            name: 'inv',
+            name: 'inventory',
             description: 'Show your inventory',
-            usage: 'inv',
+            usage: 'inventory',
             permissionNode: PermissionId.Inventory,
             minParams: 0,
         });
 
-        this.aliases = ['inventory'];
+        this.aliases = ['inv'];
     }
 
     async run(bag:CommandRunBag){

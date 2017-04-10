@@ -18,7 +18,7 @@ export default class PartyMove extends Command{
             minParams: 1,
         });
 
-        this.aliases = ['move','pm'];
+        this.aliases = ['pmove','pm'];
     }
 
     async run(bag:CommandRunBag){
