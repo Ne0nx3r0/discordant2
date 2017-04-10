@@ -37,6 +37,7 @@ export default class DiscordantBotNode{
     commandPrefix:string;
     ownerUIDs:Array<string>;
     commands:Map<String,Command>;
+    lockdown:boolean;
     socket:SocketClientRequester;
     logger:Logger;
     permissions:PermissionsService;
@@ -44,6 +45,7 @@ export default class DiscordantBotNode{
     aliases: Map<string,string>;
 
     constructor(bag:BotBag){
+        this.lockdown = false;
         this.commandPrefix = bag.commandPrefix;
         this.ownerUIDs = bag.ownerUIDs;
         this.permissions = bag.permissions;
@@ -139,6 +141,12 @@ export default class DiscordantBotNode{
                 const playerRoleStr = await this.socket.getPlayerRole(playerUID);
                 const playerRole:PermissionRole = this.permissions.getRole(playerRoleStr);
 
+                if(this.lockdown && this.ownerUIDs.indexOf(playerUID) == -1){
+                    message.channel.sendMessage(`Bot on lockdown, only owners may use commands.`);
+
+                    return;
+                }
+
                 if(!playerRole.has(command.permissionNode) && this.ownerUIDs.indexOf(playerUID) == -1){
                     if(playerRole.title == 'anonymous'){
                         message.channel.sendMessage(`You can register with \`dbegin\``);
@@ -168,6 +176,7 @@ export default class DiscordantBotNode{
                         createPvPChannel: this.createPvPChannel.bind(this),
                         createPartyChannel: this.createPartyChannel.bind(this),
                         deleteChannel: this.deleteChannel.bind(this),
+                        setLockdown: this.setLockdown.bind(this),
                     },
                     permissions: this.permissions
                 });
@@ -176,6 +185,10 @@ export default class DiscordantBotNode{
                 message.channel.sendMessage(errorMsg+', '+message.author.username);
             }
         })();
+    }
+
+    setLockdown(lockdown:boolean){
+        this.lockdown = lockdown;
     }
 
     setPlayingGame(msg:string){

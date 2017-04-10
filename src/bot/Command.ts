@@ -19,6 +19,7 @@ export interface BotHandlers{
     setPlayingGame: SetPlayingFunc;
     createPvPChannel(guild:Guild,invite:SocketPvPInvite):TextChannel;
     createPartyChannel(guild:Guild,partyName:string,leaderUid:string):TextChannel;
+    setLockdown(lockdown:boolean):void;
     deleteChannel: DeleteChannelFunc;
 }
 

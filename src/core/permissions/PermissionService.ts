@@ -10,7 +10,6 @@ const anonymousPermissions = [
 ];
 
 const playerPermissions = [
-    PermissionId.Reset,
     PermissionId.Stats,
     PermissionId.Party,
     PermissionId.PartyNew,
@@ -34,7 +33,6 @@ const playerPermissions = [
     PermissionId.Embed,
     PermissionId.Grant,
     PermissionId.ChannelId,
-    PermissionId.Shutdown,
     PermissionId.SetPlayingGame,
     PermissionId.SetRole,
 ].concat(anonymousPermissions).sort();
@@ -43,6 +41,8 @@ const testerPermissions = [
 ].concat(playerPermissions).sort();
 
 const adminPermissions = [
+    PermissionId.Reset,
+    PermissionId.Shutdown,
 ].concat(testerPermissions).sort();
 
 export class PermissionRole{
