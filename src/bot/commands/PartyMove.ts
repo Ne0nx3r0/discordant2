@@ -33,6 +33,6 @@ export default class PartyMove extends Command{
             direction = MOVE_DIRECTIONS[MOVE_DIRECTIONS_GEO.indexOf(direction)];
         }
 
-        bag.socket.moveParty(bag.message.author.id,direction as PartyMoveDirection);        
+        await bag.socket.moveParty(bag.message.author.id,direction as PartyMoveDirection);        
     }
 }
