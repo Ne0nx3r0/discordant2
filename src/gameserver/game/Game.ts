@@ -97,6 +97,8 @@ export default class Game {
             player = new PlayerCharacter({
                 uid: dbPlayer.uid,
                 title: dbPlayer.username,
+                unassignedPoints: dbPlayer.unassigned_points,
+                level: dbPlayer.level,
                 description: dbPlayer.description,
                 attributes: new AttributeSet({
                     strength: dbPlayer.attribute_strength,
@@ -152,6 +154,8 @@ export default class Game {
             inventory: new PlayerInventory(),
             xp: 0,
             wishes: 0,
+            level: 0,
+            unassignedPoints: 0,
             role: this.permissions.getRole('player'),
             karma: 0,
         });

@@ -37,6 +37,8 @@ interface PCConfig{
     equipment: CreatureEquipment,
     inventory: PlayerInventory,
     xp:number;
+    level:number;
+    unassignedPoints:number;
     wishes:number;
     role:PermissionRole;
     karma:number;
@@ -49,6 +51,8 @@ export default class PlayerCharacter extends Creature{
     status:PlayerStatus;
     class:CharacterClass;
     xp:number;
+    level:number;
+    unassignedPoints:number;
     wishes:number;
     inventory:PlayerInventory;
     role:PermissionRole;
@@ -67,6 +71,8 @@ export default class PlayerCharacter extends Creature{
         this.uid = o.uid;
         this.class = o.class;
         this.xp = o.xp;
+        this.level = o.level;
+        this.unassignedPoints = o.unassignedPoints;
         this.wishes = o.wishes;
         this.inventory = o.inventory;
         this.role = o.role;
@@ -98,6 +104,8 @@ export default class PlayerCharacter extends Creature{
             description: this.description,
             class: this.class.id,
             xp: this.xp,
+            level: this.level,
+            unassignedPoints: this.unassignedPoints,
             karma: this.karma,
             wishes: this.wishes,
             role: this.role.title,
@@ -114,6 +122,8 @@ export default class PlayerCharacter extends Creature{
 export interface SocketPlayerCharacter extends SocketCreature{
     class: number;
     xp: number;
+    level: number;
+    unassignedPoints: number;
     karma: number;
     wishes: number;
     role: string;

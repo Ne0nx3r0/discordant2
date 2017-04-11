@@ -6,10 +6,12 @@ export interface DBPlayer{
     username: string;
     description: string;
     xp: number;
+    level: number;
     wishes: number;
     class: number;
     karma: number;
     role: string;
+    unassigned_points: number;
     attribute_strength: number;
     attribute_agility: number;
     attribute_vitality: number;
