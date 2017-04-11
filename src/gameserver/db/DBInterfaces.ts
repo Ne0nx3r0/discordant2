@@ -11,7 +11,6 @@ export interface DBPlayer{
     class: number;
     karma: number;
     role: string;
-    unassigned_points: number;
     attribute_strength: number;
     attribute_agility: number;
     attribute_vitality: number;
