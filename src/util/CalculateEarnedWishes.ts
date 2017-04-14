@@ -1,19 +1,21 @@
 import CreatureAIControlled from '../core/creature/CreatureAIControlled';
-import PlayerCharacter from '../core/creature/player/PlayerCharacter';
+
 import PartyExplore from '../bot/commands/PartyExplore';
+import { IBattlePlayerCharacter } from '../core/battle/PlayerBattle';
+import Creature from '../core/creature/Creature';
 
 const PARTY_PENALTY = 0.02;
 const LEVEL_PENALTY = 0.01;
 
-export default function CalculateEarnedWishes(players:Array<PlayerCharacter>,opponent:CreatureAIControlled){
+export default function CalculateEarnedWishes(bpcs:Map<Creature, IBattlePlayerCharacter>,opponent:CreatureAIControlled){
     const baseWishes = opponent.wishesDropped;
-    const partySize = players.length;
+    const partySize = bpcs.size;
 
     let partyLevel = 0;
     
-    players.forEach(function(player){
-        if(partyLevel < player.level){
-            partyLevel = player.level;
+    bpcs.forEach(function(bpc){
+        if(partyLevel < bpc.pc.level){
+            partyLevel = bpc.pc.level;
         }
     });
 
