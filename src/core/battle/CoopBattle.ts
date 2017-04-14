@@ -331,11 +331,7 @@ export default class CoopBattle extends PlayerBattle {
         });
 
         this.bpcs.forEach((bpc)=>{
-            let wishesEarned = this.opponent.wishesDropped;
-            
-            if(bpc.defeated){
-                wishesEarned = wishesEarned;
-            }
+
 
             bpcs.push({
                 player: bpc.pc.toSocket(),

@@ -5,17 +5,17 @@ import WeaponAttackStep from '../item/WeaponAttackStep';
 import PlayerCharacter from './player/PlayerCharacter';
 
 interface CreatureAIBag extends CreatureBag{
-    wishesDropped:number;
+    challengeRating:number;
 }
 
 export default class CreatureAIControlled extends Creature{
-    wishesDropped:number;
+    challengeRating:number;
     attacks:Array<WeaponAttack>;
 
     constructor(bag:CreatureAIBag){
         super(bag);
         
-        this.wishesDropped = bag.wishesDropped;
+        this.challengeRating = bag.challengeRating;
 
         this.attacks = [];
 
