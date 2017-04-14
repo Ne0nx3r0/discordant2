@@ -22,7 +22,7 @@ export default class Goblin extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: BareHands
             }),
-            xpDropped: 10,
+            wishesDropped: 10,
         });
     }
 }

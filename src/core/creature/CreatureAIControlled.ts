@@ -5,17 +5,17 @@ import WeaponAttackStep from '../item/WeaponAttackStep';
 import PlayerCharacter from './player/PlayerCharacter';
 
 interface CreatureAIBag extends CreatureBag{
-    xpDropped:number;
+    wishesDropped:number;
 }
 
 export default class CreatureAIControlled extends Creature{
-    xpDropped:number;
+    wishesDropped:number;
     attacks:Array<WeaponAttack>;
 
     constructor(bag:CreatureAIBag){
         super(bag);
         
-        this.xpDropped = bag.xpDropped;
+        this.wishesDropped = bag.wishesDropped;
 
         this.attacks = [];
 
@@ -54,9 +54,5 @@ export default class CreatureAIControlled extends Creature{
                 return attack;
             }
         }
-    }
-
-    getExperienceEarned(pc:PlayerCharacter){
-        return this.xpDropped;//TODO: implement player-based experience drops
     }
 }
