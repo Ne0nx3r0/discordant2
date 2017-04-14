@@ -23,7 +23,7 @@ export default class GoblinRaidingParty extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: GoblinRaidingPartyWeapon
             }),
-            challengeRating: 5,
+            wishesDropped: 20,
         });
     }
 }

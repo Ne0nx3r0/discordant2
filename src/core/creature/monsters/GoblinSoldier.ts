@@ -24,7 +24,7 @@ export default class GoblinSoldier extends CreatureAIControlled{
                 offhand: WoodRoundShield,
                 weapon: HandAxe,
             }),
-            challengeRating: 3,
+            wishesDropped: 15,
         });
     }
 }
