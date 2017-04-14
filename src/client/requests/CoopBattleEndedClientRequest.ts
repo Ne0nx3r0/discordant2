@@ -5,14 +5,15 @@ import { getEmbed, EMBED_COLORS } from '../../bot/util/ChatHelpers';
 import { SocketCreature } from '../../core/creature/Creature';
 import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
 
+export interface IBattleEndedPlayer{
+    player: SocketPlayerCharacter;
+    wishesEarned: number;
+}
 
 export interface ClientRequestCoopBattleEndedData extends ClientRequestData{
-    players: Array<{
-        player: SocketPlayerCharacter;
-        //xpEarned: xpEarned,
-    }>,
+    players: Array<IBattleEndedPlayer>;
     opponent: SocketCreature;
-    victory: boolean,
+    victory: boolean;
     killer?: SocketPlayerCharacter;//required if victory is true
 }
 
@@ -22,12 +23,23 @@ export default class CoopBattleEndedClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestCoopBattleEndedData):Promise<void>{
-        bag.channel.sendMessage('```fix\nBattle Over\n```');
+        let msg = '```fix\nBattle Over\n```';
 
         if(data.victory){
+            if(data.victory){
+                data.players.forEach(function(bp){
+                    if(bp.wishesEarned > 0){
+                        msg += `\n${bp.player.title} earned ${bp.wishesEarned} wishes`;
+                    }
+                });
+            }
+
+            bag.channel.sendMessage(msg);
+
             bag.channel.sendMessage('',getEmbed('\n:tada: YOU WERE VICTORIOUS :tada:',EMBED_COLORS.INFO));
         }
         else{
+            bag.channel.sendMessage(msg);
             bag.channel.sendMessage('',getEmbed('\n:dizzy_face: YOU WERE DEFEATED :dizzy_face:',EMBED_COLORS.POISON));
         }
     }

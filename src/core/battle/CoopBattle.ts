@@ -319,18 +319,27 @@ export default class CoopBattle extends PlayerBattle {
 
     endBattle(victory:boolean,killer?:IBattlePlayerCharacter){
         this._battleEnded = true;
-/* TODO: give player the xp they earned
-        let xpEarned = 0;
-        if(victory){
-            xpEarned = this.opponent.xpDropped;
-        }*/
 
         const bpcs = [];
 
+        let partyLevel = 0;
+        
         this.bpcs.forEach(function(bpc){
+            if(bpc.pc.level > partyLevel){
+                partyLevel = bpc.pc.level;
+            }
+        });
+
+        this.bpcs.forEach((bpc)=>{
+            let wishesEarned = this.opponent.wishesDropped;
+            
+            if(bpc.defeated){
+                wishesEarned = wishesEarned;
+            }
+
             bpcs.push({
                 player: bpc.pc.toSocket(),
-                //xpEarned: xpEarned,
+                wishesEarned: wishesEarned,
             });
         });
 
@@ -352,7 +361,7 @@ export default class CoopBattle extends PlayerBattle {
 
         this.removeBattle(this.channelId);
         
-        this.party.returnFromBattle(victory);
+        this.party.returnFromBattle(victory,bpcs);
     }
 
     getPlayerExhaustion(pc:PlayerCharacter):number{

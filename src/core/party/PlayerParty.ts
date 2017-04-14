@@ -9,6 +9,7 @@ import SendMessageClientRequest from '../../client/requests/SendMessageClientReq
 import SendPMClientRequest from '../../client/requests/SendPMClientRequest';
 import SendImageClientRequest from '../../client/requests/SendImageClientRequest';
 import SendLocalImageClientRequest from "../../client/requests/SendLocalImageClientRequest";
+import { IBattleEndedPlayer } from '../../client/requests/CoopBattleEndedClientRequest';
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -129,11 +130,18 @@ export default class PlayerParty{
         .send(this.getClient());
     }
 
-    returnFromBattle(victory:boolean){
+    returnFromBattle(victory:boolean,bpcs:Array<IBattleEndedPlayer>){
         if(victory){
             this.partyStatus = PartyStatus.Exploring;
         
             this.sendCurrentMapImageFile('Your party survived!');
+
+            bpcs.forEach((bpc)=>{
+                const playerId = bpc.player.uid;
+                const wishesEarned = bpc.wishesEarned;
+
+                this.game.grantPlayerWishes(playerId,wishesEarned);
+            });
         }
         else{
             this.sendChannelMessage('Your party was defeated!');
