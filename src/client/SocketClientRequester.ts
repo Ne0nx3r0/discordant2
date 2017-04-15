@@ -33,6 +33,7 @@ import LeavePartyRequest from '../gameserver/socket/requests/LeavePartyRequest';
 import DisbandPartyRequest from "../gameserver/socket/requests/DisbandPartyRequest";
 import MovePartyRequest from '../gameserver/socket/requests/MovePartyRequest';
 import { PartyMoveDirection } from "../core/party/PartyExploringMap";
+import GrantPlayerGoldRequest from "../gameserver/socket/requests/GrantPlayerGoldRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
