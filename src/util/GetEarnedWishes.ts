@@ -17,6 +17,7 @@ interface WishesBag{
 
 export default function GetEarnedWishes(bag:WishesBag){
     // Calculate the party penalty
+    // 1 party member is no penalty, over that PARTY_PENALTY% is lost per member
     const partyPenalty = 1 - (bag.partySize-1) * PARTY_PENALTY;
 
     // Adjust base wishes
@@ -28,5 +29,6 @@ export default function GetEarnedWishes(bag:WishesBag){
     //Adjust base wishes to match the highest level player's percent
     const levelAdjustedWishes = XPToLevel[bag.playerLevel] * wishesPercent;
 
+    //Minimum of 1, rounded
     return Math.max(1,Math.round(levelAdjustedWishes));
 }
