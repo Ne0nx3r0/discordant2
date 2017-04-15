@@ -6,7 +6,7 @@ import Creature from '../core/creature/Creature';
 import PlayerBattle from '../core/battle/PlayerBattle';
 import { XPToLevel } from "./XPToLevel";
 
-const PARTY_PENALTY = 0.015;
+const PARTY_PENALTY = 0.15;
 
 interface WishesBag{
     baseWishes:number;
