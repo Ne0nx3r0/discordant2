@@ -30,7 +30,7 @@ export default class WishCalc extends Command{
         const earnedWishes = GetEarnedWishes({
             baseWishes: parseInt(bag.params[0]),
             playerLevel: parseInt(bag.params[1]),
-            highestLevel: parseInt(bag.params[3]),
+            highestLevel: parseInt(bag.params[2]),
             partySize: parseInt(bag.params[3])
         });
 
