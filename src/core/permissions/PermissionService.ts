@@ -11,6 +11,7 @@ const anonymousPermissions = [
 
 const playerPermissions = [
     PermissionId.Stats,
+    PermissionId.WishCalc,
     PermissionId.Party,
     PermissionId.PartyNew,
     PermissionId.PartyInvite,
