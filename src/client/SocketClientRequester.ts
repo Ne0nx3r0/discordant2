@@ -18,7 +18,6 @@ import { EquipPlayerItemData } from '../gameserver/socket/requests/EquipPlayerIt
 import UnequipPlayerItemRequest from '../gameserver/socket/requests/UnequipPlayerItemRequest';
 import { EquipmentSlot } from '../core/item/CreatureEquipment';
 import ItemBase from '../core/item/ItemBase';
-import GrantPlayerXPRequest from '../gameserver/socket/requests/GrantPlayerXPRequest';
 import CreatePvPInviteRequest from "../gameserver/socket/requests/CreatePvPInviteRequest";
 import { PvPInvite, SocketPvPInvite } from '../core/battle/PvPInvite';
 import GetPvPInviteRequest from "../gameserver/socket/requests/GetPvPInviteRequest";

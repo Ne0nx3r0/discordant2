@@ -8,7 +8,6 @@ import { ServerResponse } from './ServerRequest';
 import GetPlayerInventoryRequest from './requests/GetPlayerInventoryRequest';
 import ServerRequest from './ServerRequest';
 import SetPlayerRoleRequest from './requests/SetPlayerRoleRequest';
-import GrantPlayerXPRequest from './requests/GrantPlayerXPRequest';
 import GrantPlayerWishesRequest from './requests/GrantPlayerWishesRequest';
 import GrantPlayerItemRequest from './requests/GrantPlayerItemRequest';
 import RegisterPlayerRequest from './requests/RegisterPlayerRequest';
@@ -31,6 +30,7 @@ import InvitePlayerToPartyRequest from './requests/InvitePlayerToPartyRequest';
 import MovePartyRequest from './requests/MovePartyRequest';
 import DisbandPartyRequest from './requests/DisbandPartyRequest';
 import RestartRequest from './requests/RestartRequest';
+import GrantPlayerGoldRequest from "./requests/GrantPlayerGoldRequest";
 
 interface SocketServerBag{
     port:number;
@@ -77,7 +77,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new GetPvPInviteRequest(null));
             this.registerHandler(registeredEvents,client,new GrantPlayerItemRequest(null));
             this.registerHandler(registeredEvents,client,new GrantPlayerWishesRequest(null));
-            this.registerHandler(registeredEvents,client,new GrantPlayerXPRequest(null));
+            this.registerHandler(registeredEvents,client,new GrantPlayerGoldRequest(null));
             this.registerHandler(registeredEvents,client,new RegisterPlayerRequest(null));
             this.registerHandler(registeredEvents,client,new SetPartyExploringRequest(null));
             this.registerHandler(registeredEvents,client,new SetPlayerRoleRequest(null));
