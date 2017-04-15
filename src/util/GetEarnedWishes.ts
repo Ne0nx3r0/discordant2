@@ -1,9 +1,3 @@
-import CreatureAIControlled from '../core/creature/CreatureAIControlled';
-
-import PartyExplore from '../bot/commands/PartyExplore';
-import { IBattlePlayerCharacter } from '../core/battle/PlayerBattle';
-import Creature from '../core/creature/Creature';
-import PlayerBattle from '../core/battle/PlayerBattle';
 import { XPToLevel } from "./XPToLevel";
 
 const PARTY_PENALTY = 0.15;
