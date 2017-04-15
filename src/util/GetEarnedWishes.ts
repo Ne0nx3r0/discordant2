@@ -23,6 +23,14 @@ export default function GetEarnedWishes(bag:WishesBag){
     // Adjust base wishes
     const adjustedWishes = bag.baseWishes * partyPenalty;
 
+    //If player is within 5 levels of the top player skip level difference penalty
+    if(bag.highestLevel - bag.playerLevel <= 5){
+        return adjustedWishes;
+    }
+
+    // Apply a penalty to players who are five levels below the highest player
+    // Instead of earning full adjustedWishes they earn the same % of XP to level as the highest player
+
     // Calculate what percent to level the highest level player is getting
     const wishesPercent = adjustedWishes / XPToLevel[bag.highestLevel];
 
