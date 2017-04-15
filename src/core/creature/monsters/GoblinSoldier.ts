@@ -12,9 +12,9 @@ export default class GoblinSoldier extends CreatureAIControlled{
             title: 'Goblin Soldier',
             description: 'A trained goblin, normally serves as a scout or a member of raiding parties',
             attributes: new AttributeSet({
-                strength: 14,
-                agility: 14,
-                vitality: 12,
+                strength: 8,
+                agility: 8,
+                vitality: 6,
                 spirit: 0,
                 luck: 0,
                 charisma: 0,
@@ -24,7 +24,7 @@ export default class GoblinSoldier extends CreatureAIControlled{
                 offhand: WoodRoundShield,
                 weapon: HandAxe,
             }),
-            wishesDropped: 15,
+            wishesDropped: 30,
         });
     }
 }

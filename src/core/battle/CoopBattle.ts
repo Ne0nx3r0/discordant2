@@ -350,7 +350,7 @@ export default class CoopBattle extends PlayerBattle {
             players: bpcs,
             opponent: this.opponent.toSocket(),
             victory: victory,
-            killer: killer ? null : killer.pc.toSocket(),
+            killer: killer ? killer.pc.toSocket() : null,
         })
         .send(this.getClient());
 

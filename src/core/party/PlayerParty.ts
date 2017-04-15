@@ -87,6 +87,10 @@ export default class PlayerParty{
     }
 
     move(direction:PartyMoveDirection){
+        if(this.partyStatus != PartyStatus.Exploring){
+            throw 'The party is not currently exploring';
+        }
+
         if(!this.exploration.canMove(direction)){
             this.sendChannelMessage('The party cannot move '+direction+', the way is impassably blocked by a small bush or something.');
 
@@ -131,6 +135,12 @@ export default class PlayerParty{
     }
 
     returnFromBattle(victory:boolean,bpcs:Array<IBattleEndedPlayer>){
+        this.members.forEach(function(pc){
+            if(pc.HPCurrent < 0){
+                pc.HPCurrent = pc.stats.HPTotal * 0.05;
+            }
+        });
+
         if(victory){
             this.partyStatus = PartyStatus.Exploring;
         
@@ -147,14 +157,6 @@ export default class PlayerParty{
             this.sendChannelMessage('Your party was defeated!');
 
             setTimeout(()=>{
-                this.members.forEach((pc)=>{
-                    new SendPMClientRequest({
-                        channelId: null,
-                        playerUid: pc.uid,
-                        message: 'Your party was defeated!'
-                    }).send(this.getClient());
-                });
-                
                 this.playerActionDisband();
             },10000);
         }

@@ -15,7 +15,7 @@ export default class GoblinRaidingParty extends CreatureAIControlled{
             attributes: new AttributeSet({
                 strength: 18,
                 agility: 10,
-                vitality: 20,
+                vitality: 10,
                 spirit: 0,
                 luck: 0,
                 charisma: 0,
@@ -23,7 +23,7 @@ export default class GoblinRaidingParty extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: GoblinRaidingPartyWeapon
             }),
-            wishesDropped: 20,
+            wishesDropped: 40,
         });
     }
 }
