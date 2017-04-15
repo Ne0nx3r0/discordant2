@@ -12,7 +12,7 @@ import DBRegisterPlayerCharacter from '../db/api/DBRegisterPlayerCharacter';
 import DBGrantPlayerWishes from '../db/api/DBGrantPlayerWishes';
 import { EquipmentSlot, EquipmentBag } from '../../core/item/CreatureEquipment';
 import AllItems from '../../core/item/AllItems';
-import DBGrantPlayerXP from '../db/api/DBGrantPlayerXP';
+import DBGrantPlayerGold from '../db/api/DBGrantPlayerGold';
 import ItemBase from '../../core/item/ItemBase';
 import DBGrantPlayerItem from '../db/api/DBGrantPlayerItem';
 import DBEquipPlayerItem from '../db/api/DBEquipPlayerItem';
@@ -110,7 +110,7 @@ export default class Game {
                 class: CharacterClasses.get(dbPlayer.class),
                 equipment: pcEquipment,
                 inventory: pcInventory,
-                xp: dbPlayer.xp,
+                gold: dbPlayer.gold,
                 wishes: dbPlayer.wishes,
                 role: this.permissions.getRole(dbPlayer.role),
                 karma: dbPlayer.karma
@@ -151,7 +151,7 @@ export default class Game {
             class: playerClass,
             equipment: playerClass.startingEquipment,
             inventory: new PlayerInventory(),
-            xp: 0,
+            gold: 0,
             wishes: 0,
             level: 0,
             role: this.permissions.getRole('player'),
@@ -171,12 +171,12 @@ export default class Game {
         return leftOver;
     }
 
-    async grantPlayerXP(uid:string,amount:number):Promise<number>{
+    async grantPlayerGold(uid:string,amount:number):Promise<number>{
         const player = await this.getPlayerCharacter(uid);
 
-        const leftOver = await DBGrantPlayerXP(this.db,uid,amount);
+        const leftOver = await DBGrantPlayerGold(this.db,uid,amount);
 
-        player.xp += amount;
+        player.gold += amount;
 
         return leftOver;
     }

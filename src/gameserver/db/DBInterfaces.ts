@@ -5,7 +5,7 @@ export interface DBPlayer{
     discriminator: string;
     username: string;
     description: string;
-    xp: number;
+    gold: number;
     level: number;
     wishes: number;
     class: number;

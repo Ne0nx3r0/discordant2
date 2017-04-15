@@ -36,7 +36,7 @@ interface PCConfig{
     class:CharacterClass,
     equipment: CreatureEquipment,
     inventory: PlayerInventory,
-    xp:number;
+    gold:number;
     level:number;
     wishes:number;
     role:PermissionRole;
@@ -49,7 +49,7 @@ export default class PlayerCharacter extends Creature{
     party:PlayerParty;
     status:PlayerStatus;
     class:CharacterClass;
-    xp:number;
+    gold:number;
     level:number;
     wishes:number;
     inventory:PlayerInventory;
@@ -68,7 +68,7 @@ export default class PlayerCharacter extends Creature{
 
         this.uid = o.uid;
         this.class = o.class;
-        this.xp = o.xp;
+        this.gold = o.gold;
         this.level = o.level;
         this.wishes = o.wishes;
         this.inventory = o.inventory;
@@ -79,14 +79,6 @@ export default class PlayerCharacter extends Creature{
         this.party = null;
         this.battle = null;
         this.lastCommand = 0;
-    }
-
-    calculateDeathWishesLost():number{
-        return this.wishes / 2;
-    }
-
-    calculateDeathXPLost():number{
-        return this.xp * 0.01;
     }
 
     get isPartyLeader():boolean{
@@ -100,7 +92,7 @@ export default class PlayerCharacter extends Creature{
             title: this.title,
             description: this.description,
             class: this.class.id,
-            xp: this.xp,
+            gold: this.gold,
             level: this.level,
             karma: this.karma,
             wishes: this.wishes,
@@ -117,7 +109,7 @@ export default class PlayerCharacter extends Creature{
 
 export interface SocketPlayerCharacter extends SocketCreature{
     class: number;
-    xp: number;
+    gold: number;
     level: number;
     karma: number;
     wishes: number;

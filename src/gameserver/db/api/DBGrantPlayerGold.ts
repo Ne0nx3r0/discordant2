@@ -5,12 +5,12 @@ import { DBPlayer } from '../DBInterfaces';
 
 const queryStr = `
     UPDATE player 
-    SET xp = xp + $2
+    SET gold = gold + $2
     WHERE uid = $1
-    RETURNING xp;
+    RETURNING gold;
 `;
 
-const DBGrantPlayerXP = async function(db:DatabaseService,uid:string,amount:number):Promise<number>{
+const DBGrantPlayerGold = async function(db:DatabaseService,uid:string,amount:number):Promise<number>{
     const result = await db.getPool().query(queryStr,[uid,amount]);
 
     //not found
@@ -18,9 +18,9 @@ const DBGrantPlayerXP = async function(db:DatabaseService,uid:string,amount:numb
         throw 'Player not found';
     }    
 
-    const xp:number = result.rows[0].wishes;
+    const gold:number = result.rows[0].wishes;
 
-    return xp;
+    return gold;
 }
 
-export default DBGrantPlayerXP;
+export default DBGrantPlayerGold;

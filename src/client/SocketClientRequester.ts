@@ -112,8 +112,8 @@ export default class SocketClientRequester{
         return request.send(this.sioc);
     }
 
-    grantXP(playerUid:string,amount:number):Promise<number>{
-        const request = new GrantPlayerXPRequest({
+    grantGold(playerUid:string,amount:number):Promise<number>{
+        const request = new GrantPlayerGoldRequest({
             uid: playerUid,
             amount: amount
         });

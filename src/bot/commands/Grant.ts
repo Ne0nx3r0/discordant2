@@ -10,7 +10,7 @@ export default class Inventory extends Command{
         super({
             name: 'grant',
             description: 'Create an item for a player',
-            usage: 'grant <\@username> <item name|wishes|xp> [amount]',
+            usage: 'grant <\@username> <item name|wishes|gold> [amount]',
             permissionNode: PermissionId.Grant,
             minParams: 2,
         });
@@ -52,10 +52,10 @@ export default class Inventory extends Command{
 
             bag.message.channel.sendMessage(`${bag.message.author.username} created ${amountWanted} wishes for ${giveTo.title}`);
         }
-        else if(itemWantedStr == 'xp'){
-            const newXPAmount = await bag.socket.grantXP(giveTo.uid,amountWanted);
+        else if(itemWantedStr == 'gold'){
+            const newXPAmount = await bag.socket.grantGold(giveTo.uid,amountWanted);
 
-            bag.message.channel.sendMessage(`${bag.message.author.username} created ${amountWanted} xp for ${giveTo.title}`);
+            bag.message.channel.sendMessage(`${bag.message.author.username} created ${amountWanted} gold for ${giveTo.title}`);
         }
         else{//an item
             const itemWanted = bag.items.findByName(itemWantedStr);

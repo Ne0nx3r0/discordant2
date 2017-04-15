@@ -74,8 +74,8 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                     inline: true,
                 },
                 {
-                    name: 'Experience',
-                    value: pc.xp,
+                    name: 'Gold',
+                    value: pc.gold,
                     inline: true,
                 },
                 {
