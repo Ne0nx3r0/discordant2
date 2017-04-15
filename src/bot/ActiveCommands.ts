@@ -24,3 +24,4 @@ export { default as PartyAccept } from './commands/PartyAccept';
 export { default as PartyMove } from './commands/PartyMove';
 export { default as PartyDisband } from './commands/PartyDisband';
 export { default as Lockdown } from './commands/Lockdown';
+export { default as WishCalc } from './commands/WishCalc';

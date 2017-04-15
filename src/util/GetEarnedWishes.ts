@@ -17,14 +17,16 @@ interface WishesBag{
 
 export default function GetEarnedWishes(bag:WishesBag){
     // Calculate the party penalty
-    const partyPenalty = 1 - bag.partySize * PARTY_PENALTY;
+    const partyPenalty = 1 - (bag.partySize-1) * PARTY_PENALTY;
 
     // Adjust base wishes
     const adjustedWishes = bag.baseWishes * partyPenalty;
 
     // Calculate what percent to level the highest level player is getting
     const wishesPercent = adjustedWishes / XPToLevel[bag.highestLevel];
-    
+
     //Adjust base wishes to match the highest level player's percent
-    return XPToLevel[bag.playerLevel] * wishesPercent;
+    const levelAdjustedWishes = XPToLevel[bag.playerLevel] * wishesPercent;
+
+    return Math.max(1,Math.round(levelAdjustedWishes));
 }

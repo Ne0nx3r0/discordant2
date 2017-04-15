@@ -16,7 +16,7 @@ import PassedOutClientRequest from '../../client/requests/PassedOutClientRequest
 import CoopBattleEndedClientRequest from "../../client/requests/CoopBattleEndedClientRequest";
 import PlayerParty from '../party/PlayerParty';
 import { IRemoveBattleFunc } from '../../gameserver/game/Game';
-import CalculateEarnedWishes from '../../util/CalculateEarnedWishes';
+import GetEarnedWishes from "../../util/GetEarnedWishes";
 
 const dummyAttack = new WeaponAttackStep({
     attackMessage: '{attacker} doesn\'t know what to do!',
@@ -331,9 +331,14 @@ export default class CoopBattle extends PlayerBattle {
             }
         });
 
-        const wishesEarned = CalculateEarnedWishes(this.bpcs,this.opponent);
-
         this.bpcs.forEach((bpc)=>{
+            const wishesEarned = GetEarnedWishes({
+                baseWishes: this.opponent.wishesDropped,
+                partySize: this.bpcs.size,
+                playerLevel: bpc.pc.level,
+                highestLevel: partyLevel
+            });
+            
             bpcs.push({
                 player: bpc.pc.toSocket(),
                 wishesEarned: wishesEarned,

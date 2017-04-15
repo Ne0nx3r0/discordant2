@@ -11,7 +11,7 @@ enum PermissionId{
     Use,
     Challenge,
     Item,
-
+    WishCalc,
     Party,
     PartyNew,
     PartyInvite,
