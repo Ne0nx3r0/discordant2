@@ -147,12 +147,11 @@ $$;
 
 
 CREATE OR REPLACE FUNCTION levelup_player(playerUid bigint,chosenStat varchar,wishesNeeded integer) 
-RETURNS int LANGUAGE plpgsql AS
+RETURNS void LANGUAGE plpgsql AS
 $$
 
 DECLARE
   currentWishes int;
-  newStatAmount int;
 BEGIN
     SELECT wishes INTO currentWishes FROM player WHERE uid = playerUid LIMIT 1;
 
@@ -161,8 +160,8 @@ BEGIN
             USING ERRCODE = 'P0002';
     END IF;
 
-    EXECUTE 'UPDATE player SET wishes = player.wishes - '|| wishesNeeded ||',attribute_' || chosenStat || '= attribute_' || chosenStat || '+1 WHERE uid = '|| playerUid ||' RETURNING attribute_' || chosenStat INTO newStatAmount;
+    EXECUTE 'UPDATE player SET wishes = player.wishes - '|| wishesNeeded ||',attribute_' || chosenStat || '= attribute_' || chosenStat || '+1 WHERE uid = '|| playerUid;
 
-    RETURN newStatAmount;
+    UPDATE player SET level = player.level+1 WHERE uid = playerUid;
 END
 $$;

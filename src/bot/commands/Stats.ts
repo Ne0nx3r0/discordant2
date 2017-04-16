@@ -53,10 +53,10 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     +'\n'+pc.stats.Luck+' Luck';
 
     const resistancesStr = ''
-    +'\n'+(pc.stats.Resistances.Physical*100)+'% Physical'
-    +'\n'+(pc.stats.Resistances.Fire*100)+'%'+' Fire'
-    +'\n'+(pc.stats.Resistances.Cold*100)+'%'+' Cold'
-    +'\n'+(pc.stats.Resistances.Thunder*100)+'% Thunder';
+    +'\n'+Math.floor(pc.stats.Resistances.Physical*100)+'% Physical'
+    +'\n'+Math.floor(pc.stats.Resistances.Fire*100)+'%'+' Fire'
+    +'\n'+Math.floor(pc.stats.Resistances.Cold*100)+'%'+' Cold'
+    +'\n'+Math.floor(pc.stats.Resistances.Thunder*100)+'% Thunder';
 
     const characterClass = CharacterClasses.get(pc.class);
 

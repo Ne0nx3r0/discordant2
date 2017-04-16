@@ -6,10 +6,10 @@ import { WishType } from '../../socket/requests/LevelUpRequest';
 import GetEarnedWishes from '../../../util/GetEarnedWishes';
 
 const queryStr = `
-    levelup_player($1,$2,$3);
+    SELECT levelup_player($1,$2,$3) as newStatValue;
 `;
 
-export default async function DBLevelUp(db:DatabaseService,uid:string,wishType:WishType,wishesNeeded:number):Promise<number>{
+export default async function DBLevelUp(db:DatabaseService,uid:string,wishType:WishType,wishesNeeded:number):Promise<void>{
     const queries = [];
     const result = await db.getPool().query(queryStr,[uid,wishType,wishesNeeded]);
 
@@ -17,8 +17,4 @@ export default async function DBLevelUp(db:DatabaseService,uid:string,wishType:W
     if(result.rows.length == 0){
         throw 'Player not found';
     }    
-
-    const newStatAmount:number = result.rows[0].levelup_player;
-
-    return newStatAmount;
 }

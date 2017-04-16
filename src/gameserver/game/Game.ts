@@ -617,12 +617,21 @@ export default class Game {
             throw 'Not enough wishes';
         }
 
-        const newStatAmount = await DBLevelUp(this.db,playerUid,wishType,pcXPToLevel);
+        await DBLevelUp(this.db,playerUid,wishType,pcXPToLevel);
 
-        const attributeName = wishType.substr(0,1).toUpperCase()+wishType.substr(1);
-
-        pc.attributes[attributeName] = newStatAmount;
-        pc.wishes -= pcXPToLevel;
+        const tempPC = await DBGetPlayerCharacter(this.db,pc.uid);
+        
+        pc.wishes = tempPC.wishes;
+        pc.level = tempPC.level;
+        pc.attributes = {
+            Strength: tempPC.attribute_strength,
+            Agility: tempPC.attribute_agility,
+            Vitality:  tempPC.attribute_vitality,
+            Spirit: tempPC.attribute_spirit,
+            Luck: tempPC.attribute_luck,
+            Charisma: tempPC.attribute_charisma
+        };
+        pc.updateStats();
 
         return pc;
     }
