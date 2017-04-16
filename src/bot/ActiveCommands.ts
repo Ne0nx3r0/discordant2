@@ -1,4 +1,5 @@
 import PartyInvite from './commands/PartyInvite';
+import Use from './commands/Use';
 export { default as Begin } from './commands/Begin';
 export { default as Stats } from './commands/Stats';
 export { default as Inventory } from './commands/Inventory';
@@ -26,3 +27,4 @@ export { default as PartyDisband } from './commands/PartyDisband';
 export { default as Lockdown } from './commands/Lockdown';
 export { default as WishCalc } from './commands/WishCalc';
 export { default as Wish } from './commands/Wish';
+export { default as Use } from './commands/Use';

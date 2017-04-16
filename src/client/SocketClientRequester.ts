@@ -36,6 +36,8 @@ import { PartyMoveDirection } from "../core/party/PartyExploringMap";
 import GrantPlayerGoldRequest from "../gameserver/socket/requests/GrantPlayerGoldRequest";
 import { WishType } from '../gameserver/socket/requests/LevelUpRequest';
 import LevelUpRequest from '../gameserver/socket/requests/LevelUpRequest';
+import UseItemRequest from '../gameserver/socket/requests/UseItemRequest';
+import { Message } from 'discord.js';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -256,5 +258,15 @@ export default class SocketClientRequester{
         .send(this.sioc);
 
         return response.player;
+    }
+
+    async useItem(playerUid:string,itemId:number):Promise<string>{
+        const response = await new UseItemRequest({
+            uid: playerUid,
+            item: itemId,
+        })
+        .send(this.sioc);
+
+        return response.message;
     }
 }

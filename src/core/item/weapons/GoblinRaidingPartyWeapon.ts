@@ -77,8 +77,8 @@ export default  new Weapon({
             ],
             aiUseWeight: 1.0,
             aiShouldIUseThisAttack:function(attacker:Creature){
-                //use when hp is at 20% or less
-                return attacker.HPCurrent < attacker.stats.HPTotal*0.2;
+                //use when hp is at 50% or less
+                return attacker.HPCurrent < attacker.stats.HPTotal*0.5;
             }
         }),
     ]

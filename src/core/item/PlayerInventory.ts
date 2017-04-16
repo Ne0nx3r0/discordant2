@@ -58,7 +58,13 @@ export default class PlayerInventory{
     }
 
     getItemAmount(item:ItemBase){
-        return this.items.get(item.id).amount;
+        const it = this.items.get(item.id);
+
+        if(!it){
+            return 0;
+        }
+
+        return it.amount;
     }
 
     toDatabase():Array<DBItemBag>{

@@ -35,6 +35,8 @@ import { WishType } from '../socket/requests/LevelUpRequest';
 import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
 import { XPToLevel } from "../../util/XPToLevel";
 import DBLevelUp from "../db/api/DBLevelUp";
+import ItemUsable from '../../core/item/ItemUsable';
+import DBTakePlayerItem from "../db/api/DBTakePlayerItem";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -205,6 +207,30 @@ export default class Game {
         await DBGrantPlayerItem(this.db,uid,itemId,amount);
 
         player.inventory._addItem(itemBase,amount);
+
+        return player.inventory.getItemAmount(itemBase);
+    }
+
+    async takePlayerItem(uid:string,itemId:number,amount:number):Promise<number>{
+        if(amount < 1){
+            throw 'Cannot take a negative item';
+        }
+
+        const player = await this.getPlayerCharacter(uid);
+
+        if(!player){
+            throw 'Player is not registered';
+        }
+        
+        const itemBase = this.items.get(itemId);
+
+        if(!itemBase){
+            throw 'Invalid item id '+itemId;
+        }
+
+        await DBTakePlayerItem(this.db,uid,itemId,amount);
+
+        player.inventory._removeItem(itemBase,amount);
 
         return player.inventory.getItemAmount(itemBase);
     }
@@ -634,6 +660,40 @@ export default class Game {
         pc.updateStats();
 
         return pc;
+    }
+
+    async useItem(playerUid:string,itemId:number):Promise<string>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'You are not registered';
+        }
+
+        const item = this.items.get(itemId);
+
+        if(!item){
+            throw `Item not found (${itemId})`;
+        }
+
+        if(!(item instanceof ItemUsable)){
+            throw `${item.title} is not usable`;
+        }
+
+        if(!pc.inventory.hasItem(item,1)){
+            throw `You don't have any ${item.title}`;
+        }
+
+        //Will throw error if something goes wrong
+        item.canUse(pc);
+
+        if(pc.battle){
+            //Throws error if something is wrong, exhausts player so they can't take another action
+            pc.battle.useItem(pc,item);
+        }
+
+        await this.takePlayerItem(pc.uid,item.id,1);//May throw error
+
+        return item.onUse(pc);//allowed to throw error
     }
 }
 
