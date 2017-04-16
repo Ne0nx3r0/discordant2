@@ -34,6 +34,8 @@ import DisbandPartyRequest from "../gameserver/socket/requests/DisbandPartyReque
 import MovePartyRequest from '../gameserver/socket/requests/MovePartyRequest';
 import { PartyMoveDirection } from "../core/party/PartyExploringMap";
 import GrantPlayerGoldRequest from "../gameserver/socket/requests/GrantPlayerGoldRequest";
+import { WishType } from '../gameserver/socket/requests/LevelUpRequest';
+import LevelUpRequest from '../gameserver/socket/requests/LevelUpRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -244,5 +246,15 @@ export default class SocketClientRequester{
             direction: direction
         })
         .send(this.sioc);
+    }
+
+    async levelUp(playerUid:string,wishType:WishType):Promise<SocketPlayerCharacter>{
+        const response = await new LevelUpRequest({
+            uid: playerUid,
+            wishType: wishType,
+        })
+        .send(this.sioc);
+
+        return response.player;
     }
 }

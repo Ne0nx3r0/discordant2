@@ -31,6 +31,7 @@ import MovePartyRequest from './requests/MovePartyRequest';
 import DisbandPartyRequest from './requests/DisbandPartyRequest';
 import RestartRequest from './requests/RestartRequest';
 import GrantPlayerGoldRequest from "./requests/GrantPlayerGoldRequest";
+import LevelUpRequest from './requests/LevelUpRequest';
 
 interface SocketServerBag{
     port:number;
@@ -90,6 +91,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new MovePartyRequest(null));
             this.registerHandler(registeredEvents,client,new DisbandPartyRequest(null));
             this.registerHandler(registeredEvents,client,new RestartRequest(null));
+            this.registerHandler(registeredEvents,client,new LevelUpRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

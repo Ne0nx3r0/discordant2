@@ -31,6 +31,10 @@ import PlayerBattle from '../../core/battle/PlayerBattle';
 import MapUrlCache from '../../core/map/MapUrlCache';
 import { WesternGateMap } from "../../core/map/Maps";
 import { PartyMoveDirection } from "../../core/party/PartyExploringMap";
+import { WishType } from '../socket/requests/LevelUpRequest';
+import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
+import { XPToLevel } from "../../util/XPToLevel";
+import DBLevelUp from "../db/api/DBLevelUp";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -603,6 +607,24 @@ export default class Game {
         }
         
         party.move(direction);
+    }
+
+    async levelUp(playerUid:string,wishType:WishType):Promise<PlayerCharacter>{
+        const pc = await this.getPlayerCharacter(playerUid);
+        const pcXPToLevel = XPToLevel[pc.level];
+
+        if(pc.wishes < pcXPToLevel){
+            throw 'Not enough wishes';
+        }
+
+        const newStatAmount = await DBLevelUp(this.db,playerUid,wishType,pcXPToLevel);
+
+        const attributeName = wishType.substr(0,1).toUpperCase()+wishType.substr(1);
+
+        pc.attributes[attributeName] = newStatAmount;
+        pc.wishes -= pcXPToLevel;
+
+        return pc;
     }
 }
 
