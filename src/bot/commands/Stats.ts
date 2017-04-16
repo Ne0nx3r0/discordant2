@@ -7,6 +7,7 @@ import PlayerCharacter from '../../core/creature/player/PlayerCharacter';
 import { MessageOptions } from "discord.js";
 import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
 import AllItems from '../../core/item/AllItems';
+import { XPToLevel } from "../../util/XPToLevel";
 
 export default class Begin extends Command{
     constructor(bag:CommandBag){
@@ -74,13 +75,18 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                     inline: true,
                 },
                 {
-                    name: 'Gold',
-                    value: pc.gold,
+                    name: 'Level',
+                    value: pc.level,
                     inline: true,
                 },
                 {
                     name: 'Wishes',
-                    value: pc.wishes,
+                    value: `${pc.wishes} / ${XPToLevel[pc.level]}`,
+                    inline: true,
+                },
+                {
+                    name: 'Gold',
+                    value: pc.gold,
                     inline: true,
                 },                
                 {

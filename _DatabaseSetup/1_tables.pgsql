@@ -11,7 +11,7 @@ CREATE TABLE public.player
     wishes integer NOT NULL DEFAULT 0,
     gold integer NOT NULL DEFAULT 0,
     deaths integer NOT NULL DEFAULT 0,
-    level smallint NOT NULL DEFAULT 0,
+    level smallint NOT NULL DEFAULT 1,
     class smallint NOT NULL DEFAULT 0,
     attribute_strength smallint NOT NULL DEFAULT 0,
     attribute_agility smallint NOT NULL DEFAULT 0,
