@@ -276,6 +276,13 @@ export default class SocketClientRequester{
         amount: number;
         price: number;
     }){
+        const response = await MarketSellRequest({
+            uid: bag.playerUid,
+            item: bag.itemId,
+            amount: bag.amount,
+            price: bag.price,
+        }).send(this.sioc);
+
         
     }
 }
