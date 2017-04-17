@@ -23,9 +23,8 @@ mstop <offerId>
 marketbuy <offerId> [amount | all]
 mbuy
 
-marketsearch <itemName> [page#]
-msearch
-
 marketnew [page#]
 mnew
 
+marketsearch <itemName> [page#]
+msearch
