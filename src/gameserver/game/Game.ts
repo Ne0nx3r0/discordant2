@@ -38,6 +38,7 @@ import DBLevelUp from "../db/api/DBLevelUp";
 import ItemUsable from '../../core/item/ItemUsable';
 import DBTakePlayerItem from "../db/api/DBTakePlayerItem";
 import { MarketSellData } from '../socket/requests/MarketSellRequest';
+import DBMarketSellItem from "../db/api/DBMarketSellItem";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -698,7 +699,29 @@ export default class Game {
     }
 
     async marketSellItem(bag:MarketSellData):Promise<string>{
+        const pc = await this.getPlayerCharacter(bag.uid);
 
+        if(!pc){
+            throw 'You are not registered';
+        }    
+
+        const item = this.items.get(bag.item);
+
+        if(!item){
+            throw `Unknown item id ${bag.item}`;
+        }
+        
+        if(isNaN(bag.price) || bag.amount < 1){
+            throw 'Invalid amount';
+        }
+
+        if(isNaN(bag.amount) || bag.price < 1){
+            throw 'Invalid price';
+        }
+
+        const offerId = await DBMarketSellItem(this.db,bag);
+
+        return offerId;
     }
 }
 
