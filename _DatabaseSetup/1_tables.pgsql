@@ -142,7 +142,7 @@ CREATE TABLE public.market_offer
   updated timestamp without time zone NOT NULL DEFAULT now(),
   seller_uid bigint NOT NULL,
   item_id integer NOT NULL,
-  amount integer NOT NULL,
+  amount_left integer NOT NULL,
   CONSTRAINT mo_primary_key PRIMARY KEY (id),
   CONSTRAINT mo_player_uid FOREIGN KEY (seller_uid)
       REFERENCES public.player (uid) MATCH SIMPLE
