@@ -15,7 +15,7 @@ export default class MarketSell extends Command{
             minParams: 3,
         });
 
-        this.aliases = ['ms'];
+        this.aliases = ['msell','ms'];
     }
 
     async run(bag:CommandRunBag){

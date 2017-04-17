@@ -93,6 +93,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new DisbandPartyRequest(null));
             this.registerHandler(registeredEvents,client,new RestartRequest(null));
             this.registerHandler(registeredEvents,client,new UseItemRequest(null));
+            this.registerHandler(registeredEvents,client,new LevelUpRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

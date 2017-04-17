@@ -269,4 +269,13 @@ export default class SocketClientRequester{
 
         return response.message;
     }
+
+    async marketSell(bag:{
+        playerUid: string;
+        itemId: number;
+        amount: number;
+        price: number;
+    }){
+        
+    }
 }
