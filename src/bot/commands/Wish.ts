@@ -13,7 +13,7 @@ export default class SetRole extends Command{
             name: 'wish',
             description: 'Use wishes to take an action',
             usage: 'wish <strength|agility|vitality|spirit|luck|charisma>',
-            permissionNode: PermissionId.SetRole,
+            permissionNode: PermissionId.Wish,
             minParams: 1,
         });
     }
