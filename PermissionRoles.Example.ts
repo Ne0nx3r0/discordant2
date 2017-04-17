@@ -31,18 +31,18 @@ export const PlayerPermissions = [
     PermissionId.Use,
     PermissionId.Challenge,
     PermissionId.Item,
-    PermissionId.Echo,
-    PermissionId.Embed,
-    PermissionId.Grant,
-    PermissionId.ChannelId,
-    PermissionId.SetPlayingGame,
-    PermissionId.SetRole,
 ].concat(AnonymousPermissions).sort();
 
 export const TesterPermissions = [
+    PermissionId.Echo,
+    PermissionId.Embed,
+    PermissionId.ChannelId,
 ].concat(PlayerPermissions).sort();
 
 export const AdminPermissions = [
     PermissionId.Reset,
     PermissionId.Shutdown,
+    PermissionId.Grant,
+    PermissionId.SetRole,
+    PermissionId.SetPlayingGame,
 ].concat(TesterPermissions).sort();
