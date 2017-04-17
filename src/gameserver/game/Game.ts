@@ -37,6 +37,7 @@ import { XPToLevel } from "../../util/XPToLevel";
 import DBLevelUp from "../db/api/DBLevelUp";
 import ItemUsable from '../../core/item/ItemUsable';
 import DBTakePlayerItem from "../db/api/DBTakePlayerItem";
+import { MarketSellData } from '../socket/requests/MarketSellRequest';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -694,6 +695,10 @@ export default class Game {
         await this.takePlayerItem(pc.uid,item.id,1);//May throw error
 
         return item.onUse(pc);//allowed to throw error
+    }
+
+    async marketSellItem(bag:MarketSellData):Promise<string>{
+
     }
 }
 

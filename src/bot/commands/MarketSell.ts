@@ -33,11 +33,13 @@ export default class MarketSell extends Command{
             throw `Unknown item "${item.title}"`;
         }
 
-        await bag.socket.marketSell({
-            playerUid: bag.message.author.id,
-            itemId: item.id,
+        const offerId = await bag.socket.marketSell({
+            uid: bag.message.author.id,
+            item: item.id,
             amount: amount,
             price: price,
         });
+
+        
     }
 }

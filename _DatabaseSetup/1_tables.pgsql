@@ -135,6 +135,8 @@ ALTER TABLE public.player_equipment_item
 
 -- DROP TABLE public.market_offer;
 
+CREATE SEQUENCE market_offer_id_seq START 1;
+
 CREATE TABLE public.market_offer
 (
   id bigint NOT NULL DEFAULT nextval('market_offer_id_seq'::regclass),
@@ -161,6 +163,8 @@ ALTER TABLE public.market_offer
 -- Table: public.market_offer_purchase
 
 -- DROP TABLE public.market_offer_purchase;
+
+CREATE SEQUENCE market_offer_purchase_id_seq START 1;
 
 CREATE TABLE public.market_offer_purchase
 (

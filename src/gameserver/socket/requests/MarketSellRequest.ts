@@ -11,7 +11,7 @@ export interface MarketSellData extends ServerRequestData{
 }
 
 export interface MarketSellResponse extends ServerResponse{
-    offer: number;
+    offer: string;
 }
 
 export default class MarketSellRequest extends ServerRequest{
@@ -19,16 +19,15 @@ export default class MarketSellRequest extends ServerRequest{
         super('MarketSell',data);
     }
 
-    async send(sioc:SocketIOClient.Socket):Promise<void>{
-        await this._send(sioc) as MarketSellResponse;
+    async send(sioc:SocketIOClient.Socket):Promise<MarketSellResponse>{
+        return await this._send(sioc) as MarketSellResponse;
     }
 
     async receive(bag:ServerRequestReceiveBag,data:MarketSellData):Promise<MarketSellResponse>{
-        await bag.game.MarketSell({
-            
-        });
+        const offerId = await bag.game.marketSellItem(data);
 
         return {
+            offer: offerId,
             success: true,
         };
     }
