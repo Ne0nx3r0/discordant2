@@ -1,50 +1,5 @@
 import PermissionId from './PermissionId';
-//Hard coded permissions assigned to each role
-const bannedPermissions = [
-
-];
-
-const anonymousPermissions = [
-    PermissionId.Begin,
-    PermissionId.Classes,
-];
-
-const playerPermissions = [
-    PermissionId.Stats,
-    PermissionId.WishCalc,
-    PermissionId.Party,
-    PermissionId.PartyNew,
-    PermissionId.PartyInvite,
-    PermissionId.PartyJoin,
-    PermissionId.PartyExplore,
-    PermissionId.PartyMove,
-    PermissionId.Battle,
-    PermissionId.BattleAttack,
-    PermissionId.BattleOffhand,
-    PermissionId.BattleBlock,
-    PermissionId.Inventory,
-    PermissionId.Help,
-    PermissionId.Give,
-    PermissionId.Equip,
-    PermissionId.Unequip,
-    PermissionId.Use,
-    PermissionId.Challenge,
-    PermissionId.Item,
-    PermissionId.Echo,
-    PermissionId.Embed,
-    PermissionId.Grant,
-    PermissionId.ChannelId,
-    PermissionId.SetPlayingGame,
-    PermissionId.SetRole,
-].concat(anonymousPermissions).sort();
-
-const testerPermissions = [
-].concat(playerPermissions).sort();
-
-const adminPermissions = [
-    PermissionId.Reset,
-    PermissionId.Shutdown,
-].concat(testerPermissions).sort();
+import { AdminPermissions, AnonymousPermissions, BannedPermissions, PlayerPermissions, TesterPermissions } from '../../../PermissionRoles';
 
 export class PermissionRole{
     title:string;
@@ -67,13 +22,13 @@ export default class PermissionsService{
     constructor(){
         this._roles = new Map();
 
-        this.anonymous = new PermissionRole('anonymous',anonymousPermissions);
+        this.anonymous = new PermissionRole('anonymous',AnonymousPermissions);
 
         this._roles.set('anonymous',this.anonymous);
-        this._roles.set('banned',new PermissionRole('banned',bannedPermissions));
-        this._roles.set('player',new PermissionRole('player',playerPermissions));
-        this._roles.set('tester',new PermissionRole('tester',testerPermissions));        
-        this._roles.set('admin',new PermissionRole('admin',adminPermissions));
+        this._roles.set('banned',new PermissionRole('banned',BannedPermissions));
+        this._roles.set('player',new PermissionRole('player',PlayerPermissions));
+        this._roles.set('tester',new PermissionRole('tester',TesterPermissions));        
+        this._roles.set('admin',new PermissionRole('admin',AdminPermissions));
     }
 
     isRole(name:string){
