@@ -10,7 +10,7 @@ export default class SetRole extends Command{
             name: 'lockdown',
             description: 'Bot will only respond to owners until the bot is reset',
             usage: 'lockdown',
-            permissionNode: PermissionId.SetRole,
+            permissionNode: PermissionId.Lockdown,
             minParams: 0,
         });
     }

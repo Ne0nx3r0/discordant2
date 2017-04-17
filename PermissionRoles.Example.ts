@@ -45,4 +45,5 @@ export const AdminPermissions = [
     PermissionId.Grant,
     PermissionId.SetRole,
     PermissionId.SetPlayingGame,
+    PermissionId.Lockdown,
 ].concat(TesterPermissions).sort();
