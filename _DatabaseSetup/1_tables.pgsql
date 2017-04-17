@@ -21,7 +21,7 @@ CREATE TABLE public.player
     attribute_luck smallint NOT NULL DEFAULT 0,
     karma integer NOT NULL DEFAULT 1,
     role character varying COLLATE pg_catalog."default" NOT NULL DEFAULT 'player'::character varying,
-    created_at timestamp without time zone DEFAULT now(),
+    created time without time zone DEFAULT now(),
     CONSTRAINT player_uid PRIMARY KEY (uid)
 )
 WITH (
@@ -126,3 +126,77 @@ TABLESPACE pg_default;
 
 ALTER TABLE public.player_equipment_item
     OWNER to discordant;
+
+
+
+
+
+-- Table: public.market_offer
+
+-- DROP TABLE public.market_offer;
+
+CREATE TABLE public.market_offer
+(
+  id bigint NOT NULL DEFAULT nextval('market_offer_id_seq'::regclass),
+  created time without time zone NOT NULL DEFAULT now(),
+  updated timestamp without time zone NOT NULL DEFAULT now(),
+  seller_uid bigint NOT NULL,
+  item_id integer NOT NULL,
+  amount integer NOT NULL,
+  CONSTRAINT mo_primary_key PRIMARY KEY (id),
+  CONSTRAINT mo_player_uid FOREIGN KEY (seller_uid)
+      REFERENCES public.player (uid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.market_offer
+  OWNER TO discordant;
+
+
+
+
+
+-- Table: public.market_offer_purchase
+
+-- DROP TABLE public.market_offer_purchase;
+
+CREATE TABLE public.market_offer_purchase
+(
+  id bigint NOT NULL DEFAULT nextval('market_offer_purchase_id_seq'::regclass),
+  created time without time zone NOT NULL DEFAULT now(),
+  offer_id bigint NOT NULL,
+  buyer_uid bigint NOT NULL,
+  CONSTRAINT mop_pk PRIMARY KEY (id),
+  CONSTRAINT mop_buyer_uid_fk FOREIGN KEY (buyer_uid)
+      REFERENCES public.player (uid) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT mop_offer_id_fk FOREIGN KEY (offer_id)
+      REFERENCES public.market_offer (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.market_offer_purchase
+  OWNER TO discordant;
+
+-- Index: public.fki_mop_buyer_uid_fk
+
+-- DROP INDEX public.fki_mop_buyer_uid_fk;
+
+CREATE INDEX fki_mop_buyer_uid_fk
+  ON public.market_offer_purchase
+  USING btree
+  (buyer_uid);
+
+-- Index: public.fki_mop_offer_id
+
+-- DROP INDEX public.fki_mop_offer_id;
+
+CREATE INDEX fki_mop_offer_id
+  ON public.market_offer_purchase
+  USING btree
+  (offer_id);
+

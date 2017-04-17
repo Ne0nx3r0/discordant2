@@ -9,7 +9,7 @@ amount_left
 id
 created
 offer_id
-buyer_id
+buyer_uid
 
 
 -----
