@@ -272,7 +272,7 @@ export default class SocketClientRequester{
         return response.message;
     }
 
-    async marketSell(bag:MarketSellData):Promise<string>{
+    async marketSell(bag:MarketSellData):Promise<number>{
         const response = await new MarketSellRequest(bag)
         .send(this.sioc);
 

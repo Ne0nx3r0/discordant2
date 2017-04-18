@@ -6,7 +6,7 @@ const queryStr = `
     SELECT market_sell_item($1,$2,$3,$4) as offerid;
 `;
 
-export default async function DBMarketSellItem(db:DatabaseService,bag:MarketSellData):Promise<string>{
+export default async function DBMarketSellItem(db:DatabaseService,bag:MarketSellData):Promise<number>{
     try{
         const result = await db.getPool().query(queryStr,[bag.uid,bag.item,bag.amount,bag.price]);
 

@@ -11,7 +11,7 @@ export interface MarketSellData extends ServerRequestData{
 }
 
 export interface MarketSellResponse extends ServerResponse{
-    offer: string;
+    offer: number;
 }
 
 export default class MarketSellRequest extends ServerRequest{

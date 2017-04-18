@@ -4,6 +4,7 @@ import PermissionId from '../../core/permissions/PermissionId';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import GetEarnedWishes from '../../util/GetEarnedWishes';
+import MarketOfferEncoder from '../../util/MarketOfferEncoder';
 
 export default class MarketSell extends Command{
     constructor(bag:CommandBag){
@@ -41,6 +42,8 @@ export default class MarketSell extends Command{
             amount: amount,
             price: price,
         });
+
+        const offerSid = MarketOfferEncoder.encode(offerId);
 
         bag.message.channel.sendMessage(`You put ${amount} ${item.title} for sale at ${price}gp each (Offer ID: ${offerId} )`);
     }

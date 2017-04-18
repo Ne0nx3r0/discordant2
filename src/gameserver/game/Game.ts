@@ -698,7 +698,7 @@ export default class Game {
         return item.onUse(pc);//allowed to throw error
     }
 
-    async marketSellItem(bag:MarketSellData):Promise<string>{
+    async marketSellItem(bag:MarketSellData):Promise<number>{
         const pc = await this.getPlayerCharacter(bag.uid);
 
         if(!pc){
