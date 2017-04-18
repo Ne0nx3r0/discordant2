@@ -40,6 +40,7 @@ import UseItemRequest from '../gameserver/socket/requests/UseItemRequest';
 import { Message } from 'discord.js';
 import MarketSellRequest from "../gameserver/socket/requests/MarketSellRequest";
 import { MarketSellData } from '../gameserver/socket/requests/MarketSellRequest';
+import { MarketStopResponse, default as MarketStopRequest } from "../gameserver/socket/requests/MarketStopRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -277,5 +278,15 @@ export default class SocketClientRequester{
         .send(this.sioc);
 
         return response.offer;
+    }
+
+    async marketStop(playerUid:string,offerId:number):Promise<MarketStopResponse>{
+        const response = await new MarketStopRequest({
+            uid: playerUid,
+            offer: offerId,
+        })
+        .send(this.sioc);
+
+        return response;
     }
 }

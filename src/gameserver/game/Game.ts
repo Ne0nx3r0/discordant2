@@ -39,6 +39,7 @@ import ItemUsable from '../../core/item/ItemUsable';
 import DBTakePlayerItem from "../db/api/DBTakePlayerItem";
 import { MarketSellData } from '../socket/requests/MarketSellRequest';
 import DBMarketSellItem from "../db/api/DBMarketSellItem";
+import { MarketStopResponse } from '../socket/requests/MarketStopRequest';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -724,6 +725,18 @@ export default class Game {
         pc.inventory._removeItem(item,bag.amount);
 
         return offerId;
+    }
+
+    async marketStopItem(playerUid:string,offerId:number):Promise<InventoryItem>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'You are not registered';
+        }
+
+        //maybe just select for the offer data, then return nothing from the function
+        //next step is to run the dbquery and have it return a record of the two things we need (id and amount)
+        //see: http://stackoverflow.com/posts/6085167/   
     }
 }
 

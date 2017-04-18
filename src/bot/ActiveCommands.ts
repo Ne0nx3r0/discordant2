@@ -1,5 +1,6 @@
 import PartyInvite from './commands/PartyInvite';
 import Use from './commands/Use';
+import MarketStop from './commands/MarketStop';
 export { default as Begin } from './commands/Begin';
 export { default as Stats } from './commands/Stats';
 export { default as Inventory } from './commands/Inventory';
@@ -29,3 +30,4 @@ export { default as WishCalc } from './commands/WishCalc';
 export { default as Wish } from './commands/Wish';
 export { default as Use } from './commands/Use';
 export { default as MarketSell } from './commands/MarketSell';
+export { default as MarketStop } from './commands/MarketStop';

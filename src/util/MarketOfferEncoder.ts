@@ -7,10 +7,10 @@ const hashids = new Hashids(
 );
 
 const MarketOfferEncoder= {
-    decode: function(sid:string){
+    decode: function(sid:string):number{
         return hashids.decode(sid);
     },
-    encode: function (nid: number){
+    encode: function (nid: number):string{
         return hashids.encode(nid);
     }
 }
