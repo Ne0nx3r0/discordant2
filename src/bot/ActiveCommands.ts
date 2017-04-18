@@ -28,3 +28,4 @@ export { default as Lockdown } from './commands/Lockdown';
 export { default as WishCalc } from './commands/WishCalc';
 export { default as Wish } from './commands/Wish';
 export { default as Use } from './commands/Use';
+export { default as MarketSell } from './commands/MarketSell';

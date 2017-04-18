@@ -25,6 +25,8 @@ export default class MarketSell extends Command{
 
         if(isNaN(amount) || isNaN(price) || amount < 1 || price < 1){
             bag.message.channel.sendMessage(this.getUsage());
+
+            return;
         }
 
         const item = bag.items.findByName(itemName);
@@ -40,6 +42,6 @@ export default class MarketSell extends Command{
             price: price,
         });
 
-        
+        bag.message.channel.sendMessage(`You put ${amount} ${item.title} for sale at ${price}gp each (Offer ID: ${offerId} )`);
     }
 }

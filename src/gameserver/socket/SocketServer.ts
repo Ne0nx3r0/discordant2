@@ -33,6 +33,7 @@ import RestartRequest from './requests/RestartRequest';
 import GrantPlayerGoldRequest from "./requests/GrantPlayerGoldRequest";
 import LevelUpRequest from './requests/LevelUpRequest';
 import UseItemRequest from './requests/UseItemRequest';
+import MarketSellRequest from './requests/MarketSellRequest';
 
 interface SocketServerBag{
     port:number;
@@ -94,6 +95,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new RestartRequest(null));
             this.registerHandler(registeredEvents,client,new UseItemRequest(null));
             this.registerHandler(registeredEvents,client,new LevelUpRequest(null));
+            this.registerHandler(registeredEvents,client,new MarketSellRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

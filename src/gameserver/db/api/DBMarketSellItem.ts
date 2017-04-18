@@ -1,26 +1,23 @@
 import DatabaseService from '../DatabaseService';
 import { DBPlayer } from '../DBInterfaces';
 import { MarketSellData } from '../../socket/requests/MarketSellRequest';
-import shortid from 'shortid';
-
-/*
-check if player has more than max items for sale (10?)
-check if player has this item for sale already
-remove the item from the player's inventory (take_player_item())
-insert for sale record
-return new id of for sale record
-*/
 
 const queryStr = `
-    UPDATE player 
-    SET role = $2
-    WHERE uid = $1;
+    SELECT market_sell_item($1,$2,$3,$4) as offerId;
 `;
 
-shortid.characters('0123456789abcdefghijklmnopqrstuvwxyz');
-
 export default async function DBMarketSellItem(db:DatabaseService,bag:MarketSellData):Promise<string>{
+    try{
+        const result = await db.getPool().query(queryStr,[bag.uid,bag.item,bag.amount,bag.price]);
 
+        return result.rows[0].offerId;
+    }
+    catch(ex){
+        //Kind of hackish - "custom" exception from transfer_player_item function
+        if(ex.code == 'P0002'){
+            throw ex.message;
+        }
 
-    await db.getPool().query(queryStr,[uid,role]);
+        throw ex;
+    }   
 }

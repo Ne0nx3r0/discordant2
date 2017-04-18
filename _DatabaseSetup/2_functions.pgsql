@@ -151,7 +151,7 @@ RETURNS void LANGUAGE plpgsql AS
 $$
 
 DECLARE
-  currentWishes int;
+  currentWishes integer;
 BEGIN
     SELECT wishes INTO currentWishes FROM player WHERE uid = playerUid LIMIT 1;
 
@@ -165,3 +165,57 @@ BEGIN
     UPDATE player SET level = player.level+1 WHERE uid = playerUid;
 END
 $$;
+
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION market_sell_item(playerUid bigint,itemId integer,sellAmount integer,price integer) 
+RETURNS varchar LANGUAGE plpgsql AS
+$$
+
+DECLARE
+  currentMarketOffer bigint;
+  currentMarketOffersCount integer;
+  currentItemAmount integer;
+  newMarketOffer integer;
+BEGIN
+  SELECT id INTO currentMarketOffer FROM market_offer WHERE seller_uid = playerUid AND item_id = itemId;
+
+  -- Check if the player already has this item type for sale
+  IF currentMarketOffer > 0 THEN
+    RAISE EXCEPTION 'You already have a sell offer for that item (Offer ID % )',currentMarketOffer
+      USING ERRCODE = 'P0002';  
+  END IF;
+
+  -- Check if the player has more than 10 items for sale already
+  SELECT COUNT(*) INTO currentMarketOffersCount FROM market_offer WHERE seller_uid = playerUid;
+
+  IF currentMarketOffersCount >= 10 THEN
+    RAISE EXCEPTION 'You cannot have more than 10 offers at once'
+      USING ERRCODE = 'P0002';  
+  END IF;
+
+  -- Check if they have enough of the item and remove that amount from their inventory if so
+  SELECT amount INTO currentItemAmount FROM player_inventory_item WHERE player_uid = playerUid AND item_id = itemId LIMIT 1;
+
+  IF currentItemAmount > sellAmount THEN
+    UPDATE player_inventory_item SET amount = amount - sellAmount WHERE player_uid = playerUid AND item_id = itemId;
+  ELSIF currentItemAmount = sellAmount THEN
+    DELETE FROM player_inventory_item WHERE player_uid = playerUid AND item_id = itemId;
+  ELSE
+    RAISE EXCEPTION 'You only have % of that item',currentItemAmount
+          USING ERRCODE = 'P0002';  
+  END IF;
+
+   INSERT INTO market_offer(seller_uid,item_id,amount_left) VALUES(playerUid,itemId,sellAmount) RETURNING id INTO newMarketOffer;
+
+   return newMarketOffer;
+END
+$$;
+
+
+

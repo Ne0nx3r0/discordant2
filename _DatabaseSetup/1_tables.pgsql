@@ -104,6 +104,11 @@ ALTER TYPE public.equipmentslot
     OWNER TO discordant;
 
 
+
+
+
+
+
 -- Table: public.player_equipment_item
 
 -- DROP TABLE public.player_equipment_item;
@@ -116,16 +121,26 @@ CREATE TABLE public.player_equipment_item
   CONSTRAINT primary_key_slot_player PRIMARY KEY (slot, player_uid),
   CONSTRAINT player_equipment_player_uid_fkey FOREIGN KEY (player_uid)
       REFERENCES public.player (uid) MATCH SIMPLE
-      ON UPDATE RESTRICT 
-      ON DELETE RESTRICT
+      ON UPDATE RESTRICT ON DELETE RESTRICT
 )
 WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
+  OIDS=FALSE
+);
 ALTER TABLE public.player_equipment_item
-    OWNER to discordant;
+  OWNER TO discordant;
+
+-- Index: public.player_equipment_item_player_uid_idx
+
+-- DROP INDEX public.player_equipment_item_player_uid_idx;
+
+CREATE INDEX player_equipment_item_player_uid_idx
+  ON public.player_equipment_item
+  USING btree
+  (player_uid);
+
+
+
+
 
 
 
@@ -135,11 +150,9 @@ ALTER TABLE public.player_equipment_item
 
 -- DROP TABLE public.market_offer;
 
-CREATE SEQUENCE market_offer_id_seq START 1;
-
 CREATE TABLE public.market_offer
 (
-  id bigint NOT NULL DEFAULT nextval('market_offer_id_seq'::regclass),
+  id bigint NOT NULL DEFAULT nextval('market_offers_id_seq'::regclass),
   created time without time zone NOT NULL DEFAULT now(),
   updated timestamp without time zone NOT NULL DEFAULT now(),
   seller_uid bigint NOT NULL,
@@ -155,6 +168,34 @@ WITH (
 );
 ALTER TABLE public.market_offer
   OWNER TO discordant;
+
+-- Index: public.market_offer_item_id_idx
+
+-- DROP INDEX public.market_offer_item_id_idx;
+
+CREATE INDEX market_offer_item_id_idx
+  ON public.market_offer
+  USING btree
+  (item_id);
+
+-- Index: public.market_offer_item_id_seller_uid_idx
+
+-- DROP INDEX public.market_offer_item_id_seller_uid_idx;
+
+CREATE INDEX market_offer_item_id_seller_uid_idx
+  ON public.market_offer
+  USING btree
+  (item_id, seller_uid);
+
+-- Index: public.market_offer_seller_uid_idx
+
+-- DROP INDEX public.market_offer_seller_uid_idx;
+
+CREATE INDEX market_offer_seller_uid_idx
+  ON public.market_offer
+  USING btree
+  (seller_uid);
+
 
 
 

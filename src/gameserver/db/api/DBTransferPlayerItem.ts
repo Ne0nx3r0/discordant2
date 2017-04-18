@@ -15,7 +15,7 @@ const DBTransferPlayerItem = async function(db:DatabaseService,fromUid:string,to
     catch(ex){
         //Kind of hackish - "custom" exception from transfer_player_item function
         if(ex.code == 'P0002'){
-            throw 'You do not have enough of that item';
+            throw ex.error;
         }
 
         throw ex;
