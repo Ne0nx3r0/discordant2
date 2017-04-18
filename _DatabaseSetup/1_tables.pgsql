@@ -150,6 +150,8 @@ CREATE INDEX player_equipment_item_player_uid_idx
 
 -- DROP TABLE public.market_offer;
 
+CREATE SEQUENCE market_offers_id_seq START 1;
+
 CREATE TABLE public.market_offer
 (
   id bigint NOT NULL DEFAULT nextval('market_offers_id_seq'::regclass),
