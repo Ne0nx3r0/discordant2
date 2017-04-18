@@ -45,6 +45,6 @@ export default class MarketSell extends Command{
 
         const offerSid = MarketOfferEncoder.encode(offerId);
 
-        bag.message.channel.sendMessage(`You put ${amount} ${item.title} for sale at ${price}gp each (Offer ID: ${offerId} )`);
+        bag.message.channel.sendMessage(`You put ${amount} ${item.title} for sale at ${price}gp each ( ${offerSid} )`);
     }
 }

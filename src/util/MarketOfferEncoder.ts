@@ -1,4 +1,4 @@
-import Hashids from 'hashids';
+const Hashids = require('hashids');
 
 const hashids = new Hashids(
     "Discordant", 
