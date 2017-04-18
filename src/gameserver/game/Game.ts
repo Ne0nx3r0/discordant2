@@ -721,6 +721,8 @@ export default class Game {
 
         const offerId = await DBMarketSellItem(this.db,bag);
 
+        pc.inventory._removeItem(item,bag.amount);
+
         return offerId;
     }
 }

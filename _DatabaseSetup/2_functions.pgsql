@@ -174,14 +174,14 @@ $$;
 
 
 CREATE OR REPLACE FUNCTION market_sell_item(playerUid bigint,itemId integer,sellAmount integer,price integer) 
-RETURNS varchar LANGUAGE plpgsql AS
+RETURNS bigint LANGUAGE plpgsql AS
 $$
 
 DECLARE
   currentMarketOffer bigint;
   currentMarketOffersCount integer;
   currentItemAmount integer;
-  newMarketOffer integer;
+  newMarketOffer bigint;
 BEGIN
   SELECT id INTO currentMarketOffer FROM market_offer WHERE seller_uid = playerUid AND item_id = itemId;
 
