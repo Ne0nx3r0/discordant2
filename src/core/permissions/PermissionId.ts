@@ -34,10 +34,11 @@ enum PermissionId{
 
     Eval,
     SetRole,
-    MarketStop,
     Inventory,
 
     MarketSell,
+    MarketSearch,
+    MarketStop,
     Wish,
 }
 
