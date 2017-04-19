@@ -33,6 +33,11 @@ export default class MarketNew extends Command{
 
         const marketOffers:Array<SocketActiveMarketOffer> = await bag.socket.getNewestActiveMarketOffers(page);
 
+        if(marketOffers == null){
+            bag.message.channel.sendMessage(`No offers found, ${bag.message.author.username}`);
+            return;
+        }
+
         let msg = `Newest for sale offers:\n\n`;
 
         msg += marketOffers.map(function(offer){

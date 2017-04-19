@@ -307,7 +307,7 @@ export default class SocketClientRequester{
             page: page            
         })
         .send(this.sioc);
-
+        
         return response.offers;
     }
 }

@@ -194,11 +194,14 @@ BEGIN
   -- Check if they have enough of the item and remove that amount from their inventory if so
   SELECT amount INTO currentItemAmount FROM player_inventory_item WHERE player_uid = playerUid AND item_id = itemId LIMIT 1;
 
-  IF currentItemAmount > sellAmount THEN
+  IF currentItemAmount IS NULL THEN
+    RAISE EXCEPTION 'You do not have any of that item'
+          USING ERRCODE = 'P0002';  
+  ELSIF currentItemAmount > sellAmount THEN
     UPDATE player_inventory_item SET amount = amount - sellAmount WHERE player_uid = playerUid AND item_id = itemId;
   ELSIF currentItemAmount = sellAmount THEN
     DELETE FROM player_inventory_item WHERE player_uid = playerUid AND item_id = itemId;
-  ELSE
+  ELSE  
     RAISE EXCEPTION 'You only have % of that item',currentItemAmount
           USING ERRCODE = 'P0002';  
   END IF;
