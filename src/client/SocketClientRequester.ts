@@ -43,6 +43,7 @@ import { MarketSellData } from '../gameserver/socket/requests/MarketSellRequest'
 import { MarketStopResponse, default as MarketStopRequest } from "../gameserver/socket/requests/MarketStopRequest";
 import { SocketActiveMarketOffer } from "../gameserver/db/api/DBGetActiveMarketOffers";
 import MarketSearchRequest from "../gameserver/socket/requests/MarketSearchRequest";
+import MarketNewOffersRequest from "../gameserver/socket/requests/MarketNewOffersRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -295,6 +296,15 @@ export default class SocketClientRequester{
     async marketGetOffers(itemId:number):Promise<Array<SocketActiveMarketOffer>>{
         const response = await new MarketSearchRequest({
             item: itemId
+        })
+        .send(this.sioc);
+
+        return response.offers;
+    }
+
+    async getNewestActiveMarketOffers(page: number):Promise<Array<SocketActiveMarketOffer>>{
+        const response = await new MarketNewOffersRequest({
+            page: page            
         })
         .send(this.sioc);
 

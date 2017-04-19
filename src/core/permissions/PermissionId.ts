@@ -39,6 +39,7 @@ enum PermissionId{
     MarketSell,
     MarketSearch,
     MarketStop,
+    MarketNew,
     Wish,
 }
 

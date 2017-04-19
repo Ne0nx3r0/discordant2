@@ -43,6 +43,8 @@ import { MarketStopResponse } from '../socket/requests/MarketStopRequest';
 import DBGetMarketOffer from "../db/api/DBGetMarketOffer";
 import DBStopMarketOffer from "../db/api/DBStopMarketOffer";
 import DBGetActiveMarketOffers from "../db/api/DBGetActiveMarketOffers";
+import { SocketActiveMarketOffer } from '../db/api/DBGetActiveMarketOffers';
+import DBGetNewestActiveMarketOffers from "../db/api/DBGetNewestActiveMarketOffers";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -762,8 +764,14 @@ export default class Game {
         return invItem;
     }
 
-    async getActiveMarketOffers(itemId: number){
+    async getActiveMarketOffers(itemId: number):Promise<Array<SocketActiveMarketOffer>>{
         const offers = DBGetActiveMarketOffers(this.db,itemId);
+
+        return offers;
+    }
+
+    async getNewestActiveMarketOffers(page:number):Promise<Array<SocketActiveMarketOffer>>{
+        const offers = await DBGetNewestActiveMarketOffers(this.db,page);
 
         return offers;
     }
