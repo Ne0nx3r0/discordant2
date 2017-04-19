@@ -38,7 +38,7 @@ export default class MarketNew extends Command{
             return;
         }
 
-        let msg = `Newest for sale offers:\n\n`;
+        let msg = `Newest for sale offers (Page ${page}):\n\n`;
 
         msg += marketOffers.map(function(offer){
             const offerSid = MarketOfferEncoder.encode(offer.id);
