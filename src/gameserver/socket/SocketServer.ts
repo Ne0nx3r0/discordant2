@@ -35,6 +35,7 @@ import LevelUpRequest from './requests/LevelUpRequest';
 import UseItemRequest from './requests/UseItemRequest';
 import MarketSellRequest from './requests/MarketSellRequest';
 import MarketStopRequest from './requests/MarketStopRequest';
+import MarketSearchRequest from "./requests/MarketSearchRequest";
 
 interface SocketServerBag{
     port:number;
@@ -98,6 +99,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new LevelUpRequest(null));
             this.registerHandler(registeredEvents,client,new MarketSellRequest(null));
             this.registerHandler(registeredEvents,client,new MarketStopRequest(null));
+            this.registerHandler(registeredEvents,client,new MarketSearchRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

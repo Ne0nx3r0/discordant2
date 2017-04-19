@@ -203,7 +203,7 @@ BEGIN
           USING ERRCODE = 'P0002';  
   END IF;
 
-   INSERT INTO market_offer(seller_uid,item_id,amount_left,ended) VALUES(playerUid,itemId,sellAmount,false) RETURNING id INTO newMarketOffer;
+   INSERT INTO market_offer(seller_uid,item_id,amount_left,price,ended) VALUES(playerUid,itemId,sellAmount,price,false) RETURNING id INTO newMarketOffer;
 
    return newMarketOffer;
 END

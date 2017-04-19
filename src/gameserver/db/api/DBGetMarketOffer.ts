@@ -7,7 +7,7 @@ const queryStr = `
     SELECT id,created,updated,seller_uid,item_id,amount_left,ended FROM market_offer WHERE id = $1;
 `;
 
-interface DBMarketOffer{
+export interface DBMarketOffer{
     id: number;
     item: number;
     amountLeft: number;

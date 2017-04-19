@@ -160,6 +160,7 @@ CREATE TABLE public.market_offer
   seller_uid bigint NOT NULL,
   item_id integer NOT NULL,
   amount_left integer NOT NULL,
+  price integer NOT NULL,
   ended boolean NOT NULL DEFAULT false,
   CONSTRAINT mo_primary_key PRIMARY KEY (id),
   CONSTRAINT mo_player_uid FOREIGN KEY (seller_uid)

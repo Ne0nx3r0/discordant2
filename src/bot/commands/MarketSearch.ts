@@ -5,8 +5,10 @@ import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import GetEarnedWishes from '../../util/GetEarnedWishes';
 import MarketOfferEncoder from '../../util/MarketOfferEncoder';
+import { SocketActiveMarketOffer } from "../../gameserver/db/api/DBGetActiveMarketOffers";
+import Challenge from './Challenge';
 
-export default class MarketStop extends Command{
+export default class MarketSearch extends Command{
     constructor(bag:CommandBag){
         super({
             name: 'marketsearch',
@@ -20,12 +22,24 @@ export default class MarketStop extends Command{
     }
 
     async run(bag:CommandRunBag){
-        const offerSid = bag.params[0];
-        const offerId = MarketOfferEncoder.decode(offerSid);
+        const itemName = bag.params.join(' ');
 
-        const response = await bag.socket.marketStop(bag.message.author.id,offerId);
-        const item = bag.items.get(response.item);
+        const item = bag.items.findByName(itemName);
 
-        bag.message.channel.sendMessage(`${offerSid} stopped, received ${response.amount} ${item.title} that did not sell.`);
+        if(!item){
+            throw `Unknown item "${itemName}"`;
+        }
+
+        const marketOffers:Array<SocketActiveMarketOffer> = await bag.socket.marketGetOffers(item.id);
+
+        let msg = `Current offers for ${item.title}:\n\n`;
+
+        msg += marketOffers.map(function(offer){
+            const offerSid = MarketOfferEncoder.encode(offer.id);
+
+            return `${offerSid} ${offer.price}GP each (${offer.amountLeft} left, ${offer.price*offer.amountLeft}GP buyout)`;
+        }).join('\n');
+
+        bag.message.channel.sendMessage(msg);
     }
 }

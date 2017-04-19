@@ -42,6 +42,7 @@ import DBMarketSellItem from "../db/api/DBMarketSellItem";
 import { MarketStopResponse } from '../socket/requests/MarketStopRequest';
 import DBGetMarketOffer from "../db/api/DBGetMarketOffer";
 import DBStopMarketOffer from "../db/api/DBStopMarketOffer";
+import DBGetActiveMarketOffers from "../db/api/DBGetActiveMarketOffers";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -759,6 +760,12 @@ export default class Game {
         pc.inventory._addItem(invItem.base,invItem.amount);
 
         return invItem;
+    }
+
+    async getActiveMarketOffers(itemId: number){
+        const offers = DBGetActiveMarketOffers(this.db,itemId);
+
+        return offers;
     }
 }
 
