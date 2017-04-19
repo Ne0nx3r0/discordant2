@@ -754,7 +754,11 @@ export default class Game {
 
         await DBStopMarketOffer(this.db,offerId);
 
-        return new InventoryItem(itemId,amountLeft);
+        const invItem = new InventoryItem(itemId,amountLeft);
+
+        pc.inventory._addItem(invItem.base,invItem.amount);
+
+        return invItem;
     }
 }
 

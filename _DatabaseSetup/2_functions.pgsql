@@ -183,16 +183,8 @@ DECLARE
   currentItemAmount integer;
   newMarketOffer bigint;
 BEGIN
-  SELECT id INTO currentMarketOffer FROM market_offer WHERE seller_uid = playerUid AND item_id = itemId;
-
-  -- Check if the player already has this item type for sale
-  IF currentMarketOffer > 0 THEN
-    RAISE EXCEPTION 'You already have a sell offer for that item (Offer ID % )',currentMarketOffer
-      USING ERRCODE = 'P0002';  
-  END IF;
-
   -- Check if the player has more than 10 items for sale already
-  SELECT COUNT(*) INTO currentMarketOffersCount FROM market_offer WHERE seller_uid = playerUid;
+  SELECT COUNT(*) INTO currentMarketOffersCount FROM market_offer WHERE seller_uid = playerUid AND ended = false;
 
   IF currentMarketOffersCount >= 10 THEN
     RAISE EXCEPTION 'You cannot have more than 10 offers at once'
@@ -211,7 +203,7 @@ BEGIN
           USING ERRCODE = 'P0002';  
   END IF;
 
-   INSERT INTO market_offer(seller_uid,item_id,amount_left,closed) VALUES(playerUid,itemId,sellAmount,false) RETURNING id INTO newMarketOffer;
+   INSERT INTO market_offer(seller_uid,item_id,amount_left,ended) VALUES(playerUid,itemId,sellAmount,false) RETURNING id INTO newMarketOffer;
 
    return newMarketOffer;
 END
@@ -233,30 +225,29 @@ DECLARE
   isEnded boolean;
 BEGIN
   SELECT 
-    amount_left INTO amountLeft,
-    item_id INTO itemId,
-    seller_uid INTO sellerUid,
-    ended INTO isEnded
-  FROM market_offer WHERE offer_id = offerId;
+    amount_left,item_id,seller_uid,ended
+    INTO
+    amountLeft,itemId,sellerUid,isEnded
+  FROM market_offer WHERE id = offerId;
 
-  IF amount_left IS NULL THEN
+  IF amountLeft IS NULL THEN
     RAISE EXCEPTION 'Offer not found "%"',offerId
       USING ERRCODE = 'P0002';
   END IF;
 
-  IF ended THEN
+  IF isEnded THEN
     RAISE EXCEPTION 'Offer is already ended "%"',offerId
       USING ERRCODE = 'P0002';
   END IF;
 
-  IF amount_left > 0 THEN
+  IF amountLeft > 0 THEN
     UPDATE player_inventory_item SET amount = amount + amountLeft WHERE player_uid = sellerUid AND item_id = itemId;
     IF NOT FOUND THEN 
       INSERT INTO player_inventory_item(player_uid,item_id,amount) values (sellerUid,itemId,amountLeft); 
     END IF;
   END IF;
 
-  UPDATE market_offer SET ended = true WHERE offer_id = offerId;
+  UPDATE market_offer SET ended = TRUE WHERE id = offerId;
 
   return amountLeft;
 END
