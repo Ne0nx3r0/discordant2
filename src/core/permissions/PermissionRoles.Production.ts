@@ -1,5 +1,4 @@
-import PermissionId from './src/core/permissions/PermissionId';
-
+import PermissionId from './PermissionId';
 //Hard coded permissions assigned to each role
 export const BannedPermissions = [
 

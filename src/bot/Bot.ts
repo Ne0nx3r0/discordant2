@@ -24,6 +24,7 @@ export interface BotConfigBase{
 
 export interface BotConfig extends BotConfigBase{
     gameserver:string;
+    production:boolean;
 }
 
 export interface BotBag extends BotConfigBase{

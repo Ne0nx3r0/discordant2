@@ -40,6 +40,8 @@ import DBTakePlayerItem from "../db/api/DBTakePlayerItem";
 import { MarketSellData } from '../socket/requests/MarketSellRequest';
 import DBMarketSellItem from "../db/api/DBMarketSellItem";
 import { MarketStopResponse } from '../socket/requests/MarketStopRequest';
+import DBGetMarketOffer from "../db/api/DBGetMarketOffer";
+import DBStopMarketOffer from "../db/api/DBStopMarketOffer";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -60,7 +62,10 @@ export default class Game {
 
     constructor(bag:GameServerBag){
         this.db = bag.db;
-        this.permissions = new PermissionsService();
+
+        //assume stricter production perms, but we don't check perms serverside
+        this.permissions = new PermissionsService(true);
+        
         this.cachedPCs = new Map();
         this.pvpInvites = new Map();
         this.playerParties = new Map();
@@ -734,7 +739,18 @@ export default class Game {
             throw 'You are not registered';
         }
 
-        await new DBGetMarketOffer(playerUid,offerId);
+        const offer = await DBGetMarketOffer(this.db,offerId);
+
+        if(!offer){
+            throw 'Offer not found';
+        }
+
+        const itemId = this.items.get(offer.item);
+        const amountLeft = offer.amountLeft;
+
+        await DBStopMarketOffer(this.db,offerId);
+
+        return new InventoryItem(itemId,amountLeft);
     }
 }
 

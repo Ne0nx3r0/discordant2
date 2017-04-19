@@ -8,7 +8,6 @@ const queryStr = `
 `;
 
 const DBTransferPlayerItem = async function(db:DatabaseService,fromUid:string,toUid:string,itemId:number,amount:number):Promise<void>{
-
     try{
         const result = await db.getPool().query(queryStr,[fromUid,toUid,itemId,amount]);
     }

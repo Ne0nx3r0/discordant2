@@ -1,5 +1,19 @@
 import PermissionId from './PermissionId';
-import { AdminPermissions, AnonymousPermissions, BannedPermissions, PlayerPermissions, TesterPermissions } from '../../../PermissionRoles';
+import { 
+    AdminPermissions as AdminPermissionsProduction,
+    AnonymousPermissions as AnonymousPermissionsProduction, 
+    BannedPermissions as BannedPermissionsProduction,
+    PlayerPermissions as PlayerPermissionsProduction,
+    TesterPermissions as TesterPermissionsProduction,
+} from './PermissionRoles.Production';
+
+import { 
+    AdminPermissions as AdminPermissionsDevelopment,
+    AnonymousPermissions as AnonymousPermissionsDevelopment, 
+    BannedPermissions as BannedPermissionsDevelopment,
+    PlayerPermissions as PlayerPermissionsDevelopment,
+    TesterPermissions as TesterPermissionsDevelopment,
+} from './PermissionRoles.Development';
 
 export class PermissionRole{
     title:string;
@@ -19,16 +33,25 @@ export default class PermissionsService{
     _roles:Map<string,PermissionRole>;
     anonymous:PermissionRole;
 
-    constructor(){
+    constructor(production:boolean){
         this._roles = new Map();
 
-        this.anonymous = new PermissionRole('anonymous',AnonymousPermissions);
-
-        this._roles.set('anonymous',this.anonymous);
-        this._roles.set('banned',new PermissionRole('banned',BannedPermissions));
-        this._roles.set('player',new PermissionRole('player',PlayerPermissions));
-        this._roles.set('tester',new PermissionRole('tester',TesterPermissions));        
-        this._roles.set('admin',new PermissionRole('admin',AdminPermissions));
+        if(production){
+            this.anonymous = new PermissionRole('anonymous',AnonymousPermissionsProduction);
+            this._roles.set('anonymous',this.anonymous);
+            this._roles.set('banned',new PermissionRole('banned',BannedPermissionsProduction));
+            this._roles.set('player',new PermissionRole('player',PlayerPermissionsProduction));
+            this._roles.set('tester',new PermissionRole('tester',TesterPermissionsProduction));        
+            this._roles.set('admin',new PermissionRole('admin',AdminPermissionsProduction));
+        }
+        else{
+            this.anonymous = new PermissionRole('anonymous',AnonymousPermissionsDevelopment);
+            this._roles.set('anonymous',this.anonymous);
+            this._roles.set('banned',new PermissionRole('banned',BannedPermissionsDevelopment));
+            this._roles.set('player',new PermissionRole('player',PlayerPermissionsDevelopment));
+            this._roles.set('tester',new PermissionRole('tester',TesterPermissionsDevelopment));        
+            this._roles.set('admin',new PermissionRole('admin',AdminPermissionsDevelopment));
+        }
     }
 
     isRole(name:string){

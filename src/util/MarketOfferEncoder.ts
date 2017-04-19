@@ -8,7 +8,13 @@ const hashids = new Hashids(
 
 const MarketOfferEncoder= {
     decode: function(sid:string):number{
-        return hashids.decode(sid);
+        const id = hashids.decode(sid)[0];
+
+        if(!id){
+            throw 'Invalid offer id "'+sid+'"';
+        }
+        
+        return id;
     },
     encode: function (nid: number):string{
         return hashids.encode(nid);

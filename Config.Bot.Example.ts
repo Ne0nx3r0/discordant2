@@ -4,7 +4,8 @@ const gameServerConfig:BotConfig = {
     authToken:'authToken',
     ownerUIDs:['ownerUID'],
     commandPrefix:'!',
-    gameserver: 'ws://localhost:3000'
+    gameserver: 'ws://localhost:3000',
+    production: false,
 }
 
 export default gameServerConfig;

@@ -9,19 +9,28 @@ const queryStr = `
 
 interface DBMarketOffer{
     id: number;
-    itemId: number;
+    item: number;
     amountLeft: number;
     seller: string;
-    created: Date;
-    updated: Date;
+    created: string;
+    updated: string;
 }
 
-const DBSetPlayerRole = async function(db:DatabaseService,offerId:number):Promise<DBMarketOffer>{
+export default async function DBGetMarketOffer(db:DatabaseService,offerId:number):Promise<DBMarketOffer>{
     const result = await db.getPool().query(queryStr,[offerId]);
 
-    console.log(result);
+    if(result.rows.length == 0){
+        return null;
+    }
 
-    return null;
+    const row = result.rows[0];
+
+    return {
+        id: row.id,
+        created: row.created,
+        updated: row.updated,
+        seller: row.seller_uid,
+        item: row.item_id,
+        amountLeft: row.amount_left,
+    };
 }
-
-export default DBSetPlayerRole;

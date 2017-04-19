@@ -13,7 +13,7 @@ class DiscordantBotNode {
 
         const logger = new Logger();
 
-        const permissions:PermissionsService = new PermissionsService();
+        const permissions:PermissionsService = new PermissionsService(Config.production);
 
         const sioc = SocketIOClient(Config.gameserver);
 
