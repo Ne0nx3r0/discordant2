@@ -734,9 +734,7 @@ export default class Game {
             throw 'You are not registered';
         }
 
-        //maybe just select for the offer data, then return nothing from the function
-        //next step is to run the dbquery and have it return a record of the two things we need (id and amount)
-        //see: http://stackoverflow.com/posts/6085167/   
+        await new DBGetMarketOffer(playerUid,offerId);
     }
 }
 
