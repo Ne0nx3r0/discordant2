@@ -211,7 +211,7 @@ BEGIN
           USING ERRCODE = 'P0002';  
   END IF;
 
-   INSERT INTO market_offer(seller_uid,item_id,amount_left) VALUES(playerUid,itemId,sellAmount) RETURNING id INTO newMarketOffer;
+   INSERT INTO market_offer(seller_uid,item_id,amount_left,closed) VALUES(playerUid,itemId,sellAmount,false) RETURNING id INTO newMarketOffer;
 
    return newMarketOffer;
 END
@@ -219,3 +219,45 @@ $$;
 
 
 
+
+
+
+CREATE OR REPLACE FUNCTION market_stop_offer(offerId bigint) 
+RETURNS integer LANGUAGE plpgsql AS
+$$
+
+DECLARE
+  amountLeft integer;
+  itemId integer;
+  sellerUid bigint;
+  isEnded boolean;
+BEGIN
+  SELECT 
+    amount_left INTO amountLeft,
+    item_id INTO itemId,
+    seller_uid INTO sellerUid,
+    ended INTO isEnded
+  FROM market_offer WHERE offer_id = offerId;
+
+  IF amount_left IS NULL THEN
+    RAISE EXCEPTION 'Offer not found "%"',offerId
+      USING ERRCODE = 'P0002';
+  END IF;
+
+  IF ended THEN
+    RAISE EXCEPTION 'Offer is already ended "%"',offerId
+      USING ERRCODE = 'P0002';
+  END IF;
+
+  IF amount_left > 0 THEN
+    UPDATE player_inventory_item SET amount = amount + amountLeft WHERE player_uid = sellerUid AND item_id = itemId;
+    IF NOT FOUND THEN 
+      INSERT INTO player_inventory_item(player_uid,item_id,amount) values (sellerUid,itemId,amountLeft); 
+    END IF;
+  END IF;
+
+  UPDATE market_offer SET ended = true WHERE offer_id = offerId;
+
+  return amountLeft;
+END
+$$;

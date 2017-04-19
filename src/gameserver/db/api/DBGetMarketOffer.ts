@@ -4,7 +4,7 @@ import { EquipmentSlot } from '../../../core/item/CreatureEquipment';
 import { DBPlayer } from '../DBInterfaces';
 
 const queryStr = `
-    SELECT id,created,updated,seller_uid,item_id,amount_left FROM market_offer WHERE id = $1;
+    SELECT id,created,updated,seller_uid,item_id,amount_left,ended FROM market_offer WHERE id = $1;
 `;
 
 interface DBMarketOffer{
@@ -14,6 +14,7 @@ interface DBMarketOffer{
     seller: string;
     created: string;
     updated: string;
+    ended: boolean;
 }
 
 export default async function DBGetMarketOffer(db:DatabaseService,offerId:number):Promise<DBMarketOffer>{
@@ -32,5 +33,6 @@ export default async function DBGetMarketOffer(db:DatabaseService,offerId:number
         seller: row.seller_uid,
         item: row.item_id,
         amountLeft: row.amount_left,
+        ended: row.ended,
     };
 }

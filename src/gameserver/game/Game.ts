@@ -745,6 +745,10 @@ export default class Game {
             throw 'Offer not found';
         }
 
+        if(offer.ended){
+            throw 'Offer ended already';
+        }
+
         const itemId = this.items.get(offer.item);
         const amountLeft = offer.amountLeft;
 
