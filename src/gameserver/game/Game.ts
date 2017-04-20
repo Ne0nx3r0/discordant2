@@ -614,7 +614,7 @@ export default class Game {
         }
 
         if(player.status != 'inParty'){
-            throw 'Only the party leader can disband the party';
+            throw 'You are not currently in a party';
         }
 
         const party = this.playerParties.get(player.uid);
