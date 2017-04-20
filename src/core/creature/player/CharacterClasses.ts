@@ -8,6 +8,7 @@ import TabletOfHealing from '../../item/weapons/TabletOfHealing';
 import Collection from '../../../util/Collection';
 
 enum CharacterClassId{
+    NULL,//cheating because for some godforsaken reason 0 wont make it to the database.
     Nobody,
     Mercenary,
     Healer
