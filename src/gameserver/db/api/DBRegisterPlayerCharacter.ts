@@ -54,7 +54,7 @@ export default async function(db:DatabaseService,bag:DBRegisterbag):Promise<DBPl
         {query: insertPlayerQuery, params: insertPlayerParams}
     ];
     
-    if(bag.class.startingEquipment.size == 0){
+    if(bag.class.startingEquipment.size > 0){
         const equipmentItems = [];
 
         let valuesStr = '';
