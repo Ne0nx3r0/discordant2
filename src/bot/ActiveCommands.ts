@@ -34,4 +34,5 @@ export { default as MarketSell } from './commands/MarketSell';
 export { default as MarketStop } from './commands/MarketStop';
 export { default as MarketSearch } from './commands/MarketSearch';
 export { default as MarketNew } from './commands/MarketNew';
+export { default as MarketOffer } from './commands/MarketOffer';
 export { default as Party } from './commands/Party';

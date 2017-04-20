@@ -2,7 +2,6 @@ import DatabaseService from '../DatabaseService';
 import InventoryItem from '../../../core/item/InventoryItem';
 import { EquipmentSlot } from '../../../core/item/CreatureEquipment';
 import { DBPlayer } from '../DBInterfaces';
-import { DBMarketOffer } from "./DBGetMarketOffer";
 
 const queryStr = `
     SELECT id,created,updated,amount_left,price FROM market_offer WHERE item_id = $1 AND ended = false ORDER BY price ASC LIMIT 10;

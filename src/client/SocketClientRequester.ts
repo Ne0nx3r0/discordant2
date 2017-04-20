@@ -46,6 +46,8 @@ import MarketSearchRequest from "../gameserver/socket/requests/MarketSearchReque
 import MarketNewOffersRequest from "../gameserver/socket/requests/MarketNewOffersRequest";
 import PlayerPartyRequest from "../gameserver/socket/requests/PlayerPartyRequest";
 import { SocketPlayerParty } from "../core/party/PlayerParty";
+import MarketGetOfferRequest from "../gameserver/socket/requests/MarketGetOfferRequest";
+import { SocketMarketOffer } from "../gameserver/db/api/DBGetMarketOffer";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -311,6 +313,15 @@ export default class SocketClientRequester{
         .send(this.sioc);
         
         return response.offers;
+    }
+
+    async getMarketOffer(offerId: number):Promise<SocketMarketOffer>{
+        const response = await new MarketGetOfferRequest({
+            offer: offerId
+        })
+        .send(this.sioc);
+
+        return response.offer;
     }
 
     async getPlayerParty(playerUid:string):Promise<SocketPlayerParty>{

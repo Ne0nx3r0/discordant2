@@ -250,7 +250,7 @@ BEGIN
     END IF;
   END IF;
 
-  UPDATE market_offer SET ended = TRUE WHERE id = offerId;
+  UPDATE market_offer SET ended = TRUE, updated = NOW() WHERE id = offerId;
 
   return amountLeft;
 END

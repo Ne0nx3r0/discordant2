@@ -40,7 +40,7 @@ import DBTakePlayerItem from "../db/api/DBTakePlayerItem";
 import { MarketSellData } from '../socket/requests/MarketSellRequest';
 import DBMarketSellItem from "../db/api/DBMarketSellItem";
 import { MarketStopResponse } from '../socket/requests/MarketStopRequest';
-import DBGetMarketOffer from "../db/api/DBGetMarketOffer";
+import DBGetMarketOffer, { SocketMarketOffer } from "../db/api/DBGetMarketOffer";
 import DBStopMarketOffer from "../db/api/DBStopMarketOffer";
 import DBGetActiveMarketOffers from "../db/api/DBGetActiveMarketOffers";
 import { SocketActiveMarketOffer } from '../db/api/DBGetActiveMarketOffers';
@@ -733,6 +733,23 @@ export default class Game {
         pc.inventory._removeItem(item,bag.amount);
 
         return offerId;
+    }
+
+    async getMarketOffer(offerId:number):Promise<SocketMarketOffer>{
+        const offer = await DBGetMarketOffer(this.db,offerId);
+
+        if(!offer){
+            throw 'Invalid market offer';
+        }
+
+        //override the seller with their username if we have it
+        const seller = await this.getPlayerCharacter(offer.seller);
+
+        if(seller){
+            offer.sellerTitle = seller.title+' ('+seller.uid+')';
+        }
+
+        return offer;
     }
 
     async marketStopItem(playerUid:string,offerId:number):Promise<InventoryItem>{

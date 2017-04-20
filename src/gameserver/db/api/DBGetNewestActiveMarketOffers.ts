@@ -2,7 +2,6 @@ import DatabaseService from '../DatabaseService';
 import InventoryItem from '../../../core/item/InventoryItem';
 import { EquipmentSlot } from '../../../core/item/CreatureEquipment';
 import { DBPlayer } from '../DBInterfaces';
-import { DBMarketOffer } from "./DBGetMarketOffer";
 
 const ITEMS_PER_PAGE = 10;
 const queryStr = `

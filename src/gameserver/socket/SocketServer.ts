@@ -38,6 +38,7 @@ import MarketStopRequest from './requests/MarketStopRequest';
 import MarketSearchRequest from "./requests/MarketSearchRequest";
 import MarketNewOffersRequest from './requests/MarketNewOffersRequest';
 import PlayerPartyRequest from './requests/PlayerPartyRequest';
+import MarketGetOfferRequest from './requests/MarketGetOfferRequest';
 
 interface SocketServerBag{
     port:number;
@@ -103,6 +104,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new MarketStopRequest(null));
             this.registerHandler(registeredEvents,client,new MarketSearchRequest(null));
             this.registerHandler(registeredEvents,client,new MarketNewOffersRequest(null));
+            this.registerHandler(registeredEvents,client,new MarketGetOfferRequest(null));
             this.registerHandler(registeredEvents,client,new PlayerPartyRequest(null));
 
             var socket = client;
