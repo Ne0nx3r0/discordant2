@@ -99,6 +99,10 @@ export default class CreatureEquipment{
 
         return socketEquipment;
     }
+
+    get size(){
+        return Object.keys(this._items).length;
+    }
 }
 
 export interface SocketCreatureEquipment{
