@@ -2,7 +2,6 @@ import DatabaseService from '../DatabaseService';
 import InventoryItem from '../../../core/item/InventoryItem';
 import { EquipmentSlot } from '../../../core/item/CreatureEquipment';
 import { DBPlayer } from '../DBInterfaces';
-import { DBMarketOffer } from "./DBGetMarketOffer";
 
 const ITEMS_PER_PAGE = 10;
 const queryStr = `
@@ -26,7 +25,7 @@ export interface SocketActiveMarketOffer{
 }
 
 export default async function DBGetNewestActiveMarketOffers(db:DatabaseService,page:number):Promise<Array<SocketActiveMarketOffer>>{
-    const result = await db.getPool().query(queryStr,[ITEMS_PER_PAGE,ITEMS_PER_PAGE * 10]);
+    const result = await db.getPool().query(queryStr,[ITEMS_PER_PAGE,(page-1) * 10]);
 
     if(result.rows.length == 0){
         return null;

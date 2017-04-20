@@ -155,7 +155,7 @@ CREATE SEQUENCE market_offers_id_seq START 1;
 CREATE TABLE public.market_offer
 (
   id bigint NOT NULL DEFAULT nextval('market_offers_id_seq'::regclass),
-  created time without time zone NOT NULL DEFAULT now(),
+  created timestamp without time zone NOT NULL DEFAULT now(),
   updated timestamp without time zone NOT NULL DEFAULT now(),
   seller_uid bigint NOT NULL,
   item_id integer NOT NULL,

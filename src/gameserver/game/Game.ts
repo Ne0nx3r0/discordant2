@@ -40,7 +40,7 @@ import DBTakePlayerItem from "../db/api/DBTakePlayerItem";
 import { MarketSellData } from '../socket/requests/MarketSellRequest';
 import DBMarketSellItem from "../db/api/DBMarketSellItem";
 import { MarketStopResponse } from '../socket/requests/MarketStopRequest';
-import DBGetMarketOffer from "../db/api/DBGetMarketOffer";
+import DBGetMarketOffer, { SocketMarketOffer } from "../db/api/DBGetMarketOffer";
 import DBStopMarketOffer from "../db/api/DBStopMarketOffer";
 import DBGetActiveMarketOffers from "../db/api/DBGetActiveMarketOffers";
 import { SocketActiveMarketOffer } from '../db/api/DBGetActiveMarketOffers';
@@ -278,6 +278,10 @@ export default class Game {
         if(!player){
             throw 'Player is not registered';
         }
+
+        if(player.battle){
+            throw 'You cannot change weapons in combat!';
+        }
         
         const itemBase = this.items.get(itemId);
 
@@ -323,6 +327,10 @@ export default class Game {
 
         if(!player){
             throw 'You are not registered yet';
+        }
+
+        if(player.battle){
+            throw 'You cannot change weapons in combat!';
         }
 
         const itemToUnequip = player.equipment._items[slot];
@@ -614,7 +622,7 @@ export default class Game {
         }
 
         if(player.status != 'inParty'){
-            throw 'Only the party leader can disband the party';
+            throw 'You are not currently in a party';
         }
 
         const party = this.playerParties.get(player.uid);
@@ -735,6 +743,23 @@ export default class Game {
         return offerId;
     }
 
+    async getMarketOffer(offerId:number):Promise<SocketMarketOffer>{
+        const offer = await DBGetMarketOffer(this.db,offerId);
+
+        if(!offer){
+            throw 'Invalid market offer';
+        }
+
+        //override the seller with their username if we have it
+        const seller = await this.getPlayerCharacter(offer.seller);
+
+        if(seller){
+            offer.sellerTitle = seller.title+' ('+seller.uid+')';
+        }
+
+        return offer;
+    }
+
     async marketStopItem(playerUid:string,offerId:number):Promise<InventoryItem>{
         const pc = await this.getPlayerCharacter(playerUid);
 
@@ -774,6 +799,22 @@ export default class Game {
         const offers = await DBGetNewestActiveMarketOffers(this.db,page);
 
         return offers;
+    }
+
+    async getPlayerParty(playerUid: string):Promise<PlayerParty>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'You are not registered';
+        }
+
+        if(!pc.party){
+            throw 'You are not in a party';
+        }
+
+        const party = pc.party;
+
+        return party;
     }
 }
 
