@@ -278,6 +278,10 @@ export default class Game {
         if(!player){
             throw 'Player is not registered';
         }
+
+        if(player.battle){
+            throw 'You cannot change weapons in combat!';
+        }
         
         const itemBase = this.items.get(itemId);
 
@@ -323,6 +327,10 @@ export default class Game {
 
         if(!player){
             throw 'You are not registered yet';
+        }
+
+        if(player.battle){
+            throw 'You cannot change weapons in combat!';
         }
 
         const itemToUnequip = player.equipment._items[slot];
