@@ -775,6 +775,22 @@ export default class Game {
 
         return offers;
     }
+
+    async getPlayerParty(playerUid: string):Promise<PlayerParty>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'You are not registered';
+        }
+
+        if(!pc.party){
+            throw 'You are not in a party';
+        }
+
+        const party = pc.party;
+
+        return party;
+    }
 }
 
 export interface IRemoveBattleFunc{

@@ -10,6 +10,7 @@ import SendPMClientRequest from '../../client/requests/SendPMClientRequest';
 import SendImageClientRequest from '../../client/requests/SendImageClientRequest';
 import SendLocalImageClientRequest from "../../client/requests/SendLocalImageClientRequest";
 import { IBattleEndedPlayer } from '../../client/requests/CoopBattleEndedClientRequest';
+import { SocketPlayerCharacter } from '../creature/player/PlayerCharacter';
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -296,4 +297,28 @@ export default class PlayerParty{
     get isExploring():boolean{
         return this.partyStatus == PartyStatus.Exploring;
     }
+
+    toSocket():SocketPlayerParty{
+        const members = [];
+        const leaderUid = this.leader.uid;
+        this.members.forEach(function(member){
+            if(member.uid != leaderUid){
+                members.push(member.toSocket());
+            }
+        });
+
+        return {
+            title: this.title,
+            channel: this.channelId,
+            members: members,
+            leader: this.leader.toSocket()
+        };
+    }
+}
+
+export interface SocketPlayerParty{
+    title: string;
+    channel: string;
+    leader: SocketPlayerCharacter;
+    members: Array<SocketPlayerCharacter>;
 }
