@@ -33,7 +33,7 @@ export default class MarketSearch extends Command{
         const offerItem = bag.items.get(offer.item);
 
         bag.message.channel.sendMessage(`Offer ${offerSid}
-${offer.ended ? '~~' : ''}${offer.amountLeft} ${offerItem.title} for sale at ${offer.price}GP each${offer.ended ? '~~- ENDED' : ''}
+${offer.ended ? '\nENDED\n~~' : ''}${offer.amountLeft} ${offerItem.title} for sale at ${offer.price}GP each${offer.ended ? '~~' : ''}
 
 Seller: ${offer.sellerTitle}
 Posted: ${moment(new Date(offer.created)).format('MMM Do, YYYY @ hh:mm a')}
