@@ -24,7 +24,7 @@ export default async function DBBuyMarketOffer(db:DatabaseService,playerUid:stri
             totalCost: result.rows[0].total_cost,
             itemId: result.rows[0].item_id,
             sellerUid: result.rows[0].seller_uid,
-            amountLeft: result.rows[0].amount_left,
+            amountLeft: result.rows[0].amount_left_after,
         };
     }
     catch(ex){
