@@ -128,7 +128,7 @@ export default class Bot{
 
         this.aliases.forEach(function(expandTo,alias){
             if(msgWithoutPrefix.startsWith(alias)){
-                msgWithoutPrefix = expandTo+' '+msgWithoutPrefix.substr(expandTo.length+1);
+                msgWithoutPrefix = expandTo+' '+msgWithoutPrefix.substr(alias.length);
             }
         });
 

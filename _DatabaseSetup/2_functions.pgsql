@@ -255,3 +255,103 @@ BEGIN
   return amountLeft;
 END
 $$;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION market_buy_offer(buyerUid bigint,offerId bigint,amountWanted integer) 
+RETURNS RECORD LANGUAGE plpgsql AS
+$$
+
+DECLARE
+  ret RECORD;
+  amountLeft integer;
+  itemId integer;
+  sellerUid bigint;
+  isEnded boolean;
+  totalCost integer;
+  amountToBuy integer;
+  buyerGold integer;
+  itemPrice integer;
+BEGIN
+
+-- Get if offer exists
+  SELECT amount_left, item_id,   ended, seller_uid, price
+  INTO    amountLeft,  ItemId, isEnded,  sellerUid, itemPrice
+  FROM market_offer
+  WHERE ID = offerId 
+  LIMIT 1;
+
+-- Buying all
+  IF amountWanted = -1 THEN
+    amountToBuy := amountLeft;
+
+-- Not enough left
+  ELSIF amountWanted > amountLeft THEN
+    RAISE EXCEPTION 'Only % left for sale on that offer',amountLeft
+      USING ERRCODE = 'P0002';
+  END IF;
+
+--Offer not found
+  IF amountLeft IS NULL THEN
+    RAISE EXCEPTION 'Offer not found "%"',offerId
+      USING ERRCODE = 'P0002';
+  END IF;
+
+--Offer ended already
+  IF isEnded THEN
+    RAISE EXCEPTION 'Offer is already ended "%"',offerId
+      USING ERRCODE = 'P0002';
+  END IF;
+
+-- calculate total cost with amount*price
+  totalCost := amountToBuy * itemPrice;
+
+-- Check if buyer has that much
+  SELECT gold INTO buyerGold FROM player WHERE uid = buyerUid LIMIT 1;
+
+  IF buyerGold < totalCost THEN
+    RAISE EXCEPTION 'You only have %GP, need at least %GP',buyerGold,totalCost
+      USING ERRCODE = 'P0002';
+  END IF;
+
+-- Update listing
+  IF amountToBuy = amountLeft THEN
+-- End offer
+    UPDATE market_offer SET ended=true,amount_left=0,updated=NOW() WHERE id = offerId;
+  ELSE
+-- Remove some items but leave offer up
+    UPDATE market_offer SET amount_left=amount_left-amountToBuy,updated=NOW() WHERE id = offerId;
+  END IF;
+
+-- Remove gold from buyer
+  UPDATE player SET gold = gold - totalCost WHERE uid = playerUid;
+
+-- Give gold to seller
+  UPDATE player SET gold = gold + totalCost WHERE uid = sellerUid;
+
+-- Add items to seller
+  SELECT grant_player_item(playerUid,itemId,amountToBuy);
+
+-- Return some data the app will need
+  SELECT 
+    amountToBuy as amount_purchased,
+    totalCost as total_cost,
+    itemId as item_id,
+    sellerUid as seller_uid,
+    amountLeft-amountToBuy as amount_left
+  INTO ret;
+
+  return ret;
+END
+$$;

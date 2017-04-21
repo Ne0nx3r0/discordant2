@@ -46,6 +46,8 @@ import DBGetActiveMarketOffers from "../db/api/DBGetActiveMarketOffers";
 import { SocketActiveMarketOffer } from '../db/api/DBGetActiveMarketOffers';
 import DBGetNewestActiveMarketOffers from "../db/api/DBGetNewestActiveMarketOffers";
 import DBGetUserMarketOffers from "../db/api/DBGetUserMarketOffers";
+import DBBuyMarketOffer from "../db/api/DBBuyMarketOffer";
+import { PurchasedMarketOffer } from '../db/api/DBBuyMarketOffer';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -774,6 +776,33 @@ export default class Game {
         }
 
         return offer;
+    }
+
+    async buyMarketOffer(playerUid:string,offerId:number,amount:number):Promise<PurchasedMarketOffer>{
+        const buyer = await this.getPlayerCharacter(playerUid);
+
+        if(!buyer){
+            throw 'You are not registered';
+        }
+
+        if(amount < 1){
+            throw 'Invalid amount to buy';
+        }
+
+        const purchased:PurchasedMarketOffer = await DBBuyMarketOffer(this.db,playerUid,offerId,amount);
+
+        const item = this.items.get(purchased.itemId);
+
+        buyer.inventory._addItem(item,purchased.amountPurchased);
+        buyer.gold -= purchased.totalCost;
+
+        const seller = this.cachedPCs.get(purchased.sellerUid);
+
+        if(seller){
+            seller.gold += purchased.totalCost;
+        }
+
+        return purchased;
     }
 
     async marketStopItem(playerUid:string,offerId:number):Promise<InventoryItem>{
