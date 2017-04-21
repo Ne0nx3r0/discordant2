@@ -249,3 +249,7 @@ CREATE INDEX fki_mop_offer_id
   USING btree
   (offer_id);
 
+
+
+
+INSERT INTO player(uid,discriminator,username,description) values(42,42,'Deep Thought','Test account');
