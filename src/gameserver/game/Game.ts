@@ -86,9 +86,7 @@ export default class Game {
             const dbPlayer = await DBGetPlayerCharacter(this.db,uid);
 
             if(!dbPlayer){
-                const response:PlayerCharacter = null;
-
-                return response;
+                throw 'Player not found';
             }
 
             const inventory = new Map<number,InventoryItem>();
@@ -391,11 +389,11 @@ export default class Game {
             throw 'That player is not registered';
         }
 
-        if(sender.status != 'inCity'){
+        if(this.pvpInvites.has(sender.uid)){
             throw 'You cannot send challenges now';
         }
 
-        if(receiver.status != 'inCity'){
+        if(this.pvpInvites.has(receiver.uid)){
             throw `${receiver.title} cannot receive challenges right now`;
         }
 
@@ -420,7 +418,7 @@ export default class Game {
             if(maybeSameInviteReceived == invite){
                 this.pvpInvites.delete(receiver.uid);
             }
-        },PVP_INVITE_TIMEOUT+100);//+100 ensures the invite will be expired
+        },PVP_INVITE_TIMEOUT+500);//+500 ensures the invite will be expired
     }
 
     async getPvPInvite(playerUid:string):Promise<PvPInvite>{

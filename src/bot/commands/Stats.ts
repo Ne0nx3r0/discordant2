@@ -29,13 +29,15 @@ export default class Begin extends Command{
             return;
         }
 
-        const tagUserId = bag.message.mentions.users.first().id;
+        const tagUser = bag.message.mentions.users.first();
 
-        if(!tagUserId){
+        if(!tagUser){
             bag.message.channel.sendMessage(this.getUsage());
 
             return;
         }
+
+        const tagUserId = tagUser.id;
 
         const otherPlayer = await bag.socket.getPlayer(tagUserId);
 
