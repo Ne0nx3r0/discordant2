@@ -19,7 +19,7 @@ export default class MarketShop extends Command{
             minParams: 0,
         });
 
-        this.aliases = ['mshop'];
+        this.aliases.set('mshop','marketshop');
     }
 
     async run(bag:CommandRunBag){

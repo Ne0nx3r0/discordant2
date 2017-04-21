@@ -18,7 +18,8 @@ export default class MarketSearch extends Command{
             minParams: 1,
         });
 
-        this.aliases = ['msearch','ms'];
+        this.aliases.set('msearch','marketsearch');
+        this.aliases.set('ms','marketsearch');
     }
 
     async run(bag:CommandRunBag){

@@ -14,7 +14,7 @@ export default class Inventory extends Command{
             minParams: 0,
         });
 
-        this.aliases = ['inv'];
+        this.aliases.set('inv','inventory');
     }
 
     async run(bag:CommandRunBag){

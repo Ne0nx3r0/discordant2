@@ -52,7 +52,7 @@ export default class Command{
     usage:string;
     permissionNode:PermissionId;
     minParams:number;
-    aliases:Array<string>;
+    aliases:Map<string,string>;
 
     constructor(bag:CommandBag){
         this.name = bag.name;
@@ -60,7 +60,7 @@ export default class Command{
         this.usage = bag.usage;
         this.permissionNode = bag.permissionNode;
         this.minParams = bag.minParams;
-        this.aliases = [];
+        this.aliases = new Map();
     }
 
     getUsage(){

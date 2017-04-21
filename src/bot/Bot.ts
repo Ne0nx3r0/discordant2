@@ -66,8 +66,12 @@ export default class Bot{
 
             this.commands.set(command.name.toUpperCase(),command);
 
-            command.aliases.forEach((alias)=>{
-                this.aliases.set(alias,command.name);
+            command.aliases.forEach((expandTo,alias)=>{
+                if(this.aliases.has(alias)){
+                    throw 'Duplicate alias "' + alias + '" in ' + command.name+' command';
+                }
+
+                this.aliases.set(alias,expandTo);
             });
         });
 
@@ -120,15 +124,17 @@ export default class Bot{
             return;
         }
 
-        const msgWithoutPrefix:string = message.content.substr(this.commandPrefix.length);
-        const params:Array<string> = resolveArgs(msgWithoutPrefix);
-        let commandName:string = params.shift();
+        let msgWithoutPrefix:string = message.content.substr(this.commandPrefix.length);
 
-        this.aliases.forEach(function(commandStr,alias){
-            if(alias == commandName){
-                commandName = commandStr;
+        this.aliases.forEach(function(expandTo,alias){
+            if(msgWithoutPrefix.startsWith(alias)){
+                msgWithoutPrefix = expandTo+' '+msgWithoutPrefix.substr(expandTo.length);
+                console.log('expanded',alias,expandTo,msgWithoutPrefix);
             }
         });
+
+        const params:Array<string> = resolveArgs(msgWithoutPrefix);
+        let commandName:string = params.shift();
 
         const command = this.commands.get(commandName.toUpperCase());
 

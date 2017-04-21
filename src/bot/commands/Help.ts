@@ -37,10 +37,8 @@ export default class Inventory extends Command{
                 return;
             }
 
-            const commandAliasesStr = command.aliases.length==0?'':'(aliases: '+command.aliases.join(', ')+' )';
-
             bag.message.channel.sendMessage('',this.getEmbed(`
-${bag.commandPrefix.toLowerCase()}**${command.name}** ${commandAliasesStr}
+${bag.commandPrefix.toLowerCase()}**${command.name}**
 
 ${command.description}
 

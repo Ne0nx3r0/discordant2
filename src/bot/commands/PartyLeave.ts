@@ -14,7 +14,10 @@ export default class PartyDecline extends Command{
             minParams: 0,
         });
 
-        this.aliases = ['pleave'];
+        this.aliases.set('pleave','partyleave');
+        this.aliases.set('party leave','partyleave');
+        this.aliases.set('pquit','partyleave');
+        this.aliases.set('party quit','partyleave');
     }
 
     async run(bag:CommandRunBag){

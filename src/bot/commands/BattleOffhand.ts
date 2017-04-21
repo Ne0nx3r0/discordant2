@@ -16,7 +16,7 @@ export default class BattleAttack extends Command{
             minParams: 0,
         });
 
-        this.aliases = ['off'];
+        this.aliases.set('off','offhand');
     }
 
     async run(bag:CommandRunBag){

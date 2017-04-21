@@ -12,6 +12,8 @@ export default class MarketBuy extends Command{
             permissionNode: PermissionId.MarketBuy,
             minParams: 1,
         });
+
+        this.aliases.set('mbuy','marketbuy');
     }
 
     async run(bag:CommandRunBag){

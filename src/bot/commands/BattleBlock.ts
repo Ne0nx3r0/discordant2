@@ -16,7 +16,7 @@ export default class BattleAttack extends Command{
             minParams: 0,
         });
 
-        this.aliases = ['b'];
+        this.aliases.set('b','block');
     }
 
     async run(bag:CommandRunBag){

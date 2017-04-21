@@ -16,7 +16,7 @@ export default class MarketStop extends Command{
             minParams: 1,
         });
 
-        this.aliases = ['mstop'];
+        this.aliases.set('mstop','marketstop');
     }
 
     async run(bag:CommandRunBag){

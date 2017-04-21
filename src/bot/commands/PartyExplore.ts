@@ -14,7 +14,8 @@ export default class PartyExplore extends Command{
             minParams: 0,
         });
 
-        this.aliases = ['pexplore'];
+        this.aliases.set('pexplore','partyexplore');
+        this.aliases.set('party explore','partyexplore');
     }
 
     async run(bag:CommandRunBag){

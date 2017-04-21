@@ -15,7 +15,7 @@ export default class WishCalc extends Command{
             minParams: 4,
         });
 
-        this.aliases = ['wc'];
+        this.aliases.set('wc','wishcalc');
     }
 
     async run(bag:CommandRunBag){

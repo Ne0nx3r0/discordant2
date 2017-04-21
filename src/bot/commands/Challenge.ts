@@ -16,7 +16,10 @@ export default class Challenge extends Command{
             minParams: 1,
         });
 
-        this.aliases = ['c'];
+        this.aliases.set('c','challenge');
+        this.aliases.set('ca','challenge accept');
+        this.aliases.set('caccept','challenge accept');
+        this.aliases.set('cdeny','challenge deny');
     }
 
     async run(bag:CommandRunBag){
