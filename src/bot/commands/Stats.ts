@@ -21,7 +21,14 @@ export default class Begin extends Command{
     }
 
     async run(bag:CommandRunBag){
-        const tagUserId = this.getUserTagId(bag.params[0]);
+        let tagUserId;
+        
+        if(bag.params.length == 0){
+            tagUserId = bag.message.author.id;
+        }
+        else{
+            tagUserId = this.getUserTagId(bag.params[0]);
+        }
 
         if(!tagUserId){
             bag.message.channel.sendMessage(this.getUsage());
