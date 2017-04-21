@@ -87,7 +87,9 @@ export default class Game {
             const dbPlayer = await DBGetPlayerCharacter(this.db,uid);
 
             if(!dbPlayer){
-                throw 'Player not found';
+                const response:PlayerCharacter = null;
+
+                return response;
             }
 
             const inventory = new Map<number,InventoryItem>();

@@ -21,27 +21,30 @@ export default class Begin extends Command{
     }
 
     async run(bag:CommandRunBag){
+        let tagUser;
+
         if(bag.params.length == 0){
-            const player = await bag.socket.getPlayer(bag.message.author.id);
-
-            bag.message.channel.sendMessage("",getEmbed(player,bag.items) as MessageOptions);
-
-            return;
+            tagUser = bag.message.author;
         }
+        else{
+            tagUser = bag.message.mentions.users.first();
 
-        const tagUser = bag.message.mentions.users.first();
+            if(!tagUser){
+                bag.message.channel.sendMessage(this.getUsage());
 
-        if(!tagUser){
-            bag.message.channel.sendMessage(this.getUsage());
-
-            return;
+                return; 
+            }
         }
 
         const tagUserId = tagUser.id;
 
-        const otherPlayer = await bag.socket.getPlayer(tagUserId);
+        const player = await bag.socket.getPlayer(tagUserId);
 
-        bag.message.channel.sendMessage("",getEmbed(otherPlayer,bag.items) as MessageOptions);
+        if(!player){
+            throw 'Player not found';
+        }
+
+        bag.message.channel.sendMessage("",getEmbed(player,bag.items) as MessageOptions);
     }
 }
 
