@@ -22,7 +22,7 @@ export default class SetRole extends Command{
             return;
         }
 
-        const tagUserId = bag.message.mentions.users.first().id;
+        const tagUserId = this.getUserTagId(bag.params[0]);
 
         if(!tagUserId){
             bag.message.channel.sendMessage('That player is not registered, '+bag.message.author.username);

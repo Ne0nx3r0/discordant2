@@ -17,7 +17,7 @@ export default class Inventory extends Command{
     }
 
     async run(bag:CommandRunBag){
-        const tagUserId = bag.message.mentions.users.first().id;
+        const tagUserId = this.getUserTagId(bag.params[0]);
 
         if(!tagUserId){
             bag.message.channel.sendMessage(this.getUsage());
@@ -28,7 +28,7 @@ export default class Inventory extends Command{
         const giveTo = await bag.socket.getPlayer(tagUserId);
 
         if(!giveTo){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.sendMessage('Player not found');
 
             return;
         }

@@ -23,26 +23,30 @@ export default class MarketShop extends Command{
     }
 
     async run(bag:CommandRunBag){
-        let userShopId:string;
-        let tagUser:User;
+        let tagUserId;
 
         if(bag.params.length == 0){
-            tagUser = bag.message.author;
-            userShopId = bag.message.author.id;
+            tagUserId = bag.message.author.id;
         }
         else{
-            tagUser = bag.message.mentions.users.first();
+            tagUserId = this.getUserTagId(bag.params[0]);
 
-            if(!tagUser){
+            if(!tagUserId){
                 bag.message.channel.sendMessage(this.getUsage());
 
                 return;
             }
-
-            userShopId = tagUser.id;
         }
 
-        const offers:Array<SocketActiveMarketOffer> = await bag.socket.marketGetPlayerOffers(userShopId);
+        const shopPlayer = await bag.socket.getPlayer(tagUserId);
+
+        if(!shopPlayer){
+            bag.message.channel.sendMessage('Player not found');
+
+            return;
+        }
+
+        const offers:Array<SocketActiveMarketOffer> = await bag.socket.marketGetPlayerOffers(tagUserId);
 
         if(offers == null){
             bag.message.channel.sendMessage(`No offers found`);
@@ -50,7 +54,7 @@ export default class MarketShop extends Command{
             return;
         }
 
-        let msg = bag.message.author.id == userShopId ? `Your` : tagUser.username+`'s`;
+        let msg = bag.message.author.id == tagUserId ? `Your` : shopPlayer.title+`'s`;
         
         msg += ` shop offers\n\n`;
 

@@ -48,21 +48,21 @@ export default class Challenge extends Command{
         }
 
         //Sending a challenge
-        const tagUser = bag.message.mentions.users.first();
+        const tagUserId = this.getUserTagId(bag.params[0]);
         
-        if(!tagUser){
+        if(!tagUserId){
             bag.message.channel.sendMessage(this.getUsage());
 
             return;
         }
 
-        if(tagUser.id == bag.message.author.id){
+        if(tagUserId == bag.message.author.id){
             throw 'You cannot challenge yourself';
         }
 
         //Will throw error if something goes wrong
-        await bag.socket.createPvPInvite(bag.message.author.id,tagUser.id);
+        await bag.socket.createPvPInvite(bag.message.author.id,tagUserId);
 
-        bag.message.channel.sendMessage(`${bag.message.author.username} challenged ${tagUser} to a duel! (expires in 60 seconds)`);
+        bag.message.channel.sendMessage(`${bag.message.author.username} challenged <@${tagUserId}> to a duel! (expires in 60 seconds)`);
     }
 }

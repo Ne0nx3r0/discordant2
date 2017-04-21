@@ -17,7 +17,7 @@ export default class Give extends Command{
     }
 
     async run(bag:CommandRunBag){
-        const tagUserId = bag.message.mentions.users.first().id;
+        const tagUserId = this.getUserTagId(bag.params[0]);
 
         if(!tagUserId){
             bag.message.channel.sendMessage(this.getUsage());

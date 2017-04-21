@@ -7,6 +7,9 @@ import PermissionsService from '../core/permissions/PermissionService';
 import SocketClientRequester from '../client/SocketClientRequester';
 import { SocketPvPInvite } from '../core/battle/PvPInvite';
 
+const UserTagRegex = new RegExp(/<@([0-9]{18})>/);
+const UserUidRegex = new RegExp(/([0-9]{18})/);
+
 export interface SetPlayingFunc{
     (msg:string):void;
 }
@@ -71,6 +74,20 @@ export default class Command{
                 description: msg,           
             }
         }
+    }
+
+    getUserTagId(bagParam:string):string{
+        console.log(bagParam);
+
+        if(UserTagRegex.test(bagParam)){console.log(UserTagRegex.exec(bagParam)[1]);
+            return UserTagRegex.exec(bagParam)[1];
+        }
+ 
+        if(UserUidRegex.test(bagParam)){console.log(UserUidRegex.exec(bagParam)[1]);
+            return UserUidRegex.exec(bagParam)[1];
+        }
+
+        return null;
     }
 
     async run(bag:CommandRunBag):Promise<void>{

@@ -21,22 +21,13 @@ export default class Begin extends Command{
     }
 
     async run(bag:CommandRunBag){
-        let tagUser;
+        const tagUserId = this.getUserTagId(bag.params[0]);
 
-        if(bag.params.length == 0){
-            tagUser = bag.message.author;
+        if(!tagUserId){
+            bag.message.channel.sendMessage(this.getUsage());
+            
+            return;
         }
-        else{
-            tagUser = bag.message.mentions.users.first();
-
-            if(!tagUser){
-                bag.message.channel.sendMessage(this.getUsage());
-
-                return; 
-            }
-        }
-
-        const tagUserId = tagUser.id;
 
         const player = await bag.socket.getPlayer(tagUserId);
 
