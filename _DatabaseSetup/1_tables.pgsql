@@ -253,3 +253,5 @@ CREATE INDEX fki_mop_offer_id
 
 
 INSERT INTO player(uid,discriminator,username,description) values(42,42,'Deep Thought','Test account');
+INSERT INTO player(uid,discriminator,username,description) values(263033266464882688,8606,'Discordant','');
+INSERT INTO player(uid,discriminator,username,description) values(281894670487781376,6572,'Discordant.indev','');
