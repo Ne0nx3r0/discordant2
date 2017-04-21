@@ -8,7 +8,7 @@ export interface GetPlayerData extends ServerRequestData{
 }
 
 export interface GetPlayerResponse extends ServerResponse{
-    player:SocketPlayerCharacter;
+    player?:SocketPlayerCharacter;
 }
 
 export default class GetPlayerRequest extends ServerRequest{
@@ -22,6 +22,12 @@ export default class GetPlayerRequest extends ServerRequest{
 
     async receive(bag:ServerRequestReceiveBag,data:GetPlayerData):Promise<GetPlayerResponse>{
         const player:PlayerCharacter = await bag.game.getPlayerCharacter(data.uid);
+
+        if(!player){
+            return {
+                success: true,
+            };
+        }
 
         return {
             success: true,
