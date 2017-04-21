@@ -5,7 +5,7 @@ import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import { PartyMoveDirection } from "../../core/party/PartyExploringMap";
 
-const MOVE_DIRECTIONS_GEO = ['N','S','W','E'];
+const MOVE_DIRECTIONS_GEO = ['N','S','E','W'];
 const MOVE_DIRECTIONS = ['U','D','L','R'];
 
 export default class PartyMove extends Command{
