@@ -45,6 +45,7 @@ import DBStopMarketOffer from "../db/api/DBStopMarketOffer";
 import DBGetActiveMarketOffers from "../db/api/DBGetActiveMarketOffers";
 import { SocketActiveMarketOffer } from '../db/api/DBGetActiveMarketOffers';
 import DBGetNewestActiveMarketOffers from "../db/api/DBGetNewestActiveMarketOffers";
+import DBGetUserMarketOffers from "../db/api/DBGetUserMarketOffers";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -805,6 +806,18 @@ export default class Game {
 
     async getActiveMarketOffers(itemId: number):Promise<Array<SocketActiveMarketOffer>>{
         const offers = DBGetActiveMarketOffers(this.db,itemId);
+
+        return offers;
+    }
+
+    async getUserOffers(playerUid:string):Promise<Array<SocketActiveMarketOffer>>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'Player not found';
+        }
+
+        const offers = DBGetUserMarketOffers(this.db,pc.uid);
 
         return offers;
     }

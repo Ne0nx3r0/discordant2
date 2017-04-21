@@ -7,34 +7,48 @@ import GetEarnedWishes from '../../util/GetEarnedWishes';
 import MarketOfferEncoder from '../../util/MarketOfferEncoder';
 import { SocketActiveMarketOffer } from "../../gameserver/db/api/DBGetActiveMarketOffers";
 import Challenge from './Challenge';
+import { User } from "discord.js";
 
-export default class MarketSearch extends Command{
+export default class MarketShop extends Command{
     constructor(bag:CommandBag){
         super({
             name: 'marketshop',
-            description: 'Search for an item in the market',
-            usage: 'marketshop <item name>',
-            permissionNode: PermissionId.MarketSearch,
+            description: `View your items for sale or another player\'s`,
+            usage: 'marketshop [@username]',
+            permissionNode: PermissionId.MarketShop,
             minParams: 1,
         });
 
-        this.aliases = ['msearch','ms'];
+        this.aliases = ['mshop'];
     }
 
     async run(bag:CommandRunBag){
-        const itemName = bag.params.join(' ');
+        let userShopId:string;
+        let tagUser:User;
 
-        const item = bag.items.findByName(itemName);
+        if(bag.params.length == 0){
+            tagUser = bag.message.author;
+            userShopId = bag.message.author.id;
+        }
+        else{
+            tagUser = bag.message.mentions.users.first();
 
-        if(!item){
-            throw `Unknown item "${itemName}"`;
+            if(!tagUser){
+                bag.message.channel.sendMessage(this.getUsage());
+
+                return;
+            }
+
+            userShopId = tagUser.id;
         }
 
-        const marketOffers:Array<SocketActiveMarketOffer> = await bag.socket.marketGetOffers(item.id);
+        const offers:Array<SocketActiveMarketOffer> = await bag.socket.marketGetPlayerOffers(userShopId);
 
-        let msg = `Current offers for ${item.title}:\n\n`;
+        let msg = bag.message.author.id == userShopId ? `Your` : tagUser.username+`'s`;
+        
+        msg += ` shop offers\n\n`;
 
-        msg += marketOffers.map(function(offer){
+        msg += offers.map(function(offer){
             const offerSid = MarketOfferEncoder.encode(offer.id);
 
             return `${offerSid} ${offer.price}GP each (${offer.amountLeft} left, ${offer.price*offer.amountLeft}GP buyout)`;
