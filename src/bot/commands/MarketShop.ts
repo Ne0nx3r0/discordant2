@@ -16,7 +16,7 @@ export default class MarketShop extends Command{
             description: `View your items for sale or another player\'s`,
             usage: 'marketshop [@username]',
             permissionNode: PermissionId.MarketShop,
-            minParams: 1,
+            minParams: 0,
         });
 
         this.aliases = ['mshop'];
@@ -43,6 +43,12 @@ export default class MarketShop extends Command{
         }
 
         const offers:Array<SocketActiveMarketOffer> = await bag.socket.marketGetPlayerOffers(userShopId);
+
+        if(offers == null){
+            bag.message.channel.sendMessage(`No offers found`);
+
+            return;
+        }
 
         let msg = bag.message.author.id == userShopId ? `Your` : tagUser.username+`'s`;
         
