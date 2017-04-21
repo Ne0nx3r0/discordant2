@@ -77,13 +77,11 @@ export default class Command{
     }
 
     getUserTagId(bagParam:string):string{
-        console.log(bagParam);
-
-        if(UserTagRegex.test(bagParam)){console.log(UserTagRegex.exec(bagParam)[1]);
+        if(UserTagRegex.test(bagParam)){
             return UserTagRegex.exec(bagParam)[1];
         }
  
-        if(UserUidRegex.test(bagParam)){console.log(UserUidRegex.exec(bagParam)[1]);
+        if(UserUidRegex.test(bagParam)){
             return UserUidRegex.exec(bagParam)[1];
         }
 
