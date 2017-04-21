@@ -141,10 +141,9 @@ export default class Game {
     }
 
     async registerPlayerCharacter(bag:RegisterPlayerCharacterBag):Promise<PlayerCharacter>{
-        let player:PlayerCharacter = this.cachedPCs.get(bag.uid);
+        let player:PlayerCharacter = await this.getPlayerCharacter(bag.uid);
 
-        //Try from database if not
-        if(player || await DBGetPlayerCharacter(this.db,bag.uid)){
+        if(player){
             throw 'Already registered';
         }
 
