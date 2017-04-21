@@ -1,12 +1,14 @@
 import { TextChannel } from "discord.js";
 import Logger from '../gameserver/log/Logger';
 import SocketClientRequester from './SocketClientRequester';
+import Bot from "../bot/Bot";
 
 export interface ClientRequestReceiveBag{
     channel: TextChannel;
     socket:SocketClientRequester;
     logger: Logger;
     sioc: SocketIOClient.Socket;
+    bot: Bot,
 }
 
 export interface ClientRequestData{

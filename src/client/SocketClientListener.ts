@@ -16,6 +16,7 @@ import SendPMClientRequest from './requests/SendPMClientRequest';
 import SendImageClientRequest from './requests/SendImageClientRequest';
 import SocketClientRequester from './SocketClientRequester';
 import SendLocalImageClientRequest from './requests/SendLocalImageClientRequest';
+import Bot from '../bot/Bot';
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -26,6 +27,7 @@ interface SocketClientListenerBag{
     logger: Logger;
     socket: SocketClientRequester;
     channelLookup: ChannelLookupFunc;
+    bot: Bot
 }
 
 export default class SocketClientListener{
@@ -81,6 +83,7 @@ export default class SocketClientListener{
                     logger: logger,
                     socket: bag.socket,
                     sioc: bag.sioc,
+                    bot: bag.bot,
                 },data);
             }
             catch(ex){

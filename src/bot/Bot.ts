@@ -33,7 +33,7 @@ export interface BotBag extends BotConfigBase{
     logger:Logger;
 }
 
-export default class DiscordantBotNode{
+export default class Bot{
     client:DiscordClient;
     commandPrefix:string;
     ownerUIDs:Array<string>;
@@ -232,6 +232,16 @@ export default class DiscordantBotNode{
         });
 
         return channel;
+    }
+
+    grantPlayerWriteAccessToChannel(channel:TextChannel,playerUid:string){
+        const overwrites = {
+            SEND_MESSAGES: true,
+            READ_MESSAGES: true,
+            ADD_REACTIONS: true,
+        };
+
+        channel.overwritePermissions(playerUid,overwrites);
     }
 
     async createPartyChannel(guild:Guild,partyName:string,leaderUid:string):Promise<TextChannel>{

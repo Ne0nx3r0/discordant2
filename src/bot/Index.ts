@@ -35,6 +35,7 @@ class DiscordantBotNode {
             sioc: sioc,
             logger: logger,
             socket: socket,
+            bot: bot,
         });
 
         return 0;

@@ -391,6 +391,14 @@ export default class Game {
             throw 'That player is not registered';
         }
 
+        if(sender.status != 'inCity'){
+            throw 'You cannot send challenges now';
+        }
+
+        if(receiver.status != 'inCity'){
+            throw `${receiver.title} cannot receive challenges right now`;
+        }
+
         const invite = {
             sender: sender,
             receiver: receiver,
@@ -439,6 +447,14 @@ export default class Game {
 
         if(!receiver){
             throw 'That player is not registered';
+        }
+
+        if(sender.status != 'invitedToPVPBattle'){
+            throw 'You have no pending challenge';
+        }
+
+        if(receiver.status != 'invitedToPVPBattle'){
+            throw `${receiver.title} cannot join the battle now`;
         }
 
         const battle = new PvPBattle({

@@ -11,6 +11,7 @@ import SendImageClientRequest from '../../client/requests/SendImageClientRequest
 import SendLocalImageClientRequest from "../../client/requests/SendLocalImageClientRequest";
 import { IBattleEndedPlayer } from '../../client/requests/CoopBattleEndedClientRequest';
 import { SocketPlayerCharacter } from '../creature/player/PlayerCharacter';
+import SendAddPartyMemberClientRequest from "../../client/requests/SendAddPartyMemberClientRequest";
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -236,9 +237,9 @@ export default class PlayerParty{
         pc.party = this;
         pc.status = 'inParty';
 
-        new SendMessageClientRequest({
+        new SendAddPartyMemberClientRequest({
             channelId: this.channelId,
-            message: `<@${pc.uid}> joined the party!`,
+            playerUid: pc.uid
         }).send(this.getClient());
     }
 
