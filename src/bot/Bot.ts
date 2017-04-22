@@ -43,7 +43,7 @@ export default class Bot{
     logger:Logger;
     permissions:PermissionsService;
     items: AllItems;
-    aliases: Map<string,string>;
+    aliases: {};
 
     constructor(bag:BotBag){
         this.lockdown = false;
@@ -51,7 +51,7 @@ export default class Bot{
         this.ownerUIDs = bag.ownerUIDs;
         this.permissions = bag.permissions;
         this.items = new AllItems();
-        this.aliases = new Map();
+        this.aliases = {};
 
         this.logger = bag.logger;
 
@@ -67,11 +67,11 @@ export default class Bot{
             this.commands.set(command.name.toUpperCase(),command);
 
             command.aliases.forEach((expandTo,alias)=>{
-                if(this.aliases.has(alias)){
+                if(this.aliases[alias]){
                     throw 'Duplicate alias "' + alias + '" in ' + command.name+' command';
                 }
 
-                this.aliases.set(alias,expandTo);
+                this.aliases[alias] = expandTo;
             });
         });
 
@@ -126,11 +126,14 @@ export default class Bot{
 
         let msgWithoutPrefix:string = message.content.substr(this.commandPrefix.length);
 
-        this.aliases.forEach(function(expandTo,alias){
-            if(msgWithoutPrefix.startsWith(alias)){
-                msgWithoutPrefix = expandTo+' '+msgWithoutPrefix.substr(alias.length);
+        let aliasFound = false;
+
+        for(var a in this.aliases){
+            if(msgWithoutPrefix.startsWith(a)){
+                msgWithoutPrefix = this.aliases[a]+' '+msgWithoutPrefix.substr(a.length);
+                break;
             }
-        });
+        }
 
         const params:Array<string> = resolveArgs(msgWithoutPrefix);
         let commandName:string = params.shift();
