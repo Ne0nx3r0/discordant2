@@ -32,6 +32,8 @@ export default class SetRole extends Command{
 
             if(amount < 1){
                 bag.message.channel.sendMessage(`You stare up at the sky hopefully, but nothing happens, ${bag.message.author.id}`);
+
+                return;
             }
 
             const response = await bag.socket.convertWishesToGold(bag.message.author.id,amount);
