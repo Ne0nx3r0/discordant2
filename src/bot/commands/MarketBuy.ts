@@ -17,7 +17,7 @@ export default class MarketBuy extends Command{
     }
 
     async run(bag:CommandRunBag){
-        const offerSid = bag.params[0];console.log(offerSid);
+        const offerSid = bag.params[0];
         const offerId = MarketOfferEncoder.decode(offerSid);
 
         let amount;

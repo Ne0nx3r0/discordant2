@@ -639,6 +639,10 @@ export default class Game {
             throw 'You are not registered';
         }
 
+        if(player.status == 'inBattle'){
+            throw 'You cannot change your party in the middle of a battle!';
+        }
+
         if(player.status != 'inParty'){
             throw 'You are not currently in a party';
         }
@@ -650,6 +654,11 @@ export default class Game {
         }
 
         party.playerActionDisband();
+    }
+
+    //Warning: PlayerParty is responsible for calling this
+    _deleteParty(partyId:string){
+        this.playerParties.delete(partyId);
     }
 
     async moveParty(leaderUid:string,direction:PartyMoveDirection):Promise<void>{
@@ -785,7 +794,7 @@ export default class Game {
             throw 'You are not registered';
         }
 
-        if(amount < 1){
+        if(amount == 0){
             throw 'Invalid amount to buy';
         }
 

@@ -285,6 +285,8 @@ export default class PlayerParty{
                 channelId: this.channelId
             }).send(this.getClient());
         },20000);
+
+        this.game._deleteParty(this.id);
     }
 
     get isInBattle():boolean{

@@ -263,26 +263,17 @@ $$;
 
 
 
-
-
-
-
-
-DROP FUNCTION market_buy_offer(buyerUid bigint,offerId bigint,amountWanted integer);
-
-
-CREATE OR REPLACE FUNCTION market_buy_offer(buyerUid bigint,offerId bigint,amountWanted integer) 
-RETURNS TABLE(
-  amount_purchased integer,
-  total_cost integer,
-  item_id integer,
-  seller_uid bigint,
-  amount_left_after integer
-) LANGUAGE plpgsql AS
+CREATE OR REPLACE FUNCTION market_buy_offer(buyerUid bigint,offerId bigint,amountWanted integer
+,OUT out_amount_purchased integer
+,OUT out_total_cost integer
+,OUT out_item_id integer
+,OUT out_seller_uid bigint
+,OUT out_amount_left integer
+) 
+LANGUAGE plpgsql AS
 $$
 
 DECLARE
-  ret RECORD;
   amountLeft integer;
   itemId integer;
   sellerUid bigint;
@@ -335,13 +326,15 @@ BEGIN
       USING ERRCODE = 'P0002';
   END IF;
 
+  out_amount_left := amountLeft-amountToBuy;
+
 -- Update listing
   IF amountToBuy = amountLeft THEN
 -- End offer
     UPDATE market_offer SET ended=true,amount_left=0,updated=NOW() WHERE id = offerId;
   ELSE
 -- Remove some items but leave offer up
-    UPDATE market_offer SET amount_left=amountLeft-amountToBuy,updated=NOW() WHERE id = offerId;
+    UPDATE market_offer SET amount_left=out_amount_left,updated=NOW() WHERE id = offerId;
   END IF;
 
 -- Remove gold from buyer
@@ -351,14 +344,12 @@ BEGIN
   UPDATE player SET gold = gold + totalCost WHERE uid = sellerUid;
 
 -- Add items to seller
-  SELECT grant_player_item(buyerUid,itemId,amountToBuy);
+  PERFORM grant_player_item(buyerUid,itemId,amountToBuy);
 
 -- Return some data the app will need
-  RETURN QUERY SELECT
-    amountToBuy as amount_purchased,
-    totalCost as total_cost,
-    itemId as item_id,
-    sellerUid as seller_uid,
-    amountLeft-amountToBuy as amount_left;
+  out_amount_purchased := amountToBuy;
+  out_total_cost := totalCost;
+  out_item_id := itemId;
+  out_seller_uid := sellerUid;
 END
 $$;

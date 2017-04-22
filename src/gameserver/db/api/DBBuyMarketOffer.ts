@@ -19,12 +19,16 @@ export default async function DBBuyMarketOffer(db:DatabaseService,playerUid:stri
     try{
         const result = await db.getPool().query(queryStr,[playerUid,offerId,amount]);
 
+        const dboffer = result.rows[0].market_buy_offer;
+
+        const rowData = dboffer.substr(1,dboffer.length-2).split(',');
+
         return {
-            amountPurchased: result.rows[0].amount_purchased,
-            totalCost: result.rows[0].total_cost,
-            itemId: result.rows[0].item_id,
-            sellerUid: result.rows[0].seller_uid,
-            amountLeft: result.rows[0].amount_left_after,
+            amountPurchased: Number(rowData[0]),
+            totalCost: Number(rowData[1]),
+            itemId: Number(rowData[2]),
+            sellerUid: rowData[3],
+            amountLeft: Number(rowData[4]),
         };
     }
     catch(ex){
