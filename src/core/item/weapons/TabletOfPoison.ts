@@ -31,7 +31,7 @@ export default new Weapon({
                     attackMessage: '{attacker} finishes reading the legend and poisons {defender}',
                     exhaustion: 1,
                     damageFunc: function(bag:DamageFuncBag){
-                        //bag.battle.addTemporaryEffect(bag.defender,EffectSpiritSnakePoison,4);
+                        bag.battle.addTemporaryEffect(bag.defender,EffectSpiritSnakePoison,5);
 
                         return {};
                     }

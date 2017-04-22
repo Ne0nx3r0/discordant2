@@ -51,6 +51,8 @@ import { SocketMarketOffer } from '../gameserver/db/api/DBGetMarketOffer';
 import MarketUserOffersRequest from "../gameserver/socket/requests/MarketUserOffersRequest";
 import MarketBuyOfferRequest from "../gameserver/socket/requests/MarketBuyOfferRequest";
 import { PurchasedMarketOffer } from "../gameserver/db/api/DBBuyMarketOffer";
+import ConvertWishesToGoldRequest from "../gameserver/socket/requests/ConvertWishesToGoldRequest";
+import { ConvertWishesToGoldResponse } from '../gameserver/socket/requests/ConvertWishesToGoldRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -354,5 +356,15 @@ export default class SocketClientRequester{
         .send(this.sioc);
 
         return response.party;
+    }
+
+    async convertWishesToGold(playerUid:string,amount:number):Promise<ConvertWishesToGoldResponse>{
+        const response = await new ConvertWishesToGoldRequest({
+            uid: playerUid,
+            amount: amount,
+        })
+        .send(this.sioc);
+
+        return response;
     }
 }

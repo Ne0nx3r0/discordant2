@@ -48,6 +48,7 @@ import DBGetNewestActiveMarketOffers from "../db/api/DBGetNewestActiveMarketOffe
 import DBGetUserMarketOffers from "../db/api/DBGetUserMarketOffers";
 import DBBuyMarketOffer from "../db/api/DBBuyMarketOffer";
 import { PurchasedMarketOffer } from '../db/api/DBBuyMarketOffer';
+import DBConvertWishesToGold from "../db/api/DBConvertWishesToGold";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -881,6 +882,25 @@ export default class Game {
         const party = pc.party;
 
         return party;
+    }
+
+    async convertWishesToGold(playerUid:string, amount:number):Promise<Array<number>>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'Player not found';
+        }
+
+        if(pc.wishes < amount){
+            throw `You only have ${pc.wishes} wishes`;
+        }
+
+        const gold = await DBConvertWishesToGold(this.db,playerUid,amount);
+
+        pc.wishes -= amount;
+        pc.gold += gold;
+
+        return [gold,pc.gold];
     }
 }
 

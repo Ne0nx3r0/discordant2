@@ -140,6 +140,7 @@ export default class PvPBattle extends PlayerBattle{
         const damages:IDamageSet = step.getDamages({
             attacker:attacker.pc,
             defender:defender.pc,
+            battle: this,
         });
 
         if(defender.blocking){

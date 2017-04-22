@@ -12,7 +12,7 @@ export default class SetRole extends Command{
         super({
             name: 'wish',
             description: 'Use wishes to take an action',
-            usage: 'wish <strength|agility|vitality|spirit|luck|charisma>',
+            usage: 'wish <gold|strength|agility|vitality|spirit|luck|charisma>',
             permissionNode: PermissionId.Wish,
             minParams: 1,
         });
@@ -21,6 +21,26 @@ export default class SetRole extends Command{
     async run(bag:CommandRunBag){
         const wishType = bag.params[0].toUpperCase();
         
+        if(wishType == 'GOLD' || wishType == 'GP'){
+            const amount = parseInt(bag.params[1]);
+
+            if(isNaN(amount)){
+                bag.message.channel.sendMessage(`Invalid amount, ${bag.message.author.username}`);
+
+                return;
+            }
+
+            if(amount < 1){
+                bag.message.channel.sendMessage(`You stare up at the sky hopefully, but nothing happens, ${bag.message.author.id}`);
+            }
+
+            const response = await bag.socket.convertWishesToGold(bag.message.author.id,amount);
+
+            bag.message.channel.sendMessage(`You use your wishes to become ${response.goldGained}GP richer, ${response.goldTotal}GP total`);
+
+            return;
+        }
+
         if(WishTypes.indexOf(wishType) == -1){
             bag.message.channel.sendMessage(this.getUsage());
 

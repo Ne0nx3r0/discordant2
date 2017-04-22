@@ -353,3 +353,32 @@ BEGIN
   out_seller_uid := sellerUid;
 END
 $$;
+
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION convert_wishes_to_gold(playerUid bigint,amountToConvert integer) 
+RETURNS integer LANGUAGE plpgsql AS
+$$
+
+DECLARE
+  currentWishes integer;
+  goldEarned integer := amountToConvert * 2;
+BEGIN
+  SELECT wishes INTO currentWishes FROM player WHERE uid = playerUid LIMIT 1;
+
+  IF amountToConvert > currentWishes THEN
+    RAISE EXCEPTION 'You only have % wishes',currentWishes
+          USING ERRCODE = 'P0002';
+  ELSE
+    UPDATE player SET wishes = wishes - amountToConvert, gold = gold + goldEarned WHERE uid = playerUid;
+  END IF;
+
+  RETURN goldEarned;
+END
+
+$$;

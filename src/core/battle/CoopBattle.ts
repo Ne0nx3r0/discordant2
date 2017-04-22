@@ -167,6 +167,7 @@ export default class CoopBattle extends PlayerBattle {
         const pcDamages:IDamageSet = attackStep.getDamages({
             attacker: this.opponent,
             defender: playerToAttack.pc,
+            battle: this,
         });
 
         let attackCancelled = false;
@@ -264,6 +265,7 @@ export default class CoopBattle extends PlayerBattle {
         const damages:IDamageSet = step.getDamages({
             attacker: bpc.pc,
             defender: this.opponent,
+            battle: this,
         });
 
         bpc.exhaustion += step.exhaustion;
