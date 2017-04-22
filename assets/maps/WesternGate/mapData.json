@@ -3,7 +3,8 @@
     "encounters":[
         { "id": 1, "weight": 0.6 },
         { "id": 2, "weight": 0.2 },
-        { "id": 3, "weight": 0.2 }
+        { "id": 3, "weight": 0.2 },
+        { "id": 4, "weight": 5.2 }
     ],
     "portals":[
         {

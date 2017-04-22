@@ -124,7 +124,7 @@ export default class Bot{
             return;
         }
 
-        let msgWithoutPrefix:string = message.content.substr(this.commandPrefix.length);
+        let msgWithoutPrefix:string = message.content.substr(this.commandPrefix.length)+' ';
 
         let aliasFound = false;
 

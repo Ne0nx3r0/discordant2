@@ -3,6 +3,7 @@ enum CreatureId{
     Goblin,
     GoblinRaidingParty,
     GoblinSoldier,
+    GoblinSneak,
 }
 
 export default CreatureId;

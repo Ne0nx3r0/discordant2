@@ -75,7 +75,7 @@ export default class CoopBattle extends PlayerBattle {
             bpc.pc.tempEffects.forEach((roundsLeft,effect)=>{
                 if(effect.onRoundBegin){
                     effect.onRoundBegin({
-                        target:this.opponent,
+                        target:bpc.pc,
                         sendBattleEmbed:this.sendEffectApplied
                     });
                 }
@@ -136,6 +136,13 @@ export default class CoopBattle extends PlayerBattle {
         //Didn't find an elgible attack
         else{
             attackStep = dummyAttack;
+        }
+
+
+        if(this.opponent.HPCurrent<1){
+            this.endBattle(true,null);
+
+            return;
         }
 
         this.attackPlayers(attackStep);

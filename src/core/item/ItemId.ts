@@ -9,6 +9,7 @@ enum ItemId {
     HealingVial,
     TableOfPoison,
     GoblinRaidingPartyWeapon,
+    GoblinSneakPoisonWeapon,
 }
 
 export default ItemId;

@@ -70,7 +70,8 @@ export default class PlayerParty{
         new SendMessageClientRequest({
             channelId: this.channelId,
             message: msg
-        });
+        })
+        .send(this.getClient());
     }
 
     get id():string{
@@ -94,7 +95,7 @@ export default class PlayerParty{
         }
 
         if(!this.exploration.canMove(direction)){
-            this.sendChannelMessage('The party cannot move '+direction+', the way is impassably blocked by a small bush or something.');
+            this.sendChannelMessage('The way is impassably blocked by a small bush or something.');
 
             return;
         }
