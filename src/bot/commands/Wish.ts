@@ -31,7 +31,7 @@ export default class SetRole extends Command{
             }
 
             if(amount < 1){
-                bag.message.channel.sendMessage(`You stare up at the sky hopefully, but nothing happens, ${bag.message.author.username}`);
+                bag.message.channel.sendMessage(`You stare up to the sky with hope in your eyes... But nothing happens, ${bag.message.author.username}`);
 
                 return;
             }
