@@ -129,7 +129,7 @@ export default class Bot{
         let aliasFound = false;
 
         for(var a in this.aliases){
-            if(msgWithoutPrefix.startsWith(a)){
+            if(msgWithoutPrefix.startsWith(a+' ')){
                 msgWithoutPrefix = this.aliases[a]+' '+msgWithoutPrefix.substr(a.length);
                 break;
             }
