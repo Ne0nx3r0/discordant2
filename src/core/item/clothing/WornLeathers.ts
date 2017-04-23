@@ -12,7 +12,7 @@ class WornLeathers extends ItemEquippable{
 +20% Physical Resistance`,
             slotType:'armor',
             onAddBonuses:function(stats:ICreatureStatSet){
-                stats.Resistances.Physical += 0.2;
+                stats.resistances.physical += 0.2;
             }
         });
     }

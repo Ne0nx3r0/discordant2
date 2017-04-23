@@ -697,12 +697,12 @@ export default class Game {
         pc.wishes = tempPC.wishes;
         pc.level = tempPC.level;
         pc.attributes = {
-            Strength: tempPC.attribute_strength,
-            Agility: tempPC.attribute_agility,
-            Vitality:  tempPC.attribute_vitality,
-            Spirit: tempPC.attribute_spirit,
-            Luck: tempPC.attribute_luck,
-            Charisma: tempPC.attribute_charisma
+            strength: tempPC.attribute_strength,
+            agility: tempPC.attribute_agility,
+            vitality:  tempPC.attribute_vitality,
+            spirit: tempPC.attribute_spirit,
+            luck: tempPC.attribute_luck,
+            charisma: tempPC.attribute_charisma
         };
         pc.updateStats();
 

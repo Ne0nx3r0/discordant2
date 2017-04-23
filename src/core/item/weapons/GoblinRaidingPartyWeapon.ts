@@ -1,10 +1,12 @@
 import Weapon from '../../item/Weapon';
 import ItemId from '../../item/ItemId';
-import WeaponAttack from '../WeaponAttack';
+import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 import { DamageFuncBag } from '../WeaponAttackStep';
 import DamageScaling from '../../damage/DamageScaling';
 import Creature from '../../creature/Creature';
+import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
+import { Attribute } from "../../creature/AttributeSet";
 
 export default  new Weapon({
     id: ItemId.GoblinRaidingPartyWeapon,
@@ -15,62 +17,63 @@ export default  new Weapon({
     attacks:[
         new WeaponAttack({
             title: 'attack',
+            minBaseDamage: 10,
+            maxBaseDamage: 15,
+            damageType: 'physical',
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.C,
+            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} jumps about cutting {defender} with their axes',
-                    exhaustion: 1,
-                    damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(15,bag.attacker.stats.Strength);
-
-                        return {
-                            Physical: physicalDamage * (1-bag.defender.stats.Resistances.Physical)
-                        };
-                    }
+                    damageFunc: DefaultDamageFunc
                 })
             ],
             aiUseWeight: 0.5,
         }),
         new WeaponAttack({
             title: 'heavy attack',
+            minBaseDamage: 25,
+            maxBaseDamage: 35,
+            damageType: 'physical',
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.C,
+            exhaustion: 2,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} gang up on {defender} for a devastating attack',
-                    exhaustion: 2,
-                    damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(34,bag.attacker.stats.Strength);
-
-                        return {
-                            Physical: physicalDamage * (1-bag.defender.stats.Resistances.Physical)
-                        };
-                    }
+                    damageFunc: DefaultDamageFunc
                 })
             ],
             aiUseWeight: 0.2
         }),
         new WeaponAttack({
             title: 'regroup',
+            minBaseDamage: 0,
+            maxBaseDamage: 0,
+            damageType: 'special',
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.C,
+            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} attempts to run away and regroup',
-                    exhaustion: 1,
                     damageFunc: function(bag:DamageFuncBag){
                         return {};
                     }
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} is recruiting allies!',
-                    exhaustion: 1,
                     damageFunc: function(bag:DamageFuncBag){
                         return {};
                     }
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} returns with great numbers!',
-                    exhaustion: 1,
                     damageFunc: function(bag:DamageFuncBag){
-                        bag.attacker.attributes.Vitality += 10;
+                        bag.attacker.attributes.vitality += 10;
                         bag.attacker.updateStats();
-                        bag.attacker.HPCurrent = bag.attacker.stats.HPTotal / 2;
+                        bag.attacker.hpCurrent = bag.attacker.stats.hpTotal / 2;
                         return {};
                     }
                 }),
@@ -78,7 +81,7 @@ export default  new Weapon({
             aiUseWeight: 1.0,
             aiShouldIUseThisAttack:function(attacker:Creature){
                 //use when hp is at 50% or less
-                return attacker.HPCurrent < attacker.stats.HPTotal*0.5;
+                return attacker.hpCurrent < attacker.stats.hpTotal*0.5;
             }
         }),
     ]

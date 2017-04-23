@@ -48,7 +48,7 @@ export function getDamagesLine(creature:SocketCreature,damages:IDamageSet,blocke
         exhaustedStr = ' EXHAUSTED ('+exhausted+')';
     }
 
-    var line = '**'+creature.title+'**'+exhaustedStr+' ('+creature.HPCurrent+'/'+creature.stats.HPTotal+')'+blockedStr+' took damage ';
+    var line = '**'+creature.title+'**'+exhaustedStr+' ('+creature.hpCurrent+'/'+creature.stats.hpTotal+')'+blockedStr+' took damage ';
     
     Object.keys(damages).forEach(function(damageStr:string){
         line += damages[damageStr] + ' ' + getDamageTypeEmoji(damageStr) + '   ';

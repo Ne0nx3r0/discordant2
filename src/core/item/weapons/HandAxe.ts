@@ -6,6 +6,9 @@ import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
 import { DamageFuncBag } from '../WeaponAttackStep';
+import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
+import { WeaponDamageType, ScalingLevel } from '../WeaponAttack';
+import { Attribute } from '../../creature/AttributeSet';
 
 export default new Weapon({
     id: ItemId.HandAxe,
@@ -17,35 +20,33 @@ export default new Weapon({
     },
     attacks:[
         new WeaponAttack({
-            title: 'light',
+            title: 'chop',
+            minBaseDamage: 8,
+            maxBaseDamage: 12,
+            damageType: 'physical',
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.C,
+            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} swings a hand axe at {defender}',
-                    exhaustion: 1,
-                    damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(10,bag.attacker.stats.Strength);
-
-                        return {
-                            Physical: physicalDamage * (1-bag.defender.stats.Resistances.Physical)
-                        };
-                    }
+                    damageFunc: DefaultDamageFunc,
                 })
             ],
             aiUseWeight: 0.8
         }),
         new WeaponAttack({
-            title: 'heavy',
+            title: 'dive',
+            minBaseDamage: 15,
+            maxBaseDamage: 30,
+            damageType: 'physical',
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.C,
+            exhaustion: 2,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} leaps at {defender} with their hand axe',
-                    exhaustion: 2,
-                    damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(25,bag.attacker.stats.Strength);
-
-                        return {
-                            Physical: physicalDamage * (1-bag.defender.stats.Resistances.Physical)
-                        };
-                    }
+                    damageFunc: DefaultDamageFunc
                 }),
             ],
             aiUseWeight: 0.2

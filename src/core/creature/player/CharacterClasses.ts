@@ -2,10 +2,10 @@ import CharacterClass from './CharacterClass';
 import AttributeSet from '../AttributeSet';
 import CreatureEquipment from '../../item/CreatureEquipment';
 import WornLeathers from '../../item/clothing/WornLeathers';
-import WoodRoundShield from '../../item/weapons/WoodRoundShield';
 import HuntingSword from '../../item/weapons/HuntingSword';
 import TabletOfHealing from '../../item/weapons/TabletOfHealing';
 import Collection from '../../../util/Collection';
+import { WoodShield } from "../../item/weapons/WoodShield";
 
 enum CharacterClassId{
     Nobody,
@@ -52,7 +52,7 @@ addClass(new CharacterClass(
     new CreatureEquipment({
         armor: WornLeathers,
         weapon: HuntingSword,
-        offhand: WoodRoundShield,
+        offhand: WoodShield,
     }),
 ));
 

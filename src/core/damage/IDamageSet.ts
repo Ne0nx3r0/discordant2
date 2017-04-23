@@ -1,9 +1,9 @@
 interface IDamageSet{
-    Physical?:number;
-    Fire?:number;
-    Cold?:number;
-    Thunder?:number;
-    Chaos?:number;//resistance = lowest of the four other resistances
+    physical?:number;
+    fire?:number;
+    cold?:number;
+    thunder?:number;
+    chaos?:number;//resistance = lowest of the four other resistances
 }
 
 export default IDamageSet;

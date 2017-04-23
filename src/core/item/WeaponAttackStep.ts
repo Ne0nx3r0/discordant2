@@ -3,11 +3,14 @@ import Creature from '../creature/Creature';
 import Weapon from './Weapon';
 import PlayerBattle from "../battle/PlayerBattle";
 //import PlayerBattle from '../battle/PlayerBattle';
+import WeaponAttack from './WeaponAttack';
+import { IBattlePlayerCharacter } from '../battle/PlayerBattle';
 
 export interface DamageFuncBag{
-        attacker:Creature;
-        defender:Creature;
-        battle:PlayerBattle;
+    attacker:Creature;
+    defender:Creature;
+    battle:PlayerBattle;
+    step: WeaponAttackStep;
 }
 
 interface DamageFunc{
@@ -18,18 +21,16 @@ interface DamageFunc{
 
 export interface WeaponAttackStepBag{
     attackMessage:string;
-    exhaustion:number;
-    damageFunc?:DamageFunc;
+    damageFunc:DamageFunc;
 }
 
 export default class WeaponAttackStep{
     attackMessage:string;
-    exhaustion:number;
     getDamages:DamageFunc;
+    attack:WeaponAttack;//set by weaponattack this step instance is added to
 
     constructor(bag:WeaponAttackStepBag){
         this.attackMessage = bag.attackMessage;
-        this.exhaustion = bag.exhaustion;
         this.getDamages = bag.damageFunc;
     }
 }

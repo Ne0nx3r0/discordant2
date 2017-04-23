@@ -12,7 +12,7 @@ export default new BattleTemporaryEffect({
      //   bag.sendBattleEmbed('TEST EFFECT: Added',EmbedColors.TEST);
     },
     onAddBonuses: function(stats:ICreatureStatSet){
-        stats.Vitality
+        stats.vitality
     },
     onRoundBegin: function(bag:EffectEventBag){
      //   bag.sendBattleEmbed('TEST EFFECT: Round Began',EmbedColors.TEST);

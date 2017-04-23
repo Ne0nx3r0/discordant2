@@ -139,8 +139,8 @@ export default class PlayerParty{
 
     returnFromBattle(victory:boolean,bpcs:Array<IBattleEndedPlayer>){
         this.members.forEach(function(pc){
-            if(pc.HPCurrent < 0){
-                pc.HPCurrent = pc.stats.HPTotal * 0.05;
+            if(pc.hpCurrent < 0){
+                pc.hpCurrent = pc.stats.hpTotal * 0.05;
             }
         });
 

@@ -38,7 +38,7 @@ export default class Inventory extends Command{
 ${c.description}
 
 Starting Attributes: 
-Strength: ${c.startingAttributes.Strength}   Agiilty: ${c.startingAttributes.Agility}   Vitality: ${c.startingAttributes.Vitality}   Spirit: ${c.startingAttributes.Spirit}   Luck: ${c.startingAttributes.Luck}
+Strength: ${c.startingAttributes.strength}   Agiilty: ${c.startingAttributes.agility}   Vitality: ${c.startingAttributes.vitality}   Spirit: ${c.startingAttributes.spirit}   Luck: ${c.startingAttributes.luck}
 
 Starting equipment: 
 ${equipStr}`;

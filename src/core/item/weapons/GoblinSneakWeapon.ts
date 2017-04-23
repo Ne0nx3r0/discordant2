@@ -20,14 +20,10 @@ export default new Weapon({
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} takes in a deep breath',
-                    exhaustion: 1,
-                    damageFunc: function(bag:DamageFuncBag){
-                        return {};
-                    }
+                    damageFunc: function(bag:DamageFuncBag){ return {}; }
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} sprays the battlefield with a powerful toxin poisoning everyone!',
-                    exhaustion: 1,
                     damageFunc: function(bag){
                         bag.battle.bpcs.forEach(function(bpc){
                             bag.battle.addTemporaryEffect(bpc.pc,EffectGoblinSneakPoison,3);
@@ -46,10 +42,10 @@ export default new Weapon({
                     attackMessage: '{attacker} shoots a dart at {defender}',
                     exhaustion: 1,
                     damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(10,bag.attacker.stats.Strength);
+                        const physicalDamage = DamageScaling.ByAttribute(10,bag.attacker.stats.strength);
 
                         return {
-                            Physical: physicalDamage * (1-bag.defender.stats.Resistances.Physical)
+                            Physical: physicalDamage * (1-bag.defender.stats.resistances.physical)
                         };
                     }
                 }),

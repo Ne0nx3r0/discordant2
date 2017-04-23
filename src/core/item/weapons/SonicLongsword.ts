@@ -1,11 +1,13 @@
 import Weapon from '../Weapon';
-import WeaponAttack from '../WeaponAttack';
+import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 import IDamageSet from '../../damage/IDamageSet';
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
 import { DamageFuncBag } from '../WeaponAttackStep';
+import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
+import { Attribute } from "../../creature/AttributeSet";
 
 export default new Weapon({
     id: ItemId.SonicLongsword,
@@ -18,17 +20,16 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'swing',
+            minBaseDamage: 10,
+            maxBaseDamage: 40,
+            damageType: 'thunder',
+            scalingAttribute: Attribute.agility,
+            scalingLevel: ScalingLevel.B,
+            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slashes {defender} with a sonic blade',
-                    exhaustion: 1,
-                    damageFunc: function(bag:DamageFuncBag){
-                        const thunderDamage = DamageScaling.ByAttribute(Math.random()*40+10,bag.attacker.stats.Agility);
-
-                        return {
-                            Thunder: thunderDamage * (1-bag.defender.stats.Resistances.Thunder)
-                        };
-                    }
+                    damageFunc: DefaultDamageFunc
                 })
             ],
             aiUseWeight: 0.8

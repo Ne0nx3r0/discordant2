@@ -55,27 +55,27 @@ export default class SetRole extends Command{
 
         switch(wishType){
             case 'STRENGTH':
-                msg = `You use your wishes to become stronger (${pc.stats.Strength})`;
+                msg = `You use your wishes to become stronger (${pc.stats.strength})`;
             break;
             
             case 'AGILITY':
-                msg = `Your use your wishes to become faster (${pc.stats.Agility})`;
+                msg = `Your use your wishes to become faster (${pc.stats.agility})`;
             break;
             
             case 'VITALITY':
-                msg = `You use your wishes to become hardier (${pc.stats.Vitality})`;
+                msg = `You use your wishes to become hardier (${pc.stats.vitality})`;
             break;
             
             case 'SPIRIT':
-                msg = `You use your wishes to attune with the world (${pc.stats.Spirit})`;
+                msg = `You use your wishes to attune with the world (${pc.stats.spirit})`;
             break;
             
             case 'LUCK':
-                msg = `You use your wishes to become luckier (${pc.stats.Luck})`;
+                msg = `You use your wishes to become luckier (${pc.stats.luck})`;
             break;
 
             case 'CHARISMA':
-                msg = `You use your wishes to become more charming (${pc.stats.Charisma})`;
+                msg = `You use your wishes to become more charming (${pc.stats.charisma})`;
             break;
         }
 

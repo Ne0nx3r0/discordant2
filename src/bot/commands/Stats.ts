@@ -48,18 +48,18 @@ export default class Begin extends Command{
 
 function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     const pcAttributesStr = ''
-    +'\n'+pc.stats.Strength+' Strength'
-    +'\n'+pc.stats.Agility+' Agility'
-    +'\n'+pc.stats.Vitality+' Vitality'
-    +'\n'+pc.stats.Spirit+' Spirit'
-    +'\n'+pc.stats.Charisma+' Charisma'
-    +'\n'+pc.stats.Luck+' Luck';
+    +'\n'+pc.stats.strength+' Strength'
+    +'\n'+pc.stats.agility+' Agility'
+    +'\n'+pc.stats.vitality+' Vitality'
+    +'\n'+pc.stats.spirit+' Spirit'
+    +'\n'+pc.stats.charisma+' Charisma'
+    +'\n'+pc.stats.luck+' Luck';
 
     const resistancesStr = ''
-    +'\n'+Math.floor(pc.stats.Resistances.Physical*100)+'% Physical'
-    +'\n'+Math.floor(pc.stats.Resistances.Fire*100)+'%'+' Fire'
-    +'\n'+Math.floor(pc.stats.Resistances.Cold*100)+'%'+' Cold'
-    +'\n'+Math.floor(pc.stats.Resistances.Thunder*100)+'% Thunder';
+    +'\n'+Math.floor(pc.stats.resistances.physical*100)+'% Physical'
+    +'\n'+Math.floor(pc.stats.resistances.fire*100)+'%'+' Fire'
+    +'\n'+Math.floor(pc.stats.resistances.cold*100)+'%'+' Cold'
+    +'\n'+Math.floor(pc.stats.resistances.thunder*100)+'% Thunder';
 
     const characterClass = CharacterClasses.get(pc.class);
 
@@ -74,7 +74,7 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
             fields: [
                 {
                     name: 'Health Points',
-                    value: pc.HPCurrent + ' / ' + pc.stats.HPTotal,
+                    value: pc.hpCurrent + ' / ' + pc.stats.hpTotal,
                     inline: true,
                 },
                 {

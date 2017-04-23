@@ -20,7 +20,7 @@ import GetEarnedWishes from "../../util/GetEarnedWishes";
 
 const dummyAttack = new WeaponAttackStep({
     attackMessage: '{attacker} doesn\'t know what to do!',
-    exhaustion: 1,
+    damageFunc: function(){return {};}
 });
 
 interface PlayerDamaged{
@@ -139,7 +139,7 @@ export default class CoopBattle extends PlayerBattle {
         }
 
 
-        if(this.opponent.HPCurrent<1){
+        if(this.opponent.hpCurrent<1){
             this.endBattle(true,null);
 
             return;
@@ -175,6 +175,7 @@ export default class CoopBattle extends PlayerBattle {
             attacker: this.opponent,
             defender: playerToAttack.pc,
             battle: this,
+            step: attackStep,
         });
 
         let attackCancelled = false;
@@ -216,7 +217,7 @@ export default class CoopBattle extends PlayerBattle {
             };
         }
 
-        playerToAttack.pc.HPCurrent -= Math.round(damagesTotal(pcDamages));
+        playerToAttack.pc.hpCurrent -= Math.round(damagesTotal(pcDamages));
 
         eventData.attacked.push({
             creature:playerToAttack.pc.toSocket(),
@@ -231,7 +232,7 @@ export default class CoopBattle extends PlayerBattle {
         this.bpcs.forEach((bpc:IBattlePlayerCharacter)=>{
             if(bpc.defeated) return;
 
-            if(bpc.pc.HPCurrent < 1){
+            if(bpc.pc.hpCurrent < 1){
                 bpc.defeated = true;
 
                 new PassedOutClientRequest({
@@ -268,14 +269,13 @@ export default class CoopBattle extends PlayerBattle {
         }
     }
 
-    _sendAttackStep(bpc:IBattlePlayerCharacter,step:AttackStep){
+    _sendAttackStep(bpc:IBattlePlayerCharacter,step:AttackStep,target?:PlayerCharacter){
         const damages:IDamageSet = step.getDamages({
             attacker: bpc.pc,
-            defender: this.opponent,
+            defender: target || this.opponent,
             battle: this,
+            step: step,
         });
-
-        bpc.exhaustion += step.exhaustion;
 
         let attackCancelled = false;
 
@@ -305,7 +305,7 @@ export default class CoopBattle extends PlayerBattle {
             return;
         }
 
-        this.opponent.HPCurrent -= Math.round(damagesTotal(damages));
+        this.opponent.hpCurrent -= Math.round(damagesTotal(damages));
 
         new AttackedClientRequest({
             channelId: this.channelId,
@@ -322,7 +322,7 @@ export default class CoopBattle extends PlayerBattle {
         })
         .send(this.getClient());
 
-        if(this.opponent.HPCurrent<1){
+        if(this.opponent.hpCurrent<1){
             this.endBattle(true,bpc);
         }
     }

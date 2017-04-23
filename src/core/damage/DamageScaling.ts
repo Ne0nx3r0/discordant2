@@ -13,7 +13,7 @@ function scalingGen(arr){
     };
 }
 
-export default {
+const DamageScaling = {
     ByAttribute: scalingGen([
         0,//0
         0,0,0,0,0,0,0,0,0,0,//1-10
@@ -28,3 +28,5 @@ export default {
         0,1,0,1,0,1,0,1,1,6 //91-100
     ])  
 };
+
+export default DamageScaling;

@@ -100,7 +100,7 @@ export default class PlayerCharacter extends Creature{
             status: this.status,
             //inventory: this.inventory.toSocket(),
             equipment: this.equipment.toSocket(),
-            HPCurrent: this.HPCurrent,
+            hpCurrent: this.hpCurrent,
             stats: this.stats,
             battleChannelId: this.battle?this.battle.channelId:null,
         };

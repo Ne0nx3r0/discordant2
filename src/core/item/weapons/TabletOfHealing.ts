@@ -1,11 +1,12 @@
 import Weapon from '../Weapon';
-import WeaponAttack from '../WeaponAttack';
+import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 import IDamageSet from '../../damage/IDamageSet';
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
 import { DamageFuncBag } from '../WeaponAttackStep';
+import { Attribute } from "../../creature/AttributeSet";
 
 export default new Weapon({
     id: ItemId.TabletOfHealing,
@@ -18,12 +19,18 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'heal',
+            minBaseDamage: 40,
+            maxBaseDamage: 60,
+            damageType: 'special',
+            scalingAttribute: Attribute.spirit,
+            scalingLevel: ScalingLevel.B,
+            exhaustion: 1,
+            chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} reads a legend outloud and heals 30HP',
-                    exhaustion: 1,
+                    attackMessage: '{attacker} reads a legend outloud and heals',
                     damageFunc: function(bag:DamageFuncBag){
-                        bag.attacker.HPCurrent = Math.min(bag.attacker.stats.HPTotal,bag.attacker.HPCurrent+30);
+                        bag.attacker.hpCurrent = Math.min(bag.attacker.stats.hpTotal,bag.attacker.hpCurrent+30);
 
                         return {};
                     }
@@ -32,20 +39,18 @@ export default new Weapon({
             aiUseWeight: 0.8
         }),
         new WeaponAttack({
-            title: 'megaheal',
+            title: 'bless',
+            minBaseDamage: 5,
+            maxBaseDamage: 10,
+            damageType: 'special',
+            scalingAttribute: Attribute.spirit,
+            scalingLevel: ScalingLevel.B,
+            exhaustion: 1,
+            chargesRequired: 3,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} begins reading a legend from their tablet',
-                    exhaustion: 1,
+                    attackMessage: '{attacker} reads a legend aloud blessing {defender}',
                     damageFunc: function(bag:DamageFuncBag){
-                        return {};
-                    }
-                }),
-                new WeaponAttackStep({
-                    attackMessage: '{attacker} finishes their legend and fully heals',
-                    exhaustion: 1,
-                    damageFunc: function(bag:DamageFuncBag){
-                        bag.attacker.HPCurrent = bag.attacker.stats.HPTotal;
 
                         return {};
                     }

@@ -6,14 +6,14 @@ import { EquipmentSlot, SocketCreatureEquipment } from '../item/CreatureEquipmen
 import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
 
 export interface ICreatureStatSet{
-    Strength: number,
-    Agility: number,
-    Vitality: number,
-    Spirit: number,
-    Charisma: number,
-    Luck: number,
-    HPTotal: number,
-    Resistances: IDamageSet,
+    strength: number,
+    agility: number,
+    vitality: number,
+    spirit: number,
+    charisma: number,
+    luck: number,
+    hpTotal: number,
+    resistances: IDamageSet,
 }
 
 export interface CreatureBag{
@@ -31,7 +31,7 @@ export default class Creature{
     attributes: AttributeSet;
     equipment: CreatureEquipment;
     stats:ICreatureStatSet;
-    HPCurrent: number;
+    hpCurrent: number;
     tempEffects:Map<BattleTemporaryEffect,number>;//rounds left
 
     constructor(bag:CreatureBag){
@@ -45,25 +45,25 @@ export default class Creature{
 
         this.updateStats();
         
-        this.HPCurrent = this.stats.HPTotal;
+        this.hpCurrent = this.stats.hpTotal;
     }
 
     updateStats(){
         const stats:ICreatureStatSet = {
-            Strength:this.attributes.Strength,
-            Agility:this.attributes.Agility,
-            Vitality:this.attributes.Vitality,
-            Charisma:this.attributes.Charisma,
-            Spirit:this.attributes.Spirit,
-            Luck:this.attributes.Luck,
-            Resistances:{
-                Physical:0,
-                Fire:0,
-                Cold:0,
-                Thunder:0,
-                Chaos:0,
+            strength:this.attributes.strength,
+            agility:this.attributes.agility,
+            vitality:this.attributes.vitality,
+            charisma:this.attributes.charisma,
+            spirit:this.attributes.spirit,
+            luck:this.attributes.luck,
+            resistances:{
+                physical:0,
+                fire:0,
+                cold:0,
+                thunder:0,
+                chaos:0,
             },
-            HPTotal: 0,
+            hpTotal: 0,
         };
 
         this.equipment.forEach(function(item:ItemEquippable,slot:EquipmentSlot){
@@ -79,22 +79,22 @@ export default class Creature{
         });
 
         //These could be adjusted by bonuses
-        stats.HPTotal += stats.Vitality * 10,
+        stats.hpTotal += stats.vitality * 10,
 
-        stats.Resistances.Fire = Math.floor(stats.Agility/3)/100;
-        stats.Resistances.Cold = Math.floor(stats.Strength/3)/100;
-        stats.Resistances.Thunder = Math.floor(stats.Luck/3)/100;
+        stats.resistances.fire = Math.floor(stats.agility/3)/100;
+        stats.resistances.cold = Math.floor(stats.strength/3)/100;
+        stats.resistances.thunder = Math.floor(stats.luck/3)/100;
 
-        stats.Resistances.Chaos = Math.min(
-            stats.Resistances.Physical,
-            stats.Resistances.Fire,
-            stats.Resistances.Cold,
-            stats.Resistances.Thunder,
+        stats.resistances.chaos = Math.min(
+            stats.resistances.physical,
+            stats.resistances.fire,
+            stats.resistances.cold,
+            stats.resistances.thunder,
         );
 
         this.stats = stats;
 
-        if(this.HPCurrent>this.stats.HPTotal) this.HPCurrent = this.stats.HPTotal;
+        if(this.hpCurrent>this.stats.hpTotal) this.hpCurrent = this.stats.hpTotal;
     }
 
     addTemporaryEffect(effect:BattleTemporaryEffect,rounds:number){
@@ -131,7 +131,7 @@ export default class Creature{
             stats: this.stats,
             title: this.title,
             description: this.description,
-            HPCurrent: this.HPCurrent
+            hpCurrent: this.hpCurrent
         };
     }
 }
@@ -143,5 +143,5 @@ export interface SocketCreature{
     stats: ICreatureStatSet;
     title: string;
     description: string;
-    HPCurrent: number;
+    hpCurrent: number;
 }

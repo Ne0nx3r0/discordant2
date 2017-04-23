@@ -18,7 +18,7 @@ export interface ClientRequestAttackedData extends ClientRequestData{
     attacked: Array<IAttackedSocket>;
 }
 
-export default class AttackedRequest extends ClientRequest{
+export default class AttackedClientRequest extends ClientRequest{
     constructor(data:ClientRequestAttackedData){
         super('Attacked',data);
     }

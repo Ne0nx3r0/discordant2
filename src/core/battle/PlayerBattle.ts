@@ -2,7 +2,7 @@ import WeaponAttack from '../item/WeaponAttack';
 import WeaponAttackStep from '../item/WeaponAttackStep';
 import PlayerCharacter from '../creature/player/PlayerCharacter';
 import Creature from '../creature/Creature';
-import IDamageSet from '../damage/IDamageSet';
+import IDamageSet, { damagesTotal } from '../damage/IDamageSet';
 import CreatureAIControlled from '../creature/CreatureAIControlled';
 
 import ItemUsable from '../item/ItemUsable';
@@ -11,6 +11,7 @@ import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
 import BlockedClientRequest from '../../client/requests/BlockedClientRequest';
 import EffectMessageClientRequest from '../../client/requests/EffectMessageClientRequest';
 import { IRemoveBattleFunc } from '../../gameserver/game/Game';
+import AttackedClientRequest from "../../client/requests/AttackedClientRequest";
 
 export const ATTACK_TICK_MS = 10000;
 
@@ -55,7 +56,7 @@ export default class PlayerBattle {
         this.sendEffectApplied = this.sendEffectApplied.bind(this);
     }
     
-    playerActionAttack(pc:PlayerCharacter,attack:WeaponAttack){
+    playerActionAttack(pc:PlayerCharacter,attack:WeaponAttack,target?:PlayerCharacter){
         const bpc = this.bpcs.get(pc);
         
         if(!bpc){
@@ -74,7 +75,13 @@ export default class PlayerBattle {
             throw 'You are too exhausted to attack!';
         }
 
-        this._sendAttackStep(bpc,attack.steps[0]);
+        if(target && !this.bpcs.has(target)){
+            throw 'Invalid target';
+        }
+
+        bpc.exhaustion += attack.exhaustion;
+
+        this._sendAttackStep(bpc.pc,attack.steps[0],target);
 
         this.lastActionRoundsAgo = 0;
 
@@ -83,8 +90,58 @@ export default class PlayerBattle {
         }
     }
 
-    _sendAttackStep(bpc:IBattlePlayerCharacter,step:WeaponAttackStep){
-        throw 'Player battle classes must implement _sendAttackStep!';
+    _sendAttackStep(attacker:Creature,step:WeaponAttackStep,defender:Creature){
+        const damages:IDamageSet = step.getDamages({
+            attacker: attacker,
+            defender: defender,
+            battle: this,
+            step: step,
+        });
+
+        let attackCancelled = false;
+
+        attacker.tempEffects.forEach((roundsLeft,effect)=>{
+            if (effect.onAttack && !effect.onAttack({
+                target: attacker,
+                sendBattleEmbed: this.sendEffectApplied
+            }, damages)) {
+                attackCancelled = true;
+            }
+        });
+
+        if(attackCancelled){
+            return;
+        }
+
+        defender.tempEffects.forEach((roundsLeft,effect)=>{
+            if (effect.onAttacked && !effect.onAttacked({
+                target: defender,
+                sendBattleEmbed: this.sendEffectApplied
+            }, damages)) {
+                attackCancelled = true;
+            }
+        });
+
+        if(attackCancelled){
+            return;
+        }        
+
+        defender.hpCurrent -= Math.round(damagesTotal(damages));
+
+        new AttackedClientRequest({
+            channelId: this.channelId,
+            attacker: attacker.toSocket(),            
+            attacked: [{
+                creature: defender.toSocket(),
+                damages: damages,
+                blocked: false,
+                exhaustion: 0,
+            }],
+            message: step.attackMessage
+                .replace('{defender}',defender.title)
+                .replace('{attacker}',attacker.title),
+        })
+        .send(this.getClient());
     }
 
     playerActionBlock(pc:PlayerCharacter){

@@ -74,7 +74,7 @@ export default class PvPBattle extends PlayerBattle{
                         sendBattleEmbed: this.sendEffectApplied,
                     });
 
-                    if(bpc.pc.HPCurrent<1){
+                    if(bpc.pc.hpCurrent<1){
                         this.endBattle(bpc==bpc1?bpc2:bpc1,bpc);
                     }
                 }
@@ -138,9 +138,10 @@ export default class PvPBattle extends PlayerBattle{
         });
 
         const damages:IDamageSet = step.getDamages({
-            attacker:attacker.pc,
-            defender:defender.pc,
+            attacker: attacker.pc,
+            defender: defender.pc,
             battle: this,
+            step: step,
         });
 
         if(defender.blocking){
@@ -167,7 +168,7 @@ export default class PvPBattle extends PlayerBattle{
             };
         });
 
-        if(attacker.pc.HPCurrent<1){
+        if(attacker.pc.hpCurrent<1){
             this.endBattle(defender,attacker);
         }
 
@@ -184,17 +185,15 @@ export default class PvPBattle extends PlayerBattle{
             };
         });
 
-        if(defender.pc.HPCurrent<1){
+        if(defender.pc.hpCurrent<1){
             this.endBattle(attacker,defender);
         }
 
         if(attackCancelled){
             return;
         }
-
-        attacker.exhaustion += step.exhaustion;
-
-        defender.pc.HPCurrent -= Math.round(damagesTotal(damages));
+        
+        defender.pc.hpCurrent -= Math.round(damagesTotal(damages));
 
         const ClientRequest = new AttackedClientRequest({
             channelId: this.channelId,
@@ -212,7 +211,7 @@ export default class PvPBattle extends PlayerBattle{
 
         ClientRequest.send(this.getClient());
 
-        if(defender.pc.HPCurrent<1){
+        if(defender.pc.hpCurrent<1){
             this.endBattle(attacker,defender);
         }
     }
@@ -244,7 +243,7 @@ export default class PvPBattle extends PlayerBattle{
             bpc.pc.battle = null;
             bpc.pc.status = 'inCity';
             bpc.pc.clearTemporaryEffects();
-            bpc.pc.HPCurrent = bpc.pc.stats.HPTotal;
+            bpc.pc.hpCurrent = bpc.pc.stats.hpTotal;
         });
 
         this.removeBattle(this.channelId);
@@ -262,7 +261,7 @@ export default class PvPBattle extends PlayerBattle{
 //Lowest exhaustion or random agility-based goes first
 function whoGoesFirst(a:IBattlePlayerCharacter,b:IBattlePlayerCharacter){
     if(a.exhaustion == b.exhaustion){
-        return b.pc.stats.Agility * Math.random() - a.pc.stats.Agility * Math.random();
+        return b.pc.stats.agility * Math.random() - a.pc.stats.agility * Math.random();
     }
 
     return a.exhaustion - b.exhaustion;

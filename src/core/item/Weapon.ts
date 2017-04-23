@@ -17,17 +17,19 @@ interface ItemWeaponBag{
     id:number;
     title:string;
     description:string;
-    hiddenDescription?:string;
-    hiddenDescriptionLoreNeeded?:number;
     damageBlocked:number;
+    chanceToCritical?: number;
+    criticalMultiplier?: number;
     useRequirements:useRequirements;
-    attacks:Array<WeaponAttack>;
+    attacks:Array<WeaponAttack>;    
 }
 
 export default class Weapon extends ItemEquippable{
     attacks:Array<WeaponAttack>;
     useRequirements:useRequirements;
     damageBlocked:number;//0.0 to 0.45 describing the % of damage this weapon blocks when the player blocks
+    chanceToCritical: number;
+    criticalMultiplier: number;
 
     constructor(bag:ItemWeaponBag){
         super({
@@ -37,8 +39,13 @@ export default class Weapon extends ItemEquippable{
             slotType:'weapon'//also offhand, but for slot type they are all primary
         });
 
-        this.damageBlocked = Math.min(bag.damageBlocked,0.45);
+        this.damageBlocked = bag.damageBlocked;
+        this.chanceToCritical = bag.chanceToCritical || 0.1;
+        this.criticalMultiplier = bag.criticalMultiplier || 2;
         this.attacks = bag.attacks;
+        this.attacks.forEach((attack)=>{
+            attack.weapon = this;
+        });
         this.useRequirements = bag.useRequirements || {};
     }
 

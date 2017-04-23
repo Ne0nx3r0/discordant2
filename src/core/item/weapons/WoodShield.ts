@@ -6,9 +6,12 @@ import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
 import { DamageFuncBag } from '../WeaponAttackStep';
+import { Attribute } from '../../creature/AttributeSet';
+import { ScalingLevel, WeaponDamageType } from '../WeaponAttack';
+import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 
 //TODO: Add passive resistances to shields
-export default new Weapon({
+export const WoodShield = new Weapon({
     id: ItemId.WoodShield,
     title: 'Wood Shield',
     description: 'A classic defense among foot soldiers and city guard, many of these were shattered as militia steel quelled the great beasts that took to roaming the plains.',
@@ -19,17 +22,16 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'shove',
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.B,
+            minBaseDamage: 2,
+            maxBaseDamage: 5,
+            exhaustion: 1,
+            damageType: 'physical',
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} shoves {defender} with their shield',
-                    exhaustion: 1,
-                    damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(5,bag.attacker.stats.Strength);
-
-                        return {
-                            Physical: physicalDamage * (1-bag.defender.stats.Resistances.Physical)
-                        };
-                    }
+                    damageFunc: DefaultDamageFunc,
                 })
             ],
             aiUseWeight: 0.8

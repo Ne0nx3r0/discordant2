@@ -25,11 +25,11 @@ export default class Party extends Command{
         }
 
         const members = party.members.map(function(member){
-            return `${member.title} (${member.HPCurrent} / ${member.stats.HPTotal})`;
+            return `${member.title} (${member.hpCurrent} / ${member.stats.hpTotal})`;
         }).join('\n');
 
         bag.message.channel.sendMessage(`${party.title} in <#${party.channel}>
-Leader: ${party.leader.title} (${party.leader.HPCurrent} / ${party.leader.stats.HPTotal})
+Leader: ${party.leader.title} (${party.leader.hpCurrent} / ${party.leader.stats.hpTotal})
 Members: ${members}
 `);
     }

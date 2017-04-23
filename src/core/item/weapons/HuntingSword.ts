@@ -1,11 +1,13 @@
 import Weapon from '../Weapon';
-import WeaponAttack from '../WeaponAttack';
+import WeaponAttack, { WeaponDamageType, ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 import IDamageSet from '../../damage/IDamageSet';
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
 import { DamageFuncBag } from '../WeaponAttackStep';
+import { Attribute } from "../../creature/AttributeSet";
+import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 
 export default new Weapon({
     id: ItemId.HuntingSword,
@@ -17,49 +19,46 @@ export default new Weapon({
     },//no use requirements
     attacks: [
         new WeaponAttack({
-            title: 'light',
+            title: 'swing',
+            minBaseDamage: 8,
+            maxBaseDamage: 14,
+            damageType: 'physical',
+            scalingAttribute: Attribute.agility,
+            scalingLevel: ScalingLevel.C,
+            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slices {defender} with their hunting sword',
-                    exhaustion: 1,
-                    damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(12,bag.attacker.stats.Strength);
-
-                        return {
-                            Physical: physicalDamage * (1-bag.defender.stats.Resistances.Physical)
-                        };
-                    }
+                    damageFunc: DefaultDamageFunc
                 })
             ],
-            aiUseWeight: 0.5
+            aiUseWeight: 0.6
         }),
         new WeaponAttack({
             title: 'duo',
+            minBaseDamage: 8,
+            maxBaseDamage: 12,
+            damageType: 'physical',
+            scalingAttribute: Attribute.agility,
+            scalingLevel: ScalingLevel.C,
+            exhaustion: 2,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} jumps behind and slashes {defender} with their hunting sword',
-                    exhaustion: 1,
-                    damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(12,bag.attacker.stats.Strength);
-
-                        return {
-                            Physical: physicalDamage * (1-bag.defender.stats.Resistances.Physical)
-                        };
-                    }
+                    damageFunc: DefaultDamageFunc
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} follows up with a stab to {defender}',
-                    exhaustion: 1,
                     damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(10,bag.attacker.stats.Strength);
+                        const damages = DefaultDamageFunc(bag);
 
-                        return {
-                            Physical: physicalDamage * (1-bag.defender.stats.Resistances.Physical)
-                        };
+                        damages[bag.step.attack.damageType] *= 2; 
+
+                        return damages;
                     }
                 })
             ],
-            aiUseWeight: 0.5
+            aiUseWeight: 0.4
         }),
     ]
 });

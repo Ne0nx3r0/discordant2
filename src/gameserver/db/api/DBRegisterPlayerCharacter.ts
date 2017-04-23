@@ -41,12 +41,12 @@ export default async function(db:DatabaseService,bag:DBRegisterbag):Promise<DBPl
         bag.discriminator,
         bag.username,
         bag.class.id,
-        bag.class.startingAttributes.Strength,
-        bag.class.startingAttributes.Agility,
-        bag.class.startingAttributes.Vitality,
-        bag.class.startingAttributes.Spirit,
-        bag.class.startingAttributes.Charisma,
-        bag.class.startingAttributes.Luck,
+        bag.class.startingAttributes.strength,
+        bag.class.startingAttributes.agility,
+        bag.class.startingAttributes.vitality,
+        bag.class.startingAttributes.spirit,
+        bag.class.startingAttributes.charisma,
+        bag.class.startingAttributes.luck,
         'player'
     ];
 
