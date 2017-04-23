@@ -9,8 +9,8 @@ import { DamageFuncBag } from '../WeaponAttackStep';
 
 //TODO: Add passive resistances to shields
 export default new Weapon({
-    id: ItemId.WoodRoundShield,
-    title: 'Wood Round Shield',
+    id: ItemId.WoodShield,
+    title: 'Wood Shield',
     description: 'A classic defense among foot soldiers and city guard, many of these were shattered as militia steel quelled the great beasts that took to roaming the plains.',
     damageBlocked: 0.30,
     useRequirements: {

@@ -17,13 +17,13 @@ export default new Weapon({
     },
     attacks: [
         new WeaponAttack({
-            title: 'light',
+            title: 'swing',
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slashes {defender} with a sonic blade',
                     exhaustion: 1,
                     damageFunc: function(bag:DamageFuncBag){
-                        const thunderDamage = DamageScaling.ByAttribute(50,bag.attacker.stats.Agility);
+                        const thunderDamage = DamageScaling.ByAttribute(Math.random()*40+10,bag.attacker.stats.Agility);
 
                         return {
                             Thunder: thunderDamage * (1-bag.defender.stats.Resistances.Thunder)

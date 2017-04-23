@@ -11,7 +11,7 @@ export default new Weapon({
     id: ItemId.BareHands,
     title: 'Bare Hands',
     description: 'When you bring knuckles to a knife fight',
-    damageBlocked: 0.02,
+    damageBlocked: 0.01,
     useRequirements: {},//no use requirements
     attacks: [
         new WeaponAttack({

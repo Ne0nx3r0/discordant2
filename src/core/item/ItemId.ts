@@ -1,7 +1,7 @@
 enum ItemId {
     BareHands,
     HandAxe,
-    WoodRoundShield,
+    WoodShield,
     HuntingSword,
     WornLeathers,
     TabletOfHealing,
