@@ -53,6 +53,7 @@ import MarketBuyOfferRequest from "../gameserver/socket/requests/MarketBuyOfferR
 import { PurchasedMarketOffer } from "../gameserver/db/api/DBBuyMarketOffer";
 import ConvertWishesToGoldRequest from "../gameserver/socket/requests/ConvertWishesToGoldRequest";
 import { ConvertWishesToGoldResponse } from '../gameserver/socket/requests/ConvertWishesToGoldRequest';
+import BattleChargeRequest from "../gameserver/socket/requests/BattleChargeRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -366,5 +367,12 @@ export default class SocketClientRequester{
         .send(this.sioc);
 
         return response;
+    }
+
+    async sendBattleCharge(playerUid:string):Promise<void>{
+        await new BattleChargeRequest({
+            uid: playerUid
+        })
+        .send(this.sioc);
     }
 }

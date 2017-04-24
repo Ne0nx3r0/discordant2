@@ -22,6 +22,7 @@ export const PlayerPermissions = [
     PermissionId.Battle,
     PermissionId.BattleAttack,
     PermissionId.BattleOffhand,
+    PermissionId.BattleCharge,
     PermissionId.BattleBlock,
     PermissionId.Inventory,
     PermissionId.Help,

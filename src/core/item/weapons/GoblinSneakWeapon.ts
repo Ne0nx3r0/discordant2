@@ -1,5 +1,5 @@
 import Weapon from '../Weapon';
-import WeaponAttack from '../WeaponAttack';
+import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 import {DamageFuncBag} from '../WeaponAttackStep';
 import IDamageSet from '../../damage/IDamageSet';
@@ -7,6 +7,8 @@ import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
 import EffectGoblinSneakPoison from '../../effects/types/EffectGoblinSneakPoison';
+import { Attribute } from "../../creature/AttributeSet";
+import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 
 export default new Weapon({
     id: ItemId.GoblinSneakPoisonWeapon,
@@ -17,6 +19,12 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'toxicspray',
+            minBaseDamage: 0,
+            maxBaseDamage: 0,
+            damageType: 'special',
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.C,
+            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} takes in a deep breath',
@@ -37,17 +45,16 @@ export default new Weapon({
         }),
         new WeaponAttack({
             title: 'dart',
+            minBaseDamage: 8,
+            maxBaseDamage: 12,
+            damageType: 'physical',
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.C,
+            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} shoots a dart at {defender}',
-                    exhaustion: 1,
-                    damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(10,bag.attacker.stats.strength);
-
-                        return {
-                            Physical: physicalDamage * (1-bag.defender.stats.resistances.physical)
-                        };
-                    }
+                    damageFunc: DefaultDamageFunc
                 }),
             ],
             aiUseWeight: 0.5

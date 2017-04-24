@@ -1,5 +1,5 @@
 import Weapon from '../Weapon';
-import WeaponAttack from '../WeaponAttack';
+import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 import {DamageFuncBag} from '../WeaponAttackStep';
 import IDamageSet from '../../damage/IDamageSet';
@@ -7,6 +7,7 @@ import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
 import EffectSpiritSnakePoison from '../../effects/types/EffectSpiritSnakePoison';
+import { Attribute } from "../../creature/AttributeSet";
 
 export default new Weapon({
     id: ItemId.TableOfPoison,
@@ -19,17 +20,16 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'poison',
+            minBaseDamage: 8,
+            maxBaseDamage: 12,
+            damageType: 'physical',
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.C,
+            exhaustion: 1,
+            chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} begins reading a legend aloud',
-                    exhaustion: 1,
-                    damageFunc: function(bag){
-                        return {};
-                    }
-                }),
-                new WeaponAttackStep({
-                    attackMessage: '{attacker} finishes reading the legend and poisons {defender}',
-                    exhaustion: 1,
+                    attackMessage: '{attacker} reads a legend aloug and poisons {defender}',
                     damageFunc: function(bag:DamageFuncBag){
                         bag.battle.addTemporaryEffect(bag.defender,EffectSpiritSnakePoison,5);
 

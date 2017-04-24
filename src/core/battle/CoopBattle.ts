@@ -138,7 +138,6 @@ export default class CoopBattle extends PlayerBattle {
             attackStep = dummyAttack;
         }
 
-
         if(this.opponent.hpCurrent<1){
             this.endBattle(true,null);
 
@@ -161,72 +160,7 @@ export default class CoopBattle extends PlayerBattle {
 
         const playerToAttack = survivingPlayers[Math.floor(Math.random() * survivingPlayers.length)];
 
-        const eventData:ClientRequestAttackedData = {
-            channelId: this.channelId,
-            attacker: this.opponent.toSocket(),
-            attacked: [] as Array<IAttackedSocket>,
-            message:attackStep.attackMessage
-                .replace('{attacker}',this.opponent.title)
-                .replace('{defender}',playerToAttack.pc.title)
-        };
-
-        //damages calculates resistances
-        const pcDamages:IDamageSet = attackStep.getDamages({
-            attacker: this.opponent,
-            defender: playerToAttack.pc,
-            battle: this,
-            step: attackStep,
-        });
-
-        let attackCancelled = false;
-
-        this.opponent.tempEffects.forEach((roundsLeft,effect)=>{
-            if (effect.onAttack && !effect.onAttack({
-                target: this.opponent,
-                sendBattleEmbed: this.sendEffectApplied
-            }, pcDamages)) {
-                attackCancelled = true;
-            }
-        });
-
-        if(attackCancelled){
-            return;
-        }
-
-        playerToAttack.pc.tempEffects.forEach((roundsLeft,effect)=>{
-            if (effect.onAttacked && !effect.onAttacked({
-                target: playerToAttack.pc,
-                sendBattleEmbed: this.sendEffectApplied
-            }, pcDamages)) {
-                attackCancelled = true;
-            }
-        });
-
-        if(attackCancelled){
-            return;
-        }
-
-        if(playerToAttack.blocking){
-            Object.keys(pcDamages).forEach(function(type){
-                pcDamages[type] = Math.round(pcDamages[type] * (1-playerToAttack.pc.damagePercentBlocked));
-            });
-
-            const eventData:IBattleBlockEvent = {
-                battle:this,
-                blocker:playerToAttack
-            };
-        }
-
-        playerToAttack.pc.hpCurrent -= Math.round(damagesTotal(pcDamages));
-
-        eventData.attacked.push({
-            creature:playerToAttack.pc.toSocket(),
-            damages:pcDamages,
-            blocked:playerToAttack.blocking,
-            exhaustion:playerToAttack.exhaustion,
-        });
-
-        new AttackedClientRequest(eventData).send(this.getClient());
+        this._sendAttackStep(this.opponent,attackStep,playerToAttack.pc);
 
 //check if anybody died
         this.bpcs.forEach((bpc:IBattlePlayerCharacter)=>{
@@ -254,7 +188,12 @@ export default class CoopBattle extends PlayerBattle {
             if(bpc.queuedAttacks.length>0){
                 const attackStep = bpc.queuedAttacks.shift();
 
-                this._sendAttackStep(bpc,attackStep);
+                this._sendAttackStep(bpc.pc,attackStep,this.opponent);
+
+                if(this.opponent.hpCurrent<1){
+                    this.endBattle(true,bpc);
+                    return;
+                }
             }
 
             if(bpc.exhaustion>0){
@@ -266,64 +205,6 @@ export default class CoopBattle extends PlayerBattle {
 
         if(allPlayersDefeated){
             this.endBattle(false);
-        }
-    }
-
-    _sendAttackStep(bpc:IBattlePlayerCharacter,step:AttackStep,target?:PlayerCharacter){
-        const damages:IDamageSet = step.getDamages({
-            attacker: bpc.pc,
-            defender: target || this.opponent,
-            battle: this,
-            step: step,
-        });
-
-        let attackCancelled = false;
-
-        bpc.pc.tempEffects.forEach((roundsLeft,effect)=>{
-            if (effect.onAttack && !effect.onAttack({
-                target: bpc.pc,
-                sendBattleEmbed: this.sendEffectApplied
-            }, damages)) {
-                attackCancelled = true;
-            }
-        });
-
-        if(attackCancelled){
-            return;
-        }
-
-        this.opponent.tempEffects.forEach((roundsLeft,effect)=>{
-            if (effect.onAttacked && !effect.onAttacked({
-                target: this.opponent,
-                sendBattleEmbed: this.sendEffectApplied
-            }, damages)) {
-                attackCancelled = true;
-            }
-        });
-
-        if(attackCancelled){
-            return;
-        }
-
-        this.opponent.hpCurrent -= Math.round(damagesTotal(damages));
-
-        new AttackedClientRequest({
-            channelId: this.channelId,
-            attacker: bpc.pc.toSocket(),            
-            attacked: [{
-                creature: this.opponent.toSocket(),
-                damages: damages,
-                blocked: false,
-                exhaustion: 0,
-            }],
-            message: step.attackMessage
-                .replace('{defender}',this.opponent.title)
-                .replace('{attacker}',bpc.pc.title),
-        })
-        .send(this.getClient());
-
-        if(this.opponent.hpCurrent<1){
-            this.endBattle(true,bpc);
         }
     }
 

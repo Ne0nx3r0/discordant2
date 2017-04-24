@@ -12,6 +12,7 @@ import BlockedClientRequest from '../../client/requests/BlockedClientRequest';
 import EffectMessageClientRequest from '../../client/requests/EffectMessageClientRequest';
 import { IRemoveBattleFunc } from '../../gameserver/game/Game';
 import AttackedClientRequest from "../../client/requests/AttackedClientRequest";
+import ChargedClientRequest from "../../client/requests/ChargedClientRequest";
 
 export const ATTACK_TICK_MS = 10000;
 
@@ -169,6 +170,37 @@ export default class PlayerBattle {
         const request = new BlockedClientRequest({
             channelId: this.channelId,
             blockerTitle: bpc.pc.title
+        });
+        
+        request.send(this.getClient());
+
+        this.lastActionRoundsAgo = 0;
+    }
+
+    playerActionCharge(pc:PlayerCharacter){
+        const bpc = this.bpcs.get(pc);
+
+        if(!bpc){
+            throw 'You are not in in this battle';
+        }
+
+        if(bpc.blocking){
+            throw 'You are already blocking';
+        }
+
+        if(bpc.defeated){
+            throw 'You have already been defeated';
+        }
+
+        if(bpc.exhaustion > 0){
+            throw 'You are too exhausted to block';
+        }
+
+        bpc.exhaustion++;
+
+        const request = new ChargedClientRequest({
+            channelId: this.channelId,
+            chargerTitle: bpc.pc.title
         });
         
         request.send(this.getClient());

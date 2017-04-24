@@ -100,7 +100,7 @@ export default class PvPBattle extends PlayerBattle{
         if(bpc1.queuedAttacks.length>0){
             const attackStep = bpc1.queuedAttacks.shift();
 
-            this._sendAttackStep(bpc1,attackStep);
+            this._sendAttackStep(bpc1.pc,attackStep,bpc2.pc);
         }
         
         if(this._battleEnded) return;
@@ -108,7 +108,7 @@ export default class PvPBattle extends PlayerBattle{
         if(bpc2.queuedAttacks.length>0){
             const attackStep = bpc2.queuedAttacks.shift();
 
-            this._sendAttackStep(bpc2,attackStep);
+            this._sendAttackStep(bpc2.pc,attackStep,bpc1.pc);
         }
         
         if(this._battleEnded) return;
@@ -128,7 +128,7 @@ export default class PvPBattle extends PlayerBattle{
         }
     }
 
-    _sendAttackStep(attacker:IBattlePlayerCharacter,step:WeaponAttackStep){
+    _old_sendAttackStep(attacker:IBattlePlayerCharacter,step:WeaponAttackStep){
         let defender:IBattlePlayerCharacter;
 
         this.bpcs.forEach(function(bpc:IBattlePlayerCharacter){

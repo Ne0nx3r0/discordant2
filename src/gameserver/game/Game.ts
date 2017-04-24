@@ -474,7 +474,7 @@ export default class Game {
         this.pvpInvites.delete(receiver.uid);
     }
 
-    async sendBattleAttack(uid:string,attackTitle:string,offhand:boolean):Promise<void>{
+    async sendBattleAttack(uid:string,attackTitle:string,offhand:boolean,targetPlayerUid?:string):Promise<void>{
         const attacker = await this.getPlayerCharacter(uid);
 
         if(!attacker){
@@ -497,7 +497,17 @@ export default class Game {
             throw attackTitle+' is not a valid attack for '+weapon.title;
         }
 
-        attacker.battle.playerActionAttack(attacker,weaponAttack);
+        let target = null;
+
+        if(targetPlayerUid){
+            const targetPC = await this.getPlayerCharacter(targetPlayerUid);
+
+            if(!targetPC){
+                throw 'That player is not registered yet';
+            }
+        }
+
+        attacker.battle.playerActionAttack(attacker,weaponAttack,target);
     }
 
     async sendBattleBlock(uid:string){
@@ -512,6 +522,20 @@ export default class Game {
         }
 
         blocker.battle.playerActionBlock(blocker);
+    }
+
+    async sendBattleCharge(uid:string){
+        const charger = await this.getPlayerCharacter(uid);
+
+        if(!charger){
+            throw 'You are not registered yet';
+        }
+
+        if(charger.status != 'inBattle'){
+            throw 'You are not currently in a battle';
+        }
+
+        charger.battle.playerActionCharge(charger);
     }
 
     createMonsterBattle(bag:CreateMonsterBattleBag){

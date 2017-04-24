@@ -25,6 +25,7 @@ enum PermissionId{
     BattleAttack,
     BattleOffhand,
     BattleBlock,
+    BattleCharge,
 
     ChannelId,
     Echo,
