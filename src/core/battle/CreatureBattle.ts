@@ -3,10 +3,16 @@ import { IGetRandomClientFunc } from "../../gameserver/socket/SocketServer";
 import { IRemoveBattleFunc } from "../../gameserver/game/Game";
 import PlayerCharacter from "../creature/player/PlayerCharacter";
 import ItemUsable from "../item/ItemUsable";
-import WeaponAttack from "../item/WeaponAttack";
+import WeaponAttack from '../item/WeaponAttack';
 import WeaponAttackStep from "../item/WeaponAttackStep";
 import BlockedClientRequest from "../../client/requests/BlockedClientRequest";
 import ChargedClientRequest from "../../client/requests/ChargedClientRequest";
+import IDamageSet from '../damage/IDamageSet';
+
+interface BattleCreatureAttackStep{
+    step: WeaponAttackStep;
+    target: IBattleCreature;
+}
 
 export interface IBattleCreature{
     creature:Creature;
@@ -15,7 +21,7 @@ export interface IBattleCreature{
     exhaustion:number;
     charges:number;
     team: number;
-    queuedAttackSteps:Array<WeaponAttackStep>;
+    queuedAttackSteps:Array<BattleCreatureAttackStep>;
 }
 
 interface CreatureBattleBag {
@@ -71,7 +77,7 @@ export default class CreatureBattle{
         });
     }
 
-    _getBattleCreatureForAction(creature:Creature){
+    _getBattleCreatureForAction(creature:Creature):IBattleCreature{
         const bc = this.participants.get(creature);
 
         if(!bc){
@@ -167,6 +173,30 @@ export default class CreatureBattle{
 
             bcb = survivingEnemies[Math.floor(survivingEnemies.length * Math.random())];
         }   
+
+        this._creatureAttack(bca,attack,bcb);
+    }
+
+    _creatureAttack(attacker:IBattleCreature,attack:WeaponAttack,defender:IBattleCreature){
+        //Queue all steps for this attack against the target
+        attack.steps.forEach(function(step){
+            attacker.queuedAttackSteps.push({
+                step: step,
+                target: defender,
+            });
+        });
+
+        // Send the first step now, save the rest for later
+        this._sendNextAttackStep(attacker);
+    }
+
+    _sendNextAttackStep(attacker:IBattleCreature){
+        const damages:IDamageSet = step.getDamages({
+            attacker: attacker.pc,
+            defender: defender.pc,
+            battle: this,
+            step: step,
+        });
 
         we are here
     }

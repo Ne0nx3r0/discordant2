@@ -31,6 +31,7 @@ export interface WeaponAttackBag{
     steps:Array<WeaponAttackStep>;
     aiUseWeight:number;
     aiShouldIUseThisAttack?: AIShouldUseFunc;
+    isFriendly?: boolean;
 }
 
 export default class WeaponAttack{
@@ -54,6 +55,7 @@ export default class WeaponAttack{
     minBaseDamage: number;
     maxBaseDamage: number;
     chargesRequired: number;
+    isFriendly: boolean;
     weapon: Weapon;//set by weapon this instance is passed to
 
     constructor(bag:WeaponAttackBag){
@@ -71,6 +73,7 @@ export default class WeaponAttack{
             step.attack = this;
         });
         this.aiUseWeight = bag.aiUseWeight;
+        this.isFriendly = bag.isFriendly || false;
         this.aiShouldIUseThisAttack = bag.aiShouldIUseThisAttack || function(attacker:Creature){return true};
     }
 
