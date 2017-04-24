@@ -42,6 +42,7 @@ import MarketGetOfferRequest from './requests/MarketGetOfferRequest';
 import MarketUserOffersRequest from './requests/MarketUserOffersRequest';
 import MarketBuyOfferRequest from './requests/MarketBuyOfferRequest';
 import ConvertWishesToGoldRequest from './requests/ConvertWishesToGoldRequest';
+import BattleChargeRequest from './requests/BattleChargeRequest';
 
 interface SocketServerBag{
     port:number;
@@ -112,6 +113,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new MarketUserOffersRequest(null));
             this.registerHandler(registeredEvents,client,new MarketBuyOfferRequest(null));
             this.registerHandler(registeredEvents,client,new ConvertWishesToGoldRequest(null));
+            this.registerHandler(registeredEvents,client,new BattleChargeRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

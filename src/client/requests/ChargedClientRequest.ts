@@ -4,6 +4,7 @@ import { ClientRequestData, ClientRequestReceiveBag } from '../ClientRequest';
 
 export interface ClientRequestChargedData extends ClientRequestData{
     chargerTitle:string;
+    total:number;
 }
 
 export default class ChargedClientRequest extends ClientRequest{
@@ -12,6 +13,6 @@ export default class ChargedClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestChargedData):Promise<void>{
-        bag.channel.sendMessage(`:comet: ${data.chargerTitle} collects ambient energy :comet:`);
+        bag.channel.sendMessage(`:comet: ${data.chargerTitle} collects ambient energy (${data.total} stored) :comet:`);
     }
 }

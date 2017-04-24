@@ -45,6 +45,7 @@ export default class PlayerBattle {
                 pc:pc,
                 battle: this,
                 blocking: false,
+                charges: 0,
                 defeated: false,
                 exhaustion: 1,//pc can't attack the mob until the mob attacks the pc
                 queuedAttacks: [],
@@ -76,6 +77,10 @@ export default class PlayerBattle {
             throw 'You are too exhausted to attack!';
         }
 
+        if(bpc.charges < attack.chargesRequired){
+            throw 'You do not have enough charges stored!';
+        }
+
         if(target && !this.bpcs.has(target)){
             throw 'Invalid target';
         }
@@ -83,6 +88,8 @@ export default class PlayerBattle {
         bpc.exhaustion += attack.exhaustion;
 
         this._sendAttackStep(bpc.pc,attack.steps[0],target);
+
+        bpc.charges -= attack.chargesRequired;
 
         this.lastActionRoundsAgo = 0;
 
@@ -197,10 +204,12 @@ export default class PlayerBattle {
         }
 
         bpc.exhaustion++;
+        bpc.charges++;
 
         const request = new ChargedClientRequest({
             channelId: this.channelId,
-            chargerTitle: bpc.pc.title
+            chargerTitle: bpc.pc.title,
+            total: bpc.charges,
         });
         
         request.send(this.getClient());
@@ -285,6 +294,7 @@ export interface IBattlePlayerCharacter{
     blocking:boolean;
     defeated:boolean;
     exhaustion:number;
+    charges:number;
     queuedAttacks:Array<WeaponAttackStep>;
 }
 

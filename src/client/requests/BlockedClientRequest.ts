@@ -6,7 +6,7 @@ export interface ClientRequestBlockedData extends ClientRequestData{
     blockerTitle:string;
 }
 
-export default class BlockedRequest extends ClientRequest{
+export default class BlockedClientRequest extends ClientRequest{
     constructor(data:ClientRequestBlockedData){
         super('Blocked',data);
     }

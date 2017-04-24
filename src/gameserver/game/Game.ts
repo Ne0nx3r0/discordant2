@@ -411,18 +411,23 @@ export default class Game {
         this.pvpInvites.set(sender.uid,invite);
         this.pvpInvites.set(receiver.uid,invite);
 
+        receiver.status = sender.status = 'invitedToPVPBattle';
+
         setTimeout(()=>{
             const maybeSameInviteSent = this.pvpInvites.get(sender.uid);
 
             if(maybeSameInviteSent == invite){
                 this.pvpInvites.delete(sender.uid);
+                sender.status = 'inCity';
             }
 
             const maybeSameInviteReceived = this.pvpInvites.get(receiver.uid);
 
             if(maybeSameInviteReceived == invite){
                 this.pvpInvites.delete(receiver.uid);
+                receiver.status = 'inCity';
             }
+
         },PVP_INVITE_TIMEOUT+500);//+500 ensures the invite will be expired
     }
 
