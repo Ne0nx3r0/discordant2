@@ -133,7 +133,41 @@ export default class CreatureBattle{
         this.lastActionRoundsAgo = 0;
     }
     
-    playerActionAttack(attacker:Creature,attack:WeaponAttack,defender:Creature){
+    playerActionAttack(attacker:Creature,attack:WeaponAttack,defender?:Creature){
+        const bca = this._getBattleCreatureForAction(attacker);
         
+        let bcb;
+
+        if(defender){
+            bcb = this.participants.get(defender);
+
+            if(!bcb){
+                throw 'Invalid target '+defender.title;
+            }
+        }
+        else if(attack.isFriendly){
+            const survivingFriends = [];
+
+            this.participants.forEach(function(bc){
+                if(!bc.defeated && bc.team == bca.team){
+                    survivingFriends.push(bc);
+                }
+            });
+
+            bcb = survivingFriends[Math.floor(survivingFriends.length * Math.random())];
+        }
+        else{// if(!attack.isFriendly){
+            const survivingEnemies = [];
+
+            this.participants.forEach(function(bc){
+                if(!bc.defeated && bc.team != bca.team){
+                    survivingEnemies.push(bc);
+                }
+            });
+
+            bcb = survivingEnemies[Math.floor(survivingEnemies.length * Math.random())];
+        }   
+
+        we are here
     }
 }
