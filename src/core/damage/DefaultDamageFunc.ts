@@ -16,7 +16,7 @@ export function DefaultDamageFunc(bag: DamageFuncBag): IDamageSet {
 
     const scalingAttribute = Attribute[attack.scalingAttribute];
 
-    damageAmount = DamageScaling.ByAttribute(damageAmount,bag.attacker.stats[scalingAttribute]);
+    damageAmount = DamageScaling.ByAttribute(damageAmount,bag.attacker.creature.stats[scalingAttribute]);
 
     const damages = {};
 

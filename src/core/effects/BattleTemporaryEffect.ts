@@ -24,7 +24,7 @@ interface RoundEffectStatsFunc{
     (stats:ICreatureStatSet):void;/* modify the stats object and let it fall back to the caller */
 }
 
-export type EffectEventHandler = 'onAdded' | 'onRoundBegin' | 'onAttack' | 'onAttacked' | 'onRoundEnd' | 'onRemoved';
+export type EffectEventHandler = 'onAdded' | 'onRoundBegin' | 'onAttack' | 'onAttacked' | 'onRemoved';
 
 interface BattleTemporaryEffectBag{
     id:EffectId;

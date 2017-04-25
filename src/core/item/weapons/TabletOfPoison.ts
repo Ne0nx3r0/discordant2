@@ -31,7 +31,7 @@ export default new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a legend aloug and poisons {defender}',
                     damageFunc: function(bag:DamageFuncBag){
-                        bag.battle.addTemporaryEffect(bag.defender,EffectSpiritSnakePoison,5);
+                        bag.battle.addTemporaryEffect(bag.defender.creature,EffectSpiritSnakePoison,5);
 
                         return {};
                     }

@@ -8,7 +8,7 @@ export interface ClientRequestEffectMessageData extends ClientRequestData{
     color:number;
 }
 
-export default class EffectMessageRequest extends ClientRequest{
+export default class EffectMessageClientRequest extends ClientRequest{
     constructor(data:ClientRequestEffectMessageData){
         super('EffectMessage',data);
     }

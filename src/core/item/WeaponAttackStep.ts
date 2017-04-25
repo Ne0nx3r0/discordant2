@@ -1,16 +1,16 @@
 import IDamageSet from '../damage/IDamageSet';
 import Creature from '../creature/Creature';
 import Weapon from './Weapon';
-import PlayerBattle from "../battle/PlayerBattle";
-//import PlayerBattle from '../battle/PlayerBattle';
 import WeaponAttack from './WeaponAttack';
 import { IBattlePlayerCharacter } from '../battle/PlayerBattle';
+import { IBattleCreature } from '../battle/CreatureBattle';
+import CreatureBattle from '../battle/CreatureBattle';
 
 export interface DamageFuncBag{
-    attacker:Creature;
-    defender:Creature;
-    battle:PlayerBattle;
-    step: WeaponAttackStep;
+    attacker:IBattleCreature;
+    defender:IBattleCreature;
+    battle:CreatureBattle;
+    step:WeaponAttackStep;
 }
 
 interface DamageFunc{

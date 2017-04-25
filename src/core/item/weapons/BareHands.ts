@@ -46,10 +46,10 @@ export default new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} punches {defender}',
                     damageFunc: function(bag:DamageFuncBag){
-                        const physicalDamage = DamageScaling.ByAttribute(10,bag.attacker.stats.strength*2);
+                        const physicalDamage = DamageScaling.ByAttribute(10,bag.attacker.creature.stats.strength*2);
 
                         return {
-                            Physical: physicalDamage * (1-bag.defender.stats.resistances.physical)
+                            Physical: physicalDamage * (1-bag.defender.creature.stats.resistances.physical)
                         };
                     }
                 })

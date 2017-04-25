@@ -8,6 +8,12 @@ import WeaponAttackStep from "../item/WeaponAttackStep";
 import BlockedClientRequest from "../../client/requests/BlockedClientRequest";
 import ChargedClientRequest from "../../client/requests/ChargedClientRequest";
 import IDamageSet from '../damage/IDamageSet';
+import BattleTemporaryEffect from "../effects/BattleTemporaryEffect";
+import EffectMessageClientRequest from "../../client/requests/EffectMessageClientRequest";
+import { DamagesTotal } from '../damage/IDamageSet';
+import AttackedClientRequest from "../../client/requests/AttackedClientRequest";
+import RoundBeginClientRequest from "../../client/requests/RoundBeginClientRequest";
+import { SocketCreature } from '../creature/Creature';
 
 interface BattleCreatureAttackStep{
     step: WeaponAttackStep;
@@ -20,8 +26,25 @@ export interface IBattleCreature{
     defeated:boolean;
     exhaustion:number;
     charges:number;
-    team: number;
+    teamNumber: number;
     queuedAttackSteps:Array<BattleCreatureAttackStep>;
+}
+
+export interface ISocketBattleCreature{
+    creature:SocketCreature;
+    blocking:boolean;
+    defeated:boolean;
+    exhaustion:number;
+    charges:number;
+    teamNumber: number;
+}
+
+interface IPostBattleBag{
+    result:BattleResult;
+}
+
+export interface BattleCleanupFunc{
+    (bag:IPostBattleBag):void;
 }
 
 interface CreatureBattleBag {
@@ -29,51 +52,173 @@ interface CreatureBattleBag {
     team1:Array<Creature>;
     team2:Array<Creature>;
     getClient:IGetRandomClientFunc;
-    removeBattle:IRemoveBattleFunc;
+    battleCleanup:BattleCleanupFunc;
 }
+
+export enum BattleResult{
+    Team1Won,
+    Team2Won,
+    Expired
+}
+
+const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
+const ATTACK_TICK_MS = 10000;
 
 export default class CreatureBattle{
     channelId:string;
-    team1:Array<Creature>;
-    team2:Array<Creature>;
-    getClient:IGetRandomClientFunc;
-    lastActionRoundsAgo:number;
-    removeBattle:IRemoveBattleFunc;
-    participants:Map<Creature,IBattleCreature>;
+    getClient: IGetRandomClientFunc;
+    lastActionRoundsAgo: number;
+    battleHasEnded: boolean;
+    battleCleanup: BattleCleanupFunc;
+    participants: Array<IBattleCreature>;
+    participantsLookup: Map<Creature,IBattleCreature>;
 
     constructor(bag:CreatureBattleBag){
         this.lastActionRoundsAgo = 0;
         this.channelId = bag.channelId;
 
-        this.team1 = bag.team1;
-        this.team2 = bag.team2;
         this.getClient = bag.getClient;
-        this.removeBattle = bag.removeBattle;
 
-        this.participants = new Map();
+        this.battleHasEnded = false;
 
-        this.team1.forEach((creature)=>{
-            this.participants.set(creature,{
+        this.sendEffectApplied = this.sendEffectApplied.bind(this);
+        
+        this.participants = [];
+        this.participantsLookup = new Map();
+
+        const addParticipant = (creature:Creature,teamNumber:number)=>{
+            this.participantsLookup.set(creature,{
                 creature:creature,
                 blocking:false,
                 defeated:false,
                 exhaustion:1,//can't attack until first round
                 charges:0,
-                team:1,
+                teamNumber:teamNumber,
                 queuedAttackSteps:[],
             });
+        }
+
+        bag.team1.forEach((c)=>{
+            addParticipant(c,1);
         });
 
-        this.team2.forEach((creature)=>{
-            this.participants.set(creature,{
-                creature:creature,
-                blocking:false,
-                defeated:false,
-                exhaustion:1,//can't attack until first round
-                charges:0,
-                team:2,
-                queuedAttackSteps:[],
+        bag.team2.forEach((c)=>{
+            addParticipant(c,2);
+        });
+
+        setTimeout(this._roundTick.bind(this),ATTACK_TICK_MS);
+    }
+
+    _roundTick(){
+// Check if battle ended or has become inactive
+        if(this.battleHasEnded){
+            return;
+        }
+
+        if(this.lastActionRoundsAgo >= INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE){
+            this.endBattle(BattleResult.Expired);
+
+            return;
+        }
+        
+        this.lastActionRoundsAgo++;
+        
+// Dispatch round begin
+        new RoundBeginClientRequest({
+            channelId: this.channelId,
+            participants: this.participants.map(function(bc){
+                return {
+                    creature: bc.creature.toSocket(),
+                    blocking: bc.blocking,
+                    defeated: bc.defeated,
+                    exhaustion: bc.exhaustion,
+                    charges: bc.charges,
+                    teamNumber: bc.teamNumber,
+                };
+            }),
+        })
+        .send(this.getClient());
+
+// Sort participants to determine order of attacks
+// Determine order by agility
+        this.participants.sort(function(a,b){
+            return b.creature.stats.agility - a.creature.stats.agility;
+        });
+
+// Run any onRoundBegin effects
+        for(var i=0;i<this.participants.length;i++){
+            const p = this.participants[i];
+
+            if(!p.defeated){
+                continue;
+            }
+
+            p.creature.tempEffects.forEach((roundsLeft,effect)=>{
+                if(!this.battleHasEnded && !p.defeated && effect.onRoundBegin){
+                    effect.onRoundBegin({
+                        target: p.creature,
+                        sendBattleEmbed: this.sendEffectApplied
+                    });
+
+                    if(p.creature.hpCurrent<1){
+                        this.participantDefeated(p);
+                    }
+                }
+
+// Decrement//remove effect
+                if(roundsLeft==1){
+                    this.removeTemporaryEffect(p.creature,effect);
+                }
+                else{
+                    p.creature.tempEffects.set(effect,roundsLeft-1);
+                }
             });
+
+            if(this.battleHasEnded){
+                return;
+            }
+        }
+
+// Run one queued attack per participant if they have any
+        for(var i = 0;i<this.participants.length;i++){
+            const p = this.participants[i];
+
+            if(!p.defeated && p.queuedAttackSteps.length > 0){
+                this._sendNextAttackStep(p);
+
+                if(this.battleHasEnded){
+                    return;
+                }
+            }
+        }
+
+// Queue next tick
+        setTimeout(this._roundTick.bind(this),ATTACK_TICK_MS);
+    }
+
+    participantDefeated(participant:IBattleCreature){
+        participant.defeated = true;
+
+        let teamDefeated = true;
+
+        this.participants.forEach(function(p){
+            if(p.teamNumber == participant.teamNumber && p.defeated == false){
+                teamDefeated = false;
+            }
+        });
+
+        if(teamDefeated){
+            const result = participant.teamNumber == 1 ? BattleResult.Team2Won : BattleResult.Team1Won;
+
+            this.endBattle(result);
+        }
+    }
+
+    endBattle(result:BattleResult){
+        this.battleHasEnded = true;
+
+        this.battleCleanup({
+            result: result
         });
     }
 
@@ -191,13 +336,91 @@ export default class CreatureBattle{
     }
 
     _sendNextAttackStep(attacker:IBattleCreature){
-        const damages:IDamageSet = step.getDamages({
-            attacker: attacker.pc,
-            defender: defender.pc,
+        const queuedAttackStep = attacker.queuedAttackSteps.shift();
+        const defender = queuedAttackStep.target;
+
+        const damages:IDamageSet = queuedAttackStep.step.getDamages({
+            attacker: attacker,
+            defender: defender,
             battle: this,
-            step: step,
+            step: queuedAttackStep.step,
         });
 
-        we are here
+        let attackCancelled = false;
+
+        attacker.creature.tempEffects.forEach((roundsLeft,effect)=>{
+            if (effect.onAttack && !effect.onAttack({
+                target: attacker.creature,
+                sendBattleEmbed: this.sendEffectApplied
+            }, damages)) {
+                attackCancelled = true;
+            }
+        });
+
+        if(attackCancelled){
+            return;
+        }
+
+        defender.creature.tempEffects.forEach((roundsLeft,effect)=>{
+            if (effect.onAttacked && !effect.onAttacked({
+                target: defender.creature,
+                sendBattleEmbed: this.sendEffectApplied
+            }, damages)) {
+                attackCancelled = true;
+            }
+        });
+
+        if(attackCancelled){
+            return;
+        }        
+
+        defender.creature.hpCurrent -= Math.round(DamagesTotal(damages));
+
+        new AttackedClientRequest({
+            channelId: this.channelId,
+            attacker: attacker.creature.toSocket(),            
+            attacked: [{
+                creature: defender.creature.toSocket(),
+                damages: damages,
+                blocked: false,
+                exhaustion: 0,
+            }],
+            message: queuedAttackStep.step.attackMessage
+                .replace('{defender}',defender.creature.title)
+                .replace('{attacker}',attacker.creature.title),
+        })
+        .send(this.getClient());
+    }
+
+    addTemporaryEffect(target:Creature,effect:BattleTemporaryEffect,rounds:number){
+        target.addTemporaryEffect(effect,rounds);
+
+        if(effect.onAdded){
+            effect.onAdded({
+                target: target,
+                sendBattleEmbed: this.sendEffectApplied
+            });
+        }
+    }
+
+    removeTemporaryEffect(target:Creature,effect:BattleTemporaryEffect){
+        if(effect.onRemoved){
+            effect.onRemoved({
+                target:target,
+                sendBattleEmbed:this.sendEffectApplied
+            });
+        }
+
+        target.removeTemporaryEffect(effect);
+    }
+
+    sendEffectApplied(msg:string,color:number){
+        const request = new EffectMessageClientRequest({
+            channelId: this.channelId,
+            msg: msg,
+            color: color,
+        });
+
+        request.send(this.getClient());
     }
 }
