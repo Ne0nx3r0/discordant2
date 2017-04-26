@@ -14,6 +14,7 @@ import { DamagesTotal } from '../damage/IDamageSet';
 import AttackedClientRequest from "../../client/requests/AttackedClientRequest";
 import RoundBeginClientRequest from "../../client/requests/RoundBeginClientRequest";
 import { SocketCreature } from '../creature/Creature';
+import CreatureAIControlled from '../creature/CreatureAIControlled';
 
 interface BattleCreatureAttackStep{
     step: WeaponAttackStep;
@@ -140,7 +141,7 @@ export default class CreatureBattle{
         .send(this.getClient());
 
 // Sort participants to determine order of attacks
-// Determine order by agility
+// Determine order by current (with effects) agility
         this.participants.sort(function(a,b){
             return b.creature.stats.agility - a.creature.stats.agility;
         });
@@ -154,7 +155,11 @@ export default class CreatureBattle{
             }
 
             p.creature.tempEffects.forEach((roundsLeft,effect)=>{
-                if(!this.battleHasEnded && !p.defeated && effect.onRoundBegin){
+                if(p.defeated){
+                    return;
+                }
+                
+                if(effect.onRoundBegin && !this.battleHasEnded){
                     effect.onRoundBegin({
                         target: p.creature,
                         sendBattleEmbed: this.sendEffectApplied
@@ -183,7 +188,30 @@ export default class CreatureBattle{
         for(var i = 0;i<this.participants.length;i++){
             const p = this.participants[i];
 
-            if(!p.defeated && p.queuedAttackSteps.length > 0){
+            if(p.defeated){
+                continue;
+            }
+
+// For AI participants if they don't have a queued attack send a random attack
+            if(p.queuedAttackSteps.length == 0 && p.creature instanceof CreatureAIControlled){
+                const pai = p.creature as CreatureAIControlled;
+
+                const randomAttack = pai.getRandomAttack();
+
+                const opponents = [];
+
+                //so long as the battle is going on this should find something
+                this.participants.forEach(function(opponent){
+                    if(!opponent.defeated && opponent.teamNumber != p.teamNumber){
+                        opponents.push(opponent);
+                    }
+                });
+
+                const randomOpponent = opponents[Math.floor(Math.random() * opponents.length)];
+
+                this._creatureAttack(p,randomAttack,randomOpponent);
+            }
+            else if(p.queuedAttackSteps.length > 0){
                 this._sendNextAttackStep(p);
 
                 if(this.battleHasEnded){
@@ -198,6 +226,7 @@ export default class CreatureBattle{
 
     participantDefeated(participant:IBattleCreature){
         participant.defeated = true;
+        participant.creature.clearTemporaryEffects();
 
         let teamDefeated = true;
 
@@ -223,7 +252,7 @@ export default class CreatureBattle{
     }
 
     _getBattleCreatureForAction(creature:Creature):IBattleCreature{
-        const bc = this.participants.get(creature);
+        const bc = this.participantsLookup.get(creature);
 
         if(!bc){
             throw 'You are not in this battle';
@@ -290,7 +319,7 @@ export default class CreatureBattle{
         let bcb;
 
         if(defender){
-            bcb = this.participants.get(defender);
+            bcb = this.participantsLookup.get(defender);
 
             if(!bcb){
                 throw 'Invalid target '+defender.title;
@@ -300,7 +329,7 @@ export default class CreatureBattle{
             const survivingFriends = [];
 
             this.participants.forEach(function(bc){
-                if(!bc.defeated && bc.team == bca.team){
+                if(!bc.defeated && bc.teamNumber == bca.teamNumber){
                     survivingFriends.push(bc);
                 }
             });
@@ -311,7 +340,7 @@ export default class CreatureBattle{
             const survivingEnemies = [];
 
             this.participants.forEach(function(bc){
-                if(!bc.defeated && bc.team != bca.team){
+                if(!bc.defeated && bc.teamNumber != bca.teamNumber){
                     survivingEnemies.push(bc);
                 }
             });
