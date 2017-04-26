@@ -46,8 +46,8 @@ export function getDamagesLine(creature:SocketCreature,damages:IDamageSet,blocke
     var line = creature.title+blockedStr;
 
     Object.keys(damages).forEach(function(damageStr:string){
-        line += ' -'+damages[damageStr] + ' ' + getDamageTypeEmoji(damageStr) + '   ';
+        line += ' takes '+damages[damageStr] + ' ' + getDamageTypeEmoji(damageStr);
     });
 
-    return line.slice(0,-3);
+    return line;
 }

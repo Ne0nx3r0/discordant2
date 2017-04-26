@@ -21,6 +21,8 @@ export default class PartyDecline extends Command{
     }
 
     async run(bag:CommandRunBag){
+        //Note: we don't check the channel so they can leave the party from anywhere
+        
         //not really much to do here since most of it is server-side checks that we would just be duplicating after making a call for the player
         await bag.socket.leaveParty(bag.message.author.id);
     }

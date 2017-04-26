@@ -3,6 +3,7 @@ import { CommandBag, CommandRunBag } from '../Command';
 import PermissionId from '../../core/permissions/PermissionId';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
+import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
 
 export default class PartyExplore extends Command{
     constructor(bag:CommandBag){
@@ -19,7 +20,15 @@ export default class PartyExplore extends Command{
     }
 
     async run(bag:CommandRunBag){
-        //not really much to do here since most of it is server-side checks that we would just be duplicating after making a call for the player
+        const pc = await bag.socket.getPlayer(bag.message.author.id);
+
+        if(!pc.partyChannelId){
+            throw 'You are not in a party';
+        }
+
+        if(pc.partyChannelId != bag.message.channel.id){
+            throw 'Your party is at <#'+pc.partyChannelId+'>';
+        }
 
         await bag.socket.setPartyExploring(bag.message.author.id);
     }

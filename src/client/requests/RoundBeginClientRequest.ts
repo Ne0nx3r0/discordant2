@@ -2,7 +2,7 @@ import ClientRequest from '../ClientRequest';
 import { TextChannel } from 'discord.js';
 import { ClientRequestData, ClientRequestReceiveBag } from '../ClientRequest';
 import { SocketCreature } from '../../core/creature/Creature';
-import { ISocketBattleCreature } from "../../core/battle/CreatureBattle";
+import { ISocketBattleCreature } from '../../core/battle/CreatureBattle';
 
 export interface ClientRequestRoundBeginData extends ClientRequestData{
     participants: Array<ISocketBattleCreature>;
@@ -14,8 +14,17 @@ export default class RoundBeginClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestRoundBeginData):Promise<void>{
-        function formatbc(bc){
-            return `${bc.creature.hpCurrent}/${bc.creature.stats.hpTotal} ${bc.creature.title}${bc.exhaustion>0?' EX':''}${bc.blocking?' BLK':''}`;
+        function formatbc(bc:ISocketBattleCreature){
+            let blocking = bc.blocking ? ' BLK' : '';
+            let exhausted = '';
+            const prefix = bc.defeated ? '- ' : '+ ';
+            let creatureTitle = bc.creature.title+' '+bc.creature.hpCurrent+'/'+bc.creature.stats.hpTotal;
+
+            if(bc.creature.id == -1){
+                exhausted = bc.exhaustion > 0 ? ' EX' : '';
+            }
+            
+            return prefix+creatureTitle+blocking+exhausted;
         }
 
         const team1Msg = data.participants
@@ -32,6 +41,6 @@ export default class RoundBeginClientRequest extends ClientRequest{
         .map(formatbc)
         .join(', ');
 
-        bag.channel.sendMessage('```css\n--- NEW ROUND ---\n\n'+team1Msg+'\n\n'+team2Msg+'```');
+        bag.channel.sendMessage('```diff\n--- NEW ROUND ---\n'+team1Msg+'\n\n'+team2Msg+'```');
     }
 }

@@ -35,6 +35,16 @@ export default class PartyMove extends Command{
         if(MOVE_DIRECTIONS_GEO.indexOf(direction) != -1){
             direction = MOVE_DIRECTIONS[MOVE_DIRECTIONS_GEO.indexOf(direction)];
         }
+        
+        const pc = await bag.socket.getPlayer(bag.message.author.id);
+
+        if(!pc.partyChannelId){
+            throw 'You are not in a party';
+        }
+
+        if(pc.partyChannelId != bag.message.channel.id){
+            throw 'Your party is at <#'+pc.partyChannelId+'>';
+        }
 
         await bag.socket.moveParty(bag.message.author.id,direction as PartyMoveDirection);        
     }

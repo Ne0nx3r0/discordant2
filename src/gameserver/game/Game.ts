@@ -49,6 +49,7 @@ import DBConvertWishesToGold from "../db/api/DBConvertWishesToGold";
 import CreatureBattle, { IPostBattleBag, BattleResult } from "../../core/battle/CreatureBattle";
 import PvPBattleEndedClientRequest from "../../client/requests/PvPBattleEndedClientRequest";
 import PvPBattleExpiredClientRequest from '../../client/requests/PvPBattleExpiredClientRequest';
+import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -590,11 +591,23 @@ export default class Game {
             battleCleanup: (battlePostBag:IPostBattleBag)=>{
                 const victory = battlePostBag.result == BattleResult.Team1Won;
 
+                let wishesMsg;
+
                 if(battlePostBag.wishesEarned){
                     battlePostBag.wishesEarned.forEach(async (granted)=>{
                         await this.grantPlayerWishes(granted.player.uid,granted.amount);
                     });
+
+                    battlePostBag.wishesEarned.map(function(granted){
+                        return granted.player.title+' earned '+granted.amount+' wishes';
+                    }).join('\n');
                 }
+
+                new SendMessageClientRequest({
+                    channelId: bag.party.channelId,
+                    message: wishesMsg,
+                })
+                .send(this.getClient());
                 
                 bag.party.returnFromBattle(victory);
             }

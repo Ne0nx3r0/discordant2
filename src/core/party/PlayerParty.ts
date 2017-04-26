@@ -133,6 +133,9 @@ export default class PlayerParty{
         const opponentName = this.currentBattle.participants.filter(function(p){
             return p.teamNumber == 2;
         })
+        .map(function(p){
+            return p.creature.title;
+        })
         .join(', ');
 
         new SendMessageClientRequest({

@@ -15,6 +15,7 @@ import AttackedClientRequest from "../../client/requests/AttackedClientRequest";
 import RoundBeginClientRequest from "../../client/requests/RoundBeginClientRequest";
 import { SocketCreature } from '../creature/Creature';
 import CreatureAIControlled from '../creature/CreatureAIControlled';
+import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
 
 interface BattleCreatureAttackStep{
     step: WeaponAttackStep;
@@ -342,12 +343,12 @@ export default class CreatureBattle{
     playerActionAttack(attacker:Creature,attack:WeaponAttack,defender?:Creature){
         const bca = this._getBattleCreatureForAction(attacker);
         
-        let bcb;
+        let bcTarget;
 
         if(defender){
-            bcb = this.participantsLookup.get(defender);
+            bcTarget = this.participantsLookup.get(defender);
 
-            if(!bcb){
+            if(!bcTarget){
                 throw 'Invalid target '+defender.title;
             }
         }
@@ -360,7 +361,7 @@ export default class CreatureBattle{
                 }
             });
 
-            bcb = survivingFriends[Math.floor(survivingFriends.length * Math.random())];
+            bcTarget = survivingFriends[Math.floor(survivingFriends.length * Math.random())];
         }
         else{// if(!attack.isFriendly){
             const survivingEnemies = [];
@@ -371,10 +372,10 @@ export default class CreatureBattle{
                 }
             });
 
-            bcb = survivingEnemies[Math.floor(survivingEnemies.length * Math.random())];
+            bcTarget = survivingEnemies[Math.floor(survivingEnemies.length * Math.random())];
         }   
 
-        this._creatureAttack(bca,attack,bcb);
+        this._creatureAttack(bca,attack,bcTarget);
 
         this.lastActionRoundsAgo = 0;
     }
@@ -447,6 +448,28 @@ export default class CreatureBattle{
                 .replace('{attacker}',`${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal})`),
         })
         .send(this.getClient());
+
+        if(defender.creature.hpCurrent < 1){
+            defender.defeated = true;
+
+            new SendMessageClientRequest({
+                channelId: this.channelId,
+                message: defender.creature.title +' was defeated!'
+            })
+            .send(this.getClient());
+
+            let teamDefeated = true;
+
+            this.participants.forEach(function(p){
+                if(!p.defeated && p.teamNumber == defender.teamNumber){
+                    teamDefeated = false;
+                }
+            });
+
+            if(teamDefeated){
+                this.endBattle(defender.teamNumber == 2 ? BattleResult.Team1Won : BattleResult.Team2Won);
+            }
+        }
     }
 
     addTemporaryEffect(target:Creature,effect:BattleTemporaryEffect,rounds:number){

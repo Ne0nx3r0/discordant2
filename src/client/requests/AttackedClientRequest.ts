@@ -24,7 +24,7 @@ export default class AttackedClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestAttackedData):Promise<void>{
-        let embed = data.message;
+        let embed = data.message+'\n';
 
         data.attacked.forEach(function(attacked){
             if(Object.keys(attacked.damages).length > 0){

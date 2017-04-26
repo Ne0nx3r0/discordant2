@@ -87,7 +87,7 @@ export default class PlayerCharacter extends Creature{
 
     toSocket():SocketPlayerCharacter{
         return {
-            id: null,
+            id: -1,
             uid: this.uid,
             title: this.title,
             description: this.description,
@@ -103,6 +103,7 @@ export default class PlayerCharacter extends Creature{
             hpCurrent: this.hpCurrent,
             stats: this.stats,
             battleChannelId: this.battle?this.battle.channelId:null,
+            partyChannelId: this.party?this.party.channelId:null,
         };
     }
 }
@@ -115,5 +116,6 @@ export interface SocketPlayerCharacter extends SocketCreature{
     wishes: number;
     role: string;
     status: PlayerStatus;
-    battleChannelId: string;
+    battleChannelId?: string;
+    partyChannelId?: string;
 }
