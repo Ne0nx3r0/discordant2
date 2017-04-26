@@ -254,7 +254,8 @@ export default class CreatureBattle{
         });
 
         this.battleCleanup({
-            result: result
+            result: result,
+            wishesEarned: null,
         });
     }
 

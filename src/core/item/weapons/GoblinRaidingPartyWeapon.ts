@@ -71,9 +71,9 @@ export default  new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} returns with great numbers!',
                     damageFunc: function(bag:DamageFuncBag){
-                        bag.attacker.attributes.vitality += 10;
-                        bag.attacker.updateStats();
-                        bag.attacker.hpCurrent = bag.attacker.stats.hpTotal / 2;
+                        bag.attacker.creature.attributes.vitality += 10;
+                        bag.attacker.creature.updateStats();
+                        bag.attacker.creature.hpCurrent = bag.attacker.creature.stats.hpTotal / 2;
                         return {};
                     }
                 }),
