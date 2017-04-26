@@ -30,7 +30,7 @@ export default new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a legend outloud and heals',
                     damageFunc: function(bag:DamageFuncBag){
-                        bag.attacker.hpCurrent = Math.min(bag.attacker.stats.hpTotal,bag.attacker.hpCurrent+30);
+                        bag.attacker.creature.hpCurrent = Math.min(bag.attacker.creature.stats.hpTotal,bag.attacker.creature.hpCurrent+30);
 
                         return {};
                     }

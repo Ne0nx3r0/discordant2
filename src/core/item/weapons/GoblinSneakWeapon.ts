@@ -33,8 +33,12 @@ export default new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} sprays the battlefield with a powerful toxin poisoning everyone!',
                     damageFunc: function(bag){
-                        bag.battle.bpcs.forEach(function(bpc){
-                            bag.battle.addTemporaryEffect(bpc.pc,EffectGoblinSneakPoison,3);
+                        bag.battle.participants
+                        .filter(function(p){
+                            return p.teamNumber == 1;
+                        })
+                        .forEach(function(p){
+                            bag.battle.addTemporaryEffect(p.creature,EffectGoblinSneakPoison,3);
                         });
 
                         return {};

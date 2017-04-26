@@ -46,9 +46,8 @@ import DBGetUserMarketOffers from "../db/api/DBGetUserMarketOffers";
 import DBBuyMarketOffer from "../db/api/DBBuyMarketOffer";
 import { PurchasedMarketOffer } from '../db/api/DBBuyMarketOffer';
 import DBConvertWishesToGold from "../db/api/DBConvertWishesToGold";
-import CreatureBattle, { IPostBattleBag } from "../../core/battle/CreatureBattle";
+import CreatureBattle, { IPostBattleBag, BattleResult } from "../../core/battle/CreatureBattle";
 import PvPBattleEndedClientRequest from "../../client/requests/PvPBattleEndedClientRequest";
-import { BattleResult, IPostBattleBag } from '../../core/battle/CreatureBattle';
 import PvPBattleExpiredClientRequest from '../../client/requests/PvPBattleExpiredClientRequest';
 
 export interface GameServerBag{

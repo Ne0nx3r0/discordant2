@@ -2,7 +2,6 @@ import PlayerCharacter from "../creature/player/PlayerCharacter";
 import PartyExploringMap, { PartyMoveDirection } from "./PartyExploringMap";
 import Game from "../../gameserver/game/Game";
 import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
-import CoopBattle from "../battle/CoopBattle";
 import ExplorableMap from "../map/ExplorableMap";
 import DeleteChannelClientRequest from '../../client/requests/DeleteChannelClientRequest';
 import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
@@ -12,6 +11,7 @@ import SendLocalImageClientRequest from "../../client/requests/SendLocalImageCli
 import { IBattleEndedPlayer } from '../../client/requests/CoopBattleEndedClientRequest';
 import { SocketPlayerCharacter } from '../creature/player/PlayerCharacter';
 import SendAddPartyMemberClientRequest from "../../client/requests/SendAddPartyMemberClientRequest";
+import CreatureBattle from '../battle/CreatureBattle';
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -44,7 +44,7 @@ export default class PlayerParty{
     channelId:string;
     partyStatus:PartyStatus;
     exploration:PartyExploringMap;
-    currentBattle:CoopBattle;
+    currentBattle:CreatureBattle;
     getClient:IGetRandomClientFunc;
     game:Game;
 
@@ -130,9 +130,14 @@ export default class PlayerParty{
 
         this.partyStatus = PartyStatus.Battling;
 
+        const opponentName = this.currentBattle.participants.filter(function(p){
+            return p.teamNumber == 2;
+        })
+        .join(', ');
+
         new SendMessageClientRequest({
             channelId: this.channelId,
-            message: `${this.currentBattle.opponent.title} attacks!`
+            message: `${opponentName} attacks!`
         })
         .send(this.getClient());
     }
