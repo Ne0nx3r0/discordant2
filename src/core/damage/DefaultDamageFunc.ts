@@ -10,7 +10,7 @@ export function DefaultDamageFunc(bag: DamageFuncBag): IDamageSet {
 
     let damageAmount = Math.random() * (attack.maxBaseDamage - attack.minBaseDamage) + attack.minBaseDamage;
 
-    if(Math.random() <= weapon.chanceToCritical){
+    if(bag.isCritical){
         damageAmount = damageAmount * weapon.criticalMultiplier; 
     }
 

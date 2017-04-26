@@ -15,6 +15,7 @@ export interface IAttackedSocket{
 export interface ClientRequestAttackedData extends ClientRequestData{
     attacker: SocketCreature;
     message: string;
+    isCritical: boolean;
     attacked: Array<IAttackedSocket>;
 }
 
@@ -24,7 +25,8 @@ export default class AttackedClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestAttackedData):Promise<void>{
-        let embed = data.message+'\n';
+        const criticalMsg = data.isCritical ? '**CRITICAL HIT** ' : '';
+        let embed = criticalMsg+data.message+'\n';
 
         data.attacked.forEach(function(attacked){
             if(Object.keys(attacked.damages).length > 0){
@@ -32,7 +34,8 @@ export default class AttackedClientRequest extends ClientRequest{
                     attacked.creature,
                     attacked.damages,
                     attacked.blocked,
-                    attacked.exhaustion
+                    attacked.exhaustion,
+                    data.isCritical,
                 );
             }
         });

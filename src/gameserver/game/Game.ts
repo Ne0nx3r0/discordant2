@@ -50,6 +50,7 @@ import CreatureBattle, { IPostBattleBag, BattleResult } from "../../core/battle/
 import PvPBattleEndedClientRequest from "../../client/requests/PvPBattleEndedClientRequest";
 import PvPBattleExpiredClientRequest from '../../client/requests/PvPBattleExpiredClientRequest';
 import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
+import GetEarnedWishes from '../../util/GetEarnedWishes';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -472,13 +473,8 @@ export default class Game {
             team2: [receiver],
             getClient: this.getClient.bind(this),
             battleCleanup: (bag:IPostBattleBag)=>{
-                sender.battle = null;
                 sender.status = 'inCity';
-                sender.clearTemporaryEffects();
-
-                receiver.battle = null;
                 receiver.status = 'inCity';
-                receiver.clearTemporaryEffects();
                 
                 if(bag.result == BattleResult.Expired){
                     new PvPBattleExpiredClientRequest({
@@ -582,6 +578,8 @@ export default class Game {
 
     createMonsterBattle(bag:CreateMonsterBattleBag){
         const opponent = this.creatures.create(bag.opponentId);
+        const partySize = bag.partyMembers.length;
+        const highestLevel = Math.max(...bag.partyMembers.map(pc => pc.level));
 
         const battle = new CreatureBattle({
             channelId: bag.party.channelId,
@@ -593,21 +591,26 @@ export default class Game {
 
                 let wishesMsg;
 
-                if(battlePostBag.wishesEarned){
-                    battlePostBag.wishesEarned.forEach(async (granted)=>{
-                        await this.grantPlayerWishes(granted.player.uid,granted.amount);
+                battlePostBag.survivors.forEach(async (pc)=>{
+                    const wishesEarned = GetEarnedWishes({
+                        baseWishes: opponent.wishesDropped,
+                        partySize: partySize,
+                        highestLevel: highestLevel,
+                        playerLevel: pc.level,
                     });
 
-                    battlePostBag.wishesEarned.map(function(granted){
-                        return granted.player.title+' earned '+granted.amount+' wishes';
-                    }).join('\n');
-                }
+                    await this.grantPlayerWishes(pc.uid,wishesEarned);
 
-                new SendMessageClientRequest({
-                    channelId: bag.party.channelId,
-                    message: wishesMsg,
-                })
-                .send(this.getClient());
+                    wishesMsg += `\n${pc.title} earned ${wishesEarned} wishes`;
+                });
+
+                if(wishesMsg){
+                    new SendMessageClientRequest({
+                        channelId: bag.party.channelId,
+                        message: wishesMsg,
+                    })
+                    .send(this.getClient());
+                }
                 
                 bag.party.returnFromBattle(victory);
             }

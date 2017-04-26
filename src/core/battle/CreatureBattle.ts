@@ -42,15 +42,15 @@ export interface ISocketBattleCreature{
 }
 
 export interface IPostBattleBag{
-    result:BattleResult;
-    wishesEarned:Array<{player:PlayerCharacter,amount:number}>;
+    result: BattleResult;
+    survivors: Array<PlayerCharacter>;
 }
 
 export interface BattleCleanupFunc{
     (bag:IPostBattleBag):void;
 }
 
-interface CreatureBattleBag {
+export interface CreatureBattleBag {
     channelId:string;
     team1:Array<Creature>;
     team2:Array<Creature>;
@@ -268,13 +268,27 @@ export default class CreatureBattle{
 
         this.participants.forEach(function(p){
             if(p instanceof PlayerCharacter){
-                (p as PlayerCharacter).battle = null;
+                p.battle = null;
+                p.clearTemporaryEffects();
             }
         });
 
+        let survivors;
+
+        if(result != BattleResult.Expired){
+            const winningTeam = result == BattleResult.Team1Won ? 1 : 2;
+
+            survivors = this.participants.filter(function(p){
+                return !p.defeated && p.teamNumber == winningTeam;
+            })
+            .map(function(bc){
+                return bc.creature;
+            });
+        }
+        
         this.battleCleanup({
             result: result,
-            wishesEarned: null,
+            survivors: survivors
         });
     }
 
@@ -378,6 +392,8 @@ export default class CreatureBattle{
         this._creatureAttack(bca,attack,bcTarget);
 
         this.lastActionRoundsAgo = 0;
+
+        bca.exhaustion += attack.exhaustion;
     }
 
     _creatureAttack(attacker:IBattleCreature,attack:WeaponAttack,defender:IBattleCreature){
@@ -394,14 +410,22 @@ export default class CreatureBattle{
     }
 
     _sendNextAttackStep(attacker:IBattleCreature){
+        if(attacker.blocking){
+            attacker.blocking = false;
+        }
+
         const queuedAttackStep = attacker.queuedAttackSteps.shift();
         const defender = queuedAttackStep.target;
+        const criticalChance = queuedAttackStep.step.attack.weapon.chanceToCritical;
+        const isCritical = Math.random() < criticalChance;
+
 
         const damages:IDamageSet = queuedAttackStep.step.getDamages({
             attacker: attacker,
             defender: defender,
             battle: this,
             step: queuedAttackStep.step,
+            isCritical: isCritical,
         });
 
         let attackCancelled = false;
@@ -436,7 +460,8 @@ export default class CreatureBattle{
 
         new AttackedClientRequest({
             channelId: this.channelId,
-            attacker: attacker.creature.toSocket(),            
+            attacker: attacker.creature.toSocket(), 
+            isCritical: isCritical,           
             attacked: [{
                 creature: defender.creature.toSocket(),
                 damages: damages,

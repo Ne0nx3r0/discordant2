@@ -156,9 +156,7 @@ export default class PlayerParty{
             this.partyStatus = PartyStatus.Exploring;
         
             this.members.forEach((member)=>{
-                member.battle = null;
                 member.status = 'inParty';
-                member.clearTemporaryEffects();
             });
 
             this.sendCurrentMapImageFile('Your party survived!');

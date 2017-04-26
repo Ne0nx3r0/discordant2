@@ -10,6 +10,7 @@ export interface DamageFuncBag{
     defender:IBattleCreature;
     battle:CreatureBattle;
     step:WeaponAttackStep;
+    isCritical:boolean;
 }
 
 interface DamageFunc{

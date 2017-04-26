@@ -111,6 +111,8 @@ export default class Bot{
         catch(ex){
             this.logger.error(ex);
         }
+
+        this.setPlayingGame(this.commandPrefix+'help for commands');
     }
 
     handleMessage(message:Message){
@@ -120,7 +122,7 @@ export default class Bot{
         }
 
         //Ignore non-prefix messages
-        if(!message.content.startsWith(this.commandPrefix)){
+        if(!message.content.startsWith(this.commandPrefix) && !message.content.toUpperCase().startsWith(this.commandPrefix.toUpperCase())){
             return;
         }
 
