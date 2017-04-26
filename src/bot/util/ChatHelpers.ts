@@ -26,11 +26,11 @@ export function getEmbed(msg:string,color?:number){
 
 export function getDamageTypeEmoji(type:string){
     switch(type){
-        case 'Physical': return ':crossed_swords:';
-        case 'Fire': return ':fire:';
-        case 'Cold': return ':snowflake:';
-        case 'Thunder': return ':cloud_lightning:';
-        case 'Chaos': return ':sparkles:';
+        case 'physical': return ':crossed_swords:';
+        case 'fire': return ':fire:';
+        case 'cold': return ':snowflake:';
+        case 'thunder': return ':cloud_lightning:';
+        case 'chaos': return ':sparkles:';
     }
 
     return ':question:';

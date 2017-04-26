@@ -23,7 +23,6 @@ export default class Inventory extends Command{
             if(!command){
                 bag.commands.forEach((c)=>{
                     c.aliases.forEach((alias)=>{
-                        console.log(commandStr,alias);
                         if(commandStr == alias){
                             command = c;
                         }

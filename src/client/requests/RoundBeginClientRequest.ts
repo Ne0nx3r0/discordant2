@@ -19,19 +19,19 @@ export default class RoundBeginClientRequest extends ClientRequest{
             return bc.teamNumber == 1;
         })
         .map(function(bc){
-            return `${bc.creature.title} (${bc.creature.hpCurrent}/${bc.creature.stats.hpTotal})`;
+            return `${bc.creature.hpCurrent}/${bc.creature.stats.hpTotal} ${bc.creature.title}`;
         })
         .join(', ');
 
         const team2Msg = data.participants
         .filter(function(bc){
-            return bc.teamNumber == 1;
+            return bc.teamNumber == 2;
         })
         .map(function(bc){
-            return `${bc.creature.title} (${bc.creature.hpCurrent}/${bc.creature.stats.hpTotal})`;
+            return `${bc.creature.hpCurrent}/${bc.creature.stats.hpTotal} ${bc.creature.title}`;
         })
         .join(', ');
 
-        bag.channel.sendMessage('```css\n--- NEW ROUND ---\n```\n'+team1Msg+'\n'+team2Msg);
+        bag.channel.sendMessage('```css\n--- NEW ROUND ---\n```\n'+team1Msg+'\n\n'+team2Msg);
     }
 }

@@ -18,5 +18,9 @@ export default class PvPBattleExpiredClientRequest extends ClientRequest{
         bag.channel.sendMessage('',getEmbed(`Neither player participated so the battle ended in a draw`));
 
         bag.channel.sendMessage('',getEmbed(`Channel will expire in 1 minute`));
+
+        setTimeout(function(){
+            bag.channel.delete();
+        },60000);
     }
 }

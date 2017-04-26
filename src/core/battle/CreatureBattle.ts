@@ -80,6 +80,7 @@ export default class CreatureBattle{
         this.channelId = bag.channelId;
 
         this.getClient = bag.getClient;
+        this.battleCleanup = bag.battleCleanup;
 
         this.battleHasEnded = false;
 
@@ -89,7 +90,14 @@ export default class CreatureBattle{
         this.participantsLookup = new Map();
 
         const addParticipant = (creature:Creature,teamNumber:number)=>{
-            this.participantsLookup.set(creature,{
+            if(creature instanceof PlayerCharacter){
+                const pc:PlayerCharacter = creature;
+
+                pc.status = 'inBattle';
+                pc.battle = this;
+            }
+
+            const participant = {
                 creature:creature,
                 blocking:false,
                 defeated:false,
@@ -97,7 +105,10 @@ export default class CreatureBattle{
                 charges:0,
                 teamNumber:teamNumber,
                 queuedAttackSteps:[],
-            });
+            };
+
+            this.participants.push(participant);
+            this.participantsLookup.set(creature,participant);
         }
 
         bag.team1.forEach((c)=>{
@@ -140,6 +151,13 @@ export default class CreatureBattle{
             }),
         })
         .send(this.getClient());
+
+//Remove one exhaustion point from all participants
+        this.participants.forEach(function(p){
+            if(p.exhaustion > 0){
+                p.exhaustion--;
+            }
+        });   
 
 // Sort participants to determine order of attacks
 // Determine order by current (with effects) agility

@@ -15,6 +15,7 @@ export default class PartyDecline extends Command{
         });
 
         this.aliases.set('party accept','partyaccept');
+        this.aliases.set('paccept','partyaccept');
     }
 
     async run(bag:CommandRunBag){

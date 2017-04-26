@@ -16,6 +16,8 @@ export default class Challenge extends Command{
             minParams: 1,
         });
 
+        this.aliases.set('challengeaccept','challenge accept');
+        this.aliases.set('challengedeny','challenge deny');
         this.aliases.set('caccept','challenge accept');
         this.aliases.set('cdeny','challenge deny');
     }
@@ -64,6 +66,8 @@ export default class Challenge extends Command{
         //Will throw error if something goes wrong
         await bag.socket.createPvPInvite(bag.message.author.id,tagUserId);
 
-        bag.message.channel.sendMessage(`${bag.message.author.username} challenged <@${tagUserId}> to a duel! (expires in 60 seconds)`);
+        bag.message.channel.sendMessage(`${bag.message.author.username} challenged <@${tagUserId}> to a duel! (expires in 60 seconds)
+
+You can reply \`${bag.commandPrefix}caccept\` or \`${bag.commandPrefix}cdeny\``);
     }
 }
