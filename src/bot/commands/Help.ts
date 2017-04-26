@@ -20,11 +20,14 @@ export default class Inventory extends Command{
             const commandStr = bag.params[0];
             let command = bag.commands.get(commandStr.toUpperCase());
 
+            let redirectedFrom = null;
+
             if(!command){
                 bag.commands.forEach((c)=>{
-                    c.aliases.forEach((alias)=>{
+                    c.aliases.forEach((expandsTo,alias)=>{
                         if(commandStr == alias){
                             command = c;
+                            redirectedFrom = commandStr;
                         }
                     });
                 });
@@ -37,7 +40,7 @@ export default class Inventory extends Command{
             }
 
             bag.message.channel.sendMessage('',this.getEmbed(`
-${bag.commandPrefix.toLowerCase()}**${command.name}**
+${bag.commandPrefix.toLowerCase()}**${command.name}** (Redirected from *${redirectedFrom}*)
 
 ${command.description}
 
