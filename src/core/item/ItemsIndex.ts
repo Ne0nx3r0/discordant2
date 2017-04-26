@@ -7,3 +7,4 @@ export { default as TabletOfHealing } from './weapons/TabletOfHealing';
 export { default as TabletOfPoison } from './weapons/TabletOfPoison';
 export { default as SonicLongsword } from './weapons/SonicLongsword';
 export { default as HealingVial } from './misc/HealingVial';
+export { default as ScarabToken } from './misc/ScarabToken';

@@ -10,6 +10,7 @@ enum ItemId {
     TableOfPoison,
     GoblinRaidingPartyWeapon,
     GoblinSneakPoisonWeapon,
+    ScarabToken,
 }
 
 export default ItemId;
