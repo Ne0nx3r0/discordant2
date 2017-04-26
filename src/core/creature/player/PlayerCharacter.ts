@@ -8,15 +8,15 @@ import PlayerInventory from '../../item/PlayerInventory';
 import { SocketPlayerInventory } from '../../item/PlayerInventory';
 import { SocketCreatureEquipment } from '../../item/CreatureEquipment';
 import { ICreatureStatSet, SocketCreature } from '../Creature';
-import PlayerBattle from '../../battle/PlayerBattle';
 import PlayerParty from '../../party/PlayerParty';
+import CreatureBattle from '../../battle/CreatureBattle';
 
 type PlayerStatus = 'inCity' | 'invitedToPVPBattle' | 'inBattle' | 'invitedToParty' | 'inParty';
 
 export {PlayerStatus};
 
 interface BattleData{
-    battle:PlayerBattle;
+    battle:CreatureBattle;
     defeated:boolean;
     attackExhaustion:number,
     queuedAttacks:Array<WeaponAttackStep>,
@@ -45,7 +45,7 @@ interface PCConfig{
 
 export default class PlayerCharacter extends Creature{
     uid:string;
-    battle:PlayerBattle;
+    battle:CreatureBattle;
     party:PlayerParty;
     status:PlayerStatus;
     class:CharacterClass;

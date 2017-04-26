@@ -7,7 +7,7 @@ export interface ClientRequestPvPBattleExpiredData extends ClientRequestData{
     
 }
 
-export default class PvPBattleExpiredRequest extends ClientRequest{
+export default class PvPBattleExpiredClientRequest extends ClientRequest{
     constructor(data:ClientRequestPvPBattleExpiredData){
         super('PvPBattleExpired',data);
     }

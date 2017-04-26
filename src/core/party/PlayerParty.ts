@@ -137,7 +137,7 @@ export default class PlayerParty{
         .send(this.getClient());
     }
 
-    returnFromBattle(victory:boolean,bpcs:Array<IBattleEndedPlayer>){
+    returnFromBattle(victory:boolean){
         this.members.forEach(function(pc){
             if(pc.hpCurrent < 0){
                 pc.hpCurrent = pc.stats.hpTotal * 0.05;
@@ -147,14 +147,13 @@ export default class PlayerParty{
         if(victory){
             this.partyStatus = PartyStatus.Exploring;
         
-            this.sendCurrentMapImageFile('Your party survived!');
-
-            bpcs.forEach((bpc)=>{
-                const playerId = bpc.player.uid;
-                const wishesEarned = bpc.wishesEarned;
-
-                this.game.grantPlayerWishes(playerId,wishesEarned);
+            this.members.forEach((member)=>{
+                member.battle = null;
+                member.status = 'inParty';
+                member.clearTemporaryEffects();
             });
+
+            this.sendCurrentMapImageFile('Your party survived!');
         }
         else{
             this.sendChannelMessage('Your party was defeated!');

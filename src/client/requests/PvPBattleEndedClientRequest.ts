@@ -9,7 +9,7 @@ export interface ClientRequestPvPBattleEndedData extends ClientRequestData{
     loser:SocketPlayerCharacter;
 }
 
-export default class PvPBattleEndedRequest extends ClientRequest{
+export default class PvPBattleEndedClientRequest extends ClientRequest{
     constructor(data:ClientRequestPvPBattleEndedData){
         super('PvPBattleEnded',data);
     }

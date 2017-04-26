@@ -22,12 +22,9 @@ import Weapon from '../../core/item/Weapon';
 import DBTransferPlayerItem from '../db/api/DBTransferPlayerItem';
 import DBSetPlayerRole from '../db/api/DBSetPlayerRole';
 import { PvPInvite, PVP_INVITE_TIMEOUT, SocketPvPInvite } from '../../core/battle/PvPInvite';
-import PvPBattle from './battle/PvPBattle';
 import { IGetRandomClientFunc } from '../socket/SocketServer';
 import PlayerParty from "../../core/party/PlayerParty";
 import AllCreaturesAIControlled from "../../core/creature/AllCreaturesAIControlled";
-import CoopBattle from '../../core/battle/CoopBattle';
-import PlayerBattle from '../../core/battle/PlayerBattle';
 import MapUrlCache from '../../core/map/MapUrlCache';
 import { WesternGateMap } from "../../core/map/Maps";
 import { PartyMoveDirection } from "../../core/party/PartyExploringMap";
@@ -49,6 +46,10 @@ import DBGetUserMarketOffers from "../db/api/DBGetUserMarketOffers";
 import DBBuyMarketOffer from "../db/api/DBBuyMarketOffer";
 import { PurchasedMarketOffer } from '../db/api/DBBuyMarketOffer';
 import DBConvertWishesToGold from "../db/api/DBConvertWishesToGold";
+import CreatureBattle, { IPostBattleBag } from "../../core/battle/CreatureBattle";
+import PvPBattleEndedClientRequest from "../../client/requests/PvPBattleEndedClientRequest";
+import { BattleResult, IPostBattleBag } from '../../core/battle/CreatureBattle';
+import PvPBattleExpiredClientRequest from '../../client/requests/PvPBattleExpiredClientRequest';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -64,7 +65,7 @@ export default class Game {
     items: AllItems;
     getClient: IGetRandomClientFunc;
     playerParties:Map<string,PlayerParty>;
-    activeBattles:Map<string,PlayerBattle>;
+    activeBattles:Map<string,CreatureBattle>;
     mapUrlCache: MapUrlCache;
 
     constructor(bag:GameServerBag){
@@ -465,12 +466,48 @@ export default class Game {
             throw `${receiver.title} cannot join the battle now`;
         }
 
-        const battle = new PvPBattle({
+        const battle = new CreatureBattle({
             channelId: channelId,
-            pc1: sender,
-            pc2: receiver,
+            team1: [sender],
+            team2: [receiver],
             getClient: this.getClient.bind(this),
-            removeBattle: this.removeBattle.bind(this)
+            battleCleanup: (bag:IPostBattleBag)=>{
+                sender.battle = null;
+                sender.status = 'inCity';
+                sender.clearTemporaryEffects();
+
+                receiver.battle = null;
+                receiver.status = 'inCity';
+                receiver.clearTemporaryEffects();
+                
+                if(bag.result == BattleResult.Expired){
+                    new PvPBattleExpiredClientRequest({
+                        channelId: channelId,
+                    })
+                    .send(this.getClient());
+                }
+                else{
+                    let winner:PlayerCharacter,loser:PlayerCharacter;
+
+                    if(bag.result == BattleResult.Team1Won){
+                        winner = sender;
+                        loser = receiver;
+                    }
+                    else{
+                        winner = receiver;
+                        loser = sender;
+                    }
+
+                    new PvPBattleEndedClientRequest({
+                        winner: winner.toSocket(),
+                        loser: loser.toSocket(),
+                        channelId: channelId
+                    })
+                    .send(this.getClient());   
+                }
+
+                this.activeBattles.delete(channelId);
+            }
         });
 
         this.activeBattles.set(channelId,battle);
@@ -546,20 +583,25 @@ export default class Game {
     createMonsterBattle(bag:CreateMonsterBattleBag){
         const opponent = this.creatures.create(bag.opponentId);
 
-        const battle = new CoopBattle({
-            id: bag.party.channelId,
-            party: bag.party,
-            partyMembers: bag.partyMembers,
+        const battle = new CreatureBattle({
+            channelId: bag.party.channelId,
+            team1: bag.partyMembers,
+            team2: [opponent],
             getClient: this.getClient.bind(this),
-            opponent: opponent,
-            removeBattle: this.removeBattle.bind(this),
+            battleCleanup: (battlePostBag:IPostBattleBag)=>{
+                const victory = battlePostBag.result == BattleResult.Team1Won;
+
+                if(battlePostBag.wishesEarned){
+                    battlePostBag.wishesEarned.forEach(async (granted)=>{
+                        await this.grantPlayerWishes(granted.player.uid,granted.amount);
+                    });
+                }
+                
+                bag.party.returnFromBattle(victory);
+            }
         });
 
         return battle;
-    }
-
-    removeBattle(battleId:string):void{
-        this.activeBattles.delete(battleId);
     }
 
     setSliceRemoteUrl(imageSrc:string,remoteUrl:string):void{

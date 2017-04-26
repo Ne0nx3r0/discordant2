@@ -1,7 +1,7 @@
 import Creature from "../creature/Creature";
 import { IGetRandomClientFunc } from "../../gameserver/socket/SocketServer";
 import { IRemoveBattleFunc } from "../../gameserver/game/Game";
-import PlayerCharacter from "../creature/player/PlayerCharacter";
+import PlayerCharacter from '../creature/player/PlayerCharacter';
 import ItemUsable from "../item/ItemUsable";
 import WeaponAttack from '../item/WeaponAttack';
 import WeaponAttackStep from "../item/WeaponAttackStep";
@@ -40,8 +40,9 @@ export interface ISocketBattleCreature{
     teamNumber: number;
 }
 
-interface IPostBattleBag{
+export interface IPostBattleBag{
     result:BattleResult;
+    wishesEarned:Array<{player:PlayerCharacter,amount:number}>;
 }
 
 export interface BattleCleanupFunc{
@@ -245,6 +246,12 @@ export default class CreatureBattle{
 
     endBattle(result:BattleResult){
         this.battleHasEnded = true;
+
+        this.participants.forEach(function(p){
+            if(p instanceof PlayerCharacter){
+                (p as PlayerCharacter).battle = null;
+            }
+        });
 
         this.battleCleanup({
             result: result

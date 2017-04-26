@@ -2,7 +2,6 @@ import IDamageSet from '../damage/IDamageSet';
 import Creature from '../creature/Creature';
 import Weapon from './Weapon';
 import WeaponAttack from './WeaponAttack';
-import { IBattlePlayerCharacter } from '../battle/PlayerBattle';
 import { IBattleCreature } from '../battle/CreatureBattle';
 import CreatureBattle from '../battle/CreatureBattle';
 
