@@ -38,20 +38,15 @@ export function getDamageTypeEmoji(type:string){
 
 export function getDamagesLine(creature:SocketCreature,damages:IDamageSet,blocked:boolean,exhausted:number){
     let blockedStr = '';
-    let exhaustedStr = '';
 
     if(blocked){
-        blockedStr = ' BLOCKED';
+        blockedStr = ' :shield: ';
     }
 
-    if(exhausted>1){
-        exhaustedStr = ' EXHAUSTED ('+exhausted+')';
-    }
+    var line = creature.title+blockedStr;
 
-    var line = '**'+creature.title+'**'+exhaustedStr+' ('+creature.hpCurrent+'/'+creature.stats.hpTotal+')'+blockedStr+' took damage ';
-    
     Object.keys(damages).forEach(function(damageStr:string){
-        line += damages[damageStr] + ' ' + getDamageTypeEmoji(damageStr) + '   ';
+        line += ' -'+damages[damageStr] + ' ' + getDamageTypeEmoji(damageStr) + '   ';
     });
 
     return line.slice(0,-3);

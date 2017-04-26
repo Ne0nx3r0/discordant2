@@ -375,6 +375,8 @@ export default class CreatureBattle{
         }   
 
         this._creatureAttack(bca,attack,bcb);
+
+        this.lastActionRoundsAgo = 0;
     }
 
     _creatureAttack(attacker:IBattleCreature,attack:WeaponAttack,defender:IBattleCreature){
@@ -441,8 +443,8 @@ export default class CreatureBattle{
                 exhaustion: 0,
             }],
             message: queuedAttackStep.step.attackMessage
-                .replace('{defender}',defender.creature.title)
-                .replace('{attacker}',attacker.creature.title),
+                .replace('{defender}',`${defender.creature.title} (${defender.creature.hpCurrent}/${defender.creature.stats.hpTotal})`)
+                .replace('{attacker}',`${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal})`),
         })
         .send(this.getClient());
     }

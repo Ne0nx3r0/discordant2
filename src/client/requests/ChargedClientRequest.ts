@@ -1,6 +1,7 @@
 import ClientRequest from '../ClientRequest';
 import { TextChannel } from 'discord.js';
 import { ClientRequestData, ClientRequestReceiveBag } from '../ClientRequest';
+import { getEmbed, EMBED_COLORS } from '../../bot/util/ChatHelpers';
 
 export interface ClientRequestChargedData extends ClientRequestData{
     chargerTitle:string;
@@ -13,6 +14,8 @@ export default class ChargedClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestChargedData):Promise<void>{
-        bag.channel.sendMessage(`:comet: ${data.chargerTitle} collects ambient energy (${data.total} stored) :comet:`);
+        bag.channel.sendMessage('',getEmbed(
+            `${data.chargerTitle} collects ambient energy ${':comet: '.repeat(data.total)}`
+        ,EMBED_COLORS.ACTION));
     }
 }

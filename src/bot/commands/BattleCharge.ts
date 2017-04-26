@@ -20,6 +20,18 @@ export default class BattleCharge extends Command{
     }
 
     async run(bag:CommandRunBag){
+        const player = await bag.socket.getPlayer(bag.message.author.id);
+
+        if(player.status != 'inBattle'){
+            throw 'You are not currently in a battle';
+        }
+
+        if(bag.message.channel.id != player.battleChannelId){
+            throw `Your battle is in <#${player.battleChannelId}>`;
+        }
+
         await bag.socket.sendBattleCharge(bag.message.author.id);
+
+        bag.message.delete();
     }
 }
