@@ -16,6 +16,7 @@ export default new Weapon({
     useRequirements:{
         Spirit: 16
     },
+    chanceToCritical: 0.05,
     attacks: [
         new WeaponAttack({
             title: 'heal',
@@ -31,7 +32,13 @@ export default new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a legend outloud and heals',
                     damageFunc: function(bag:DamageFuncBag){
-                        bag.attacker.creature.hpCurrent = Math.min(bag.attacker.creature.stats.hpTotal,bag.attacker.creature.hpCurrent+30);
+                        const healAmount = (Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage;
+
+                        if(bag.isCritical){
+                            healAmount = healAmount * 2;
+                        }
+
+                        bag.attacker.creature.hpCurrent = Math.min(bag.attacker.creature.stats.hpTotal,bag.attacker.creature.hpCurrent+healAmount);
 
                         return {};
                     }
@@ -50,7 +57,7 @@ export default new Weapon({
             chargesRequired: 3,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} reads a legend aloud blessing {defender}',
+                    attackMessage: '{attacker} reads a legend aloud blessing NOT WORKING YET {defender}',
                     damageFunc: function(bag:DamageFuncBag){
 
                         return {};

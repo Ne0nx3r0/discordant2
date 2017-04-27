@@ -170,7 +170,7 @@ export default class CreatureBattle{
         for(var i=0;i<this.participants.length;i++){
             const p = this.participants[i];
 
-            if(!p.defeated){
+            if(p.defeated){
                 continue;
             }
 
@@ -357,6 +357,10 @@ export default class CreatureBattle{
     playerActionAttack(attacker:Creature,attack:WeaponAttack,defender?:Creature){
         const bca = this._getBattleCreatureForAction(attacker);
         
+        if(attack.chargesRequired > bca.charges){
+            throw 'You need at least '+attack.chargesRequired+' charges to use '+attack.title+'!';
+        }
+
         let bcTarget;
 
         if(defender){
@@ -394,6 +398,7 @@ export default class CreatureBattle{
         this.lastActionRoundsAgo = 0;
 
         bca.exhaustion += attack.exhaustion;
+        bca.charges -= attack.chargesRequired;
     }
 
     _creatureAttack(attacker:IBattleCreature,attack:WeaponAttack,defender:IBattleCreature){

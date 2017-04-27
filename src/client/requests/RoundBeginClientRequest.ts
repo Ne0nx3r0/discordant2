@@ -21,7 +21,7 @@ export default class RoundBeginClientRequest extends ClientRequest{
             let creatureTitle = bc.creature.title+' '+bc.creature.hpCurrent+'/'+bc.creature.stats.hpTotal;
 
             if(bc.creature.id == -1){
-                exhausted = bc.exhaustion > 0 ? ' EX' : '';
+                exhausted = bc.exhaustion > 1 ? ' EX' : '';
             }
             
             return prefix+creatureTitle+blocking+exhausted;
