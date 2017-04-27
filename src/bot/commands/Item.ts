@@ -82,7 +82,7 @@ export default class Item extends Command{
                 const chargesRequired = attack.chargesRequired > 0 ? '\nRequires ' + attack.chargesRequired +' charges': '';
 
                 const msg = `
-${special}${attack.minBaseDamage} to ${attack.maxBaseDamage} ${attack.damageType} damage
+${attack.minBaseDamage} to ${attack.maxBaseDamage} ${attack.damageType} damage${special}
 ${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttribute]}
 Exhausts ${attack.exhaustion} points${chargesRequired}`;
 
