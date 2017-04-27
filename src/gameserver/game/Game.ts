@@ -590,22 +590,22 @@ export default class Game {
             battleCleanup: (battlePostBag:IPostBattleBag)=>{
                 const victory = battlePostBag.result == BattleResult.Team1Won;
 
-                let wishesMsg;
+                if(victory){
+                    let wishesMsg = '';
 
-                battlePostBag.survivors.forEach(async (pc)=>{
-                    const wishesEarned = GetEarnedWishes({
-                        baseWishes: opponent.wishesDropped,
-                        partySize: partySize,
-                        highestLevel: highestLevel,
-                        playerLevel: pc.level,
+                    battlePostBag.survivors.forEach((pc)=>{
+                        const wishesEarned = GetEarnedWishes({
+                            baseWishes: opponent.wishesDropped,
+                            partySize: partySize,
+                            highestLevel: highestLevel,
+                            playerLevel: pc.level,
+                        });
+
+                        this.grantPlayerWishes(pc.uid,wishesEarned);
+
+                        wishesMsg += `\n${pc.title} earned ${wishesEarned} wishes`;
                     });
 
-                    await this.grantPlayerWishes(pc.uid,wishesEarned);
-
-                    wishesMsg += `\n${pc.title} earned ${wishesEarned} wishes`;
-                });
-
-                if(wishesMsg){
                     new SendMessageClientRequest({
                         channelId: bag.party.channelId,
                         message: wishesMsg,
@@ -754,6 +754,10 @@ export default class Game {
 
         if(!player){
             throw 'You are not registered';
+        }
+
+        if(player.status == 'inBattle'){
+            throw 'You cannot move the party right now';
         }
 
         if(player.status != 'inParty'){
