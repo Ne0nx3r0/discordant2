@@ -267,9 +267,9 @@ export default class CreatureBattle{
         this.battleHasEnded = true;
 
         this.participants.forEach(function(p){
-            if(p instanceof PlayerCharacter){
-                p.battle = null;
-                p.clearTemporaryEffects();
+            if(p.creature instanceof PlayerCharacter){
+                p.creature.battle = null;
+                p.creature.clearTemporaryEffects();
             }
         });
 
