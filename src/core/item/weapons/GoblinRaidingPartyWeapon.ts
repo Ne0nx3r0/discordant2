@@ -14,6 +14,7 @@ export default  new Weapon({
     description:'',
     damageBlocked: 0,
     useRequirements:{},
+    chanceToCritical: 0,
     attacks:[
         new WeaponAttack({
             title: 'attack',
