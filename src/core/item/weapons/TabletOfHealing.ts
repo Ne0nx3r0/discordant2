@@ -22,6 +22,7 @@ export default new Weapon({
             minBaseDamage: 40,
             maxBaseDamage: 60,
             damageType: 'special',
+            specialDescription: 'Heals target',
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,
             exhaustion: 1,

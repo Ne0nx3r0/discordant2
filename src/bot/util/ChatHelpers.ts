@@ -36,7 +36,7 @@ export function getDamageTypeEmoji(type:string){
     return ':question:';
 }
 
-export function getDamagesLine(creature:SocketCreature,damages:IDamageSet,blocked:boolean,exhausted:number,isCritical:number){
+export function getDamagesLine(creature:SocketCreature,damages:IDamageSet,blocked:boolean,exhausted:number,isCritical:boolean){
     let blockedStr = '';
 
     if(blocked){

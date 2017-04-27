@@ -54,6 +54,7 @@ import { PurchasedMarketOffer } from "../gameserver/db/api/DBBuyMarketOffer";
 import ConvertWishesToGoldRequest from "../gameserver/socket/requests/ConvertWishesToGoldRequest";
 import { ConvertWishesToGoldResponse } from '../gameserver/socket/requests/ConvertWishesToGoldRequest';
 import BattleChargeRequest from "../gameserver/socket/requests/BattleChargeRequest";
+import RespecPlayerRequest from "../gameserver/socket/requests/RespecPlayerRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -274,6 +275,13 @@ export default class SocketClientRequester{
         .send(this.sioc);
 
         return response.player;
+    }
+
+    async respecPlayer(playerUid:string):Promise<void>{
+        await new RespecPlayerRequest({
+            uid: playerUid
+        })
+        .send(this.sioc);
     }
 
     async useItem(playerUid:string,itemId:number):Promise<string>{

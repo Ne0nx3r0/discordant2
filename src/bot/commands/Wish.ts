@@ -11,8 +11,8 @@ export default class SetRole extends Command{
     constructor(bag:CommandBag){
         super({
             name: 'wish',
-            description: 'Use wishes to take an action',
-            usage: 'wish <gold|strength|agility|vitality|spirit|luck|charisma>',
+            description: 'Use wishes to take an action. Wishes convert to 2gp each, respec costs the current amount of wishes to level.',
+            usage: 'wish <gold|respec|strength|agility|vitality|spirit|luck|charisma>',
             permissionNode: PermissionId.Wish,
             minParams: 1,
         });
@@ -39,6 +39,14 @@ export default class SetRole extends Command{
             const response = await bag.socket.convertWishesToGold(bag.message.author.id,amount);
 
             bag.message.channel.sendMessage(`You use your wishes to become ${response.goldGained}GP richer, ${response.goldTotal}GP total`);
+
+            return;
+        }
+
+        if(wishType == 'RESPEC'){ 
+            await bag.socket.respecPlayer(bag.message.author.id);
+
+            bag.message.channel.sendMessage(`You use your wishes to realign your strengths`);
 
             return;
         }

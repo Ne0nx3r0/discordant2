@@ -30,7 +30,7 @@ import { WesternGateMap } from "../../core/map/Maps";
 import { PartyMoveDirection } from "../../core/party/PartyExploringMap";
 import { WishType } from '../socket/requests/LevelUpRequest';
 import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
-import { XPToLevel } from "../../util/XPToLevel";
+import { XPToLevel, TotalXPToLevel } from "../../util/XPToLevel";
 import DBLevelUp from "../db/api/DBLevelUp";
 import ItemUsable from '../../core/item/ItemUsable';
 import DBTakePlayerItem from "../db/api/DBTakePlayerItem";
@@ -51,6 +51,7 @@ import PvPBattleEndedClientRequest from "../../client/requests/PvPBattleEndedCli
 import PvPBattleExpiredClientRequest from '../../client/requests/PvPBattleExpiredClientRequest';
 import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
 import GetEarnedWishes from '../../util/GetEarnedWishes';
+import DBRespecPlayer from '../db/api/DBRespecPlayer';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -793,6 +794,34 @@ export default class Game {
         pc.updateStats();
 
         return pc;
+    }
+
+    async respecPlayer(playerUid:string):Promise<void>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'You are not registered';
+        }
+
+        const wishesNeeded = XPToLevel[pc.level];
+
+        if(pc.wishes < wishesNeeded){
+            throw `You only have ${pc.wishes} wishes, you need at least ${wishesNeeded}`;
+        }
+
+        const wishesToGrant = pc.wishes - wishesNeeded + TotalXPToLevel[pc.level-1];
+
+        await DBRespecPlayer(this.db,pc,wishesNeeded,wishesToGrant);
+
+        pc.wishes = wishesToGrant;
+        pc.attributes.strength = pc.class.startingAttributes.strength;
+        pc.attributes.agility = pc.class.startingAttributes.agility;
+        pc.attributes.vitality = pc.class.startingAttributes.vitality; 
+        pc.attributes.spirit = pc.class.startingAttributes.spirit;
+        pc.attributes.charisma = pc.class.startingAttributes.charisma;
+        pc.attributes.luck = pc.class.startingAttributes.luck;
+        pc.level = 1;
+        pc.updateStats();
     }
 
     async useItem(playerUid:string,itemId:number):Promise<string>{
