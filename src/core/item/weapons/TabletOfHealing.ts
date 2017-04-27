@@ -32,7 +32,7 @@ export default new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a legend outloud and heals',
                     damageFunc: function(bag:DamageFuncBag){
-                        let healAmount = (Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage;
+                        let healAmount = Math.round((Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage);
 
                         if(bag.isCritical){
                             healAmount = healAmount * 2;

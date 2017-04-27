@@ -15,5 +15,5 @@ export function DamagesTotal(damages:IDamageSet):number{
         total += damages[type];
     });
 
-    return total;
+    return Math.round(total);
 }

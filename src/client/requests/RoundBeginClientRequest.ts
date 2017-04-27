@@ -15,16 +15,17 @@ export default class RoundBeginClientRequest extends ClientRequest{
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestRoundBeginData):Promise<void>{
         function formatbc(bc:ISocketBattleCreature){
-            let blocking = bc.blocking ? ' BLK' : '';
+            const blocking = bc.blocking ? ' | Blocking' : '';
+            const charges = bc.charges>0?' | Charges: '+bc.charges:'';
             let exhausted = '';
             const prefix = bc.defeated ? '- ' : '+ ';
-            let creatureTitle = bc.creature.title+' '+bc.creature.hpCurrent+'/'+bc.creature.stats.hpTotal;
+            const creatureTitle = bc.creature.title+' '+bc.creature.hpCurrent+'/'+bc.creature.stats.hpTotal;
 
             if(bc.creature.id == -1){
-                exhausted = bc.exhaustion > 1 ? ' EX' : '';
+                exhausted = bc.exhaustion > 1 ? ' | Exhausted' : '';
             }
-            
-            return prefix+creatureTitle+blocking+exhausted;
+
+            return prefix+creatureTitle+charges+blocking+exhausted;
         }
 
         const team1Msg = data.participants

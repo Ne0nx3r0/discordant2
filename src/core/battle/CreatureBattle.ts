@@ -481,6 +481,10 @@ export default class CreatureBattle{
 
         if(defender.creature.hpCurrent < 1){
             defender.defeated = true;
+            defender.blocking = false;
+            defender.charges = 0;
+            defender.queuedAttackSteps.length = 0;
+            defender.exhaustion = 0;
 
             new SendMessageClientRequest({
                 channelId: this.channelId,
