@@ -1,7 +1,10 @@
 enum EffectId {
     Test,
     PoisonSpiritSnake,
-    WolfsBane
+    WolfsBane,
+    Sage,
+    Fox,
+    Yerba,
 }
 
 export default EffectId;
