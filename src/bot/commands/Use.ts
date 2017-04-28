@@ -10,7 +10,7 @@ export default class Use extends Command{
             description: 'Use an item',
             usage: 'use <itemName>',
             permissionNode: PermissionId.Use,
-            minParams: 2,
+            minParams: 1,
         });
     }
 
