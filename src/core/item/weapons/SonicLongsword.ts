@@ -14,6 +14,7 @@ export default new Weapon({
     title: 'Sonic Longsword',
     description: `A blade whose hilt generates an electric charge which is inflicted on enemies`,
     damageBlocked: 0.05,
+    goldValue: 100,
     useRequirements:{
         Agility: 20
     },

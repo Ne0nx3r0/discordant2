@@ -15,6 +15,7 @@ export default new Weapon({
     title: 'Hand Axe',
     description: 'A basic weapon whose history and use dates back to prehistoric times',
     damageBlocked: 0.05,
+    goldValue: 30,
     useRequirements:{
         Strength: 10
     },

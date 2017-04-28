@@ -14,6 +14,7 @@ export default new Weapon({
     title: 'Hunting Sword',
     description: 'A straight, pointed blade used to quickly and silently finish off prey before its calls can alert other, larger predators to the meal.',
     damageBlocked: 0.05,
+    goldValue: 30,
     useRequirements: {
         Strength: 12
     },//no use requirements

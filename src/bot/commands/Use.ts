@@ -29,6 +29,9 @@ export default class Use extends Command{
 
         const useMessage = await bag.socket.useItem(bag.message.author.id,item.id);
 
-        bag.message.channel.sendMessage(useMessage);
+        //May be null
+        if(useMessage){
+            bag.message.channel.sendMessage(useMessage);
+        }
     }
 }

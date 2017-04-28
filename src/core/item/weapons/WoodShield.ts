@@ -16,6 +16,7 @@ export const WoodShield = new Weapon({
     title: 'Wood Shield',
     description: 'A classic defense among foot soldiers and city guard, many of these were shattered as militia steel quelled the great beasts that took to roaming the plains.',
     damageBlocked: 0.30,
+    goldValue: 50,
     useRequirements: {
         Strength: 10
     },

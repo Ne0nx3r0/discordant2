@@ -6,11 +6,18 @@ enum ItemId {
     WornLeathers,
     TabletOfHealing,
     SonicLongsword,
-    HealingVial,
+    Vial,
     TableOfPoison,
     GoblinRaidingPartyWeapon,
     GoblinSneakPoisonWeapon,
     ScarabToken,
+    Agave,
+    Acai,
+    Bane,
+    Sage,
+    Fox,
+    Yerba,
+    Mezcal,
 }
 
 export default ItemId;

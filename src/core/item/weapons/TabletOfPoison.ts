@@ -14,6 +14,7 @@ export default new Weapon({
     title: 'Tablet of Poison',
     description: 'A stone tablet engraved with strange characters which read aloud can poison enemies',
     damageBlocked: 0.05,
+    goldValue: 100,
     useRequirements:{
         Spirit: 18
     },

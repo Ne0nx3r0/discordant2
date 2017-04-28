@@ -16,6 +16,7 @@ export default new Weapon({
     description: 'A creature item',
     damageBlocked: 0.05,
     useRequirements:{},
+    goldValue:0,
     attacks: [
         new WeaponAttack({
             title: 'toxicspray',

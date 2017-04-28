@@ -1,7 +1,7 @@
 interface IDamageSet{
     physical?:number;
     fire?:number;
-    cold?:number;
+    acid?:number;
     thunder?:number;
     chaos?:number;//resistance = lowest of the four other resistances
 }

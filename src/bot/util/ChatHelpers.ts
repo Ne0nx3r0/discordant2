@@ -7,6 +7,7 @@ export const EMBED_COLORS = {
     POISON: 0x6D066A,
     ERROR: 0xAA1100,
     TEST: 0xE1F4EF,
+    BOOST: 0xB4FAB4,
 }/*
 export const EMBED_COLORS = {
     newRound: 0xFFA500,

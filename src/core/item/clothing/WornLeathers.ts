@@ -10,6 +10,7 @@ class WornLeathers extends ItemEquippable{
             title: 'Worn Leathers',
             description: `A set of hardened animal hide braces that cover the chest, arms and legs 
 +20% Physical Resistance`,
+            goldValue: 30,
             slotType:'armor',
             onAddBonuses:function(stats:ICreatureStatSet){
                 stats.resistances.physical += 0.2;

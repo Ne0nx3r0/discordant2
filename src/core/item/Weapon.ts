@@ -17,6 +17,7 @@ interface ItemWeaponBag{
     id:number;
     title:string;
     description:string;
+    goldValue: number;
     damageBlocked:number;
     chanceToCritical?: number;
     criticalMultiplier?: number;
@@ -36,6 +37,7 @@ export default class Weapon extends ItemEquippable{
             id:bag.id,
             title:bag.title,
             description:bag.description,
+            goldValue: bag.goldValue,
             slotType:'weapon'//also offhand, but for slot type they are all primary
         });
 

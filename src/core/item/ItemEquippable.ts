@@ -31,11 +31,7 @@ export default class ItemEquippable extends ItemBase{
     onAddBonuses?:OnAddBonusesHandler;
 
     constructor(bag:ItemEquippableBag){
-        super({
-            id: bag.id,
-            title: bag.title,
-            description: bag.description
-        });
+        super(bag);
 
         this.slotType = bag.slotType;
 

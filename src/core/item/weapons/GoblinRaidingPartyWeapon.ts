@@ -13,6 +13,7 @@ export default  new Weapon({
     title:'Goblin Raiding Party Weapons',
     description:'',
     damageBlocked: 0,
+    goldValue:0,
     useRequirements:{},
     chanceToCritical: 0,
     attacks:[

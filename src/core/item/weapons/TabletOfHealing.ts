@@ -13,6 +13,7 @@ export default new Weapon({
     title: 'Tablet of Healing',
     description: 'A stone tablet engraved with strange characters which read aloud can heal the reader.',
     damageBlocked: 0.05,
+    goldValue: 120,
     useRequirements:{
         Spirit: 16
     },

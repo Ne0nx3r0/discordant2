@@ -59,7 +59,7 @@ export default class Creature{
             resistances:{
                 physical:0,
                 fire:0,
-                cold:0,
+                acid:0,
                 thunder:0,
                 chaos:0,
             },
@@ -82,13 +82,13 @@ export default class Creature{
         stats.hpTotal += stats.vitality * 10,
 
         stats.resistances.fire = Math.floor(stats.agility/3)/100;
-        stats.resistances.cold = Math.floor(stats.strength/3)/100;
+        stats.resistances.acid = Math.floor(stats.vitality/3)/100;
         stats.resistances.thunder = Math.floor(stats.luck/3)/100;
 
         stats.resistances.chaos = Math.min(
             stats.resistances.physical,
             stats.resistances.fire,
-            stats.resistances.cold,
+            stats.resistances.acid,
             stats.resistances.thunder,
         );
 

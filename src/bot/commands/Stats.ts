@@ -58,7 +58,7 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     const resistancesStr = ''
     +'\n'+Math.floor(pc.stats.resistances.physical*100)+'% Physical'
     +'\n'+Math.floor(pc.stats.resistances.fire*100)+'%'+' Fire'
-    +'\n'+Math.floor(pc.stats.resistances.cold*100)+'%'+' Cold'
+    +'\n'+Math.floor(pc.stats.resistances.acid*100)+'%'+' Acid'
     +'\n'+Math.floor(pc.stats.resistances.thunder*100)+'% Thunder';
 
     const characterClass = CharacterClasses.get(pc.class);

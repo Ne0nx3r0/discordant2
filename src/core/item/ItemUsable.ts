@@ -22,11 +22,7 @@ export default class ItemUsable extends ItemBase{
     battleExhaustion: number;
 
     constructor(bag:ItemUsableBag){
-        super({
-            id:bag.id,
-            title:bag.title,
-            description:bag.description
-        });
+        super(bag);
 
         this.canUse = bag.canUse;
         this.onUse = bag.onUse;
