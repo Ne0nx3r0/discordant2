@@ -16,13 +16,13 @@ export default class BattleTemporaryEffectAttributeBoost extends BattleTemporary
             id: bag.id,
             title: bag.title,
             onAdded:function(effectBag){
-                effectBag.sendBattleEmbed(`${effectBag.target.title}'s ${bag.attribute} is boosted by ${bag.title}!`,EMBED_COLORS.BOOST);
+                effectBag.sendBattleEmbed(`${effectBag.target.title}'s ${Attribute[bag.attribute]} is boosted by ${bag.title}!`,EMBED_COLORS.BOOST);
             },
             onRemoved:function(effectBag){
                 effectBag.sendBattleEmbed(`${effectBag.target.title}'s ${bag.title} wore off`,EMBED_COLORS.ACTION);
             },
             onAddBonuses:function(stats){
-                stats[bag.attribute] += bag.amount;
+                stats[Attribute[bag.attribute]] += bag.amount;
             }
         });
     }
