@@ -20,5 +20,9 @@ export default class PvPBattleEndedClientRequest extends ClientRequest{
         bag.channel.sendMessage('',getEmbed(`:tada: ${data.winner.title} has defeated ${data.loser.title} :tada:`));
 
         bag.channel.sendMessage('',getEmbed(`Channel will expire in 1 minute`));
+        
+        setTimeout(function(){
+            bag.channel.delete();
+        },60000);
     }
 }
