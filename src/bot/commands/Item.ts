@@ -72,7 +72,13 @@ export default class Item extends Command{
 
             embed.addField(
                 'Use Requirements',
-                useRequirementsStr
+                useRequirementsStr,
+                true
+            );
+
+            embed.addField(
+                'Sell Value',
+                item.goldValue,true
             );
 
             const attacksStr = weapon.attacks
@@ -96,7 +102,7 @@ Exhausts ${attack.exhaustion} points${chargesRequired}`;
         }
         else{
             bag.message.channel.sendMessage('',this.getEmbed(`
-                ${item.title}
+                ${item.title} (${item.goldValue}GP)
 
                 ${item.description}
             `,EmbedColors.INFO));

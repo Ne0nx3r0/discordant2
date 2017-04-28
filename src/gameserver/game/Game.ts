@@ -1004,7 +1004,13 @@ export default class Game {
             throw `You only have ${amountHas} ${item.title}`;
         }
 
-        await DBSellItem(this.db,pc.uid,item.id,amountToSell,amountToSell*item.goldValue);
+        const totalValue = amountToSell * item.goldValue;
+
+        await DBSellItem(this.db,pc.uid,item.id,amountToSell,totalValue);
+
+        pc.inventory._removeItem(item,amountToSell);
+
+        pc.gold += totalValue;
     }
 
     async getNewestActiveMarketOffers(page:number):Promise<Array<SocketActiveMarketOffer>>{
