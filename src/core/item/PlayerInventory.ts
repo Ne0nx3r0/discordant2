@@ -45,8 +45,8 @@ export default class PlayerInventory{
         }
     }
 
-    hasItem(item:ItemBase,amount?:number):boolean{
-        if(!amount) amount = 1;
+    hasItem(item:ItemBase,amount:number):boolean{
+        if(amount) amount = 1;
 
         const itemBase = this.items.get(item.id);
         

@@ -390,6 +390,7 @@ export default class SocketClientRequester{
             uid: playerUid,
             item: item.id,
             amount: amount,
-        });
+        })
+        .send(this.sioc);
     }
 }

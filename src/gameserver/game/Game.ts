@@ -296,7 +296,7 @@ export default class Game {
             throw 'Invalid item id '+itemId;
         }
 
-        if(!player.inventory.hasItem(itemBase)){
+        if(!player.inventory.hasItem(itemBase,1)){
             throw `You have no ${itemBase.title}`;
         }
         
@@ -982,7 +982,7 @@ export default class Game {
         return offers;
     }
 
-    async sellItem(playerUid:string,itemId:number,amount:number):Promise<void>{
+    async sellItem(playerUid:string,itemId:number,amountToSell:number):Promise<void>{
         const pc = await this.getPlayerCharacter(playerUid);
 
         if(!pc){
@@ -995,18 +995,16 @@ export default class Game {
             throw 'Invalid item id '+itemId;
         }
 
-        if(!pc.inventory.hasItem(item,amount)){
-            const amountHas = pc.inventory.getItemAmount(item);
+        const amountHas = pc.inventory.getItemAmount(item);
 
-            if(amountHas == 0){
-                throw 'You do not have any '+item.title;
-            }
-            else{
-                throw `You only have ${amountHas} ${item.title}`;
-            }
+        if(amountHas == 0){
+            throw 'You do not have any '+item.title;
+        }
+        else if(amountHas < amountToSell){
+            throw `You only have ${amountHas} ${item.title}`;
         }
 
-        await DBSellItem(this.db,pc.uid,item.id,amount,amount*item.goldValue);
+        await DBSellItem(this.db,pc.uid,item.id,amountToSell,amountToSell*item.goldValue);
     }
 
     async getNewestActiveMarketOffers(page:number):Promise<Array<SocketActiveMarketOffer>>{

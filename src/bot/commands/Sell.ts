@@ -25,10 +25,10 @@ export default class Sell extends Command{
         //assume everything after the first element is the item name
         if(isNaN(amountToSell)){
             amountToSell = 1;
-            itemWantedStr = bag.params.slice(1).join(' ');
+            itemWantedStr = bag.params.slice(0).join(' ');
         }
         else{
-            itemWantedStr = bag.params.slice(1,-1).join(' ');
+            itemWantedStr = bag.params.slice(0,-1).join(' ');
         }
 
         const itemWanted = bag.items.findByName(itemWantedStr);
@@ -40,7 +40,7 @@ export default class Sell extends Command{
         }
 
         if(amountToSell < 1){
-            bag.message.channel.sendMessage('You cannot sell a negative item, '+bag.message.author.username);
+            bag.message.channel.sendMessage('You must sell at least 1, '+bag.message.author.username);
 
             return;
         }
