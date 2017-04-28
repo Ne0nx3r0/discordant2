@@ -52,6 +52,7 @@ import PvPBattleExpiredClientRequest from '../../client/requests/PvPBattleExpire
 import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
 import GetEarnedWishes from '../../util/GetEarnedWishes';
 import DBRespecPlayer from '../db/api/DBRespecPlayer';
+import { DBSellItem } from "../db/api/DBSellItem";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -979,6 +980,33 @@ export default class Game {
         const offers = DBGetUserMarketOffers(this.db,pc.uid);
 
         return offers;
+    }
+
+    async sellItem(playerUid:string,itemId:number,amount:number):Promise<void>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'Player not found';
+        }
+
+        const item = this.items.get(itemId);
+
+        if(!item){
+            throw 'Invalid item id '+itemId;
+        }
+
+        if(!pc.inventory.hasItem(item,amount)){
+            const amountHas = pc.inventory.getItemAmount(item);
+
+            if(amountHas == 0){
+                throw 'You do not have any '+item.title;
+            }
+            else{
+                throw `You only have ${amountHas} ${item.title}`;
+            }
+        }
+
+        await DBSellItem(this.db,pc.uid,item.id,amount,amount*item.goldValue);
     }
 
     async getNewestActiveMarketOffers(page:number):Promise<Array<SocketActiveMarketOffer>>{

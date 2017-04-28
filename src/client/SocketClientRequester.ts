@@ -55,6 +55,7 @@ import ConvertWishesToGoldRequest from "../gameserver/socket/requests/ConvertWis
 import { ConvertWishesToGoldResponse } from '../gameserver/socket/requests/ConvertWishesToGoldRequest';
 import BattleChargeRequest from "../gameserver/socket/requests/BattleChargeRequest";
 import RespecPlayerRequest from "../gameserver/socket/requests/RespecPlayerRequest";
+import SellItemRequest from '../gameserver/socket/requests/SellItemRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -382,5 +383,13 @@ export default class SocketClientRequester{
             uid: playerUid
         })
         .send(this.sioc);
+    }
+
+    async sellItem(playerUid:string,item:ItemBase,amount:number):Promise<void>{
+        await new SellItemRequest({
+            uid: playerUid,
+            item: item.id,
+            amount: amount,
+        });
     }
 }
