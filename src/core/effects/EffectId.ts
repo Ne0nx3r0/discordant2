@@ -5,6 +5,7 @@ enum EffectId {
     Sage,
     Fox,
     Yerba,
+    Rage,
 }
 
 export default EffectId;

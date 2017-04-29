@@ -1,7 +1,7 @@
 import Creature from '../Creature';
 import CreatureId from '../CreatureId';
 import CreatureEquipment from '../../item/CreatureEquipment';
-import { BareHands, HandAxe, WornLeathers, WoodShield } from '../../item/ItemsIndex';
+import { BareHands, HandAxe, WornLeathers, WoodShield, StoneDagger } from '../../item/ItemsIndex';
 import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
 
@@ -23,7 +23,7 @@ export default class GoblinSoldier extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 armor: WornLeathers,
                 offhand: WoodShield,
-                weapon: HandAxe,
+                weapon: StoneDagger,
             }),
             wishesDropped: 30,
         });

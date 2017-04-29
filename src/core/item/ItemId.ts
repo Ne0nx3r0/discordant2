@@ -18,6 +18,8 @@ enum ItemId {
     Fox,
     Yerba,
     Mezcal,
+    StoneAxe,
+    StoneDagger,
 }
 
 export default ItemId;
