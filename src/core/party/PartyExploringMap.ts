@@ -1,6 +1,7 @@
 import ExplorableMap from '../map/ExplorableMap';
 import Game from '../../gameserver/game/Game';
 import { SendPartyMessageFunc } from '../map/EventTile';
+import PlayerCharacter from '../creature/player/PlayerCharacter';
 
 type PartyMoveDirection = 'U' | 'L' | 'D' | 'R';
 
@@ -71,6 +72,30 @@ export default class PartyExploringMap{
             });
 
             this.onEnterRunCounts.set(xDashY,runCounts+1);
+        }
+    }
+
+    onInteractCurrentTile(player:PlayerCharacter){
+        const xDashY = this.currentX+'-'+this.currentY;
+
+        const event = this.map.getTileEvent(xDashY);
+
+        const runCounts = this.onInteractRunCounts.get(xDashY) || 0;
+
+        if(event && event.onInteract){
+            if(!event.onInteract({
+                runCount: runCounts,
+                sendPartyMessage: this.sendPartyMessage,
+                game: this.game,
+                player: player,
+            })){
+                this.sendPartyMessage('Nothing of interest here...');
+            }
+
+            this.onInteractRunCounts.set(xDashY,runCounts+1);
+        }
+        else{
+            this.sendPartyMessage(`There doesn't seem to be anything of interest here`);
         }
     }
 }

@@ -45,6 +45,7 @@ import ConvertWishesToGoldRequest from './requests/ConvertWishesToGoldRequest';
 import BattleChargeRequest from './requests/BattleChargeRequest';
 import { RespecPlayerData, default as RespecPlayerRequest } from './requests/RespecPlayerRequest';
 import SellItemRequest from './requests/SellItemRequest';
+import InteractWithCurrentTileRequest from './requests/InteractWithCurrentTileRequest';
 
 interface SocketServerBag{
     port:number;
@@ -118,6 +119,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new BattleChargeRequest(null));
             this.registerHandler(registeredEvents,client,new RespecPlayerRequest(null));
             this.registerHandler(registeredEvents,client,new SellItemRequest(null));
+            this.registerHandler(registeredEvents,client,new InteractWithCurrentTileRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

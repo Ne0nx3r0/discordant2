@@ -56,6 +56,7 @@ import { ConvertWishesToGoldResponse } from '../gameserver/socket/requests/Conve
 import BattleChargeRequest from "../gameserver/socket/requests/BattleChargeRequest";
 import RespecPlayerRequest from "../gameserver/socket/requests/RespecPlayerRequest";
 import SellItemRequest from '../gameserver/socket/requests/SellItemRequest';
+import InteractWithCurrentTileRequest from '../gameserver/socket/requests/InteractWithCurrentTileRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -264,6 +265,13 @@ export default class SocketClientRequester{
         return new MovePartyRequest({
             uid: leaderUid,
             direction: direction
+        })
+        .send(this.sioc);
+    }
+
+    async interactWithCurrentTile(playerUid:string):Promise<void>{
+        await new InteractWithCurrentTileRequest({
+            uid: playerUid
         })
         .send(this.sioc);
     }

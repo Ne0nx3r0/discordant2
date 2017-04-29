@@ -5,10 +5,7 @@ export const EventTileAcai = new EventTile({
     onEnter: function(bag){
         if(bag.runCount == 0){
             bag.sendPartyMessage(`There's a small patch of acai plants.`);
-            
-            return true;
         }
-        return false;
     },
     onInteract: function(bag){
         if(bag.runCount == 0){

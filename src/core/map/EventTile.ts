@@ -16,7 +16,7 @@ export interface EventTileInteractBag extends EventTileHandlerBag{
 }
 
 interface EventTileHandlerFunc{
-    (bag:EventTileHandlerBag):boolean;
+    (bag:EventTileHandlerBag):void;
 }
 
 interface EventTileInteractHandlerFunc{
@@ -32,7 +32,7 @@ export interface EventTileBag{
 export default class EventTile{
     onEnter:EventTileHandlerFunc;
     onExit:EventTileHandlerFunc;
-    onInteract:EventTileHandlerFunc;
+    onInteract:EventTileInteractHandlerFunc;
 
     constructor(bag:EventTileBag){
         this.onEnter = bag.onEnter;

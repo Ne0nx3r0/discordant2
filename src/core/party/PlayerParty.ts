@@ -1,4 +1,4 @@
-import PlayerCharacter from "../creature/player/PlayerCharacter";
+import PlayerCharacter from '../creature/player/PlayerCharacter';
 import PartyExploringMap, { PartyMoveDirection } from "./PartyExploringMap";
 import Game from "../../gameserver/game/Game";
 import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
@@ -174,6 +174,20 @@ export default class PlayerParty{
         });
 
         this.exploration.onEnterCurrentTile();
+    }
+
+    playerActionInteract(uid:string):void{
+        const partyMember = this.members.get(uid);
+
+        if(partyMember == null){
+            throw 'You are not in this party';
+        }
+
+        if(this.status != PartyStatus.Exploring){
+            throw 'The party is not currently exploring';
+        }
+
+        this.exploration.onInteractCurrentTile(partyMember);
     }
 
     sendCurrentMapImageFile(msg:string){

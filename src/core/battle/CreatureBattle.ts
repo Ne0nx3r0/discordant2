@@ -122,7 +122,7 @@ export default class CreatureBattle{
             addParticipant(c,2);
         });
 
-        setTimeout(this._roundTick.bind(this),ATTACK_TICK_MS);
+        setTimeout(this._roundTick.bind(this),ATTACK_TICK_MS/2);
     }
 
     _roundTick(){
@@ -219,6 +219,10 @@ export default class CreatureBattle{
                 const waitToAttackMS = (ATTACK_WAIT_MAX_MS - ATTACK_WAIT_MIN_MS) * p.creature.attackDelay;
 
                 setTimeout(()=>{
+                    if(this.battleHasEnded){
+                        return;
+                    }
+
                     const pai = p.creature as CreatureAIControlled;
 
                     const randomAttack = pai.getRandomAttack();
