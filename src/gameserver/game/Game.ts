@@ -646,7 +646,7 @@ export default class Game {
             throw 'Only the party leader can direct the party!';
         }
 
-        party.explore(WesternGate2Map);
+        party.explore(WesternGate2Map,26,22);
     }
 
     async invitePlayerToParty(leaderUid:string,inviteUid:string):Promise<void>{

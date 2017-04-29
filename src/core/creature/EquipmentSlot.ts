@@ -1,7 +1,7 @@
 export type EquipmentSlot = 
     'amulet' |
     'armor' |
-    'bracer' |
+    'pouch' |
     'hat' |
     'offhand' |
     'ring' |

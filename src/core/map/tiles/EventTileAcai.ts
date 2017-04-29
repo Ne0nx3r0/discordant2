@@ -1,26 +1,25 @@
 import EventTile from '../EventTile';
+import ItemId from '../../item/ItemId';
 
-export class EventTileAcai extends EventTile{
-    constructor(x:number,y:number){
-        super({
-            x: x,
-            y: y,
-            onEnter: function(bag){
-                if(bag.runCount == 0){
-                    bag.sendPartyMessage(`There's a small patch of acai plants.`);
-                    return true;
-                }
-                return false;
-            },
-            onInteract: function(bag){
-                if(bag.runCount == 0){
-                    bag.sendPartyMessage(`You don't find anything of interest`);
-                    return true;
-                }
-                else{
-                    return false;
-                }
-            }
-        });
+export const EventTileAcai = new EventTile({
+    onEnter: function(bag){
+        if(bag.runCount == 0){
+            bag.sendPartyMessage(`There's a small patch of acai plants.`);
+            
+            return true;
+        }
+        return false;
+    },
+    onInteract: function(bag){
+        if(bag.runCount == 0){
+            bag.sendPartyMessage(`${bag.player.title} found an acai berry!`);
+
+            bag.game.grantPlayerItem(bag.player.uid,ItemId.Acai,1);
+
+            return true;
+        }
+        else{
+            return false;
+        }
     }
-}
+});

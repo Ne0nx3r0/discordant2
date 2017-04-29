@@ -24,7 +24,7 @@ export default class Inventory extends Command{
             let equipStr = '';
             
             if(c.startingEquipment.amulet) equipStr += ', '+c.startingEquipment.amulet.title;
-            if(c.startingEquipment.bracer) equipStr += ', '+c.startingEquipment.bracer.title;
+            if(c.startingEquipment.pouch) equipStr += ', '+c.startingEquipment.pouch.title;
             if(c.startingEquipment.ring) equipStr += ', '+c.startingEquipment.ring.title;
             if(c.startingEquipment.hat) equipStr += ', '+c.startingEquipment.hat.title;
             if(c.startingEquipment.armor) equipStr += ', '+c.startingEquipment.armor.title;

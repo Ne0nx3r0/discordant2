@@ -98,7 +98,7 @@ CREATE INDEX player_items_player_uid
 -- DROP TYPE public.equipmentslot;
 
 CREATE TYPE public.equipmentslot AS ENUM
-    ('armor', 'hat', 'bracer', 'ring', 'amulet', 'weapon', 'offhand');
+    ('armor', 'hat', 'pouch', 'ring', 'amulet', 'weapon', 'offhand');
 
 ALTER TYPE public.equipmentslot
     OWNER TO discordant;

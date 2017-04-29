@@ -82,8 +82,8 @@ export default class PlayerParty{
         return this.partyStatus;
     }
 
-    explore(map:ExplorableMap){
-        this.exploration = new PartyExploringMap(map);
+    explore(map:ExplorableMap,startX:number,startY:number){
+        this.exploration = new PartyExploringMap(map,this.game,this.sendChannelMessage.bind(this),startX,startY);
         this.partyStatus = PartyStatus.Exploring;
 
         this.sendCurrentMapImageFile('Your party arrives outside the city...');
@@ -104,13 +104,12 @@ export default class PlayerParty{
 
         if(this.exploration.getEncounterChance() > Math.random()){
             this.monsterEncounter();
-
-            return;
         }
+        else{
+            this.sendCurrentMapImageFile('Your party moved');
 
-        const startingLocationImageSrc = this.exploration.getCurrentLocationImage();
-
-        this.sendCurrentMapImageFile('Your party moved');
+            this.exploration.onEnterCurrentTile();
+        }
     }
 
     monsterEncounter(){
@@ -173,6 +172,8 @@ export default class PlayerParty{
         this.members.forEach(function(member){
             member.status = 'inParty';
         });
+
+        this.exploration.onEnterCurrentTile();
     }
 
     sendCurrentMapImageFile(msg:string){

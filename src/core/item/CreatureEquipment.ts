@@ -4,7 +4,7 @@ import Weapon from './Weapon';
 export type EquipmentSlot = 
     'amulet' |
     'armor' |
-    'bracer' |
+    'pouch' |
     'hat' |
     'offhand' |
     'ring' |
@@ -14,7 +14,7 @@ export type EquipmentSlot =
 const ValidEquipmentSlots = [
     'amulet',
     'armor',
-    'bracer',
+    'pouch',
     'hat',
     'offhand',
     'ring',
@@ -26,7 +26,7 @@ export {ValidEquipmentSlots};
 export interface EquipmentBag{
     amulet?: ItemEquippable;//element resistance, item find, critical hits
     armor?: ItemEquippable;//physical resistance
-    bracer?: ItemEquippable;//element resistance, item find, critical hits
+    pouch?: ItemEquippable;//element resistance, item find, critical hits
     hat?: ItemEquippable;// ?
     offhand?: Weapon;
     ring?: ItemEquippable;//element resistance, item find, critical hits
@@ -78,8 +78,8 @@ export default class CreatureEquipment{
         return this._items.amulet;
     }
 
-    get bracer():ItemEquippable{
-        return this._items.bracer;
+    get pouch():ItemEquippable{
+        return this._items.pouch;
     }
 
     get weapon():Weapon{
@@ -108,7 +108,7 @@ export default class CreatureEquipment{
 export interface SocketCreatureEquipment{
     amulet?: number;
     armor?: number;
-    bracer?: number;
+    pouch?: number;
     hat?: number;
     offhand?: number;
     ring?: number;

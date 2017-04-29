@@ -1,4 +1,6 @@
 import ExplorableMap from '../map/ExplorableMap';
+import Game from '../../gameserver/game/Game';
+import { SendPartyMessageFunc } from '../map/EventTile';
 
 type PartyMoveDirection = 'U' | 'L' | 'D' | 'R';
 
@@ -8,14 +10,24 @@ export default class PartyExploringMap{
     map:ExplorableMap;
     currentX:number;
     currentY:number;
+    game: Game;
+    sendPartyMessage:SendPartyMessageFunc;
+    onEnterRunCounts:Map<string,number>;
+    onExitRunCounts:Map<string,number>;
+    onInteractRunCounts:Map<string,number>;
 
-    constructor(map:ExplorableMap){
+    constructor(map:ExplorableMap,game:Game,sendPartyMessage:SendPartyMessageFunc,startX:number,startY:number){
         this.map = map;
 
-        const startingPoint = map.getStartingPoint();
+        this.currentX = startX;
+        this.currentY = startY;
 
-        this.currentX = startingPoint.x;
-        this.currentY = startingPoint.y;
+        this.game = game;
+        this.sendPartyMessage = sendPartyMessage;
+
+        this.onEnterRunCounts = new Map();
+        this.onExitRunCounts = new Map();
+        this.onInteractRunCounts = new Map();
     }
 
     getCurrentLocationImage(){
@@ -23,14 +35,14 @@ export default class PartyExploringMap{
     }
 
     canMove(direction:PartyMoveDirection){
-                if(direction == 'U') return this.map.isWalkable(this.currentX,this.currentY-1);
-         else if(direction == 'D') return this.map.isWalkable(this.currentX,this.currentY+1);
-         else if(direction == 'L') return this.map.isWalkable(this.currentX-1,this.currentY);
+             if(direction == 'U') return this.map.isWalkable(this.currentX,this.currentY-1);
+        else if(direction == 'D') return this.map.isWalkable(this.currentX,this.currentY+1);
+        else if(direction == 'L') return this.map.isWalkable(this.currentX-1,this.currentY);
         else if(direction == 'R') return this.map.isWalkable(this.currentX+1,this.currentY);
     }
 
     move(direction:PartyMoveDirection){
-        if(direction == 'U') this.currentY -= 1;
+             if(direction == 'U') this.currentY -= 1;
         else if(direction == 'D') this.currentY += 1;
         else if(direction == 'L') this.currentX -= 1;
         else if(direction == 'R') this.currentX += 1;
@@ -42,5 +54,23 @@ export default class PartyExploringMap{
 
     getRandomEncounterMonsterId():number{
         return this.map.getRandomEncounterMonsterId();
+    }
+
+    onEnterCurrentTile(){
+        const xDashY = this.currentX+'-'+this.currentY;
+
+        const event = this.map.getTileEvent(xDashY);
+
+        const runCounts = this.onEnterRunCounts.get(xDashY) || 0;
+
+        if(event && event.onEnter){
+            event.onEnter({
+                runCount: runCounts,
+                sendPartyMessage: this.sendPartyMessage,
+                game: this.game,
+            });
+
+            this.onEnterRunCounts.set(xDashY,runCounts+1);
+        }
     }
 }

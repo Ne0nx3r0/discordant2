@@ -1,6 +1,7 @@
-const TRIGGER_START_POINT = 2;
+import EventTile from "./EventTile";
+import { IMapData } from './IMapData';
 
-interface StartingPoint{
+interface StartingPoint {
     x:number;
     y:number;
 }
@@ -41,58 +42,56 @@ export default class ExplorableMap{
     name:string;
     triggersLayer:number;
     mapJson:MapJson;
-    mapDataJson:MapDataJson;
+    mapData:IMapData;
+    eventTiles:Map<string,EventTile>;
 
-    constructor(name:string,mapJson:MapJson,mapDataJson:MapDataJson){
+    constructor(name:string,mapJson:MapJson,mapData:IMapData){
         this.name = name;
         this.mapJson = mapJson;
-        this.mapDataJson = mapDataJson;
+        this.mapData = mapData;
         
         for(var i=0;i<this.mapJson.layers.length;i++){
             const layer = this.mapJson.layers[i];
 
-            if(layer.name == 'triggers'){
+            if(layer.name == 'walls'){
                 this.triggersLayer = i;
                 break; 
             }
         }
 
         if(this.triggersLayer === undefined){
-            throw 'No trigger layer defined in map '+this.name;
+            throw 'No walls layer defined in map '+this.name;
         }
+
+        this.eventTiles = new Map();
+
+        mapData.eventTiles.forEach((mapEventTile)=>{
+            mapEventTile.coords.forEach((coords)=>{
+                this.eventTiles.set(coords.x+'-'+coords.y,mapEventTile.event);
+            });
+        });
     }
 
     getMapSlicePath(x:number,y:number):string{
         return './assets/maps/'+this.name+'/slices/'+x+'-'+y+'.png';
     }
 
-    getStartingPoint():StartingPoint{
-        const triggerData = this.mapJson.layers[this.triggersLayer].data;
-
-        for(var i=0;i<triggerData.length;i++){
-            if(triggerData[i] == TRIGGER_START_POINT){
-                return {
-                    x: i % this.mapJson.width + 1,
-                    y: Math.floor(i/this.mapJson.width)+1,
-                };
-            }
-        }
-
-        throw 'Starting point not found for map '+this.name;
-    }
-
-    isWalkable(x,y):boolean{
+    isWalkable(x:number,y:number):boolean{
         return this.mapJson.layers[this.triggersLayer].data[(y-1)*this.mapJson.width+x-1] != 1;
     }
 
     getEncounterChance(){
-        return this.mapDataJson.encounterChance;
+        return this.mapData.encounterChance;
+    }
+
+    getTileEvent(xDashY:string){
+        return this.eventTiles.get(xDashY);
     }
 
     getRandomEncounterMonsterId(){
         let totalWeight = 0;
         
-        this.mapDataJson.encounters
+        this.mapData.encounters
         .forEach(function(encounter){
             totalWeight += encounter.weight;
         });
@@ -100,8 +99,8 @@ export default class ExplorableMap{
         const roll = Math.random() * totalWeight;
         let currentWeight = 0;
 
-        for(var i=0;i<this.mapDataJson.encounters.length;i++){
-            const encounter = this.mapDataJson.encounters[i];
+        for(var i=0;i<this.mapData.encounters.length;i++){
+            const encounter = this.mapData.encounters[i];
 
             currentWeight += encounter.weight;
 
