@@ -11,6 +11,7 @@ export default class GoblinRaidingParty extends CreatureAIControlled{
         super({
             id: CreatureId.GoblinRaidingParty,
             title: 'Goblin Raiding Party',
+            attackDelay: 0.75,
             description: 'A roaming party of goblins looking for careless adventurer\'s to rob... or worse.',
             attributes: new AttributeSet({
                 strength: 18,

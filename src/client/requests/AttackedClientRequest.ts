@@ -26,11 +26,11 @@ export default class AttackedClientRequest extends ClientRequest{
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestAttackedData):Promise<void>{
         const criticalMsg = data.isCritical ? '**CRITICAL HIT** ' : '';
-        let embed = criticalMsg+data.message+'\n';
+        let embed = data.message+'\n';
 
         data.attacked.forEach(function(attacked){
             if(Object.keys(attacked.damages).length > 0){
-                embed += '\n'+getDamagesLine(
+                embed += '\n'+criticalMsg+getDamagesLine(
                     attacked.creature,
                     attacked.damages,
                     attacked.blocked,

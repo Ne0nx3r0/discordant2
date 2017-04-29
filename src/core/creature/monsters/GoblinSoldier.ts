@@ -10,6 +10,7 @@ export default class GoblinSoldier extends CreatureAIControlled{
         super({
             id: CreatureId.GoblinSoldier,
             title: 'Goblin Soldier',
+            attackDelay: 0.75,
             description: 'A trained goblin, normally serves as a scout or a member of raiding parties',
             attributes: new AttributeSet({
                 strength: 8,

@@ -66,6 +66,8 @@ export enum BattleResult{
 
 const INACTIVE_ROUNDS_BEFORE_CANCEL_BATTLE = 10;
 const ATTACK_TICK_MS = 10000;
+const ATTACK_WAIT_MIN_MS = 500;
+const ATTACK_WAIT_MAX_MS = 8000;
 
 export default class CreatureBattle{
     channelId:string;
@@ -212,24 +214,30 @@ export default class CreatureBattle{
                 continue;
             }
 
-// For AI participants if they don't have a queued attack send a random attack
-            if(p.queuedAttackSteps.length == 0 && p.creature instanceof CreatureAIControlled){
-                const pai = p.creature as CreatureAIControlled;
+// For AI participants if they aren't exhausted and don't have a queued attack send a random attack
+            if(p.exhaustion < 1 && p.queuedAttackSteps.length == 0 && p.creature instanceof CreatureAIControlled){
+                const waitToAttackMS = (ATTACK_WAIT_MAX_MS - ATTACK_WAIT_MIN_MS) * p.creature.attackDelay;
 
-                const randomAttack = pai.getRandomAttack();
+                setTimeout(()=>{
+                    const pai = p.creature as CreatureAIControlled;
 
-                const opponents = [];
+                    const randomAttack = pai.getRandomAttack();
 
-                //so long as the battle is going on this should find something
-                this.participants.forEach(function(opponent){
-                    if(!opponent.defeated && opponent.teamNumber != p.teamNumber){
-                        opponents.push(opponent);
+                    const opponents = [];
+
+                    //so long as the battle is going on this should find something
+                    this.participants.forEach(function(opponent){
+                        if(!opponent.defeated && opponent.teamNumber != p.teamNumber){
+                            opponents.push(opponent);
+                        }
+                    });
+
+                    if(opponents.length > 0){
+                        const randomOpponent = opponents[Math.floor(Math.random() * opponents.length)];
+
+                        this._creatureAttack(p,randomAttack,randomOpponent);
                     }
-                });
-
-                const randomOpponent = opponents[Math.floor(Math.random() * opponents.length)];
-
-                this._creatureAttack(p,randomAttack,randomOpponent);
+                },waitToAttackMS);
             }
             else if(p.queuedAttackSteps.length > 0){
                 this._sendNextAttackStep(p);

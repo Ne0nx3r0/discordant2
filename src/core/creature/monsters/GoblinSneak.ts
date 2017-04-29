@@ -10,6 +10,7 @@ export default class GoblinSneak extends CreatureAIControlled{
         super({
             id: CreatureId.GoblinSneak,
             title: 'Goblin Sneak',
+            attackDelay: 0.5,
             description: 'A goblin master of poisons',
             attributes: new AttributeSet({
                 strength: 4,
