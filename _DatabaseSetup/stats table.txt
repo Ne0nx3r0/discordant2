@@ -1,0 +1,3 @@
+stat_str:varchar (indexed)
+value:integer
+player_uid:bigint (indexed)

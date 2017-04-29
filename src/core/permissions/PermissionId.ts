@@ -33,6 +33,7 @@ enum PermissionId{
     Shutdown,
     SetPlayingGame,
     Sell,
+    Lead,
 
     Eval,
     SetRole,
