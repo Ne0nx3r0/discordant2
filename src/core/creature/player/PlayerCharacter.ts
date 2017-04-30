@@ -15,14 +15,6 @@ type PlayerStatus = 'inCity' | 'invitedToPVPBattle' | 'inBattle' | 'invitedToPar
 
 export {PlayerStatus};
 
-interface BattleData{
-    battle:CreatureBattle;
-    defeated:boolean;
-    attackExhaustion:number,
-    queuedAttacks:Array<WeaponAttackStep>,
-    blocking:boolean,
-}
-
 interface PartyData{
     inviteExpires?:number;
     //party?:PlayerParty;
