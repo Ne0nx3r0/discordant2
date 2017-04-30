@@ -23,7 +23,7 @@ export default class GoblinSoldier extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 armor: WornLeathers,
                 offhand: WoodShield,
-                weapon: StoneDagger,
+                weapon: HandAxe,
             }),
             wishesDropped: 30,
         });

@@ -206,6 +206,9 @@ export default class CreatureBattle{
             }
         }
 
+//put together AI exhausted messages
+        const aiMessages = [];
+
 // Run one queued attack per participant if they have any
         for(var i = 0;i<this.participants.length;i++){
             const p = this.participants[i];
@@ -214,8 +217,14 @@ export default class CreatureBattle{
                 continue;
             }
 
+            if(p.exhaustion < 0 && p.creature instanceof CreatureAIControlled){
+                aiMessages.push(`${p.creature.title} is exhausted!`);
+
+                continue;
+            }
+
 // For AI participants if they aren't exhausted and don't have a queued attack send a random attack
-            if(p.exhaustion < 1 && p.queuedAttackSteps.length == 0 && p.creature instanceof CreatureAIControlled){
+            if(p.queuedAttackSteps.length == 0 && p.creature instanceof CreatureAIControlled){
                 const waitToAttackMS = (ATTACK_WAIT_MAX_MS - ATTACK_WAIT_MIN_MS) * p.creature.attackDelay;
 
                 setTimeout(()=>{
@@ -250,6 +259,15 @@ export default class CreatureBattle{
                     return;
                 }
             }
+        }
+
+// Send queued messages if there are any
+        if(aiMessages.length > 0){
+            new SendMessageClientRequest({
+                channelId: this.channelId,
+                message: aiMessages.join('\n'),
+            })
+            .send(this.getClient());
         }
 
 // Queue next tick

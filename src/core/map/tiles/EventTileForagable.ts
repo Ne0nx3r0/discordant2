@@ -1,18 +1,18 @@
 import EventTile from '../EventTile';
 import ItemId from '../../item/ItemId';
 
-export function EventTileForagable(){
+export function EventTileForagable(title:string,itemId:ItemId){
     return new EventTile({
         onEnter: function(bag){
             if(bag.runCount == 0){
-                bag.sendPartyMessage(`There's a small patch of yerba shrubs.`);
+                bag.sendPartyMessage(`There's a small patch of ${title} shrubs.`);
             }
         },
         onInteract: function(bag){
             if(bag.runCount == 0){
-                bag.sendPartyMessage(`${bag.player.title} found a yerba flower!`);
+                bag.sendPartyMessage(`${bag.player.title} found ${title}!`);
 
-                bag.game.grantPlayerItem(bag.player.uid,ItemId.Yerba,1);
+                bag.game.grantPlayerItem(bag.player.uid,itemId,1);
 
                 return true;
             }
