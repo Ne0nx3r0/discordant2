@@ -13,7 +13,7 @@ export default class PartyMove extends Command{
         super({
             name: 'partymove',
             description: 'Move the party',
-            usage: 'partymove',
+            usage: 'partymove <up|down|left|right>',
             permissionNode: PermissionId.PartyMove,
             minParams: 1,
         });

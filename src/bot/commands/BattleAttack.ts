@@ -60,7 +60,5 @@ export default class BattleAttack extends Command{
             attack.title,
             false
         );
-
-        bag.message.delete();
     }
 }

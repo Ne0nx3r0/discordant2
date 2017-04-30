@@ -31,7 +31,5 @@ export default class BattleCharge extends Command{
         }
 
         await bag.socket.sendBattleCharge(bag.message.author.id);
-
-        bag.message.delete();
     }
 }

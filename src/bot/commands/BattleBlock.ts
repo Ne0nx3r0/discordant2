@@ -34,7 +34,5 @@ export default class BattleAttack extends Command{
         const wantedAttackStr = bag.params.join(' ').toUpperCase();
 
         await bag.socket.sendBattleBlock(player.uid);
-
-        bag.message.delete();
     }
 }
