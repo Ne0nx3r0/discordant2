@@ -19,7 +19,7 @@ export default function GetEarnedWishes(bag:WishesBag){
 
     //If player is within 5 levels of the top player skip level difference penalty
     if(bag.highestLevel - bag.playerLevel <= 5){
-        return adjustedWishes;
+        return Math.round(adjustedWishes);
     }
 
     // Apply a penalty to players who are five levels below the highest player

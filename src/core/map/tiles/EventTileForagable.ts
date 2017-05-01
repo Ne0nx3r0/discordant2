@@ -10,9 +10,11 @@ export function EventTileForagable(title:string,itemId:ItemId){
         },
         onInteract: function(bag){
             if(bag.runCount == 0){
-                bag.sendPartyMessage(`${bag.player.title} found ${title}!`);
+                bag.sendPartyMessage(`${bag.player.title} found one ${title} for each party member`);
 
-                bag.game.grantPlayerItem(bag.player.uid,itemId,1);
+                bag.player.party.members.forEach(function(pc){
+                    bag.game.grantPlayerItem(pc.uid,itemId,1);
+                });
 
                 return true;
             }

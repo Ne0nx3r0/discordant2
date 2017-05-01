@@ -20,14 +20,14 @@ export default class Inventory extends Command{
             const commandStr = bag.params[0];
             let command = bag.commands.get(commandStr.toUpperCase());
 
-            let redirectedFrom = null;
+            let redirectedFrom = '';
 
             if(!command){
                 bag.commands.forEach((c)=>{
                     c.aliases.forEach((expandsTo,alias)=>{
                         if(commandStr == alias){
                             command = c;
-                            redirectedFrom = commandStr;
+                            redirectedFrom = `(Redirected from *${commandStr}*)`;
                         }
                     });
                 });
@@ -39,12 +39,24 @@ export default class Inventory extends Command{
                 return;
             }
 
+            let aliasesStr = '';
+
+            if(command.aliases.size > 0){
+                aliasesStr += 'Aliases:';
+                
+                command.aliases.forEach(function(expandsTo,alias){
+                    aliasesStr += `\n ${alias} => ${expandsTo}`;
+                });
+            }
+
             bag.message.channel.sendMessage('',this.getEmbed(`
-${bag.commandPrefix.toLowerCase()}**${command.name}** (Redirected from *${redirectedFrom}*)
+${bag.commandPrefix.toLowerCase()}**${command.name}** ${redirectedFrom}
 
 ${command.description}
 
 ${command.getUsage()}
+
+${aliasesStr}
             `));
 
             return; 

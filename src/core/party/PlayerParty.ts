@@ -174,7 +174,7 @@ export default class PlayerParty{
                 member.status = 'inParty';
             });
 
-            this.sendCurrentMapImageFile(this.getPartyIdentifier()+' arrive');
+            this.sendCurrentMapImageFile(this.getPartyIdentifier()+' arrives');
         }
         else{
             this.sendChannelMessage('Your party was defeated!');

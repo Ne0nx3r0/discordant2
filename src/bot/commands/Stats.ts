@@ -61,8 +61,6 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     +'\n'+Math.floor(pc.stats.resistances.acid*100)+'%'+' Acid'
     +'\n'+Math.floor(pc.stats.resistances.thunder*100)+'% Thunder';
 
-    const characterClass = CharacterClasses.get(pc.class);
-
     return {
         embed: {
             color: 3447003,
@@ -105,11 +103,6 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                 {
                     name: 'Offhand Weapon',
                     value: items.get(pc.equipment.offhand || 0).title,
-                    inline: true,
-                },
-                {
-                    name: 'Class',
-                    value: characterClass.title,
                     inline: true,
                 },
                 {
