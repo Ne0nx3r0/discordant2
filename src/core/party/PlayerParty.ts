@@ -69,11 +69,8 @@ export default class PlayerParty{
         this.leader.status = 'inParty';
     }
 
-    getPartyIdentifier(){
-        if(this.members.size > 1){
-            return 'Your party';
-        }
-        return 'You';
+    partyPlural(singular:string,plural:string){
+        return this.members.size > 1 ? plural : singular;
     }
 
     sendChannelMessage(msg:string){
@@ -96,12 +93,12 @@ export default class PlayerParty{
         this.exploration = new PartyExploringMap(map,this.game,this.sendChannelMessage.bind(this),startX,startY);
         this.partyStatus = PartyStatus.Exploring;
 
-        this.sendCurrentMapImageFile(this.getPartyIdentifier()+' arrives outside the city...');
+        this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + `at ${map.name}...`);
     }
 
     move(direction:PartyMoveDirection){
         if(this.partyStatus != PartyStatus.Exploring){
-            throw this.getPartyIdentifier()+' must be exploring a map.';
+            throw this.partyPlural('You','Your party')+' must be exploring a map.';
         }
 
         if(!this.exploration.canMove(direction)){
@@ -116,7 +113,7 @@ export default class PlayerParty{
             this.monsterEncounter();
         }
         else{
-            this.sendCurrentMapImageFile(this.getPartyIdentifier()+' moved');
+            this.sendCurrentMapImageFile(this.partyPlural('You','Your party moved')+' moved');
 
             this.exploration.onEnterCurrentTile();
         }
@@ -174,7 +171,7 @@ export default class PlayerParty{
                 member.status = 'inParty';
             });
 
-            this.sendCurrentMapImageFile(this.getPartyIdentifier()+' arrives');
+            this.sendCurrentMapImageFile(this.partyPlural('You survived!','Your party survived!'));
         }
         else{
             this.sendChannelMessage('Your party was defeated!');
@@ -200,7 +197,7 @@ export default class PlayerParty{
         }
 
         if(this.status != PartyStatus.Exploring){
-            throw this.getPartyIdentifier()+' is not currently exploring';
+            throw this.partyPlural('You are','Your party is')+' not currently exploring';
         }
 
         this.exploration.onInteractCurrentTile(partyMember);
