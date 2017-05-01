@@ -128,20 +128,19 @@ export default class CreatureBattleTurnBased{
     }
     
     turnBegin(){
-        this.participants.forEach((p)=>{
-            if(p.teamNumber == this.activeTeam){
-                p.exhausted = false;
-            }
-        });
-
-
 // Run any onRoundBegin effects
         for(var i=0;i<this.participants.length;i++){
             const p = this.participants[i];
 
+            if(p.teamNumber != this.activeTeam){
+                continue;
+            }
+
             if(p.defeated){
                 continue;
             }
+
+            p.exhausted = false;
 
             p.creature.tempEffects.forEach((roundsLeft,effect)=>{
                 if(p.defeated){
