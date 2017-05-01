@@ -46,13 +46,14 @@ import DBGetUserMarketOffers from "../db/api/DBGetUserMarketOffers";
 import DBBuyMarketOffer from "../db/api/DBBuyMarketOffer";
 import { PurchasedMarketOffer } from '../db/api/DBBuyMarketOffer';
 import DBConvertWishesToGold from "../db/api/DBConvertWishesToGold";
-import CreatureBattle, { IPostBattleBag, BattleResult } from "../../core/battle/CreatureBattle";
 import PvPBattleEndedClientRequest from "../../client/requests/PvPBattleEndedClientRequest";
 import PvPBattleExpiredClientRequest from '../../client/requests/PvPBattleExpiredClientRequest';
 import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
 import GetEarnedWishes from '../../util/GetEarnedWishes';
 import DBRespecPlayer from '../db/api/DBRespecPlayer';
 import { DBSellItem } from "../db/api/DBSellItem";
+import CreatureBattleTurnBased from '../../core/battle/CreatureBattleTurnBased';
+import { IPostBattleBag, BattleResult } from '../../core/battle/CreatureBattleTurnBased';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -68,7 +69,7 @@ export default class Game {
     items: AllItems;
     getClient: IGetRandomClientFunc;
     playerParties:Map<string,PlayerParty>;
-    activeBattles:Map<string,CreatureBattle>;
+    activeBattles:Map<string,CreatureBattleTurnBased>;
     mapUrlCache: MapUrlCache;
 
     constructor(bag:GameServerBag){
@@ -446,7 +447,8 @@ export default class Game {
     }
 
     async createPvPBattle(player1Uid:string,player2Uid:string,channelId:string):Promise<void>{
-        const sender = await this.getPlayerCharacter(player1Uid);
+        throw 'Temporarily disabled';
+        /*const sender = await this.getPlayerCharacter(player1Uid);
         const receiver = await this.getPlayerCharacter(player2Uid);
 
         if(this.activeBattles.has(channelId)){
@@ -511,7 +513,7 @@ export default class Game {
         this.activeBattles.set(channelId,battle);
 
         this.pvpInvites.delete(sender.uid);
-        this.pvpInvites.delete(receiver.uid);
+        this.pvpInvites.delete(receiver.uid);*/
     }
 
     async sendBattleAttack(uid:string,attackTitle:string,offhand:boolean,targetPlayerUid?:string):Promise<void>{
@@ -564,6 +566,44 @@ export default class Game {
         blocker.battle.playerActionBlock(blocker);
     }
 
+    async sendBattleSkip(requesterUid:string,skipUid:string){
+        const requester = await this.getPlayerCharacter(requesterUid);
+
+        if(!requester){
+            throw 'You are not registered yet';
+        }
+
+        if(requester.status != 'inBattle'){
+            throw 'You are not currently in a battle';
+        }
+
+        const skip = await this.getPlayerCharacter(skipUid);
+
+        if(!skip){
+            throw 'That person is not registered yet';
+        }
+
+        if(skip.status != 'inBattle'){
+            throw 'That person is not in this battle';
+        }
+
+        requester.battle.playerActionSkip(requester,skip);
+    }
+
+    async sendBattleRun(playerUid:string){
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'You are not registered yet';
+        }
+
+        if(pc.status != 'inBattle'){
+            throw 'You are not currently in a battle';
+        }
+
+        pc.battle.playerActionRun(pc);
+    }
+
     async sendBattleCharge(uid:string){
         const charger = await this.getPlayerCharacter(uid);
 
@@ -583,15 +623,15 @@ export default class Game {
         const partySize = bag.partyMembers.length;
         const highestLevel = Math.max(...bag.partyMembers.map(pc => pc.level));
 
-        const battle = new CreatureBattle({
+        const battle = new CreatureBattleTurnBased({
             channelId: bag.party.channelId,
+            startDelay: bag.startDelay,
             team1: bag.partyMembers,
             team2: [opponent],
+            runChance: bag.runChance,
             getClient: this.getClient.bind(this),
             battleCleanup: (battlePostBag:IPostBattleBag)=>{
-                const victory = battlePostBag.result == BattleResult.Team1Won;
-
-                if(victory){
+                if(battlePostBag.result == BattleResult.Team1Won){
                     let wishesMsg = '';
 
                     battlePostBag.survivors.forEach((pc)=>{
@@ -609,12 +649,12 @@ export default class Game {
 
                     new SendMessageClientRequest({
                         channelId: bag.party.channelId,
-                        message: wishesMsg,
+                        message: '```css'+wishesMsg+'\n```',
                     })
                     .send(this.getClient());
                 }
                 
-                bag.party.returnFromBattle(victory);
+                bag.party.returnFromBattle(battlePostBag.result);
             }
         });
 
@@ -869,7 +909,7 @@ export default class Game {
 
         if(pc.battle){
             //Throws error if something is wrong, exhausts player so they can't take another action
-            pc.battle.useItem(pc,item);
+            pc.battle.playerActionUseItem(pc,item);
         }
 
         await this.takePlayerItem(pc.uid,item.id,1);//May throw error
@@ -1077,6 +1117,8 @@ interface CreateMonsterBattleBag{
     party: PlayerParty;
     partyMembers: Array<PlayerCharacter>;
     opponentId: number;
+    startDelay: number;
+    runChance: number;
 }
 
 export interface RegisterPlayerCharacterBag{

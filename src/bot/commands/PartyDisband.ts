@@ -16,7 +16,7 @@ export default class PartyDecline extends Command{
 
         this.aliases.set('pdisband','partydisband');
         this.aliases.set('party disband','partydisband');
-        
+        this.aliases.set('disband','partydisband')
     }
 
     async run(bag:CommandRunBag){        

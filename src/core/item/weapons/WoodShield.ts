@@ -27,7 +27,6 @@ export const WoodShield = new Weapon({
             scalingLevel: ScalingLevel.B,
             minBaseDamage: 2,
             maxBaseDamage: 5,
-            exhaustion: 1,
             damageType: 'physical',
             steps: [
                 new WeaponAttackStep({

@@ -16,6 +16,7 @@ enum PermissionId{
     Party,
     PartyNew,
     PartyInvite,
+    BattleRun,
     PartyJoin,
     PartyLeave,
     PartyExplore,
@@ -38,6 +39,7 @@ enum PermissionId{
     Eval,
     SetRole,
     Inventory,
+    Pass,
 
     MarketSell,
     MarketSearch,

@@ -29,7 +29,7 @@ export default new Weapon({
             damageType: 'physical',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 2,
+            chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slashses {defender} with a stone dagger',

@@ -24,7 +24,6 @@ export default  new Weapon({
             damageType: 'physical',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} jumps about cutting {defender} with their axes',
@@ -40,7 +39,7 @@ export default  new Weapon({
             damageType: 'physical',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 2,
+            chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} gang up on {defender} for a devastating attack',
@@ -56,7 +55,6 @@ export default  new Weapon({
             damageType: 'special',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} attempts to run away and regroup',

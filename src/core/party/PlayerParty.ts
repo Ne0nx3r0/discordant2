@@ -11,7 +11,8 @@ import SendLocalImageClientRequest from "../../client/requests/SendLocalImageCli
 import { IBattleEndedPlayer } from '../../client/requests/CoopBattleEndedClientRequest';
 import { SocketPlayerCharacter } from '../creature/player/PlayerCharacter';
 import SendAddPartyMemberClientRequest from "../../client/requests/SendAddPartyMemberClientRequest";
-import CreatureBattle from '../battle/CreatureBattle';
+import CreatureBattleTurnBased from '../battle/CreatureBattleTurnBased';
+import { BattleResult } from '../battle/CreatureBattleTurnBased';
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -44,15 +45,17 @@ export default class PlayerParty{
     channelId:string;
     partyStatus:PartyStatus;
     exploration:PartyExploringMap;
-    currentBattle:CreatureBattle;
+    currentBattle:CreatureBattleTurnBased;
     getClient:IGetRandomClientFunc;
     game:Game;
+    timesRun: number;
 
     constructor(bag:PlayerPartyBag){
         this.leader = bag.leader;
         this.title = bag.title;
         this.channelId = bag.channelId;
         this.getClient = bag.getClient;
+        this.timesRun = 0;
 
         this.members = new Map();
         this.members.set(bag.leader.uid,bag.leader);
@@ -64,6 +67,13 @@ export default class PlayerParty{
 
         this.leader.party = this;
         this.leader.status = 'inParty';
+    }
+
+    getPartyIdentifier(){
+        if(this.members.size > 1){
+            return 'Your party';
+        }
+        return 'You';
     }
 
     sendChannelMessage(msg:string){
@@ -86,12 +96,12 @@ export default class PlayerParty{
         this.exploration = new PartyExploringMap(map,this.game,this.sendChannelMessage.bind(this),startX,startY);
         this.partyStatus = PartyStatus.Exploring;
 
-        this.sendCurrentMapImageFile('Your party arrives outside the city...');
+        this.sendCurrentMapImageFile(this.getPartyIdentifier()+' arrives outside the city...');
     }
 
     move(direction:PartyMoveDirection){
         if(this.partyStatus != PartyStatus.Exploring){
-            throw 'The party is not currently exploring';
+            throw this.getPartyIdentifier()+' ';
         }
 
         if(!this.exploration.canMove(direction)){
@@ -106,7 +116,7 @@ export default class PlayerParty{
             this.monsterEncounter();
         }
         else{
-            this.sendCurrentMapImageFile('Your party moved');
+            this.sendCurrentMapImageFile(this.getPartyIdentifier()+' moved');
 
             this.exploration.onEnterCurrentTile();
         }
@@ -124,7 +134,9 @@ export default class PlayerParty{
         this.currentBattle = this.game.createMonsterBattle({
             party: this,
             partyMembers: partyMembers,
-            opponentId: opponentId
+            opponentId: opponentId,
+            startDelay: 2000,
+            runChance: 1 / (this.timesRun+1)
         });
 
         this.partyStatus = PartyStatus.Battling;
@@ -144,21 +156,25 @@ export default class PlayerParty{
         .send(this.getClient());
     }
 
-    returnFromBattle(victory:boolean){
+    returnFromBattle(result:BattleResult){
         this.members.forEach(function(pc){
             if(pc.hpCurrent < 0){
                 pc.hpCurrent = pc.stats.hpTotal * 0.05;
             }
         });
 
-        if(victory){
+        if(result == BattleResult.Team1Won || result == BattleResult.Ran){
+            if(result == BattleResult.Ran){
+                this.timesRun++;
+            }
+
             this.partyStatus = PartyStatus.Exploring;
         
             this.members.forEach((member)=>{
                 member.status = 'inParty';
             });
 
-            this.sendCurrentMapImageFile('Your party survived!');
+            this.sendCurrentMapImageFile(this.getPartyIdentifier()+' arrive');
         }
         else{
             this.sendChannelMessage('Your party was defeated!');
@@ -184,7 +200,7 @@ export default class PlayerParty{
         }
 
         if(this.status != PartyStatus.Exploring){
-            throw 'The party is not currently exploring';
+            throw this.getPartyIdentifier()+' is not currently exploring';
         }
 
         this.exploration.onInteractCurrentTile(partyMember);
@@ -204,6 +220,7 @@ export default class PlayerParty{
         else{
             new SendLocalImageClientRequest({
                 channelId: this.channelId,
+                locationName: this.exploration.map.name,
                 imageSrc: localUrl,
                 message: msg,
             }).send(this.getClient());
@@ -298,14 +315,14 @@ export default class PlayerParty{
 
         new SendMessageClientRequest({
             channelId: this.channelId,
-            message: `The party has been disbanded!`,
+            message: `The party has been disbanded!\n\n(Channel will be deleted in one minute)`,
         }).send(this.getClient());
 
         setTimeout(()=>{
             new DeleteChannelClientRequest({
                 channelId: this.channelId
             }).send(this.getClient());
-        },20000);
+        },30000);
 
         this.game._deleteParty(this.id);
     }

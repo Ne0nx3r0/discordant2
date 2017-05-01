@@ -23,7 +23,6 @@ export default new Weapon({
             title: 'jab',
             minBaseDamage: 2,
             maxBaseDamage: 6,
-            exhaustion: 1,
             damageType: 'physical',
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.S,
@@ -36,8 +35,7 @@ export default new Weapon({
             aiUseWeight: 0.8
         }),
         new WeaponAttack({
-            title: 'punch',
-            exhaustion: 2,            
+            title: 'punch',           
             damageType: 'physical',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.S,

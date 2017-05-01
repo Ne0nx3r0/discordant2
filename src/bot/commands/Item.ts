@@ -89,8 +89,7 @@ export default class Item extends Command{
 
                 const msg = `
 ${attack.minBaseDamage} to ${attack.maxBaseDamage} ${attack.damageType} damage${special}
-${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttribute]}
-Exhausts ${attack.exhaustion} points${chargesRequired}`;
+${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttribute]} points${chargesRequired}`;
 
                 embed.addField('(Attack) '+attack.title,msg);
             })

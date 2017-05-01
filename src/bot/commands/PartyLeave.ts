@@ -18,6 +18,7 @@ export default class PartyDecline extends Command{
         this.aliases.set('party leave','partyleave');
         this.aliases.set('pquit','partyleave');
         this.aliases.set('party quit','partyleave');
+        this.aliases.set('leave','partyleave');
     }
 
     async run(bag:CommandRunBag){

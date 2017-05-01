@@ -26,7 +26,6 @@ export default new Weapon({
             damageType: 'physical',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 1,
             chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({

@@ -7,6 +7,7 @@ import SetSliceRemoteUrlRequest from '../../gameserver/socket/requests/SetSliceR
 export interface ClientRequestSendLocalImageData extends ClientRequestData{
     imageSrc: string;
     message: string;
+    locationName: string;
 }
 
 export default class SendLocalImageClientRequest extends ClientRequest{
@@ -16,7 +17,7 @@ export default class SendLocalImageClientRequest extends ClientRequest{
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestSendLocalImageData):Promise<void>{
         try{
-            const resultMessage = await bag.channel.sendFile(data.imageSrc,'slice.png',data.message);
+            const resultMessage = await bag.channel.sendFile(data.imageSrc,data.locationName+'.png',data.message);
 
             const cacheUrl = resultMessage.attachments.first().url;      
 

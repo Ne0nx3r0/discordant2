@@ -26,7 +26,6 @@ export default new Weapon({
             damageType: 'physical',
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slices {defender} with their hunting sword',
@@ -37,19 +36,16 @@ export default new Weapon({
         }),
         new WeaponAttack({
             title: 'duo',
-            minBaseDamage: 8,
-            maxBaseDamage: 12,
+            minBaseDamage: 0,
+            maxBaseDamage: 0,
             damageType: 'physical',
+            specialDescription: 'Attacks 1-3 times',
+            chargesRequired: 1,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 2,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} jumps behind and slashes {defender} with their hunting sword',
-                    damageFunc: DefaultDamageFunc
-                }),
-                new WeaponAttackStep({
-                    attackMessage: '{attacker} follows up with a stab to {defender}',
+                    attackMessage: '{attacker} slices ',
                     damageFunc: function(bag:DamageFuncBag){
                         const damages = DefaultDamageFunc(bag);
 

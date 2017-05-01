@@ -29,7 +29,7 @@ export default new Weapon({
             damageType: 'physical',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.D,
-            exhaustion: 3,
+            chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slams their axe down on {defender}',
@@ -46,7 +46,6 @@ export default new Weapon({
             damageType: 'special',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.D,
-            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} rages letting out a terrifying scream',

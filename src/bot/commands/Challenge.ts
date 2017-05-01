@@ -23,6 +23,9 @@ export default class Challenge extends Command{
     }
 
     async run(bag:CommandRunBag){
+        if(1==1){
+            throw 'Temporarily disabled';
+        }
         //Accepting a pending challenge
         if(bag.params[0] == 'accept' || bag.params[0] == 'a'){
             const invite:SocketPvPInvite = await bag.socket.getPvPInvite(bag.message.author.id);

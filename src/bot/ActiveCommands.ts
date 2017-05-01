@@ -41,5 +41,7 @@ export { default as MarketShop } from './commands/MarketShop';
 export { default as MarketBuy } from './commands/MarketBuy';
 export { default as Lead } from './commands/Lead';
 export { default as Interact } from './commands/Interact';
+export { default as BattleSkip } from './commands/BattleSkip';
+export { default as BattleRun } from './commands/BattleRun';
 
 export { default as Party } from './commands/Party';

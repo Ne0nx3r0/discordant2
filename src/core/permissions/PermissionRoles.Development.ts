@@ -49,6 +49,7 @@ export const PlayerPermissions = [
     PermissionId.MarketShop,
     PermissionId.Sell,
     PermissionId.Lead,
+    PermissionId.Pass,
 ].concat(AnonymousPermissions).sort();
 
 export const TesterPermissions = [

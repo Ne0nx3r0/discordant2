@@ -27,7 +27,6 @@ export interface WeaponAttackBag{
     scalingAttribute: Attribute;
     scalingLevel: ScalingLevel;
     chargesRequired?: number;
-    exhaustion: number;
     steps:Array<WeaponAttackStep>;
     aiUseWeight:number;
     aiShouldIUseThisAttack?: AIShouldUseFunc;
@@ -37,9 +36,6 @@ export interface WeaponAttackBag{
 export default class WeaponAttack{
     title:string;
     steps:Array<WeaponAttackStep>;
-
-    //Rounds the attack will exhaust for
-    exhaustion: number;
 
     //1-100 weighted chance AI will use this attack
     aiUseWeight:number;
@@ -66,7 +62,6 @@ export default class WeaponAttack{
         this.damageType = bag.damageType;
         this.scalingAttribute = bag.scalingAttribute;
         this.scalingLevel = bag.scalingLevel;
-        this.exhaustion = bag.exhaustion;
         this.chargesRequired = bag.chargesRequired || 0;
         this.steps = bag.steps;
         this.steps.forEach((step)=>{

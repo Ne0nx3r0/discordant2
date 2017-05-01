@@ -57,6 +57,8 @@ import BattleChargeRequest from "../gameserver/socket/requests/BattleChargeReque
 import RespecPlayerRequest from "../gameserver/socket/requests/RespecPlayerRequest";
 import SellItemRequest from '../gameserver/socket/requests/SellItemRequest';
 import InteractWithCurrentTileRequest from '../gameserver/socket/requests/InteractWithCurrentTileRequest';
+import BattleSkipRequest from '../gameserver/socket/requests/BattleSkipRequest';
+import BattleRunRequest from '../gameserver/socket/requests/BattleRunRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -389,6 +391,21 @@ export default class SocketClientRequester{
     async sendBattleCharge(playerUid:string):Promise<void>{
         await new BattleChargeRequest({
             uid: playerUid
+        })
+        .send(this.sioc);
+    }
+
+    async sendBattleSkip(requesterUid:string,skipUid:string):Promise<void>{
+        await new BattleSkipRequest({
+            requesterUid: requesterUid,
+            skipUid: skipUid,
+        })
+        .send(this.sioc);
+    }
+
+    async sendBattleRun(playerUid:string):Promise<void>{
+        await new BattleRunRequest({
+            uid: playerUid,
         })
         .send(this.sioc);
     }

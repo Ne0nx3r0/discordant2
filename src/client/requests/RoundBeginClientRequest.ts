@@ -2,7 +2,7 @@ import ClientRequest from '../ClientRequest';
 import { TextChannel } from 'discord.js';
 import { ClientRequestData, ClientRequestReceiveBag } from '../ClientRequest';
 import { SocketCreature } from '../../core/creature/Creature';
-import { ISocketBattleCreature } from '../../core/battle/CreatureBattle';
+import { ISocketBattleCreature } from '../../core/battle/CreatureBattleTurnBased';
 
 export interface ClientRequestRoundBeginData extends ClientRequestData{
     participants: Array<ISocketBattleCreature>;
@@ -22,7 +22,7 @@ export default class RoundBeginClientRequest extends ClientRequest{
             const creatureTitle = bc.creature.title+' '+bc.creature.hpCurrent+'/'+bc.creature.stats.hpTotal;
 
             if(bc.creature.id == -1){
-                exhausted = bc.exhaustion > 1 ? ' | Exhausted' : '';
+                exhausted = bc.exhausted ? ' | Exhausted' : '';
             }
 
             return prefix+creatureTitle+charges+blocking+exhausted;
@@ -42,6 +42,6 @@ export default class RoundBeginClientRequest extends ClientRequest{
         .map(formatbc)
         .join(', ');
 
-        bag.channel.sendMessage('```diff\n--- NEW ROUND ---\n'+team1Msg+'\n\n'+team2Msg+'```');
+        bag.channel.sendMessage('```diff\n--- YOUR MOVE ---\n'+team1Msg+'\n\n'+team2Msg+'```');
     }
 }

@@ -2,13 +2,13 @@ import IDamageSet from '../damage/IDamageSet';
 import Creature from '../creature/Creature';
 import Weapon from './Weapon';
 import WeaponAttack from './WeaponAttack';
-import { IBattleCreature } from '../battle/CreatureBattle';
-import CreatureBattle from '../battle/CreatureBattle';
+import CreatureBattleTurnBased from '../battle/CreatureBattleTurnBased';
+import { IBattleCreature } from '../battle/CreatureBattleTurnBased';
 
 export interface DamageFuncBag{
     attacker:IBattleCreature;
     defender:IBattleCreature;
-    battle:CreatureBattle;
+    battle:CreatureBattleTurnBased;
     step:WeaponAttackStep;
     isCritical:boolean;
 }

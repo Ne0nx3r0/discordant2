@@ -27,7 +27,6 @@ export default new Weapon({
             specialDescription: 'Heals target',
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,
-            exhaustion: 1,
             chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
@@ -54,8 +53,6 @@ export default new Weapon({
             damageType: 'special',
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,
-            exhaustion: 1,
-            chargesRequired: 3,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a legend aloud blessing NOT WORKING YET {defender}',

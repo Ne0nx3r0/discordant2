@@ -9,7 +9,7 @@ import { SocketPlayerInventory } from '../../item/PlayerInventory';
 import { SocketCreatureEquipment } from '../../item/CreatureEquipment';
 import { ICreatureStatSet, SocketCreature } from '../Creature';
 import PlayerParty from '../../party/PlayerParty';
-import CreatureBattle from '../../battle/CreatureBattle';
+import CreatureBattleTurnBased from '../../battle/CreatureBattleTurnBased';
 
 type PlayerStatus = 'inCity' | 'invitedToPVPBattle' | 'inBattle' | 'invitedToParty' | 'inParty';
 
@@ -37,7 +37,7 @@ interface PCConfig{
 
 export default class PlayerCharacter extends Creature{
     uid:string;
-    battle:CreatureBattle;
+    battle:CreatureBattleTurnBased;
     party:PlayerParty;
     status:PlayerStatus;
     class:CharacterClass;
@@ -74,7 +74,7 @@ export default class PlayerCharacter extends Creature{
     }
 
     get isPartyLeader():boolean{
-        return false;//this.party && this.party.leader == this;
+        return this.party && this.party.leader == this;
     }
 
     toSocket():SocketPlayerCharacter{

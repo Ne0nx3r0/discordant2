@@ -25,7 +25,6 @@ export default new Weapon({
             damageType: 'special',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} takes in a deep breath',
@@ -55,7 +54,6 @@ export default new Weapon({
             damageType: 'physical',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} shoots a dart at {defender}',

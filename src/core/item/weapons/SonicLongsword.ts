@@ -26,7 +26,6 @@ export default new Weapon({
             damageType: 'thunder',
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.B,
-            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slashes {defender} with a sonic blade',

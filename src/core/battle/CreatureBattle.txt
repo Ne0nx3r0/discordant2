@@ -16,21 +16,8 @@ import RoundBeginClientRequest from "../../client/requests/RoundBeginClientReque
 import { SocketCreature } from '../creature/Creature';
 import CreatureAIControlled from '../creature/CreatureAIControlled';
 import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
+import { IBattleCreature } from './CreatureBattleTurnBased';
 
-interface BattleCreatureAttackStep{
-    step: WeaponAttackStep;
-    target: IBattleCreature;
-}
-
-export interface IBattleCreature{
-    creature:Creature;
-    blocking:boolean;
-    defeated:boolean;
-    exhaustion:number;
-    charges:number;
-    teamNumber: number;
-    queuedAttackSteps:Array<BattleCreatureAttackStep>;
-}
 
 export interface ISocketBattleCreature{
     creature:SocketCreature;

@@ -27,7 +27,6 @@ export default new Weapon({
             damageType: 'physical',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} swings a hand axe at {defender}',
@@ -43,7 +42,7 @@ export default new Weapon({
             damageType: 'physical',
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            exhaustion: 2,
+            chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} leaps at {defender} with their hand axe',
