@@ -50,6 +50,7 @@ export const PlayerPermissions = [
     PermissionId.Sell,
     PermissionId.Lead,
     PermissionId.Pass,
+    PermissionId.PartyLeave,
 ].concat(AnonymousPermissions).sort();
 
 export const TesterPermissions = [
