@@ -27,7 +27,7 @@ export default new Weapon({
             specialDescription: 'Heals target',
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,
-            chargesRequired: 2,
+            chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a legend outloud and heals',
@@ -51,6 +51,7 @@ export default new Weapon({
             minBaseDamage: 5,
             maxBaseDamage: 10,
             damageType: 'special',
+            chargesRequired: 2,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,
             steps: [
