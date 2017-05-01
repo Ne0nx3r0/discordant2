@@ -101,7 +101,7 @@ export default class PlayerParty{
 
     move(direction:PartyMoveDirection){
         if(this.partyStatus != PartyStatus.Exploring){
-            throw this.getPartyIdentifier()+' ';
+            throw this.getPartyIdentifier()+' must be exploring a map.';
         }
 
         if(!this.exploration.canMove(direction)){
