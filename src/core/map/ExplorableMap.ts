@@ -39,14 +39,16 @@ interface MapDataJson{
 }
 
 export default class ExplorableMap{
-    name:string;
+    fileName:string;
+    title:string;
     triggersLayer:number;
     mapJson:MapJson;
     mapData:IMapData;
     eventTiles:Map<string,EventTile>;
 
-    constructor(name:string,mapJson:MapJson,mapData:IMapData){
-        this.name = name;
+    constructor(fileName:string,title:string,mapJson:MapJson,mapData:IMapData){
+        this.fileName = fileName;
+        this.title = title;
         this.mapJson = mapJson;
         this.mapData = mapData;
         
@@ -60,7 +62,7 @@ export default class ExplorableMap{
         }
 
         if(this.triggersLayer === undefined){
-            throw 'No walls layer defined in map '+this.name;
+            throw 'No walls layer defined in map '+this.fileName;
         }
 
         this.eventTiles = new Map();
@@ -73,7 +75,7 @@ export default class ExplorableMap{
     }
 
     getMapSlicePath(x:number,y:number):string{
-        return './assets/maps/'+this.name+'/slices/'+x+'-'+y+'.png';
+        return './assets/maps/'+this.fileName+'/slices/'+x+'-'+y+'.png';
     }
 
     isWalkable(x:number,y:number):boolean{

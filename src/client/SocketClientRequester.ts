@@ -263,10 +263,11 @@ export default class SocketClientRequester{
         .send(this.sioc);
     }
 
-    moveParty(leaderUid:string,direction:PartyMoveDirection):Promise<void>{
+    moveParty(leaderUid:string,direction:PartyMoveDirection,steps:number):Promise<void>{
         return new MovePartyRequest({
             uid: leaderUid,
-            direction: direction
+            direction: direction,
+            steps: steps,
         })
         .send(this.sioc);
     }

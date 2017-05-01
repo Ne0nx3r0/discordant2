@@ -93,30 +93,44 @@ export default class PlayerParty{
         this.exploration = new PartyExploringMap(map,this.game,this.sendChannelMessage.bind(this),startX,startY);
         this.partyStatus = PartyStatus.Exploring;
 
-        this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + `at ${map.name}...`);
+        this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + ` at ${map.title}...`);
     }
 
-    move(direction:PartyMoveDirection){
+    move(direction:PartyMoveDirection,steps:number){
+        if(steps < 1){
+            throw 'Cannot move less than one step';
+        }
+        
         if(this.partyStatus != PartyStatus.Exploring){
             throw this.partyPlural('You','Your party')+' must be exploring a map.';
         }
 
-        if(!this.exploration.canMove(direction)){
-            this.sendChannelMessage('The way is impassably blocked by a small bush or something.');
+        for(var i=0;i<steps;i++){
+            if(!this.exploration.canMove(direction)){
+                if(i==0){  
+                    this.sendChannelMessage('The way is blocked');
+                }
+                else{
+                    this.sendCurrentMapImageFile(`Walked ${i} steps but could not go further`);
 
-            return;
+                    this.exploration.onEnterCurrentTile();
+                }
+
+                return;
+            }
+
+            this.exploration.move(direction);
+
+            if(this.exploration.getEncounterChance() > Math.random()){
+                this.monsterEncounter();
+
+                return;
+            }
         }
 
-        this.exploration.move(direction);
+        this.sendCurrentMapImageFile(this.partyPlural('You','Your party moved')+' moved');
 
-        if(this.exploration.getEncounterChance() > Math.random()){
-            this.monsterEncounter();
-        }
-        else{
-            this.sendCurrentMapImageFile(this.partyPlural('You','Your party moved')+' moved');
-
-            this.exploration.onEnterCurrentTile();
-        }
+        this.exploration.onEnterCurrentTile();
     }
 
     monsterEncounter(){
@@ -217,7 +231,7 @@ export default class PlayerParty{
         else{
             new SendLocalImageClientRequest({
                 channelId: this.channelId,
-                locationName: this.exploration.map.name,
+                locationName: this.exploration.map.title,
                 imageSrc: localUrl,
                 message: msg,
             }).send(this.getClient());

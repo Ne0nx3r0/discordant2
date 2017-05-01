@@ -9,6 +9,7 @@ const TestMap = new ExplorableMap(
 */
 const WesternGate2Map = new ExplorableMap(
     'WesternGate2',
+    'The Western Gate',
     require('../../../assets/maps/WesternGate2/map.json'),
     MapData
 );

@@ -804,7 +804,7 @@ export default class Game {
         this.playerParties.delete(partyId);
     }
 
-    async moveParty(leaderUid:string,direction:PartyMoveDirection):Promise<void>{
+    async moveParty(leaderUid:string,direction:PartyMoveDirection,steps:number):Promise<void>{
         const player = await this.getPlayerCharacter(leaderUid);
 
         if(!player){
@@ -825,7 +825,7 @@ export default class Game {
             throw 'Only the party leader can move the party';
         }
         
-        party.move(direction);
+        party.move(direction,steps);
     }
 
     async levelUp(playerUid:string,wishType:WishType):Promise<PlayerCharacter>{

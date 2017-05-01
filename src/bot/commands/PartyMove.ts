@@ -13,7 +13,7 @@ export default class PartyMove extends Command{
         super({
             name: 'partymove',
             description: 'Move the party',
-            usage: 'partymove <up|down|left|right>',
+            usage: 'partymove <up|down|left|right> [#steps]',
             permissionNode: PermissionId.PartyMove,
             minParams: 1,
         });
@@ -26,6 +26,11 @@ export default class PartyMove extends Command{
 
     async run(bag:CommandRunBag){
         let direction = bag.params[0].substr(0,1).toUpperCase();
+        let steps = parseInt(bag.params[1]);
+
+        if(isNaN(steps) || steps < 1){
+            steps = 1;
+        }
 
         if(MOVE_DIRECTIONS.indexOf(direction) == -1 && MOVE_DIRECTIONS_GEO.indexOf(direction) == -1){
             throw `Invalid direction, valid directions: ${MOVE_DIRECTIONS.join(',')} and ${MOVE_DIRECTIONS_GEO.join(',')}`;
@@ -46,6 +51,10 @@ export default class PartyMove extends Command{
             throw 'Your party is at <#'+pc.partyChannelId+'>';
         }
 
-        await bag.socket.moveParty(bag.message.author.id,direction as PartyMoveDirection);        
+        await bag.socket.moveParty(
+            bag.message.author.id,
+            direction as PartyMoveDirection,
+            steps
+        );        
     }
 }
