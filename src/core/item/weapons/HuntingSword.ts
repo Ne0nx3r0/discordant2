@@ -36,8 +36,8 @@ export default new Weapon({
         }),
         new WeaponAttack({
             title: 'duo',
-            minBaseDamage: 0,
-            maxBaseDamage: 0,
+            minBaseDamage: 5,
+            maxBaseDamage: 10,
             damageType: 'physical',
             specialDescription: 'Attacks 1-3 times',
             chargesRequired: 1,
@@ -45,7 +45,7 @@ export default new Weapon({
             scalingLevel: ScalingLevel.C,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} slices ',
+                    attackMessage: '{attacker} slices {defender} (BROKEN DONT USE RIGHT NOW)',
                     damageFunc: function(bag:DamageFuncBag){
                         const damages = DefaultDamageFunc(bag);
 
