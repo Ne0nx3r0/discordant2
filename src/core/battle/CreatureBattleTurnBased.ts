@@ -134,6 +134,45 @@ export default class CreatureBattleTurnBased{
             }
         });
 
+
+// Run any onRoundBegin effects
+        for(var i=0;i<this.participants.length;i++){
+            const p = this.participants[i];
+
+            if(p.defeated){
+                continue;
+            }
+
+            p.creature.tempEffects.forEach((roundsLeft,effect)=>{
+                if(p.defeated){
+                    return;
+                }
+                
+                if(effect.onRoundBegin && !this.battleHasEnded){
+                    effect.onRoundBegin({
+                        target: p.creature,
+                        sendBattleEmbed: this.sendEmbed
+                    });
+
+                    if(p.creature.hpCurrent<1){
+                        this.participantDefeated(p);
+                    }
+                }
+
+// Decrement//remove effect
+                if(roundsLeft==1){
+                    this.removeTemporaryEffect(p.creature,effect);
+                }
+                else{
+                    p.creature.tempEffects.set(effect,roundsLeft-1);
+                }
+            });
+
+            if(this.battleHasEnded){
+                return;
+            }
+        }
+
         if(this.activeTeam == 1){
             new RoundBeginClientRequest({
                 channelId: this.channelId,
@@ -468,31 +507,36 @@ export default class CreatureBattleTurnBased{
         .send(this.getClient());
 
         if(defender.creature.hpCurrent < 1){
-            defender.defeated = true;
-            defender.blocking = false;
-            defender.charges = 0;
-            defender.queuedAttackSteps.length = 0;
-            defender.exhausted = false;
-
-            this.sendEmbed(
-                defender.creature.title +' was defeated!',
-                EMBED_COLORS.INFO
-            );
-
-            let teamDefeated = true;
-
-            this.participants.forEach(function(p){
-                if(!p.defeated && p.teamNumber == defender.teamNumber){
-                    teamDefeated = false;
-                }
-            });
-
-            if(teamDefeated){
-                this.endBattle(defender.teamNumber == 2 ? BattleResult.Team1Won : BattleResult.Team2Won);
-            }
+            this.participantDefeated(defender);
         }
     }
 
+    participantDefeated(participant:IBattleCreature){
+        participant.defeated = true;
+        participant.blocking = false;
+        participant.charges = 0;
+        participant.queuedAttackSteps.length = 0;
+        participant.exhausted = false;
+        participant.creature.clearTemporaryEffects();
+
+        this.sendEmbed(
+            participant.creature.title +' was defeated!',
+            EMBED_COLORS.INFO
+        );
+
+        let teamDefeated = true;
+
+        this.participants.forEach(function(p){
+            if(!p.defeated && p.teamNumber == participant.teamNumber){
+                teamDefeated = false;
+            }
+        });
+
+        if(teamDefeated){
+            this.endBattle(participant.teamNumber == 2 ? BattleResult.Team1Won : BattleResult.Team2Won);
+        }
+    }
+    
     endBattle(result:BattleResult){
         this.battleHasEnded = true;
 
