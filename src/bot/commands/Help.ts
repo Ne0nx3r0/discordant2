@@ -3,6 +3,7 @@ import { CommandBag, CommandRunBag } from '../Command';
 import PermissionId from '../../core/permissions/PermissionId';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
+import { RichEmbed } from 'discord.js';
 
 export default class Inventory extends Command{
     constructor(bag:CommandBag){
@@ -62,18 +63,71 @@ ${aliasesStr}
             return; 
         }
 
-        const commandsArr = [];
+        
+        const embed = new RichEmbed();
 
-        bag.commands.forEach(function(command,commandStr){
-            //Only show commands the player has permission to use
-            if(bag.role.has(command.permissionNode)){
-                commandsArr.push(command.name);
-            }
-        });
+        embed.setTitle('Commands');
+        embed.setDescription('`'+bag.commandPrefix+'help [command]` for more info');
+        
+        embed.addField(
+`User`,
+`begin
+classes
+stats
+wish
+`,
+true
+        );
+        
+        embed.addField(
+`Battle`,
+`attack
+block
+charge
+offhand
+use`,
+true
+        );
+        
+        embed.addField(
+`Player Market`,
+`mbuy
+mnew
+msearch
+msell
+mstop
+mbuy
+mshop`,
+true
+        );
 
-        commandsArr.sort();
+        embed.addField(
+`Items`,
+`inv
+item
+give
+equip
+unequip
+use
+sell
+buy`,
+true
+        );
 
-        bag.message.channel.sendMessage('',this.getEmbed('Here are the commands you have access to, '+bag.message.author.username+':\n\n'+commandsArr.join(', ')
-        +'\n\n`'+bag.commandPrefix.toLocaleLowerCase()+'help [command]` for more info'));
+        embed.addField(
+`Party`,
+`party
+pnew
+pinvite
+paccept
+pdeny
+pdisband 
+pleave
+pexplore
+pmove`,
+true
+        );
+
+        bag.message.channel.sendEmbed(embed);
     }
 }
