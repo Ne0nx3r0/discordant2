@@ -11,6 +11,7 @@ enum PermissionId{
     Use,
     Challenge,
     Item,
+    Buy,
     Lockdown,
     WishCalc,
     Party,

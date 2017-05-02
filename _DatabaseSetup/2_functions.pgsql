@@ -382,3 +382,32 @@ BEGIN
 END
 
 $$;
+
+
+
+
+
+
+
+CREATE OR REPLACE FUNCTION buy_item(inBuyerUid bigint,inItemId integer,inAmountToBuy integer,inGoldNeeded integer)
+RETURNS VOID
+LANGUAGE plpgsql AS
+$$
+
+DECLARE
+  buyerGold integer;
+BEGIN
+
+-- Attempt to take gold from player
+  UPDATE player
+  SET    gold = gold - inGoldNeeded 
+  WHERE  uid = inBuyerUid;
+  IF NOT FOUND THEN
+    RAISE EXCEPTION 'Not enough gold'
+      USING ERRCODE = 'P0002';
+  END IF;
+
+-- Add items to buyer
+  PERFORM grant_player_item(inBuyerUid,inItemId,inAmountToBuy);
+END
+$$;

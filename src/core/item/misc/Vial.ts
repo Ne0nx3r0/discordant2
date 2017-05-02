@@ -8,6 +8,7 @@ export default new ItemUsable({
     title: 'Vial',
     description: 'A small vial of glowing water which heals 50 points of health when drank. \n\nAfter a chance encounter a healer discovered a method of using wishes to create a viscous healing liquid. It was only a matter of time before savvy investors capitalized on the art.',
     goldValue: 10,
+    buyCost: 20,
     battleExhaustion: 1,
     canUse: function(user:PlayerCharacter){
         if(user.hpCurrent >= user.stats.hpTotal){

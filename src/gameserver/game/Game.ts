@@ -54,6 +54,7 @@ import DBRespecPlayer from '../db/api/DBRespecPlayer';
 import { DBSellItem } from "../db/api/DBSellItem";
 import CreatureBattleTurnBased from '../../core/battle/CreatureBattleTurnBased';
 import { IPostBattleBag, BattleResult } from '../../core/battle/CreatureBattleTurnBased';
+import { DBBuyItem } from "../db/api/DBBuyItem";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -853,6 +854,43 @@ export default class Game {
         pc.updateStats();
 
         return pc;
+    }
+
+    async buyItem(playerUid:string,itemId:number,amount:number):Promise<void>{
+        if(amount < 1){
+            throw `You must buy at least one`;
+        }
+
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw `You are not registered`;
+        }
+
+        if(pc.status != 'inCity'){
+            throw `You are not currently in town to buy from the town store`;
+        }
+
+        const item = this.items.get(itemId);
+
+        if(!item){
+            throw `Unknown item id ${itemId}`;
+        }
+
+        if(!item.buyCost){
+            throw `${item.title} cannot be purchased from the town store`;
+        }
+
+        const goldNeeded = item.buyCost * amount;
+
+        if(pc.gold < goldNeeded){
+            throw `You only have ${pc.gold}GP, need ${goldNeeded}GP`;
+        }
+
+        await DBBuyItem(this.db,pc.uid,item.id,amount,goldNeeded);
+
+        pc.gold -= goldNeeded;
+        pc.inventory._addItem(item,amount);
     }
 
     async respecPlayer(playerUid:string):Promise<void>{

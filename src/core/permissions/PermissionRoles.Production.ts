@@ -32,6 +32,7 @@ export const PlayerPermissions = [
     PermissionId.Challenge,
     PermissionId.Item,
     PermissionId.Wish,
+    PermissionId.Buy,
     PermissionId.MarketSell,
     PermissionId.MarketStop,
     PermissionId.MarketSearch,

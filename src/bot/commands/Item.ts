@@ -78,8 +78,17 @@ export default class Item extends Command{
 
             embed.addField(
                 'Sell Value',
-                item.goldValue,true
+                item.goldValue+'GP',
+                true
             );
+
+            if(item.buyCost){
+                embed.addField(
+                    'Buy Cost',
+                    item.buyCost+'GP',
+                    true
+                );
+            }
 
             const attacksStr = weapon.attacks
             .map(function(attack){
@@ -100,11 +109,14 @@ ${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttr
             bag.message.channel.sendEmbed(embed);
         }
         else{
+            const itemBuyCost = item.buyCost ? `\nBuyable for ${item.buyCost}GP` : '';
             bag.message.channel.sendMessage('',this.getEmbed(`
-                ${item.title} (${item.goldValue}GP)
+${item.title} 
 
-                ${item.description}
-            `,EmbedColors.INFO));
+Sellable for ${item.goldValue}GP${itemBuyCost}
+
+${item.description}
+`,EmbedColors.INFO));
         }
 
 

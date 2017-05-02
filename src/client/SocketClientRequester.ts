@@ -59,6 +59,7 @@ import SellItemRequest from '../gameserver/socket/requests/SellItemRequest';
 import InteractWithCurrentTileRequest from '../gameserver/socket/requests/InteractWithCurrentTileRequest';
 import BattleSkipRequest from '../gameserver/socket/requests/BattleSkipRequest';
 import BattleRunRequest from '../gameserver/socket/requests/BattleRunRequest';
+import BuyItemRequest from '../gameserver/socket/requests/BuyItemRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -292,6 +293,15 @@ export default class SocketClientRequester{
     async respecPlayer(playerUid:string):Promise<void>{
         await new RespecPlayerRequest({
             uid: playerUid
+        })
+        .send(this.sioc);
+    }
+
+    async buyItem(playerUid:string,item:ItemBase,amount:number):Promise<void>{
+        await new BuyItemRequest({
+            uid:playerUid,
+            item:item.id,
+            amount:amount
         })
         .send(this.sioc);
     }

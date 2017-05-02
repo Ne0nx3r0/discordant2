@@ -41,6 +41,7 @@ export const PlayerPermissions = [
     PermissionId.SetRole,
     PermissionId.SetPlayingGame,
     PermissionId.Lockdown,
+    PermissionId.Buy,
     PermissionId.MarketSell,
     PermissionId.MarketStop,
     PermissionId.MarketSearch,
