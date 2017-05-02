@@ -68,7 +68,7 @@ export default class Inventory extends Command{
             }
 
             bag.message.channel.sendMessage('',this.getEmbed(`
-${bag.commandPrefix.toLowerCase()}**${command.name}** ${redirectedFrom}
+**${bag.commandPrefix.toLowerCase()}${command.name}** ${redirectedFrom}
 
 ${command.description}
 
