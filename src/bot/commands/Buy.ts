@@ -46,7 +46,7 @@ export default class Buy extends Command{
         }
 
         if(amountToBuy < 1){
-            bag.message.channel.sendMessage('You must sell at least 1, '+bag.message.author.username);
+            bag.message.channel.sendMessage('You must buy at least 1, '+bag.message.author.username);
 
             return;
         }
