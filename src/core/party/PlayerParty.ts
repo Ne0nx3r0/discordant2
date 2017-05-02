@@ -128,7 +128,7 @@ export default class PlayerParty{
             }
         }
 
-        this.sendCurrentMapImageFile(this.partyPlural('You','Your party moved')+' moved');
+        this.sendCurrentMapImageFile(this.partyPlural('You','Your party')+' moved');
 
         this.exploration.onEnterCurrentTile();
     }
