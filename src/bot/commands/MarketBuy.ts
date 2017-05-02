@@ -25,6 +25,9 @@ export default class MarketBuy extends Command{
         if(bag.params[1] == 'all'){
             amount = -1;
         }
+        else if(!bag.params[1]){
+            amount = 1;
+        }
         else{
             amount = parseInt(bag.params[1]);
 
