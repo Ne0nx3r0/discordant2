@@ -38,7 +38,7 @@ export { default as MarketStop } from './commands/MarketStop';
 export { default as MarketSearch } from './commands/MarketSearch';
 export { default as MarketNew } from './commands/MarketNew';
 export { default as MarketOffer } from './commands/MarketOffer';
-export { default as MarketShop } from './commands/MarketShop';
+export { default as MarketList } from './commands/MarketList';
 export { default as MarketBuy } from './commands/MarketBuy';
 export { default as Lead } from './commands/Lead';
 export { default as Interact } from './commands/Interact';

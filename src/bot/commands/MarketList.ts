@@ -9,17 +9,17 @@ import { SocketActiveMarketOffer } from "../../gameserver/db/api/DBGetActiveMark
 import Challenge from './Challenge';
 import { User } from "discord.js";
 
-export default class MarketShop extends Command{
+export default class MarketList extends Command{
     constructor(bag:CommandBag){
         super({
-            name: 'marketshop',
+            name: 'marketlist',
             description: `View your items for sale or another player\'s`,
-            usage: 'marketshop [@username]',
-            permissionNode: PermissionId.MarketShop,
+            usage: 'marketlist [@username]',
+            permissionNode: PermissionId.MarketList,
             minParams: 0,
         });
 
-        this.aliases.set('mshop','marketshop');
+        this.aliases.set('mlist','marketlist');
     }
 
     async run(bag:CommandRunBag){

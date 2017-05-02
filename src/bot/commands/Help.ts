@@ -115,7 +115,7 @@ ${p}msearch
 ${p}msell
 ${p}mstop
 ${p}mbuy
-${p}mshop`,
+${p}mlist`,
 true
         );
 

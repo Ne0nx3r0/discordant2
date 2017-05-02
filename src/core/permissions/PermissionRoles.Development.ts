@@ -47,7 +47,7 @@ export const PlayerPermissions = [
     PermissionId.MarketSearch,
     PermissionId.MarketNew,
     PermissionId.MarketBuy,
-    PermissionId.MarketShop,
+    PermissionId.MarketList,
     PermissionId.Sell,
     PermissionId.Lead,
     PermissionId.Pass,
