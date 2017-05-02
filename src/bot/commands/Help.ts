@@ -127,6 +127,7 @@ ${p}give
 ${p}equip
 ${p}unequip
 ${p}use
+${p}shop
 ${p}sell
 ${p}buy`,
 true
