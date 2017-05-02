@@ -727,6 +727,10 @@ export default class Game {
             throw 'That player is not registered yet';
         }
 
+        if(invited.status == 'inParty'){
+            throw `That player is already in a party`;
+        }
+
         if(invited.status != 'inCity'){
             throw 'That player cannot be invited to join a party right now';
         }
