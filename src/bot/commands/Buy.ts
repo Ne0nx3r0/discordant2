@@ -19,7 +19,7 @@ export default class Buy extends Command{
     async run(bag:CommandRunBag){
         //The last param may be part of the request or it might be a number
         const amountToBuyStr = bag.params[bag.params.length-1];
-        let amountToBuy:number = ParseNumber(amountToBuyStr);
+        let amountToBuy:number = Math.round(ParseNumber(amountToBuyStr));
         let itemWantedStr;
 
         //assume everything after the first element is the item name
