@@ -28,7 +28,7 @@ export default class Inventory extends Command{
                     c.aliases.forEach((expandsTo,alias)=>{
                         if(commandStr == alias){
                             command = c;
-                            redirectedFrom = `(Redirected from *${commandStr}*)`;
+                            redirectedFrom = `(Redirected from *${bag.commandPrefix}${commandStr}*)`;
                         }
                     });
                 });
@@ -44,7 +44,7 @@ export default class Inventory extends Command{
                         c.aliases.forEach((expandsTo,alias)=>{
                             if(stubCommandStr == alias.toUpperCase()){
                                 command = c;
-                                redirectedFrom = `(Redirected from *${stubCommandStr}*)`;
+                                redirectedFrom = `(Redirected from *${bag.commandPrefix}${stubCommandStr.toLowerCase()}*)`;
                             }
                         });
                     });
@@ -63,7 +63,7 @@ export default class Inventory extends Command{
                 aliasesStr += 'Aliases:';
                 
                 command.aliases.forEach(function(expandsTo,alias){
-                    aliasesStr += `\n ${alias} => ${expandsTo}`;
+                    aliasesStr += `\n ${bag.commandPrefix}${alias} => ${bag.commandPrefix}${expandsTo}`;
                 });
             }
 
