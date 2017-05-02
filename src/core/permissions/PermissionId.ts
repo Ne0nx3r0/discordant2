@@ -8,6 +8,7 @@ enum PermissionId{
     Grant,
     Equip,
     Unequip,
+    Shop,
     Use,
     Challenge,
     Item,
