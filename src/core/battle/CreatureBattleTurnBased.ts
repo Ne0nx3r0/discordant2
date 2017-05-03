@@ -76,16 +76,16 @@ export default class CreatureBattleTurnBased{
     participantsLookup: Map<Creature,IBattleCreature>;
     activeTeam: number;
     runChance: number;
+    queuedBattleMessages: Array<Array<string>>;
 
     constructor(bag:CreatureBattleTurnBasedBag){
+        this.queuedBattleMessages = [];
         this.channelId = bag.channelId;
         this.getClient = bag.getClient;
         this.battleCleanup = bag.battleCleanup;
         this.runChance = bag.runChance;
         
         this.battleHasEnded = false;
-
-        this.sendEmbed = this.sendEmbed.bind(this);
         
         this.participants = [];
         this.participantsLookup = new Map();
@@ -587,20 +587,6 @@ export default class CreatureBattleTurnBased{
         target.removeTemporaryEffect(effect);
     }
 
-    sendEmbed(msg:string,color?:number){
-        if(!color){
-            color = EMBED_COLORS.ACTION;
-        }
-
-        const request = new EffectMessageClientRequest({
-            channelId: this.channelId,
-            msg: msg,
-            color: color,
-        });
-
-        request.send(this.getClient());
-    }
-
     getLazyTeamMemberNames(team:number):Array<string>{
         const lazyTeamMembers:Array<IBattleCreature> = [];
 
@@ -617,5 +603,31 @@ export default class CreatureBattleTurnBased{
         }
 
         return [];
+    }
+
+    queueBattleMessage(msg:Array<string>){
+        this.queuedBattleMessages.push(msg);
+    }
+
+    flushBattleMessagesCheck(){
+        for(var i=0;i<this.participants.length;i++){
+            const p = this.participants[i];
+
+            if(p.teamNumber == this.activeTeam  
+            && !p.defeated 
+            && !p.exhausted
+            && p.creature instanceof PlayerCharacter){
+                const msgToSend = this.queuedBattleMessages.map(function(block){
+                    return '```diff\n'+block.join('\n')+'\n```';
+                }).join('\n\n');
+
+                new SendMessageClientRequest({
+                    channelId: this.channelId,
+                    message: msgToSend,
+                }).send(this.getClient());
+
+                this.queuedBattleMessages = [];
+            }
+        }
     }
 }
