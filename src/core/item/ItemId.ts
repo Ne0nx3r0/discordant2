@@ -20,6 +20,7 @@ enum ItemId {
     Mezcal,
     StoneAxe,
     StoneDagger,
+    BetaKey,
 }
 
 export default ItemId;

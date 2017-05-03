@@ -15,3 +15,4 @@ export { default as Yerba } from './misc/Yerba';
 export { default as Bane } from './misc/Bane';
 export { default as Acai } from './misc/Acai';
 export { default as Fox } from './misc/Fox';
+export { default as BetaKey } from './misc/BetaKey';
