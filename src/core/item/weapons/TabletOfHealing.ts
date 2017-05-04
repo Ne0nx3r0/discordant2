@@ -30,7 +30,7 @@ export default new Weapon({
             chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} reads a legend outloud and heals',
+                    attackMessage: '{attacker} reads a healing legend outloud',
                     damageFunc: function(bag:DamageFuncBag){
                         let healAmount = Math.round((Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage);
 

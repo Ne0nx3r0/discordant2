@@ -39,15 +39,15 @@ export default class BattleAttack extends Command{
         
         if(target && bag.params.length > 1){
             wantedAttackStr = bag.params.slice(0,-1).join(' ').toUpperCase();
+            attack = primaryWeapon.findAttack(wantedAttackStr);    
         }
         else if(target || bag.params.length == 0){
-            wantedAttackStr = primaryWeapon.attacks[0];
+            attack = primaryWeapon.attacks[0];
         }
         else{
             wantedAttackStr = bag.params.join(' ').toUpperCase();
+            attack = primaryWeapon.findAttack(wantedAttackStr);
         }
-
-        attack = primaryWeapon.findAttack(wantedAttackStr);
 
         if(!attack){
             let validAttacks = primaryWeapon.attacks.map((attack)=>{

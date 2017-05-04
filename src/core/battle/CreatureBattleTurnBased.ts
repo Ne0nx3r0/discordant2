@@ -510,16 +510,20 @@ export default class CreatureBattleTurnBased{
         this.queueBattleMessage([
             queuedAttackStep.step.attackMessage
             .replace('{defender}',`${defender.creature.title} (${defender.creature.hpCurrent}/${defender.creature.stats.hpTotal})`)
-            .replace('{attacker}',`${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal})`),
-
-            '- '+getDamagesLine(
-                defender.creature.toSocket(),
-                damages,
-                false,
-                0,
-                isCritical
-            )
+            .replace('{attacker}',`${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal})`)
         ]);
+
+        if(Object.keys(damages).length > 0){
+            this.queueBattleMessage([
+                '- '+getDamagesLine(
+                    defender.creature.toSocket(),
+                    damages,
+                    false,
+                    0,
+                    isCritical
+                )
+            ]);
+        }
 
         if(defender.creature.hpCurrent < 1){
             this.participantDefeated(defender);

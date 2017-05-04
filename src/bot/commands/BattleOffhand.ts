@@ -32,22 +32,22 @@ export default class BattleAttack extends Command{
             throw `Your battle is in <#${player.battleChannelId}>`;
         }
 
-        const primaryWeaponId = player.equipment.weapon;
-        const primaryWeapon = bag.items.get(primaryWeaponId) as Weapon;
+        const offhandWeaponId = player.equipment.weapon;
+        const offhandWeapon = bag.items.get(offhandWeaponId) as Weapon;
         let attack:WeaponAttack;
         let wantedAttackStr;
         
         if(target && bag.params.length > 1){
             wantedAttackStr = bag.params.slice(0,-1).join(' ').toUpperCase();
+            attack = offhandWeapon.findAttack(wantedAttackStr);    
         }
         else if(target || bag.params.length == 0){
-            wantedAttackStr = primaryWeapon.attacks[0];
+            attack = offhandWeapon.attacks[0];
         }
         else{
             wantedAttackStr = bag.params.join(' ').toUpperCase();
+            attack = offhandWeapon.findAttack(wantedAttackStr);
         }
-
-        attack = primaryWeapon.findAttack(wantedAttackStr);
 
         if(!attack){
             let validAttacks = '';
