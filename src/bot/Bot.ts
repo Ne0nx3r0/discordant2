@@ -15,7 +15,6 @@ import{
     PermissionOverwrites
 } from 'discord.js';
 import Logger from "../gameserver/log/Logger";
-import { Message } from 'discord.js';
 import SendMessageClientRequest from '../client/requests/SendMessageClientRequest';
 
 export interface BotConfigBase{

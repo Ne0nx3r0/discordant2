@@ -191,7 +191,7 @@ export default class CreatureBattleTurnBased{
                 return bc.teamNumber == 1;
             })
             .map(formatbc)
-            .join(', ');
+            .join('\n');
 
             const team2Msg = this.participants
             .filter(function(bc){
@@ -229,6 +229,8 @@ export default class CreatureBattleTurnBased{
 
             this.turnBegin();
         }
+
+        this.flushBattleMessagesCheck();
     }
 
     runAIActions(){
@@ -637,7 +639,11 @@ export default class CreatureBattleTurnBased{
         }
     }
 
-    flushBattleMessages(){                
+    flushBattleMessages(){   
+        if(this.queuedBattleMessages.length == 0){
+            return;
+        }
+
         const msgToSend = this.queuedBattleMessages.map(function(block){
             return '```diff\n'+block.join('\n')+'\n```';
         }).join('\n');

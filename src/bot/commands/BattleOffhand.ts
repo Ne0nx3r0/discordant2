@@ -20,6 +20,7 @@ export default class BattleAttack extends Command{
     }
 
     async run(bag:CommandRunBag){
+        const target = bag.message.mentions.users.first();
         const player = await bag.socket.getPlayer(bag.message.author.id);
 
         if(player.status != 'inBattle'){
@@ -57,6 +58,7 @@ export default class BattleAttack extends Command{
 
         await bag.socket.sendBattleAttack(
             player.uid,
+            target?target.id:player.uid,
             attack.title,
             true
         );

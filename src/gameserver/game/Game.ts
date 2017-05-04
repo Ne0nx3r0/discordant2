@@ -517,7 +517,7 @@ export default class Game {
         this.pvpInvites.delete(receiver.uid);*/
     }
 
-    async sendBattleAttack(uid:string,attackTitle:string,offhand:boolean,targetPlayerUid?:string):Promise<void>{
+    async sendBattleAttack(uid:string,targetPlayerUid:string,attackTitle:string,offhand:boolean):Promise<void>{
         const attacker = await this.getPlayerCharacter(uid);
 
         if(!attacker){

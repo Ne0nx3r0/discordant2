@@ -5,6 +5,7 @@ import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 
 export interface BattleAttackData extends ServerRequestData{
     uid: string;
+    target:string;
     attackTitle:string;
     offhand:boolean;
 }
@@ -23,7 +24,7 @@ export default class BattleAttackRequest extends ServerRequest{
     }
 
     async receive(bag:ServerRequestReceiveBag,data:BattleAttackData):Promise<BattleAttackResponse>{
-        await bag.game.sendBattleAttack(data.uid,data.attackTitle,data.offhand);
+        await bag.game.sendBattleAttack(data.uid,data.target,data.attackTitle,data.offhand);
 
         return {
             success: true,

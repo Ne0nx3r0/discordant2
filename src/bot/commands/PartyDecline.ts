@@ -14,6 +14,7 @@ export default class PartyDecline extends Command{
             minParams: 0,
         });
 
+        this.aliases.set('pno','partydecline');
         this.aliases.set('pdecline','partydecline');
         this.aliases.set('party decline','partydecline');
     }

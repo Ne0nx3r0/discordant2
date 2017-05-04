@@ -30,6 +30,6 @@ export default class PartyInvite extends Command{
         //not really much to do here since most of it is server-side checks that we would just be duplicating after making a call for the player
         await bag.socket.invitePlayerToJoinParty(bag.message.author.id,tagUserId);
 
-        bag.message.channel.sendMessage(`<@${tagUserId}> was invited to join the party!\n\nYou can use \`${bag.commandPrefix}paccept\` or \`${bag.commandPrefix}pdecline\``);
+        bag.message.channel.sendMessage(`<@${tagUserId}> was invited to join the party!\n\nYou can use \`${bag.commandPrefix}pyes\` or \`${bag.commandPrefix}pno\``);
     }
 }

@@ -193,9 +193,10 @@ export default class SocketClientRequester{
         return request.send(this.sioc);
     }
 
-    sendBattleAttack(playerUid:string,attackTitle:string,offhand:boolean):Promise<void>{
+    sendBattleAttack(playerUid:string,targetUid:string,attackTitle:string,offhand:boolean):Promise<void>{
         const request = new BattleAttackRequest({
             uid: playerUid,
+            target: targetUid,
             attackTitle: attackTitle,
             offhand: offhand
         });
