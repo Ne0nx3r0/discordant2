@@ -1,19 +1,14 @@
 import Creature from '../creature/Creature';
 import { IGetRandomClientFunc } from '../../gameserver/socket/SocketServer';
-import EffectMessageClientRequest from '../../client/requests/EffectMessageClientRequest';
 import PlayerCharacter from '../creature/player/PlayerCharacter';
 import ItemUsable from '../item/ItemUsable';
 import WeaponAttack from '../item/WeaponAttack';
-import RoundBeginClientRequest from '../../client/requests/RoundBeginClientRequest';
 import CreatureAIControlled from '../creature/CreatureAIControlled';
-import { EMBED_COLORS } from '../../bot/util/ChatHelpers';
+import { getDamagesLine } from '../../bot/util/ChatHelpers';
 import IDamageSet from '../damage/IDamageSet';
 import { DamagesTotal } from '../damage/IDamageSet';
-import AttackedClientRequest from '../../client/requests/AttackedClientRequest';
 import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
 import WeaponAttackStep from '../item/WeaponAttackStep';
-import BlockedClientRequest from '../../client/requests/BlockedClientRequest';
-import ChargedClientRequest from '../../client/requests/ChargedClientRequest';
 import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
 import { SocketCreature } from '../creature/Creature';
 
@@ -79,6 +74,7 @@ export default class CreatureBattleTurnBased{
     queuedBattleMessages: Array<Array<string>>;
 
     constructor(bag:CreatureBattleTurnBasedBag){
+        this.queueBattleMessage = this.queueBattleMessage.bind(this);
         this.queuedBattleMessages = [];
         this.channelId = bag.channelId;
         this.getClient = bag.getClient;
@@ -172,24 +168,49 @@ export default class CreatureBattleTurnBased{
             }
         }
 
+        this.flushBattleMessagesCheck();
+
         if(this.activeTeam == 1){
-            new RoundBeginClientRequest({
-                channelId: this.channelId,
-                participants: this.participants.map(function(bc){
-                    return {
-                        creature: bc.creature.toSocket(),
-                        blocking: bc.blocking,
-                        defeated: bc.defeated,
-                        exhausted: bc.exhausted,
-                        charges: bc.charges,
-                        teamNumber: bc.teamNumber,
-                    };
-                }),
+            function formatbc(bc:IBattleCreature){
+                const blocking = bc.blocking ? ' | Blocking' : '';
+                const charges = bc.charges>0?' | Charges: '+bc.charges:'';
+                let exhausted = '';
+                let defeated = '';
+                const prefix = bc.defeated ? '- ' : '+ ';
+                const creatureTitle = bc.creature.title+' '+bc.creature.hpCurrent+'/'+bc.creature.stats.hpTotal;
+
+                if(bc.creature.id == -1){
+                    exhausted = bc.exhausted ? ' | Exhausted' : '';
+                }
+
+                return prefix+creatureTitle+charges+blocking+exhausted;
+            }
+
+            const team1Msg = this.participants
+            .filter(function(bc){
+                return bc.teamNumber == 1;
             })
-            .send(this.getClient());
+            .map(formatbc)
+            .join(', ');
+
+            const team2Msg = this.participants
+            .filter(function(bc){
+                return bc.teamNumber == 2;
+            })
+            .map(formatbc)
+            .join(', ');
+
+            this.queueBattleMessage([
+                '--- YOUR MOVE ---',
+                team1Msg,
+                '',
+                team2Msg
+            ]);
         }
 
         this.runAIActions();
+
+        this.flushBattleMessagesCheck();
     }
 
     exhaustParticipant(bc:IBattleCreature){
@@ -263,12 +284,14 @@ export default class CreatureBattleTurnBased{
                 return p.creature.title;
             }).join(', ');
             
-            this.queueBattleMessage([`${partyMembers} ran away!`]);
+            this.queueBattleMessage([`+ ${partyMembers} ran away!`]);
+
+            this.flushBattleMessages();
 
             this.endBattle(BattleResult.Ran);
         }
         else{
-            this.queueBattleMessage([`Failed to run away!`]);
+            this.queueBattleMessage([`- Failed to run away!`]);
 
             this.exhaustParticipant(bc);
         }
@@ -334,11 +357,7 @@ export default class CreatureBattleTurnBased{
 
         bc.blocking = true;
 
-        new BlockedClientRequest({
-            channelId: this.channelId,
-            blockerTitle: bc.creature.title
-        })
-        .send(this.getClient());
+        this.queueBattleMessage([`+ ${bc.creature.title} blocks!`]);
         
         this.exhaustParticipant(bc);
     }
@@ -394,12 +413,7 @@ export default class CreatureBattleTurnBased{
 
         bc.charges++;
 
-        new ChargedClientRequest({
-            channelId: this.channelId,
-            chargerTitle: bc.creature.title,
-            total: bc.charges,
-        })
-        .send(this.getClient());
+        this.queueBattleMessage([`+ ${bc.creature.title} collects ambient energy (${bc.charges} total)`]);
 
         this.exhaustParticipant(bc);
     }
@@ -489,21 +503,21 @@ export default class CreatureBattleTurnBased{
 
         defender.creature.hpCurrent -= Math.round(DamagesTotal(damages));
 
-        new AttackedClientRequest({
-            channelId: this.channelId,
-            attacker: attacker.creature.toSocket(), 
-            isCritical: isCritical,           
-            attacked: [{
-                creature: defender.creature.toSocket(),
-                damages: damages,
-                blocked: false,
-                exhaustion: 0,
-            }],
-            message: queuedAttackStep.step.attackMessage
-                .replace('{defender}',`${defender.creature.title} (${defender.creature.hpCurrent}/${defender.creature.stats.hpTotal})`)
-                .replace('{attacker}',`${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal})`),
-        })
-        .send(this.getClient());
+        const criticalMsg = isCritical ? '**CRITICAL HIT** ' : '';
+
+        this.queueBattleMessage([
+            queuedAttackStep.step.attackMessage
+            .replace('{defender}',`${defender.creature.title} (${defender.creature.hpCurrent}/${defender.creature.stats.hpTotal})`)
+            .replace('{attacker}',`${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal})`),
+
+            '- '+getDamagesLine(
+                defender.creature.toSocket(),
+                damages,
+                false,
+                0,
+                isCritical
+            )
+        ]);
 
         if(defender.creature.hpCurrent < 1){
             this.participantDefeated(defender);
@@ -607,6 +621,10 @@ export default class CreatureBattleTurnBased{
     }
 
     flushBattleMessagesCheck(){
+        if(this.queuedBattleMessages.length == 0){
+            return;
+        }
+
         for(var i=0;i<this.participants.length;i++){
             const p = this.participants[i];
 
@@ -614,17 +632,21 @@ export default class CreatureBattleTurnBased{
             && !p.defeated 
             && !p.exhausted
             && p.creature instanceof PlayerCharacter){
-                const msgToSend = this.queuedBattleMessages.map(function(block){
-                    return '```diff\n'+block.join('\n')+'\n```';
-                }).join('\n\n');
-
-                new SendMessageClientRequest({
-                    channelId: this.channelId,
-                    message: msgToSend,
-                }).send(this.getClient());
-
-                this.queuedBattleMessages = [];
+                this.flushBattleMessages();
             }
         }
+    }
+
+    flushBattleMessages(){                
+        const msgToSend = this.queuedBattleMessages.map(function(block){
+            return '```diff\n'+block.join('\n')+'\n```';
+        }).join('\n');
+
+        new SendMessageClientRequest({
+            channelId: this.channelId,
+            message: msgToSend,
+        }).send(this.getClient());
+
+        this.queuedBattleMessages = [];
     }
 }

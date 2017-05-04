@@ -49,6 +49,7 @@ import InteractWithCurrentTileRequest from './requests/InteractWithCurrentTileRe
 import BattleSkipRequest from './requests/BattleSkipRequest';
 import BattleRunRequest from './requests/BattleRunRequest';
 import BuyItemRequest from './requests/BuyItemRequest';
+import LeavePartyRequest from './requests/LeavePartyRequest';
 
 interface SocketServerBag{
     port:number;
@@ -126,6 +127,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new BattleSkipRequest(null));
             this.registerHandler(registeredEvents,client,new BattleRunRequest(null));
             this.registerHandler(registeredEvents,client,new BuyItemRequest(null));
+            this.registerHandler(registeredEvents,client,new LeavePartyRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

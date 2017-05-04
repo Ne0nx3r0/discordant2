@@ -27,14 +27,14 @@ export function getEmbed(msg:string,color?:number){
 
 export function getDamageTypeEmoji(type:string){
     switch(type){
-        case 'physical': return ':crossed_swords:';
-        case 'fire': return ':fire:';
-        case 'cold': return ':snowflake:';
-        case 'thunder': return ':cloud_lightning:';
-        case 'chaos': return ':sparkles:';
+        case 'physical': return 'PHYSICAL';//':crossed_swords:';
+        case 'fire': return 'FIRE';//:fire:';
+        case 'cold': return 'COLD';//':snowflake:';
+        case 'thunder': return 'THUNDER';//':cloud_lightning:';
+        case 'chaos': return 'CHAOS';//':sparkles:';
     }
 
-    return ':question:';
+    return 'UNKNOWN DAMAGE TYPE';
 }
 
 export function getDamagesLine(creature:SocketCreature,damages:IDamageSet,blocked:boolean,exhausted:number,isCritical:boolean){

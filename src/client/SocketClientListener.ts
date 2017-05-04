@@ -4,7 +4,6 @@ import RoundBeginClientRequest from './requests/RoundBeginClientRequest';
 import { TextChannel } from 'discord.js';
 import { ClientRequestData } from './ClientRequest';
 import AttackedClientRequest from './requests/AttackedClientRequest';
-import BlockedClientRequest from './requests/BlockedClientRequest';
 import CoopBattleEndedClientRequest from './requests/CoopBattleEndedClientRequest';
 import EffectMessageClientRequest from './requests/EffectMessageClientRequest';
 import PassedOutClientRequest from './requests/PassedOutClientRequest';
@@ -18,7 +17,6 @@ import SocketClientRequester from './SocketClientRequester';
 import SendLocalImageClientRequest from './requests/SendLocalImageClientRequest';
 import Bot from '../bot/Bot';
 import SendAddPartyMemberClientRequest from './requests/SendAddPartyMemberClientRequest';
-import ChargedClientRequest from "./requests/ChargedClientRequest";
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -36,21 +34,17 @@ export default class SocketClientListener{
     constructor(bag:SocketClientListenerBag){
         //we can pass null in here because we just want the title
         this.registerHandler(bag,new AttackedClientRequest(null));
-        this.registerHandler(bag,new BlockedClientRequest(null));
         this.registerHandler(bag,new CoopBattleEndedClientRequest(null));
         this.registerHandler(bag,new DeleteChannelClientRequest(null));
         this.registerHandler(bag,new EffectMessageClientRequest(null));
         this.registerHandler(bag,new PassedOutClientRequest(null));
         this.registerHandler(bag,new PvPBattleEndedClientRequest(null));
         this.registerHandler(bag,new PvPBattleExpiredClientRequest(null));
-        this.registerHandler(bag,new RoundBeginClientRequest(null));
         this.registerHandler(bag,new SendMessageClientRequest(null));
         this.registerHandler(bag,new SendPMClientRequest(null));
         this.registerHandler(bag,new SendImageClientRequest(null));
         this.registerHandler(bag,new SendLocalImageClientRequest(null));
-        this.registerHandler(bag,new SendAddPartyMemberClientRequest(null));
-        this.registerHandler(bag,new ChargedClientRequest(null));
-        
+        this.registerHandler(bag,new SendAddPartyMemberClientRequest(null));        
 
         var socket = bag.sioc;//using this syntax to avoid pissing off typescript
         var onevent = socket['onevent'];
