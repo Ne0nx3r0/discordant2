@@ -330,7 +330,7 @@ export default class CreatureBattleTurnBased{
 
             if(bc.exhausted){
                 const lazyTeamMembers = this.getLazyTeamMemberNames(bc.teamNumber);
-                
+
                 if(lazyTeamMembers.length > 0){
                     throw `${bc.creature.title} has already taken their turn, waiting on: ${lazyTeamMembers.join(', ')}`;
                 }
@@ -431,7 +431,7 @@ export default class CreatureBattleTurnBased{
             const lazyTeamMembers = this.getLazyTeamMemberNames(bc.teamNumber);
 
             if(lazyTeamMembers.length > 0){
-                throw 'You are exhausted, waiting on: '+lazyTeamMembers.join(', ');
+                throw 'You are exhausted, waiting on: '+lazyTeamMembers.join(', ')+' to complete their turn';
             }
 
             throw `You are exhausted`;

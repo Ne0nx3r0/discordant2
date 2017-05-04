@@ -23,7 +23,7 @@ import DBTransferPlayerItem from '../db/api/DBTransferPlayerItem';
 import DBSetPlayerRole from '../db/api/DBSetPlayerRole';
 import { PvPInvite, PVP_INVITE_TIMEOUT, SocketPvPInvite } from '../../core/battle/PvPInvite';
 import { IGetRandomClientFunc } from '../socket/SocketServer';
-import PlayerParty from "../../core/party/PlayerParty";
+import PlayerParty, { PartyStatus } from "../../core/party/PlayerParty";
 import AllCreaturesAIControlled from "../../core/creature/AllCreaturesAIControlled";
 import MapUrlCache from '../../core/map/MapUrlCache';
 import { WesternGate2Map } from "../../core/map/Maps";
@@ -719,6 +719,10 @@ export default class Game {
 
         if(!party){
             throw 'Only the party leader can direct the party!';
+        }
+
+        if(party.status != PartyStatus.InTown){
+            throw 'Your party has already left town!';
         }
 
         const invited = await this.getPlayerCharacter(inviteUid);

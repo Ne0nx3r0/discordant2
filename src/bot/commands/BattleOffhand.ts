@@ -21,6 +21,7 @@ export default class BattleAttack extends Command{
 
     async run(bag:CommandRunBag){
         const target = bag.message.mentions.users.first();
+
         const player = await bag.socket.getPlayer(bag.message.author.id);
 
         if(player.status != 'inBattle'){
@@ -31,18 +32,22 @@ export default class BattleAttack extends Command{
             throw `Your battle is in <#${player.battleChannelId}>`;
         }
 
-        const wantedAttackStr = bag.params.join(' ').toUpperCase();
-
-        const offhandWeaponId = player.equipment.offhand;
-        const offhandWeapon = bag.items.get(offhandWeaponId) as Weapon;
+        const primaryWeaponId = player.equipment.weapon;
+        const primaryWeapon = bag.items.get(primaryWeaponId) as Weapon;
         let attack:WeaponAttack;
+        let wantedAttackStr;
         
-        if(bag.params.length == 0){
-            attack = offhandWeapon.attacks[0];
+        if(target && bag.params.length > 1){
+            wantedAttackStr = bag.params.slice(0,-1).join(' ').toUpperCase();
+        }
+        else if(target || bag.params.length == 0){
+            wantedAttackStr = primaryWeapon.attacks[0];
         }
         else{
-            attack = offhandWeapon.findAttack(wantedAttackStr);
-        } 
+            wantedAttackStr = bag.params.join(' ').toUpperCase();
+        }
+
+        attack = primaryWeapon.findAttack(wantedAttackStr);
 
         if(!attack){
             let validAttacks = '';
