@@ -32,7 +32,7 @@ export default class BattleAttack extends Command{
             throw `Your battle is in <#${player.battleChannelId}>`;
         }
 
-        const offhandWeaponId = player.equipment.weapon;
+        const offhandWeaponId = player.equipment.offhand;
         const offhandWeapon = bag.items.get(offhandWeaponId) as Weapon;
         let attack:WeaponAttack;
         let wantedAttackStr;
