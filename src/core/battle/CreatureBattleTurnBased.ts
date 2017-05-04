@@ -364,32 +364,30 @@ export default class CreatureBattleTurnBased{
         this.exhaustParticipant(bc);
     }
 
-    playerActionAttack(attacker:Creature,attack:WeaponAttack,defender:Creature){
+    playerActionAttack(attacker:Creature,attack:WeaponAttack,target:Creature){
         const bca = this.getBattleCreatureForAction(attacker);
         
         if(attack.chargesRequired > bca.charges){
             throw 'You need at least '+attack.chargesRequired+' charges to use '+attack.title+'!';
         }
 
-        let bcTarget;
+        let bcTarget:IBattleCreature;
 
-        if(defender){
-            bcTarget = this.participantsLookup.get(defender);
+        if(target != attacker){
+            bcTarget = this.participantsLookup.get(target);
 
             if(!bcTarget){
-                throw 'Invalid target '+defender.title;
+                throw 'Invalid target '+target.title;
             }
-        }
+            else if(attack.isFriendly && bcTarget.teamNumber != bca.teamNumber){
+                throw target.title+' is not on your team and that is a friendly attack';
+            }
+            else{// if(!attack.isFriendly && bcTarget.teamNumber == bca.teamNumber){
+                throw target.title+' is on your team and that\'s not a friendly attack';
+            }
+        } 
         else if(attack.isFriendly){
-            const survivingFriends = [];
-
-            this.participants.forEach(function(bc){
-                if(!bc.defeated && bc.teamNumber == bca.teamNumber){
-                    survivingFriends.push(bc);
-                }
-            });
-
-            bcTarget = survivingFriends[Math.floor(survivingFriends.length * Math.random())];
+            bcTarget = bca;
         }
         else{// if(!attack.isFriendly){
             const survivingEnemies = [];

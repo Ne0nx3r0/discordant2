@@ -540,7 +540,7 @@ export default class Game {
             throw attackTitle+' is not a valid attack for '+weapon.title;
         }
 
-        let target = null;
+        let target = attacker;
 
         if(targetPlayerUid){
             const targetPC = await this.getPlayerCharacter(targetPlayerUid);
