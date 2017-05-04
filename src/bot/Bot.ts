@@ -15,6 +15,8 @@ import{
     PermissionOverwrites
 } from 'discord.js';
 import Logger from "../gameserver/log/Logger";
+import { Message } from 'discord.js';
+import SendMessageClientRequest from '../client/requests/SendMessageClientRequest';
 
 export interface BotConfigBase{
     authToken:string;
@@ -33,6 +35,8 @@ export interface BotBag extends BotConfigBase{
     logger:Logger;
 }
 
+const COOLDOWN_MS = 1000;
+
 export default class Bot{
     client:DiscordClient;
     commandPrefix:string;
@@ -43,6 +47,7 @@ export default class Bot{
     logger:Logger;
     permissions:PermissionsService;
     items: AllItems;
+    cooldowns:Map<String,number>;
     aliases: {};
 
     constructor(bag:BotBag){
@@ -52,6 +57,7 @@ export default class Bot{
         this.permissions = bag.permissions;
         this.items = new AllItems();
         this.aliases = {};
+        this.cooldowns = new Map();
 
         this.logger = bag.logger;
 
@@ -144,6 +150,19 @@ export default class Bot{
 
         if(!command){
             return;
+        }
+
+        const lastCommandMS = this.cooldowns.get(message.author.id);
+        const nowMS = new Date().getTime();
+        const expireMS = nowMS - COOLDOWN_MS;
+
+        if(lastCommandMS && lastCommandMS > expireMS){
+            message.channel.sendMessage(`You are sending commands too fast, ${message.author.username}`);
+
+            return;
+        }
+        else{
+            this.cooldowns.set(message.author.id,nowMS);
         }
 
         (async ()=>{
