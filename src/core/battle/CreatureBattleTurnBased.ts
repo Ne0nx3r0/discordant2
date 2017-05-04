@@ -150,7 +150,7 @@ export default class CreatureBattleTurnBased{
                 if(effect.onRoundBegin && !this.battleHasEnded){
                     effect.onRoundBegin({
                         target: p.creature,
-                        sendBattleEmbed: this.sendEmbed
+                        sendBattleEmbed: this.queueBattleMessage
                     });
 
                     if(p.creature.hpCurrent<1){
@@ -239,7 +239,7 @@ export default class CreatureBattleTurnBased{
                     this._sendNextAttackStep(p);
                 }
                 else{
-                    this.sendEmbed(`${p.creature.title} is exhausted!`,EMBED_COLORS.INFO);
+                    this.queueBattleMessage([`${p.creature.title} is exhausted!`]);
 
                     this.exhaustParticipant(p);
                 }
@@ -263,12 +263,12 @@ export default class CreatureBattleTurnBased{
                 return p.creature.title;
             }).join(', ');
             
-            this.sendEmbed(`${partyMembers} ran away!`);
+            this.queueBattleMessage([`${partyMembers} ran away!`]);
 
             this.endBattle(BattleResult.Ran);
         }
         else{
-            this.sendEmbed(`Failed to run away!`);
+            this.queueBattleMessage([`Failed to run away!`]);
 
             this.exhaustParticipant(bc);
         }
@@ -278,7 +278,7 @@ export default class CreatureBattleTurnBased{
         if(requester == skip){
             const bc = this.getBattleCreatureForAction(requester);
 
-            this.sendEmbed(`${bc.creature.title} skips their turn`);
+            this.queueBattleMessage([`${bc.creature.title} skips their turn`]);
 
             this.exhaustParticipant(bc);
         }
@@ -315,7 +315,7 @@ export default class CreatureBattleTurnBased{
 
             this.exhaustParticipant(bc);
 
-            this.sendEmbed(`${bc.creature.title} has been skipped`);
+            this.queueBattleMessage([`${bc.creature.title} has been skipped`]);
         }
     }
 
@@ -464,7 +464,7 @@ export default class CreatureBattleTurnBased{
         attacker.creature.tempEffects.forEach((roundsLeft,effect)=>{
             if (effect.onAttack && !effect.onAttack({
                 target: attacker.creature,
-                sendBattleEmbed: this.sendEmbed
+                sendBattleEmbed: this.queueBattleMessage
             }, damages)) {
                 attackCancelled = true;
             }
@@ -477,7 +477,7 @@ export default class CreatureBattleTurnBased{
         defender.creature.tempEffects.forEach((roundsLeft,effect)=>{
             if (effect.onAttacked && !effect.onAttacked({
                 target: defender.creature,
-                sendBattleEmbed: this.sendEmbed
+                sendBattleEmbed: this.queueBattleMessage
             }, damages)) {
                 attackCancelled = true;
             }
@@ -518,10 +518,7 @@ export default class CreatureBattleTurnBased{
         participant.exhausted = false;
         participant.creature.clearTemporaryEffects();
 
-        this.sendEmbed(
-            participant.creature.title +' was defeated!',
-            EMBED_COLORS.INFO
-        );
+        this.queueBattleMessage([participant.creature.title +' was defeated!']);
 
         let teamDefeated = true;
 
@@ -571,7 +568,7 @@ export default class CreatureBattleTurnBased{
         if(effect.onAdded){
             effect.onAdded({
                 target: target,
-                sendBattleEmbed: this.sendEmbed
+                sendBattleEmbed: this.queueBattleMessage
             });
         }
     }
@@ -580,7 +577,7 @@ export default class CreatureBattleTurnBased{
         if(effect.onRemoved){
             effect.onRemoved({
                 target:target,
-                sendBattleEmbed:this.sendEmbed
+                sendBattleEmbed: this.queueBattleMessage
             });
         }
 

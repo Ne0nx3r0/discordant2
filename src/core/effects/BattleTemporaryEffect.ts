@@ -4,7 +4,7 @@ import EffectId from './EffectId';
 import { ICreatureStatSet } from '../creature/Creature';
 
 interface BattleEmbedFunc{
-    (msg:string,color:number):void;
+    (msg:Array<string>):void;
 }
 
 export interface EffectEventBag{

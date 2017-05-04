@@ -10,7 +10,7 @@ export default class BattleTemporaryEffectPoison extends BattleTemporaryEffect{
             onRoundBegin:function(bag){
                 bag.target.hpCurrent -= damagePerRound;
 
-                bag.sendBattleEmbed(`${bag.target.title} ${bag.target.hpCurrent}/${bag.target.stats.hpTotal} lost ${damagePerRound}HP from ${this.title}`,EMBED_COLORS.POISON);
+                bag.sendBattleEmbed([`-${bag.target.title} ${bag.target.hpCurrent}/${bag.target.stats.hpTotal} lost ${damagePerRound}HP from ${this.title}`]);
             }
         });
     }
