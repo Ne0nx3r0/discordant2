@@ -24,12 +24,11 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'slash',
-            minBaseDamage: 15,
-            maxBaseDamage: 30,
+            minBaseDamage: 10,
+            maxBaseDamage: 15,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slashses {defender} with a stone dagger',
