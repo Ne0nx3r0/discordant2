@@ -346,6 +346,13 @@ export default class CreatureBattleTurnBased{
     playerActionUseItem(pc:PlayerCharacter,item:ItemUsable){
         const bc = this.getBattleCreatureForAction(pc);
 
+        const onUseMsg = item.onUse(pc);
+
+        this.queueBattleMessage([
+            `${pc.title} used ${item.title}`,
+            '+ '+onUseMsg
+        ]);
+
         this.exhaustParticipant(bc);
     }
 
@@ -367,7 +374,7 @@ export default class CreatureBattleTurnBased{
         const bca = this.getBattleCreatureForAction(attacker);
         
         if(attack.chargesRequired > bca.charges){
-            throw 'You need at least '+attack.chargesRequired+' charges to use '+attack.title+'!';
+            throw 'You need at least '+attack.chargesRequired+' charges to use '+attack.title;
         }
 
         let bcTarget:IBattleCreature;

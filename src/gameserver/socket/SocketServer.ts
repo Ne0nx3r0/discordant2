@@ -50,6 +50,8 @@ import BattleSkipRequest from './requests/BattleSkipRequest';
 import BattleRunRequest from './requests/BattleRunRequest';
 import BuyItemRequest from './requests/BuyItemRequest';
 import LeavePartyRequest from './requests/LeavePartyRequest';
+import { SetPlayerDescriptionData } from './requests/SetPlayerDescriptionRequest';
+import SetPlayerDescriptionRequest from './requests/SetPlayerDescriptionRequest';
 
 interface SocketServerBag{
     port:number;
@@ -128,6 +130,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new BattleRunRequest(null));
             this.registerHandler(registeredEvents,client,new BuyItemRequest(null));
             this.registerHandler(registeredEvents,client,new LeavePartyRequest(null));
+            this.registerHandler(registeredEvents,client,new SetPlayerDescriptionRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

@@ -60,6 +60,7 @@ import InteractWithCurrentTileRequest from '../gameserver/socket/requests/Intera
 import BattleSkipRequest from '../gameserver/socket/requests/BattleSkipRequest';
 import BattleRunRequest from '../gameserver/socket/requests/BattleRunRequest';
 import BuyItemRequest from '../gameserver/socket/requests/BuyItemRequest';
+import SetPlayerDescriptionRequest from '../gameserver/socket/requests/SetPlayerDescriptionRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -427,6 +428,14 @@ export default class SocketClientRequester{
             uid: playerUid,
             item: item.id,
             amount: amount,
+        })
+        .send(this.sioc);
+    }
+
+    async setPlayerDescription(playerUid:string,description:string):Promise<void>{
+        await new SetPlayerDescriptionRequest({
+            uid: playerUid,
+            description: description,
         })
         .send(this.sioc);
     }

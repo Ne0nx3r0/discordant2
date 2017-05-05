@@ -55,6 +55,7 @@ import { DBSellItem } from "../db/api/DBSellItem";
 import CreatureBattleTurnBased from '../../core/battle/CreatureBattleTurnBased';
 import { IPostBattleBag, BattleResult } from '../../core/battle/CreatureBattleTurnBased';
 import { DBBuyItem } from "../db/api/DBBuyItem";
+import { DBSetPlayerDescription } from "../db/api/DBSetPlayerDescription";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -953,14 +954,21 @@ export default class Game {
         //Will throw error if something goes wrong
         item.canUse(pc);
 
+        //If they are in a battle, the battle is responsible for notifying the player in the message queue
+        let onUseMsg = null;
+
+        //If they are in a battle the battle needs a chance to reject if the player is exhausted
         if(pc.battle){
-            //Throws error if something is wrong, exhausts player so they can't take another action
+            //Throws error if something is wrong, also exhausts player so they can't take another action
             pc.battle.playerActionUseItem(pc,item);
         }
-
+        else{
+            onUseMsg = item.onUse(pc);//allowed to throw error
+        }
+        
         await this.takePlayerItem(pc.uid,item.id,1);//May throw error
 
-        return item.onUse(pc);//allowed to throw error
+        return onUseMsg;
     }
 
     async marketSellItem(bag:MarketSellData):Promise<number>{
@@ -1006,6 +1014,20 @@ export default class Game {
         }
 
         return offer;
+    }
+
+    async setPlayerDescription(playerUid:string,description:string):Promise<void>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw `You are not registered`;
+        }
+
+        const descriptionFiltered = description.replace(/[^a-zA-Z0-9 \,'\.\-_]/g,'');
+
+        await DBSetPlayerDescription(this.db,playerUid,descriptionFiltered);
+
+        pc.description = descriptionFiltered;
     }
 
     async buyMarketOffer(playerUid:string,offerId:number,amount:number):Promise<PurchasedMarketOffer>{

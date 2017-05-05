@@ -68,7 +68,7 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                 name: 'Stats for '+pc.title,
                 icon_url: 'http://dsi-vd.github.io/patternlab-vd/images/fpo_avatar.png'
             },
-            description: 'description here '+pc.description,
+            description: pc.description?pc.description:'',
             fields: [
                 {
                     name: 'Health Points',

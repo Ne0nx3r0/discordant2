@@ -24,7 +24,7 @@ enum PermissionId{
     PartyLeave,
     PartyExplore,
     PartyMove,
-
+    SetDescription,
     Battle,
     BattleAttack,
     BattleOffhand,
