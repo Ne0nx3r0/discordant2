@@ -16,6 +16,7 @@ enum PermissionId{
     Lockdown,
     WishCalc,
     Party,
+    DPR,
     PartyNew,
     PartyInvite,
     BattleRun,

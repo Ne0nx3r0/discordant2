@@ -46,5 +46,6 @@ export { default as BattleSkip } from './commands/BattleSkip';
 export { default as BattleRun } from './commands/BattleRun';
 export { default as Buy } from './commands/Buy';
 export { default as Shop } from './commands/Shop';
+export { default as DPR } from './commands/DPR';
 
 export { default as Party } from './commands/Party';

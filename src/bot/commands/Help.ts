@@ -138,8 +138,8 @@ true
 `${p}party
 ${p}pnew
 ${p}pinvite
-${p}paccept
-${p}pdeny
+${p}pyes
+${p}pno
 ${p}pdisband 
 ${p}pleave
 ${p}pexplore
