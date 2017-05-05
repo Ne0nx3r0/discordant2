@@ -1,11 +1,11 @@
 import Weapon from '../Weapon';
 import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import IDamageSet from '../../damage/IDamageSet';
+
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
-import { DamageFuncBag } from '../WeaponAttackStep';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from "../../creature/AttributeSet";
 
 export default new Weapon({
@@ -23,7 +23,7 @@ export default new Weapon({
             title: 'heal',
             minBaseDamage: 40,
             maxBaseDamage: 60,
-            damageType: 'special',
+            damageType: DamageType.SPECIAL,
             isFriendly: true,
             specialDescription: 'Heals target',
             scalingAttribute: Attribute.spirit,
@@ -31,7 +31,7 @@ export default new Weapon({
             chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} reads a healing legend outloud',
+                    attackMessage: '{attacker} reads a healing legend outloud and heals {defender}',
                     damageFunc: function(bag:DamageFuncBag){
                         let healAmount = Math.round((Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage);
 
@@ -39,11 +39,15 @@ export default new Weapon({
                             healAmount = healAmount * 2;
                         }
 
-                        bag.defender.creature.hpCurrent = Math.min(bag.defender.creature.stats.hpTotal,bag.defender.creature.hpCurrent+healAmount);
+                        const adjustedHealAmount = bag.defender.creature.stats.hpTotal > healAmount ? bag.defender.creature.stats.hpTotal - bag.defender.creature.hpCurrent : healAmount;
 
-                        bag.battle.queueBattleMessage();
-
-                        return {};
+                        return [
+                            {
+                                target: bag.defender,
+                                type: DamageType.HP,
+                                amount: adjustedHealAmount
+                            }
+                        ];
                     }
                 })
             ],
@@ -53,7 +57,7 @@ export default new Weapon({
             title: 'bless',
             minBaseDamage: 5,
             maxBaseDamage: 10,
-            damageType: 'special',
+            damageType: DamageType.SPECIAL,
             isFriendly: true,
             chargesRequired: 2,
             scalingAttribute: Attribute.spirit,
@@ -63,7 +67,7 @@ export default new Weapon({
                     attackMessage: '{attacker} reads a legend aloud blessing NOT WORKING YET {defender}',
                     damageFunc: function(bag:DamageFuncBag){
 
-                        return {};
+                        return [];
                     }
                 }),
             ],

@@ -1,11 +1,11 @@
 import Weapon from '../Weapon';
 import WeaponAttack from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import IDamageSet from '../../damage/IDamageSet';
+
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
-import { DamageFuncBag } from '../WeaponAttackStep';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from '../../creature/AttributeSet';
 import { ScalingLevel, WeaponDamageType } from '../WeaponAttack';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
@@ -27,7 +27,7 @@ export const WoodShield = new Weapon({
             scalingLevel: ScalingLevel.B,
             minBaseDamage: 2,
             maxBaseDamage: 5,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} shoves {defender} with their shield',

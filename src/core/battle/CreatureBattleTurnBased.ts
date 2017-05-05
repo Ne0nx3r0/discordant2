@@ -5,12 +5,11 @@ import ItemUsable from '../item/ItemUsable';
 import WeaponAttack from '../item/WeaponAttack';
 import CreatureAIControlled from '../creature/CreatureAIControlled';
 import { getDamagesLine } from '../../bot/util/ChatHelpers';
-import IDamageSet from '../damage/IDamageSet';
-import { DamagesTotal } from '../damage/IDamageSet';
 import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
 import WeaponAttackStep from '../item/WeaponAttackStep';
 import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
 import { SocketCreature } from '../creature/Creature';
+import { IWeaponAttackDamages } from '../item/WeaponAttackStep';
 
 export enum BattleResult{
     Team1Won,
@@ -465,7 +464,7 @@ export default class CreatureBattleTurnBased{
         const criticalChance = queuedAttackStep.step.attack.weapon.chanceToCritical;
         const isCritical = Math.random() < criticalChance;
 
-        const damages:IDamageSet = queuedAttackStep.step.getDamages({
+        const damages:Array<IWeaponAttackDamages> = queuedAttackStep.step.getDamages({
             attacker: attacker,
             defender: defender,
             battle: this,

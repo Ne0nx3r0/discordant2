@@ -1,9 +1,18 @@
-import IDamageSet from '../damage/IDamageSet';
 import Creature from '../creature/Creature';
 import Weapon from './Weapon';
 import WeaponAttack from './WeaponAttack';
 import CreatureBattleTurnBased from '../battle/CreatureBattleTurnBased';
 import { IBattleCreature } from '../battle/CreatureBattleTurnBased';
+
+export enum DamageType{
+    HP,
+    PHYSICAL,
+    FIRE,
+    ACID,
+    THUNDER,
+    CHAOS,
+    SPECIAL
+}
 
 export interface DamageFuncBag{
     attacker:IBattleCreature;
@@ -13,10 +22,16 @@ export interface DamageFuncBag{
     isCritical:boolean;
 }
 
+export interface IWeaponAttackDamages{
+    target: IBattleCreature;
+    type: DamageType;
+    amount: number;
+}
+
 interface DamageFunc{
     (     
         bag:DamageFuncBag
-    ):IDamageSet;
+    ):Array<IWeaponAttackDamages>;
 }
 
 export interface WeaponAttackStepBag{

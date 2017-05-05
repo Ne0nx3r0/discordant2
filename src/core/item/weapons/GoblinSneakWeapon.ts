@@ -1,14 +1,14 @@
 import Weapon from '../Weapon';
 import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import {DamageFuncBag} from '../WeaponAttackStep';
-import IDamageSet from '../../damage/IDamageSet';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
 import EffectGoblinSneakPoison from '../../effects/types/EffectGoblinSneakPoison';
 import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
+import { DoNoDamageFunc } from '../../damage/DoNoDamageFunc';
 
 export default new Weapon({
     id: ItemId.GoblinSneakPoisonWeapon,
@@ -22,13 +22,13 @@ export default new Weapon({
             title: 'toxicspray',
             minBaseDamage: 0,
             maxBaseDamage: 0,
-            damageType: 'special',
+            damageType: DamageType.SPECIAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} takes in a deep breath',
-                    damageFunc: function(bag:DamageFuncBag){ return {}; }
+                    damageFunc: DoNoDamageFunc
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} sprays the battlefield with a powerful toxin poisoning everyone!',
@@ -41,7 +41,7 @@ export default new Weapon({
                             bag.battle.addTemporaryEffect(p.creature,EffectGoblinSneakPoison,3);
                         });
 
-                        return {};
+                        return [];
                     }
                 }),
             ],
@@ -51,7 +51,7 @@ export default new Weapon({
             title: 'dart',
             minBaseDamage: 8,
             maxBaseDamage: 12,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             steps: [

@@ -1,6 +1,5 @@
 import ItemBase from './ItemBase';
 import {ItemBaseBag} from './ItemBase';
-import DamageSet from '../damage/IDamageSet';
 import Creature from '../creature/Creature';
 import {ICreatureStatSet} from '../creature/Creature';
 import { EquipmentSlot } from './CreatureEquipment';

@@ -1,11 +1,11 @@
 import Weapon from '../Weapon';
 import WeaponAttack, { WeaponDamageType, ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import IDamageSet from '../../damage/IDamageSet';
+
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
-import { DamageFuncBag } from '../WeaponAttackStep';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 
@@ -23,7 +23,7 @@ export default new Weapon({
             title: 'swing',
             minBaseDamage: 8,
             maxBaseDamage: 14,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.C,
             steps: [
@@ -38,7 +38,7 @@ export default new Weapon({
             title: 'duo',
             minBaseDamage: 5,
             maxBaseDamage: 10,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             specialDescription: 'Attacks 1-3 times',
             chargesRequired: 1,
             scalingAttribute: Attribute.agility,
@@ -46,13 +46,7 @@ export default new Weapon({
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slices {defender} (BROKEN DONT USE RIGHT NOW)',
-                    damageFunc: function(bag:DamageFuncBag){
-                        const damages = DefaultDamageFunc(bag);
-
-                        damages[bag.step.attack.damageType] *= 2; 
-
-                        return damages;
-                    }
+                    damageFunc: DefaultDamageFunc,
                 })
             ],
             aiUseWeight: 0.4

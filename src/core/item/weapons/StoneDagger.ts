@@ -1,8 +1,8 @@
 import Weapon from '../Weapon';
 import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import {DamageFuncBag} from '../WeaponAttackStep';
-import IDamageSet from '../../damage/IDamageSet';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
+
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
@@ -26,7 +26,7 @@ export default new Weapon({
             title: 'slash',
             minBaseDamage: 15,
             maxBaseDamage: 30,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             chargesRequired: 1,

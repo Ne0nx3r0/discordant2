@@ -2,6 +2,7 @@ import Creature from '../creature/Creature';
 import WeaponAttackStep from './WeaponAttackStep';
 import { Attribute } from '../creature/AttributeSet';
 import Weapon from "./Weapon";
+import { DamageType } from './WeaponAttackStep';
 
 export type WeaponDamageType = 'physical' | 'thunder' | 'fire' | 'cold' | 'chaos' | 'special';
 
@@ -23,7 +24,7 @@ export interface WeaponAttackBag{
     specialDescription?: string;
     minBaseDamage: number;
     maxBaseDamage: number;
-    damageType: WeaponDamageType;
+    damageType: DamageType;
     scalingAttribute: Attribute;
     scalingLevel: ScalingLevel;
     chargesRequired?: number;
@@ -45,7 +46,7 @@ export default class WeaponAttack{
     aiShouldIUseThisAttack:AIShouldUseFunc;
 
     specialDescription: string;
-    damageType: WeaponDamageType;
+    damageType: DamageType;
     scalingAttribute: Attribute;
     scalingLevel: ScalingLevel;
     minBaseDamage: number;

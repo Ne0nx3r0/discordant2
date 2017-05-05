@@ -1,9 +1,16 @@
 import AttributeSet from './AttributeSet';
-import IDamageSet from '../damage/IDamageSet';
 import CreatureEquipment from '../item/CreatureEquipment';
 import ItemEquippable from '../item/ItemEquippable';
 import { EquipmentSlot, SocketCreatureEquipment } from '../item/CreatureEquipment';
 import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
+
+interface IResistances{
+    physical:number;
+    fire:number;
+    thunder:number;
+    acid:number;
+    chaos:number;
+}
 
 export interface ICreatureStatSet{
     strength: number,
@@ -13,7 +20,7 @@ export interface ICreatureStatSet{
     charisma: number,
     luck: number,
     hpTotal: number,
-    resistances: IDamageSet,
+    resistances: IResistances,
 }
 
 export interface CreatureBag{

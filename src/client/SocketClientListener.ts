@@ -3,7 +3,6 @@ import ClientClientRequest from './ClientRequest';
 import RoundBeginClientRequest from './requests/RoundBeginClientRequest';
 import { TextChannel } from 'discord.js';
 import { ClientRequestData } from './ClientRequest';
-import AttackedClientRequest from './requests/AttackedClientRequest';
 import CoopBattleEndedClientRequest from './requests/CoopBattleEndedClientRequest';
 import EffectMessageClientRequest from './requests/EffectMessageClientRequest';
 import PassedOutClientRequest from './requests/PassedOutClientRequest';
@@ -32,8 +31,7 @@ interface SocketClientListenerBag{
 
 export default class SocketClientListener{
     constructor(bag:SocketClientListenerBag){
-        //we can pass null in here because we just want the title
-        this.registerHandler(bag,new AttackedClientRequest(null));
+        //we can pass null in here because we just want the title\
         this.registerHandler(bag,new CoopBattleEndedClientRequest(null));
         this.registerHandler(bag,new DeleteChannelClientRequest(null));
         this.registerHandler(bag,new EffectMessageClientRequest(null));

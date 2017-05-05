@@ -1,11 +1,10 @@
 import Weapon from '../Weapon';
 import WeaponAttack from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import IDamageSet from '../../damage/IDamageSet';
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
-import { DamageFuncBag } from '../WeaponAttackStep';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { WeaponDamageType, ScalingLevel } from '../WeaponAttack';
 import { Attribute } from '../../creature/AttributeSet';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
@@ -23,7 +22,7 @@ export default new Weapon({
             title: 'jab',
             minBaseDamage: 2,
             maxBaseDamage: 6,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.S,
             steps: [
@@ -36,7 +35,7 @@ export default new Weapon({
         }),
         new WeaponAttack({
             title: 'punch',           
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.S,
             minBaseDamage: 5,

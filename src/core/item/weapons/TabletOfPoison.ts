@@ -1,8 +1,7 @@
 import Weapon from '../Weapon';
 import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import {DamageFuncBag} from '../WeaponAttackStep';
-import IDamageSet from '../../damage/IDamageSet';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
@@ -23,7 +22,7 @@ export default new Weapon({
             title: 'poison',
             minBaseDamage: 8,
             maxBaseDamage: 12,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             chargesRequired: 2,
@@ -33,7 +32,7 @@ export default new Weapon({
                     damageFunc: function(bag:DamageFuncBag){
                         bag.battle.addTemporaryEffect(bag.defender.creature,EffectSpiritSnakePoison,5);
 
-                        return {};
+                        return [];
                     }
                 })
             ],

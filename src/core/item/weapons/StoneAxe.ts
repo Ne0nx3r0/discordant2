@@ -1,8 +1,8 @@
 import Weapon from '../Weapon';
 import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import {DamageFuncBag} from '../WeaponAttackStep';
-import IDamageSet from '../../damage/IDamageSet';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
+
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
@@ -26,7 +26,7 @@ export default new Weapon({
             title: 'slam',
             minBaseDamage: 40,
             maxBaseDamage: 60,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.D,
             chargesRequired: 2,
@@ -43,7 +43,7 @@ export default new Weapon({
             specialDescription: 'Lowers VIT by 4 and increases STR by 10 (12 rounds)',
             minBaseDamage: 0,
             maxBaseDamage: 0,
-            damageType: 'special',
+            damageType: DamageType.SPECIAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.D,
             steps: [
@@ -63,7 +63,7 @@ export default new Weapon({
                             12
                         );
 
-                        return {};
+                        return [];
                     },
                 }),
             ],

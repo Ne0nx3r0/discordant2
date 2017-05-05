@@ -1,7 +1,7 @@
 import Creature from '../creature/Creature';
-import IDamageSet from '../damage/IDamageSet';
 import EffectId from './EffectId';
 import { ICreatureStatSet } from '../creature/Creature';
+import { IWeaponAttackDamages } from '../item/WeaponAttackStep';
 
 interface BattleEmbedFunc{
     (msg:Array<string>):void;
@@ -17,7 +17,7 @@ interface RoundEffectFunc{
 }
 
 interface RoundEffectAttackFunc{
-    (bag:EffectEventBag,damages:IDamageSet):boolean;
+    (bag:EffectEventBag,damages:IWeaponAttackDamages):boolean;
 }
 
 interface RoundEffectStatsFunc{

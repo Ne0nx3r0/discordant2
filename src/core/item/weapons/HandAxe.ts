@@ -1,11 +1,11 @@
 import Weapon from '../Weapon';
 import WeaponAttack from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import IDamageSet from '../../damage/IDamageSet';
+
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
-import { DamageFuncBag } from '../WeaponAttackStep';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { WeaponDamageType, ScalingLevel } from '../WeaponAttack';
 import { Attribute } from '../../creature/AttributeSet';
@@ -24,7 +24,7 @@ export default new Weapon({
             title: 'chop',
             minBaseDamage: 8,
             maxBaseDamage: 12,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             steps: [
@@ -39,7 +39,7 @@ export default new Weapon({
             title: 'dive',
             minBaseDamage: 15,
             maxBaseDamage: 30,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             chargesRequired: 1,

@@ -2,7 +2,7 @@ import Weapon from '../../item/Weapon';
 import ItemId from '../../item/ItemId';
 import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import { DamageFuncBag } from '../WeaponAttackStep';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import DamageScaling from '../../damage/DamageScaling';
 import Creature from '../../creature/Creature';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
@@ -21,7 +21,7 @@ export default  new Weapon({
             title: 'attack',
             minBaseDamage: 10,
             maxBaseDamage: 15,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             steps: [
@@ -36,7 +36,7 @@ export default  new Weapon({
             title: 'heavy attack',
             minBaseDamage: 25,
             maxBaseDamage: 35,
-            damageType: 'physical',
+            damageType: DamageType.PHYSICAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             chargesRequired: 2,
@@ -52,20 +52,20 @@ export default  new Weapon({
             title: 'regroup',
             minBaseDamage: 0,
             maxBaseDamage: 0,
-            damageType: 'special',
+            damageType: DamageType.SPECIAL,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} attempts to run away and regroup',
                     damageFunc: function(bag:DamageFuncBag){
-                        return {};
+                        return [];
                     }
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} is recruiting allies!',
                     damageFunc: function(bag:DamageFuncBag){
-                        return {};
+                        return [];
                     }
                 }),
                 new WeaponAttackStep({
@@ -74,7 +74,8 @@ export default  new Weapon({
                         bag.attacker.creature.attributes.vitality += 10;
                         bag.attacker.creature.updateStats();
                         bag.attacker.creature.hpCurrent = bag.attacker.creature.stats.hpTotal / 2;
-                        return {};
+                        
+                        return [];
                     }
                 }),
             ],

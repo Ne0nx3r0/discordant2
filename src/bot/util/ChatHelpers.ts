@@ -1,4 +1,3 @@
-import IDamageSet from '../../core/damage/IDamageSet';
 import { SocketCreature } from '../../core/creature/Creature';
 export const EMBED_COLORS = {
     INFO: 0x3D79DB,
@@ -37,7 +36,7 @@ export function getDamageTypeEmoji(type:string){
     return 'UNKNOWN DAMAGE TYPE';
 }
 
-export function getDamagesLine(creature:SocketCreature,damages:IDamageSet,blocked:boolean,exhausted:number,isCritical:boolean){
+export function getDamagesLine(creature:SocketCreature,damages:any,blocked:boolean,exhausted:number,isCritical:boolean){
     let blockedStr = '';
 
     if(blocked){

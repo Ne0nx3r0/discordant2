@@ -2,8 +2,9 @@ import BattleTemporaryEffect from '../BattleTemporaryEffect';
 import EffectId from '../EffectId';
 import { EffectEventBag } from '../BattleTemporaryEffect';
 import { ICreatureStatSet } from '../../creature/Creature';
-import IDamageSet from '../../damage/IDamageSet';
+
 //import EmbedColors from '../../../util/EmbedColors';
+import { IWeaponAttackDamages } from '../../item/WeaponAttackStep';
 
 export default new BattleTemporaryEffect({
     id: EffectId.Test,
@@ -17,7 +18,7 @@ export default new BattleTemporaryEffect({
     onRoundBegin: function(bag:EffectEventBag){
      //   bag.sendBattleEmbed('TEST EFFECT: Round Began',EmbedColors.TEST);
     },
-    onAttack: function(bag:EffectEventBag,damages:IDamageSet){
+    onAttack: function(bag:EffectEventBag,damages:IWeaponAttackDamages){
         if(Math.random>Math.random){
       //      bag.sendBattleEmbed('TEST EFFECT: Denied attack',EmbedColors.TEST);
             return false;
@@ -26,7 +27,7 @@ export default new BattleTemporaryEffect({
        // bag.sendBattleEmbed('TEST EFFECT: Allowed attack',EmbedColors.TEST);
         return true;
     },
-    onAttacked: function(bag:EffectEventBag,damages:IDamageSet){
+    onAttacked: function(bag:EffectEventBag,damages:IWeaponAttackDamages){
         if(Math.random>Math.random){
       //      bag.sendBattleEmbed('TEST EFFECT: Denied attacked',EmbedColors.TEST);
             return false;

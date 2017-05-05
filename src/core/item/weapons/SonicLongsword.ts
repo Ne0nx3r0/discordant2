@@ -1,11 +1,10 @@
 import Weapon from '../Weapon';
 import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import IDamageSet from '../../damage/IDamageSet';
 import Creature from '../../creature/Creature';
 import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
-import { DamageFuncBag } from '../WeaponAttackStep';
+import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { Attribute } from "../../creature/AttributeSet";
 
@@ -23,7 +22,7 @@ export default new Weapon({
             title: 'swing',
             minBaseDamage: 10,
             maxBaseDamage: 40,
-            damageType: 'thunder',
+            damageType: DamageType.THUNDER,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.B,
             steps: [
