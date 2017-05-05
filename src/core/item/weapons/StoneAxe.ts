@@ -26,7 +26,7 @@ export default new Weapon({
             title: 'slam',
             minBaseDamage: 40,
             maxBaseDamage: 60,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.D,
             chargesRequired: 2,
@@ -43,7 +43,7 @@ export default new Weapon({
             specialDescription: 'Lowers VIT by 4 and increases STR by 10 (12 rounds)',
             minBaseDamage: 0,
             maxBaseDamage: 0,
-            damageType: DamageType.SPECIAL,
+            damageType: DamageType.special,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.D,
             steps: [

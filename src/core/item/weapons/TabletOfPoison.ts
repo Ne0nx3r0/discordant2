@@ -22,7 +22,7 @@ export default new Weapon({
             title: 'poison',
             minBaseDamage: 8,
             maxBaseDamage: 12,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             chargesRequired: 2,

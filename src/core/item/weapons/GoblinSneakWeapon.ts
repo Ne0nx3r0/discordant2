@@ -22,7 +22,7 @@ export default new Weapon({
             title: 'toxicspray',
             minBaseDamage: 0,
             maxBaseDamage: 0,
-            damageType: DamageType.SPECIAL,
+            damageType: DamageType.special,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             steps: [
@@ -51,7 +51,7 @@ export default new Weapon({
             title: 'dart',
             minBaseDamage: 8,
             maxBaseDamage: 12,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             steps: [

@@ -23,7 +23,7 @@ export default new Weapon({
             title: 'swing',
             minBaseDamage: 8,
             maxBaseDamage: 14,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.C,
             steps: [
@@ -38,7 +38,7 @@ export default new Weapon({
             title: 'duo',
             minBaseDamage: 5,
             maxBaseDamage: 10,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             specialDescription: 'Attacks 1-3 times',
             chargesRequired: 1,
             scalingAttribute: Attribute.agility,

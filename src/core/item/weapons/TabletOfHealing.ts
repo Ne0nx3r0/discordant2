@@ -7,6 +7,7 @@ import DamageScaling from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
 import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from "../../creature/AttributeSet";
+import { DefaultDamageFunc } from "../../damage/DefaultDamageFunc";
 
 export default new Weapon({
     id: ItemId.TabletOfHealing,
@@ -23,9 +24,8 @@ export default new Weapon({
             title: 'heal',
             minBaseDamage: 40,
             maxBaseDamage: 60,
-            damageType: DamageType.SPECIAL,
+            damageType: DamageType.healing,
             isFriendly: true,
-            specialDescription: 'Heals target',
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,
             chargesRequired: 1,
@@ -44,7 +44,7 @@ export default new Weapon({
                         return [
                             {
                                 target: bag.defender,
-                                type: DamageType.HP,
+                                type: DamageType.healing,
                                 amount: adjustedHealAmount
                             }
                         ];
@@ -57,7 +57,7 @@ export default new Weapon({
             title: 'bless',
             minBaseDamage: 5,
             maxBaseDamage: 10,
-            damageType: DamageType.SPECIAL,
+            damageType: DamageType.special,
             isFriendly: true,
             chargesRequired: 2,
             scalingAttribute: Attribute.spirit,

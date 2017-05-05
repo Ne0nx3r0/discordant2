@@ -27,7 +27,7 @@ export const WoodShield = new Weapon({
             scalingLevel: ScalingLevel.B,
             minBaseDamage: 2,
             maxBaseDamage: 5,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} shoves {defender} with their shield',

@@ -22,7 +22,7 @@ export default new Weapon({
             title: 'swing',
             minBaseDamage: 10,
             maxBaseDamage: 40,
-            damageType: DamageType.THUNDER,
+            damageType: DamageType.thunder,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.B,
             steps: [

@@ -43,8 +43,8 @@ export default class BattleTemporaryEffect{
     onAdded?:RoundEffectFunc;
     onAddBonuses?:RoundEffectStatsFunc;
     onRoundBegin?:RoundEffectFunc;
-    onAttack?:RoundEffectAttackFunc;
-    onAttacked?:RoundEffectAttackFunc;
+    //onAttack?:RoundEffectAttackFunc;
+    //onAttacked?:RoundEffectAttackFunc;
     onRemoved?:RoundEffectFunc;
 
     constructor(bag:BattleTemporaryEffectBag){
@@ -52,8 +52,8 @@ export default class BattleTemporaryEffect{
         this.onAdded = bag.onAdded;
         this.onAddBonuses = bag.onAddBonuses;
         this.onRoundBegin = bag.onRoundBegin;
-        this.onAttack = bag.onAttack;
-        this.onAttacked = bag.onAttacked;
+        //this.onAttack = bag.onAttack;
+        //this.onAttacked = bag.onAttacked;
         this.onRemoved = bag.onRemoved;
     }
 }

@@ -5,13 +5,13 @@ import CreatureBattleTurnBased from '../battle/CreatureBattleTurnBased';
 import { IBattleCreature } from '../battle/CreatureBattleTurnBased';
 
 export enum DamageType{
-    HP,
-    PHYSICAL,
-    FIRE,
-    ACID,
-    THUNDER,
-    CHAOS,
-    SPECIAL
+    healing,
+    physical,
+    fire,
+    acid,
+    thunder,
+    chaos,
+    special
 }
 
 export interface DamageFuncBag{

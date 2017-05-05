@@ -26,7 +26,7 @@ export default new Weapon({
             title: 'slash',
             minBaseDamage: 15,
             maxBaseDamage: 30,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             chargesRequired: 1,

@@ -9,7 +9,7 @@ import SendMessageClientRequest from '../../client/requests/SendMessageClientReq
 import WeaponAttackStep from '../item/WeaponAttackStep';
 import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
 import { SocketCreature } from '../creature/Creature';
-import { IWeaponAttackDamages } from '../item/WeaponAttackStep';
+import { IWeaponAttackDamages, DamageType } from '../item/WeaponAttackStep';
 
 export enum BattleResult{
     Team1Won,
@@ -472,59 +472,47 @@ export default class CreatureBattleTurnBased{
             isCritical: isCritical,
         });
 
-        let attackCancelled = false;
-
-        attacker.creature.tempEffects.forEach((roundsLeft,effect)=>{
-            if (effect.onAttack && !effect.onAttack({
-                target: attacker.creature,
-                sendBattleEmbed: this.queueBattleMessage
-            }, damages)) {
-                attackCancelled = true;
-            }
-        });
-
-        if(attackCancelled){
-            return;
-        }
-
-        defender.creature.tempEffects.forEach((roundsLeft,effect)=>{
-            if (effect.onAttacked && !effect.onAttacked({
-                target: defender.creature,
-                sendBattleEmbed: this.queueBattleMessage
-            }, damages)) {
-                attackCancelled = true;
-            }
-        });
-
-        if(attackCancelled){
-            return;
-        }        
-
-        defender.creature.hpCurrent -= Math.round(DamagesTotal(damages));
-
         const criticalMsg = isCritical ? '**CRITICAL HIT** ' : '';
 
         this.queueBattleMessage([
-            queuedAttackStep.step.attackMessage
+            criticalMsg+queuedAttackStep.step.attackMessage
             .replace('{defender}',`${defender.creature.title} (${defender.creature.hpCurrent}/${defender.creature.stats.hpTotal})`)
             .replace('{attacker}',`${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal})`)
         ]);
 
-        if(Object.keys(damages).length > 0){
-            this.queueBattleMessage([
-                '- '+getDamagesLine(
-                    defender.creature.toSocket(),
-                    damages,
-                    false,
-                    0,
-                    isCritical
-                )
-            ]);
-        }
+        damages.forEach((wad:IWeaponAttackDamages)=>{
+            const wadc = wad.target.creature;
 
-        if(defender.creature.hpCurrent < 1){
-            this.participantDefeated(defender);
-        }
+            if(this.battleHasEnded){
+                return;
+            }
+
+            if(wad.type == DamageType.special){
+                //nothing to do here but we don't want to exit yet because we need to run a defeated check
+            }
+            else if(wad.type == DamageType.healing){
+                defender.creature.hpCurrent += wad.amount;
+    
+                this.queueBattleMessage([
+                    `+ ${wadc.title}(${wadc.hpCurrent}/${wadc.stats.hpTotal}) gained ${wad.amount}HP`
+                ]);
+            }
+            else{
+                const damageTypeStr = DamageType[wad.type];
+                const damageResisted = wad.amount * wad.target.creature.stats.resistances[damageTypeStr];
+                const damageTaken = wad.amount - damageResisted;
+                
+                defender.creature.hpCurrent += wad.amount;
+
+                this.queueBattleMessage([
+                    `- ${wadc.title}(${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${wad.amount} ${damageTypeStr.toUpperCase()} damage, resisted ${damageResisted}`
+                ]);
+            }
+ 
+            if(wad.target.creature.hpCurrent < 1){
+                this.participantDefeated(wad.target);
+            }
+        });
     }
 
     participantDefeated(participant:IBattleCreature){

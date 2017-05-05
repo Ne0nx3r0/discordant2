@@ -22,7 +22,7 @@ export default new Weapon({
             title: 'jab',
             minBaseDamage: 2,
             maxBaseDamage: 6,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.S,
             steps: [
@@ -35,7 +35,7 @@ export default new Weapon({
         }),
         new WeaponAttack({
             title: 'punch',           
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.S,
             minBaseDamage: 5,

@@ -21,7 +21,7 @@ export default  new Weapon({
             title: 'attack',
             minBaseDamage: 10,
             maxBaseDamage: 15,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             steps: [
@@ -36,7 +36,7 @@ export default  new Weapon({
             title: 'heavy attack',
             minBaseDamage: 25,
             maxBaseDamage: 35,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             chargesRequired: 2,
@@ -52,7 +52,7 @@ export default  new Weapon({
             title: 'regroup',
             minBaseDamage: 0,
             maxBaseDamage: 0,
-            damageType: DamageType.SPECIAL,
+            damageType: DamageType.special,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             steps: [

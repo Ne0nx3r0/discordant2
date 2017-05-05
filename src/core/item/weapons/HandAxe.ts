@@ -24,7 +24,7 @@ export default new Weapon({
             title: 'chop',
             minBaseDamage: 8,
             maxBaseDamage: 12,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             steps: [
@@ -39,7 +39,7 @@ export default new Weapon({
             title: 'dive',
             minBaseDamage: 15,
             maxBaseDamage: 30,
-            damageType: DamageType.PHYSICAL,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             chargesRequired: 1,
