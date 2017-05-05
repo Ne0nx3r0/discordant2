@@ -543,9 +543,9 @@ export default class Game {
         let target = attacker;
 
         if(targetPlayerUid){
-            const targetPC = await this.getPlayerCharacter(targetPlayerUid);
+            target = await this.getPlayerCharacter(targetPlayerUid);
 
-            if(!targetPC){
+            if(!target){
                 throw 'That player is not registered yet';
             }
         }

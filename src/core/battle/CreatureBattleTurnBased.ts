@@ -338,9 +338,9 @@ export default class CreatureBattleTurnBased{
                 throw `${bc.creature.title} has already taken their turn`;
             }
 
-            this.exhaustParticipant(bc);
-
             this.queueBattleMessage([`${bc.creature.title} has been skipped`]);
+
+            this.exhaustParticipant(bc);
         }
     }
 
@@ -382,7 +382,7 @@ export default class CreatureBattleTurnBased{
             else if(attack.isFriendly && bcTarget.teamNumber != bca.teamNumber){
                 throw target.title+' is not on your team and that is a friendly attack';
             }
-            else{// if(!attack.isFriendly && bcTarget.teamNumber == bca.teamNumber){
+            else if(!attack.isFriendly && bcTarget.teamNumber == bca.teamNumber){
                 throw target.title+' is on your team and that\'s not a friendly attack';
             }
         } 
@@ -401,11 +401,11 @@ export default class CreatureBattleTurnBased{
             bcTarget = survivingEnemies[Math.floor(survivingEnemies.length * Math.random())];
         }   
 
+        bca.charges -= attack.chargesRequired;
+
         this._creatureAttack(bca,attack,bcTarget);
 
         this.exhaustParticipant(bca);
-
-        bca.charges -= attack.chargesRequired;
     }
 
     playerActionCharge(pc:PlayerCharacter){

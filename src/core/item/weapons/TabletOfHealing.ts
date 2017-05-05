@@ -24,6 +24,7 @@ export default new Weapon({
             minBaseDamage: 40,
             maxBaseDamage: 60,
             damageType: 'special',
+            isFriendly: true,
             specialDescription: 'Heals target',
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,
@@ -38,7 +39,9 @@ export default new Weapon({
                             healAmount = healAmount * 2;
                         }
 
-                        bag.attacker.creature.hpCurrent = Math.min(bag.attacker.creature.stats.hpTotal,bag.attacker.creature.hpCurrent+healAmount);
+                        bag.defender.creature.hpCurrent = Math.min(bag.defender.creature.stats.hpTotal,bag.defender.creature.hpCurrent+healAmount);
+
+                        bag.battle.queueBattleMessage();
 
                         return {};
                     }
@@ -51,6 +54,7 @@ export default new Weapon({
             minBaseDamage: 5,
             maxBaseDamage: 10,
             damageType: 'special',
+            isFriendly: true,
             chargesRequired: 2,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,

@@ -41,13 +41,13 @@ export function getDamagesLine(creature:SocketCreature,damages:IDamageSet,blocke
     let blockedStr = '';
 
     if(blocked){
-        blockedStr = ' :shield: ';
+        blockedStr = ' \*blocked\* ';
     }
 
     var line = creature.title+blockedStr;
 
     Object.keys(damages).forEach(function(damageStr:string){
-        line += ' took '+damages[damageStr] + ' ' + getDamageTypeEmoji(damageStr);
+        line += ' hit with '+damages[damageStr] + ' ' + getDamageTypeEmoji(damageStr) + ' damage';
     });
 
     return line;
