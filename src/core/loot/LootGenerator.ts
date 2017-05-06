@@ -27,14 +27,14 @@ export default class LootGenerator{
 
         //Do the last node separately
         for(let i=0;i<nodeSegments.length;i++){
-            const nodeStep = nodeSegments.slice(0,i+1).join('.');
+            const nodeStep = 'root.'+nodeSegments.slice(0,i+1).join('.');
 
             lootNode = this.lootNodes.get(nodeStep);
 
             if(!lootNode){
-                lootNode = new LootNode('root.'+nodeStep,parentNode);
+                lootNode = new LootNode(nodeStep,parentNode);
 
-                this.lootNodes.set('root.'+nodeStep,lootNode);
+                this.lootNodes.set(nodeStep,lootNode);
             }
 
             parentNode.addChild(lootNode);
@@ -46,7 +46,7 @@ export default class LootGenerator{
     }
 
     generateLoot(bag:IGenerateLootBag):number{
-        let lootNode = this.lootNodes.get('root.'+bag.startingNode);
+        let lootNode = this.lootNodes.get(bag.startingNode);
 
         if(!lootNode){
             throw 'Invalid loot starting node root.'+bag.startingNode;
@@ -102,10 +102,10 @@ class LootNode{
 
     getRandomChild(magicFind:number):LootNode{
         let roll = Math.random() * this.rarity;
-console.log('roll',roll,'rarity',this.rarity,'node',this.node);
+
         for(let i=0;i<this.children.length;i++){
             const child = this.children[i];
-console.log('roll/rarity',roll+'/'+child.rarity,child.node);
+
             if(child.rarity > roll){
 
                 return child;
@@ -162,17 +162,25 @@ test.addLootItem('common.herbs',Sage,0.5);
 test.addLootItem('common.herbs',Yerba,0.5);
 test.addLootItem('common.herbs',Bane,0.5);
 test.addLootItem('common.herbs',Fox,0.5);
-test.addLootItem('common.herbs',Acai,0.5);
+test.addLootItem('common.herbs',Acai,1);
 
+const results = {};
 
-for(var i=0;i<10;i++){
+const lootRuns = 1000;
+const generateNode = 'root';
+
+for(var i=0;i<lootRuns;i++){
     const loot = test.generateLoot({
-        startingNode: 'common',
+        startingNode: generateNode,
         chanceToGenerate: 1,
         chanceToGoUp: 0,
         maxStepsUp: 5,
         magicFind: 0
     });
 
-    console.log(loot ? ItemId[loot] : 'no loot generated');
+    results[loot ? loot : 'null'] = (results[loot ? loot : 'null'] || 0) + 1;
+}
+
+for(var lootItem in results){
+    console.log(ItemId[lootItem],Math.round(results[lootItem]/lootRuns*10000)/100+'%');
 }
