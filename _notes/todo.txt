@@ -1,0 +1,66 @@
+SometimesiCode
+#9228
+
+current-tasks
+Add your reactions to tasks so I know which to focus on!
+
+
+
+Search
+
+
+
+Welcome to the beginning of the #current-tasks channel.
+SometimesiCode - 04/23/2017
+Defeated & Death count for players -- track stats in a separate table?
+April 26, 2017
+SometimesiCode - 04/26/2017
+Wish memory
+SometimesiCode - 04/26/2017
+Show base damage and requesting player's scaled damage on item screen
+SometimesiCode - 04/26/2017
+Dheal, healing subclass items
+April 28, 2017
+SometimesiCode - 04/28/2017
+leaderboards
+boss defeat teleports player to loot map
+foraging, scrying, scavenging stats for playercharacter(edited)
+👆2
+karma +1 per day
+April 29, 2017
+SometimesiCode - Last Saturday at 6:52 AM
+Logging database
+SometimesiCode - Last Saturday at 11:05 AM
+Check item restrictions on equip
+👆1
+SometimesiCode - Last Saturday at 5:45 PM
+Add dbegin Merc alias
+April 30, 2017
+SometimesiCode - Last Sunday at 11:47 AM
+Standing stones
+SometimesiCode - Last Sunday at 2:50 PM
+status command
+SometimesiCode - Last Sunday at 10:09 PM
+Fix hunting blade duo attack -- allow for custom attack messages to be returned from damage func(edited)
+Show all equipment in stats
+SometimesiCode - Last Sunday at 11:01 PM
+craft acai into vial
+May 2, 2017
+SometimesiCode - Last Tuesday at 11:25 AM
+Show scaled damage on item screen
+SometimesiCode - Last Tuesday at 5:46 PM
+Consumables:
+Potion
+Lure
+Revive
+Antidote
+Escape
+Tent
+^everyones hp by 100
+Knife
+Bomb
+SometimesiCode - Last Tuesday at 6:03 PM
+Bows use arrow ammunition, arrows for sale at shop
+May 3, 2017
+SometimesiCode - Last Wednesday at 7:27 AM
+Afk party member mode
