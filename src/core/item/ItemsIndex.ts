@@ -8,7 +8,7 @@ export { default as TabletOfPoison } from './weapons/TabletOfPoison';
 export { default as SonicLongsword } from './weapons/SonicLongsword';
 export { default as StoneAxe } from './weapons/StoneAxe';
 export { default as StoneDagger } from './weapons/StoneDagger';
-export { default as Vial } from './misc/Vial';
+export { Vial } from './misc/Vial';
 export { default as ScarabToken } from './misc/ScarabToken';
 export { default as Sage } from './misc/Sage';
 export { default as Yerba } from './misc/Yerba';

@@ -495,7 +495,7 @@ export default class CreatureBattleTurnBased{
                 //nothing to do here but we don't want to exit yet because we need to run a defeated check
             }
             else if(wad.type == DamageType.healing){
-                defender.creature.hpCurrent += wad.amount;
+                defender.creature.hpCurrent += Math.round(wad.amount);
     
                 damagesMsgs.push(
                     `+ ${wadc.title}(${wadc.hpCurrent}/${wadc.stats.hpTotal}) gained ${wad.amount}HP`
@@ -503,11 +503,11 @@ export default class CreatureBattleTurnBased{
             }
             else{
                 const damageTypeStr = DamageType[wad.type];
-                const damageResisted = wad.amount * wad.target.creature.stats.resistances[damageTypeStr];
+                const damageResisted = Math.round(wad.amount * wad.target.creature.stats.resistances[damageTypeStr]);
                 const damageTaken = wad.amount - damageResisted;
                 const resistedStr = damageResisted == 0 ? '' : `, resisted ${damageResisted}`;
 
-                defender.creature.hpCurrent -= damageTaken;
+                defender.creature.hpCurrent -= Math.round(damageTaken);
 
                 damagesMsgs.push(
                     `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${wad.amount} ${damageTypeStr.toUpperCase()} damage${resistedStr}`
@@ -565,7 +565,7 @@ export default class CreatureBattleTurnBased{
 
                 //If anyone passed out restore them to 5% of their HP
                 if(p.creature.hpCurrent < 0){
-                    p.creature.hpCurrent = p.creature.stats.hpTotal * 0.05;
+                    p.creature.hpCurrent = Math.round(p.creature.stats.hpTotal * 0.05);
                 }
             }
         });
