@@ -6,7 +6,7 @@ import BattleTemporaryEffectAttributeBoost from '../../effects/BattleTemporaryEf
 import EffectId from '../../effects/EffectId';
 import { Attribute } from "../../creature/AttributeSet";
 
-export default new ItemUsable({
+export const Fox = new ItemUsable({
     id: ItemId.Fox,
     title: 'Fox',
     description: '(During a battle: boosts AGL) Digitalis Lanata or "Foxglove", a wildflower that while toxic in large doses in the right amount can speed the heart and give the consumer just the edge they need in battle.',

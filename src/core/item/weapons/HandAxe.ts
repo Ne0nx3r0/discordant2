@@ -10,7 +10,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { WeaponDamageType, ScalingLevel } from '../WeaponAttack';
 import { Attribute } from '../../creature/AttributeSet';
 
-export default new Weapon({
+export const HandAxe = new Weapon({
     id: ItemId.HandAxe,
     title: 'Hand Axe',
     description: 'A basic weapon whose history and use dates back to prehistoric times',

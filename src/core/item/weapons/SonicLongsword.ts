@@ -8,7 +8,7 @@ import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { Attribute } from "../../creature/AttributeSet";
 
-export default new Weapon({
+export const SonicLongsword = new Weapon({
     id: ItemId.SonicLongsword,
     title: 'Sonic Longsword',
     description: `A blade whose hilt generates an electric charge which is inflicted on enemies`,

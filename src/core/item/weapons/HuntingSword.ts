@@ -9,7 +9,7 @@ import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 
-export default new Weapon({
+export const HuntingSword = new Weapon({
     id: ItemId.HuntingSword,
     title: 'Hunting Sword',
     description: 'A straight, pointed blade used to quickly and silently finish off prey before its calls can alert other, larger predators to the meal.',

@@ -6,7 +6,7 @@ import BattleTemporaryEffectAttributeBoost from '../../effects/BattleTemporaryEf
 import EffectId from '../../effects/EffectId';
 import { Attribute } from "../../creature/AttributeSet";
 
-export default new ItemUsable({
+export const Sage = new ItemUsable({
     id: ItemId.Sage,
     title: 'Sage',
     description: '(During a battle: boosts SPR) Salvia officinalis, a minty wild flower known to raise mental acuteness and state of mind of those who consume it.',

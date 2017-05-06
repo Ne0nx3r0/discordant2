@@ -6,7 +6,7 @@ import BattleTemporaryEffectAttributeBoost from '../../effects/BattleTemporaryEf
 import EffectId from '../../effects/EffectId';
 import { Attribute } from "../../creature/AttributeSet";
 
-export default new ItemUsable({
+export const Yerba = new ItemUsable({
     id: ItemId.Yerba,
     title: 'Yerba',
     description: '(During a battle: boosts VIT) Eriodictyon crassifolium, a shrub beloved by butterflies and other small bugs. When chewed it embues the chewer with a sense of bravery and purpose.',

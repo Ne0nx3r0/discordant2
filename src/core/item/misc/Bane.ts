@@ -6,7 +6,7 @@ import BattleTemporaryEffectAttributeBoost from '../../effects/BattleTemporaryEf
 import EffectId from '../../effects/EffectId';
 import { Attribute } from "../../creature/AttributeSet";
 
-export default new ItemUsable({
+export const Bane = new ItemUsable({
     id: ItemId.Bane,
     title: 'Bane',
     description: '(During a battle: boosts STR) Wolf\'s Bane, a poisonus wild flower used by many a hunter to subdue prey.',

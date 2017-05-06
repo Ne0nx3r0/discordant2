@@ -1,6 +1,7 @@
 import ItemBase from '../item/ItemBase';
 import AllItems from '../item/AllItems';
-import { Vial } from '../item/misc/Vial';
+import { HandAxe,WoodShield,HuntingSword,WornLeathers,TabletOfHealing,TabletOfPoison,SonicLongsword,StoneAxe,StoneDagger,Vial,Sage,Yerba,Bane,Acai,Fox } from "../item/ItemsIndex";
+
 interface IGenerateLootBag{
     startingNode:string;
     chanceToGenerate:number;
@@ -25,14 +26,14 @@ export default class LootGenerator{
 
         //Do the last node separately
         for(let i=0;i<nodeSegments.length;i++){
-            const nodeStep = 'root.'+nodeSegments.slice(0,i+1).join('.');
+            const nodeStep = nodeSegments.slice(0,i+1).join('.');
 
             lootNode = this.lootNodes.get(nodeStep);
 
             if(!lootNode){
-                lootNode = new LootNode(nodeStep,parentNode);
+                lootNode = new LootNode('root.'+nodeStep,parentNode);
 
-                this.lootNodes.set(nodeStep,lootNode);
+                this.lootNodes.set('root.'+nodeStep,lootNode);
             }
 
             parentNode.addChild(lootNode);
@@ -44,10 +45,10 @@ export default class LootGenerator{
     }
 
     generateLoot(bag:IGenerateLootBag):number{
-        let lootNode = this.lootNodes.get(bag.startingNode);
+        let lootNode = this.lootNodes.get('root.'+bag.startingNode);
 
-        if(lootNode){
-            throw 'Invalid loot starting node '+bag.startingNode;
+        if(!lootNode){
+            throw 'Invalid loot starting node root.'+bag.startingNode;
         }
 
         //Check if this call will even generate loot
@@ -68,7 +69,7 @@ export default class LootGenerator{
 
         //Work our way down until we find an item
         while(lootNode.hasChildren()){
-           // lootNode = lootNode.getRandomChild(bag.magicFind);
+            lootNode = lootNode.getRandomChild(bag.magicFind);
         }
 
         return lootNode.itemId;
@@ -98,6 +99,23 @@ class LootNode{
         return this.parent?true:false;
     }
 
+    getRandomChild(magicFind:number):LootNode{
+        let roll = Math.random() * this.rarity;
+console.log('roll',roll,'rarity',this.rarity);
+        for(let i=0;i<this.children.length;i++){
+            const child = this.children[i];
+console.log('roll/rarity',roll+'/'+child.rarity,child.node);
+            if(child.rarity > roll){
+
+                return child;
+            }
+
+            roll -= child.rarity;
+        }
+
+        throw 'returned null, NOOOOOO!';
+    }
+
     addChild(node:LootNode){
         this.children.push(node);
 
@@ -105,6 +123,18 @@ class LootNode{
             return a.rarity - b.rarity;
         });
 
+        this.updateRarity();
+
+        let parent:LootNode = this;
+
+        while(parent.hasParent()){
+            parent = parent.parent;
+
+            parent.updateRarity();
+        }
+    }
+
+    updateRarity(){
         this.rarity = 0;
 
         for(let i=0;i<this.children.length;i++){
@@ -117,4 +147,31 @@ class LootNode{
 
 const test = new LootGenerator();
 
-test.addLootItem('common.consumables.herbs',Vial,0.5);
+test.addLootItem('common.weapons.physical',HandAxe,0.5);
+test.addLootItem('common.weapons.physical',WoodShield,0.5);
+test.addLootItem('common.weapons.physical',HuntingSword,0.4);
+test.addLootItem('common.equipment.armor',WornLeathers,0.4);
+test.addLootItem('uncommon.weapons.tablets',TabletOfHealing,0.2);
+test.addLootItem('uncommon.weapons.tablets',TabletOfPoison,0.2);
+test.addLootItem('rare.weapons.thunder',SonicLongsword,0.05);
+test.addLootItem('rare.weapons.physical',StoneAxe,0.05);
+test.addLootItem('uncommon.weapons.physical',StoneDagger,0.15);
+test.addLootItem('common.consumables',Vial,0.8);
+test.addLootItem('common.herbs',Sage,0.5);
+test.addLootItem('common.herbs',Yerba,0.5);
+test.addLootItem('common.herbs',Bane,0.5);
+test.addLootItem('common.herbs',Acai,0.5);
+test.addLootItem('common.herbs',Fox,0.5);
+
+
+for(var i=0;i<10;i++){
+    const loot = test.generateLoot({
+        startingNode: 'common',
+        chanceToGenerate: 1,
+        chanceToGoUp: 0,
+        maxStepsUp: 5,
+        magicFind: 0.5
+    });
+
+    console.log(loot ? loot : 'no loot generated');
+}

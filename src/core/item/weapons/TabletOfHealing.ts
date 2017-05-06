@@ -9,7 +9,7 @@ import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from "../../damage/DefaultDamageFunc";
 
-export default new Weapon({
+export const TabletOfHealing = new Weapon({
     id: ItemId.TabletOfHealing,
     title: 'Tablet of Healing',
     description: 'A stone tablet engraved with strange characters which read aloud can heal the reader.',

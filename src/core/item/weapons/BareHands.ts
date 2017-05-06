@@ -9,7 +9,7 @@ import { WeaponDamageType, ScalingLevel } from '../WeaponAttack';
 import { Attribute } from '../../creature/AttributeSet';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 
-export default new Weapon({
+export const BareHands = new Weapon({
     id: ItemId.BareHands,
     title: 'Bare Hands',
     description: 'When you bring knuckles to a knife fight',

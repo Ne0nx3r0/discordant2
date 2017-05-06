@@ -12,7 +12,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
 
-export default new Weapon({
+export const StoneDagger = new Weapon({
     id: ItemId.StoneDagger,
     title: 'Stone Dagger',
     description: 'A slab of solid rock carved into a vaguely dagger-like shape. Though referred to as "stone", the material seems far stronger than any typical rock. The dagger might also function as a small shield.',

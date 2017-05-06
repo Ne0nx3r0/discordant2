@@ -2,7 +2,7 @@ import ItemBase from '../ItemBase';
 import ItemId from '../ItemId';
 import InventoryItem from "../InventoryItem";
 
-export default new ItemBase({
+export const ScarabToken = new ItemBase({
     id: ItemId.ScarabToken,
     title: 'Scarab Token',
     goldValue: 40,

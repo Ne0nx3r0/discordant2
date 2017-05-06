@@ -1,11 +1,11 @@
 import CharacterClass from './CharacterClass';
 import AttributeSet from '../AttributeSet';
 import CreatureEquipment from '../../item/CreatureEquipment';
-import WornLeathers from '../../item/clothing/WornLeathers';
-import HuntingSword from '../../item/weapons/HuntingSword';
-import TabletOfHealing from '../../item/weapons/TabletOfHealing';
+import {WornLeathers} from '../../item/clothing/WornLeathers';
+import {TabletOfHealing} from '../../item/weapons/TabletOfHealing';
 import Collection from '../../../util/Collection';
 import { WoodShield } from "../../item/weapons/WoodShield";
+import { HuntingSword } from '../../item/weapons/HuntingSword';
 
 enum CharacterClassId{
     Nobody,

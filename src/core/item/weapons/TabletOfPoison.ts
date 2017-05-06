@@ -8,7 +8,7 @@ import ItemId from '../ItemId';
 import EffectSpiritSnakePoison from '../../effects/types/EffectSpiritSnakePoison';
 import { Attribute } from "../../creature/AttributeSet";
 
-export default new Weapon({
+export const TabletOfPoison =  new Weapon({
     id: ItemId.TableOfPoison,
     title: 'Tablet of Poison',
     description: 'A stone tablet engraved with strange characters which read aloud can poison enemies',

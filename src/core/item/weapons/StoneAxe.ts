@@ -12,7 +12,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
 
-export default new Weapon({
+export const StoneAxe = new Weapon({
     id: ItemId.StoneAxe,
     title: 'Stone Axe',
     description: 'A large slab of solid rock carved into a vaguely axe-like shape. The "blade" is large and sturdy enough to be used as a shield.',

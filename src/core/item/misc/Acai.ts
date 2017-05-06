@@ -3,7 +3,7 @@ import ItemId from '../ItemId';
 import ItemUsable from '../ItemUsable';
 import PlayerCharacter from '../../creature/player/PlayerCharacter';
 
-export default new ItemUsable({
+export const Acai = new ItemUsable({
     id: ItemId.Acai,
     title: 'Acai',
     goldValue: 6,
