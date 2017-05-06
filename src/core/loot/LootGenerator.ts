@@ -1,6 +1,7 @@
 import ItemBase from '../item/ItemBase';
 import AllItems from '../item/AllItems';
 import { HandAxe,WoodShield,HuntingSword,WornLeathers,TabletOfHealing,TabletOfPoison,SonicLongsword,StoneAxe,StoneDagger,Vial,Sage,Yerba,Bane,Acai,Fox } from "../item/ItemsIndex";
+import ItemId from '../item/ItemId';
 
 interface IGenerateLootBag{
     startingNode:string;
@@ -41,7 +42,7 @@ export default class LootGenerator{
             parentNode = lootNode;
         }
 
-        lootNode.addChild(new LootNode(node,parentNode,rarity,item));
+        lootNode.addChild(new LootNode('root.'+node,parentNode,rarity,item));
     }
 
     generateLoot(bag:IGenerateLootBag):number{
@@ -101,7 +102,7 @@ class LootNode{
 
     getRandomChild(magicFind:number):LootNode{
         let roll = Math.random() * this.rarity;
-console.log('roll',roll,'rarity',this.rarity);
+console.log('roll',roll,'rarity',this.rarity,'node',this.node);
         for(let i=0;i<this.children.length;i++){
             const child = this.children[i];
 console.log('roll/rarity',roll+'/'+child.rarity,child.node);
@@ -160,8 +161,8 @@ test.addLootItem('common.consumables',Vial,0.8);
 test.addLootItem('common.herbs',Sage,0.5);
 test.addLootItem('common.herbs',Yerba,0.5);
 test.addLootItem('common.herbs',Bane,0.5);
-test.addLootItem('common.herbs',Acai,0.5);
 test.addLootItem('common.herbs',Fox,0.5);
+test.addLootItem('common.herbs',Acai,0.5);
 
 
 for(var i=0;i<10;i++){
@@ -170,8 +171,8 @@ for(var i=0;i<10;i++){
         chanceToGenerate: 1,
         chanceToGoUp: 0,
         maxStepsUp: 5,
-        magicFind: 0.5
+        magicFind: 0
     });
 
-    console.log(loot ? loot : 'no loot generated');
+    console.log(loot ? ItemId[loot] : 'no loot generated');
 }
