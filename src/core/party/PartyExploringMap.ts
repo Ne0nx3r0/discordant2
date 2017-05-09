@@ -2,10 +2,18 @@ import ExplorableMap from '../map/ExplorableMap';
 import Game from '../../gameserver/game/Game';
 import { SendPartyMessageFunc } from '../map/EventTile';
 import PlayerCharacter from '../creature/player/PlayerCharacter';
+import LootGenerator from "../loot/LootGenerator";
 
 type PartyMoveDirection = 'U' | 'L' | 'D' | 'R';
 
 export {PartyMoveDirection}
+
+interface IPartyExploringMapBag{
+    map:ExplorableMap;
+    game:Game;
+    sendPartyMessage:SendPartyMessageFunc;
+    lootGenerator: LootGenerator;
+}
 
 export default class PartyExploringMap{
     map:ExplorableMap;
@@ -16,15 +24,17 @@ export default class PartyExploringMap{
     onEnterRunCounts:Map<string,number>;
     onExitRunCounts:Map<string,number>;
     onInteractRunCounts:Map<string,number>;
+    lootGenerator: LootGenerator;
 
-    constructor(map:ExplorableMap,game:Game,sendPartyMessage:SendPartyMessageFunc,startX:number,startY:number){
-        this.map = map;
+    constructor(bag:IPartyExploringMapBag){
+        this.map = bag.map;
+        this.lootGenerator = bag.lootGenerator;
 
-        this.currentX = startX;
-        this.currentY = startY;
+        this.currentX = bag.map.mapData.startX;
+        this.currentY = bag.map.mapData.startY;
 
-        this.game = game;
-        this.sendPartyMessage = sendPartyMessage;
+        this.game = bag.game;
+        this.sendPartyMessage = bag.sendPartyMessage;
 
         this.onEnterRunCounts = new Map();
         this.onExitRunCounts = new Map();
@@ -88,6 +98,7 @@ export default class PartyExploringMap{
                 sendPartyMessage: this.sendPartyMessage,
                 game: this.game,
                 player: player,
+                lootGenerator: this.lootGenerator,
             })){
                 this.sendPartyMessage('Nothing of interest here...');
             }

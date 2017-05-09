@@ -56,6 +56,7 @@ import CreatureBattleTurnBased from '../../core/battle/CreatureBattleTurnBased';
 import { IPostBattleBag, BattleResult } from '../../core/battle/CreatureBattleTurnBased';
 import { DBBuyItem } from "../db/api/DBBuyItem";
 import { DBSetPlayerDescription } from "../db/api/DBSetPlayerDescription";
+import LootGenerator from "../../core/loot/LootGenerator";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -73,9 +74,11 @@ export default class Game {
     playerParties:Map<string,PlayerParty>;
     activeBattles:Map<string,CreatureBattleTurnBased>;
     mapUrlCache: MapUrlCache;
+    lootGenerator: LootGenerator;
 
     constructor(bag:GameServerBag){
         this.db = bag.db;
+        this.lootGenerator = new LootGenerator();
 
         //assume stricter production perms, but we don't check perms serverside
         this.permissions = new PermissionsService(true);
@@ -688,7 +691,10 @@ export default class Game {
             throw 'Only the party leader can direct the party!';
         }
 
-        party.explore(WesternGate2Map,26,22);
+        party.explore({
+            map: WesternGate2Map,
+            lootGenerator: this.lootGenerator
+        });
     }
 
     async interactWithCurrentTile(playerUid:string){

@@ -1,5 +1,6 @@
 import PlayerCharacter from '../creature/player/PlayerCharacter';
 import Game from '../../gameserver/game/Game';
+import LootGenerator from "../loot/LootGenerator";
 
 export interface SendPartyMessageFunc{
     (msg:string):void;
@@ -13,6 +14,7 @@ export interface EventTileHandlerBag{
 
 export interface EventTileInteractBag extends EventTileHandlerBag{
     player: PlayerCharacter;
+    lootGenerator: LootGenerator;
 }
 
 interface EventTileHandlerFunc{

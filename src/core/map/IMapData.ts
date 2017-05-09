@@ -14,4 +14,6 @@ export interface IMapData{
     encounterChance: number;//percent change to spawn an encounter
     encounters: Array<IMapEncounter>;
     eventTiles: Array<MapEventTile>;
+    startX: number;
+    startY: number;
 }

@@ -13,6 +13,7 @@ import { SocketPlayerCharacter } from '../creature/player/PlayerCharacter';
 import SendAddPartyMemberClientRequest from "../../client/requests/SendAddPartyMemberClientRequest";
 import CreatureBattleTurnBased from '../battle/CreatureBattleTurnBased';
 import { BattleResult } from '../battle/CreatureBattleTurnBased';
+import LootGenerator from "../loot/LootGenerator";
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -25,6 +26,11 @@ enum PartyStatus{
 interface PlayerCharacterInvited{
     pc:PlayerCharacter;
     expires:number;
+}
+
+interface IPlayerPartyBag{
+    map:ExplorableMap;
+    lootGenerator: LootGenerator;
 }
 
 export {PartyStatus};
@@ -89,11 +95,17 @@ export default class PlayerParty{
         return this.partyStatus;
     }
 
-    explore(map:ExplorableMap,startX:number,startY:number){
-        this.exploration = new PartyExploringMap(map,this.game,this.sendChannelMessage.bind(this),startX,startY);
+    explore(bag:IPlayerPartyBag){
+        this.exploration = new PartyExploringMap({
+            lootGenerator: bag.lootGenerator,
+            map: bag.map,
+            game: this.game,
+            sendPartyMessage: this.sendChannelMessage.bind(this)
+        });
+
         this.partyStatus = PartyStatus.Exploring;
 
-        this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + ` at ${map.title}...`);
+        this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + ` at ${bag.map.title}...`);
     }
 
     move(direction:PartyMoveDirection,steps:number){
