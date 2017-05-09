@@ -1,14 +1,13 @@
 import ItemBase from '../item/ItemBase';
-import AllItems from '../item/AllItems';
 import { HandAxe,WoodShield,HuntingSword,WornLeathers,TabletOfHealing,TabletOfPoison,SonicLongsword,StoneAxe,StoneDagger,Vial,Sage,Yerba,Bane,Acai,Fox } from "../item/ItemsIndex";
 import ItemId from '../item/ItemId';
 
-interface IGenerateLootBag{
+export interface IGenerateLootBag{
     startingNode:string;
     chanceToGenerate:number;
-    chanceToGoUp:number;
-    maxStepsUp:number;
-    magicFind:number;
+    chanceToGoUp?:number;
+    maxStepsUp?:number;
+    magicFind?:number;
 }
 
 export default class LootGenerator{
@@ -17,6 +16,22 @@ export default class LootGenerator{
     constructor(){
         this.lootNodes = new Map();
         this.lootNodes.set( 'root' , new LootNode('root',null) );
+
+        this.addLootItem('common.weapons.physical',HandAxe,0.5);
+        this.addLootItem('common.weapons.physical',WoodShield,0.5);
+        this.addLootItem('common.weapons.physical',HuntingSword,0.4);
+        this.addLootItem('common.equipment.armor',WornLeathers,0.4);
+        this.addLootItem('uncommon.weapons.tablets',TabletOfHealing,0.2);
+        this.addLootItem('uncommon.weapons.tablets',TabletOfPoison,0.2);
+        this.addLootItem('rare.weapons.thunder',SonicLongsword,0.05);
+        this.addLootItem('rare.weapons.physical',StoneAxe,0.05);
+        this.addLootItem('uncommon.weapons.physical',StoneDagger,0.15);
+        this.addLootItem('common.consumables',Vial,0.8);
+        this.addLootItem('common.herbs',Sage,0.5);
+        this.addLootItem('common.herbs',Yerba,0.5);
+        this.addLootItem('common.herbs',Bane,0.5);
+        this.addLootItem('common.herbs',Fox,0.5);
+        this.addLootItem('common.herbs',Acai,1);
     }
 
     addLootItem(node:string,item:ItemBase,rarity:number){
@@ -35,14 +50,18 @@ export default class LootGenerator{
                 lootNode = new LootNode(nodeStep,parentNode);
 
                 this.lootNodes.set(nodeStep,lootNode);
+                
+                parentNode.addChild(lootNode);
             }
-
-            parentNode.addChild(lootNode);
 
             parentNode = lootNode;
         }
 
-        lootNode.addChild(new LootNode('root.'+node,parentNode,rarity,item));
+        const itemLootNode = new LootNode('root.'+node,parentNode,rarity,item);
+        
+        this.lootNodes.set('root.'+node+'.'+ItemId[item.id],itemLootNode);
+        
+        lootNode.addChild(itemLootNode);
     }
 
     generateLoot(bag:IGenerateLootBag):number{
@@ -58,7 +77,7 @@ export default class LootGenerator{
         }
 
         //Check if we need to go up the tree
-        if(Math.random() < bag.chanceToGoUp){
+        if(bag.chanceToGoUp && Math.random() < bag.chanceToGoUp){
             let stepsUp = Math.floor(Math.random() * bag.maxStepsUp)+1;
 
             while(stepsUp > 0 && lootNode.hasParent()){
@@ -101,17 +120,26 @@ class LootNode{
     }
 
     getRandomChild(magicFind:number):LootNode{
-        let roll = Math.random() * this.rarity;
+        let rollMax = 0;
 
-        for(let i=0;i<this.children.length;i++){
-            const child = this.children[i];
+        const tempRarities = this.children.map(function(c){
+            const adjustedRarity = c.rarity + magicFind;
 
-            if(child.rarity > roll){
+            rollMax += adjustedRarity;
 
-                return child;
+            return adjustedRarity;
+        });
+
+        let roll = Math.random() * rollMax;
+
+        for(let i=0;i<tempRarities.length;i++){
+            const tempRarity = tempRarities[i];
+
+            if(tempRarity > roll){
+                return this.children[i];
             }
 
-            roll -= child.rarity;
+            roll -= tempRarity;
         }
 
         throw 'returned null, NOOOOOO!';
@@ -125,14 +153,6 @@ class LootNode{
         });
 
         this.updateRarity();
-
-        let parent:LootNode = this;
-
-        while(parent.hasParent()){
-            parent = parent.parent;
-
-            parent.updateRarity();
-        }
     }
 
     updateRarity(){
@@ -141,46 +161,9 @@ class LootNode{
         for(let i=0;i<this.children.length;i++){
             this.rarity += this.children[i].rarity;
         }
+
+        if(this.parent){
+            this.parent.updateRarity();
+        }
     }
-}
-
-
-
-const test = new LootGenerator();
-
-test.addLootItem('common.weapons.physical',HandAxe,0.5);
-test.addLootItem('common.weapons.physical',WoodShield,0.5);
-test.addLootItem('common.weapons.physical',HuntingSword,0.4);
-test.addLootItem('common.equipment.armor',WornLeathers,0.4);
-test.addLootItem('uncommon.weapons.tablets',TabletOfHealing,0.2);
-test.addLootItem('uncommon.weapons.tablets',TabletOfPoison,0.2);
-test.addLootItem('rare.weapons.thunder',SonicLongsword,0.05);
-test.addLootItem('rare.weapons.physical',StoneAxe,0.05);
-test.addLootItem('uncommon.weapons.physical',StoneDagger,0.15);
-test.addLootItem('common.consumables',Vial,0.8);
-test.addLootItem('common.herbs',Sage,0.5);
-test.addLootItem('common.herbs',Yerba,0.5);
-test.addLootItem('common.herbs',Bane,0.5);
-test.addLootItem('common.herbs',Fox,0.5);
-test.addLootItem('common.herbs',Acai,1);
-
-const results = {};
-
-const lootRuns = 1000;
-const generateNode = 'root';
-
-for(var i=0;i<lootRuns;i++){
-    const loot = test.generateLoot({
-        startingNode: generateNode,
-        chanceToGenerate: 1,
-        chanceToGoUp: 0,
-        maxStepsUp: 5,
-        magicFind: 0
-    });
-
-    results[loot ? loot : 'null'] = (results[loot ? loot : 'null'] || 0) + 1;
-}
-
-for(var lootItem in results){
-    console.log(ItemId[lootItem],Math.round(results[lootItem]/lootRuns*10000)/100+'%');
 }
