@@ -6,20 +6,16 @@ import PlayerCharacter from './player/PlayerCharacter';
 
 interface CreatureAIBag extends CreatureBag{
     wishesDropped:number;
-    attackDelay:number;
 }
 
 export default class CreatureAIControlled extends Creature{
     wishesDropped:number;
     attacks:Array<WeaponAttack>;
-    attackDelay:number;//0 => no delay, 1 => maximum delay
-
+    
     constructor(bag:CreatureAIBag){
         super(bag);
         
         this.wishesDropped = bag.wishesDropped;
-
-        this.attackDelay = bag.attackDelay;
 
         this.attacks = [];
 

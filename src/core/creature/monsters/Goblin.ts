@@ -10,7 +10,6 @@ export default class Goblin extends CreatureAIControlled{
         super({
             id: CreatureId.Goblin,
             title: 'Goblin',
-            attackDelay: 1,
             description: 'A low level generic creature',
             attributes: new AttributeSet({
                 strength: 4,

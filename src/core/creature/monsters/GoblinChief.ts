@@ -1,20 +1,20 @@
 import Creature from '../Creature';
 import CreatureId from '../CreatureId';
 import CreatureEquipment from '../../item/CreatureEquipment';
-import { BareHands, HandAxe, WornLeathers, WoodShield, StoneDagger } from '../../item/ItemsIndex';
+import { BareHands, HandAxe, WornLeathers, WoodShield, StoneDagger, HuntingSword } from '../../item/ItemsIndex';
 import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
 
 export default class GoblinSoldier extends CreatureAIControlled{
     constructor(){
         super({
-            id: CreatureId.GoblinSoldier,
-            title: 'Goblin Soldier',
-            description: 'A trained goblin, normally serves as a scout or a member of raiding parties',
+            id: CreatureId.GoblinChief,
+            title: 'Goblin Chief',
+            description: 'The highest ranked of the local tribe of goblins, often a position earned through blood and deceit.',
             attributes: new AttributeSet({
-                strength: 8,
-                agility: 8,
-                vitality: 6,
+                strength: 20,
+                agility: 20,
+                vitality: 20,
                 spirit: 0,
                 luck: 0,
                 charisma: 0,
@@ -22,9 +22,9 @@ export default class GoblinSoldier extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 armor: WornLeathers,
                 offhand: WoodShield,
-                weapon: HandAxe,
+                weapon: HuntingSword,
             }),
-            wishesDropped: 30,
+            wishesDropped: 100,
         });
     }
 }
