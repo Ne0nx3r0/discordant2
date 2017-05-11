@@ -36,7 +36,7 @@ export const Tent = new ItemUsable({
             
             const amountsHealedStr = amountsHealed.join('\n');
 
-            return `${user.title} set up a small camp site allowing the party to rest\n${amountsHealedStr}`;
+            return `${user.title} set up a small camp site allowing the party to rest\n\n${amountsHealedStr}`;
         }
     }
 });
