@@ -89,61 +89,43 @@ ${aliasesStr}
         
         embed.addField(
 `User`,
-`${p}begin
-${p}classes
-${p}stats
-${p}wish
+`${p}begin, ${p}classes,
+${p}stats, ${p}wish,
 `,
 true
         );
         
         embed.addField(
 `Battle`,
-`${p}attack
-${p}block
-${p}charge
-${p}offhand
+`${p}attack, ${p}block,
+${p}charge, ${p}offhand,
 ${p}use`,
 true
         );
         
         embed.addField(
 `Player Market`,
-`${p}mbuy
-${p}mnew
-${p}msearch
-${p}msell
-${p}mstop
-${p}mbuy
-${p}mlist`,
+`${p}mnew, ${p}msearch, 
+${p}mbuy, ${p}msell,
+${p}mlist, ${p}mstop`,
 true
         );
 
         embed.addField(
 `Items`,
-`${p}inv
-${p}item
-${p}give
-${p}equip
-${p}unequip
-${p}use
-${p}shop
-${p}sell
-${p}buy`,
+`${p}item, ${p}items, ${p}inv,
+${p}shop, ${p}buy, ${p}sell,
+${p}equip, ${p}unequip,
+${p}use, ${p}give`,
 true
         );
 
         embed.addField(
 `Party`,
-`${p}party
-${p}pnew
-${p}pinvite
-${p}pyes
-${p}pno
-${p}pdisband 
-${p}pleave
-${p}pexplore
-${p}pmove`,
+`${p}party, ${p}pnew,
+${p}pinvite, ${p}pyes, ${p}pno,
+${p}pdisband, ${p}pleave,
+${p}pexplore, ${p}pmove`,
 true
         );
 
