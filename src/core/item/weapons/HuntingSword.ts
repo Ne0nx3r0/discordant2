@@ -45,8 +45,20 @@ export const HuntingSword = new Weapon({
             scalingLevel: ScalingLevel.C,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} slices {defender} (BROKEN DONT USE RIGHT NOW)',
-                    damageFunc: DefaultDamageFunc,
+                    attackMessage: '{attacker} takes multiple slices at {defender}',
+                    damageFunc: function(bag){
+                        const attacksCount = Math.floor(Math.random() * 3)+1;
+                        
+                        bag.battle.queueBattleMessage(['Hit '+attacksCount+ 'times!']);
+                        
+                        const attacks = [];
+
+                        for(var i=0;i<attacksCount;i++){
+                            attacks.push(DefaultDamageFunc(bag)[0]);
+                        }
+                        
+                        return attacks;
+                    },
                 })
             ],
             aiUseWeight: 0.4
