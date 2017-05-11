@@ -3,6 +3,7 @@ import Creature from '../../../src/core/creature/Creature';
 import { IMapData } from '../../../src/core/map/IMapData';
 import { EventTileForagable } from '../../../src/core/map/tiles/EventTileForagable';
 import ItemId from '../../../src/core/item/ItemId';
+import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable";
 
 const WesternGate2MapData:IMapData = {
     startX: 26,
@@ -73,6 +74,19 @@ const WesternGate2MapData:IMapData = {
                 {x:7,y:10},
                 {x:8,y:10},
             ]
+        },
+        {
+            event: EventTileLootable(),
+            coords: [
+                {x:8,y:1},
+                {x:18,y:1},
+                {x:25,y:6},
+                {x:13,y:8},
+                {x:13,y:11},
+                {x:1,y:17},
+                {x:11,y:23},
+                {x:24,y:17},
+            ],
         },
     ]
 };

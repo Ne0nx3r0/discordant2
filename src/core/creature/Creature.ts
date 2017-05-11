@@ -13,14 +13,15 @@ interface IResistances{
 }
 
 export interface ICreatureStatSet{
-    strength: number,
-    agility: number,
-    vitality: number,
-    spirit: number,
-    charisma: number,
-    luck: number,
-    hpTotal: number,
-    resistances: IResistances,
+    strength: number;
+    agility: number;
+    vitality: number;
+    spirit: number;
+    charisma: number;
+    luck: number;
+    hpTotal: number;
+    resistances: IResistances;
+    magicFind: number;
 }
 
 export interface CreatureBag{
@@ -71,6 +72,7 @@ export default class Creature{
                 chaos:0,
             },
             hpTotal: 0,
+            magicFind: Math.floor(this.attributes.luck / 10),
         };
 
         this.equipment.forEach(function(item:ItemEquippable,slot:EquipmentSlot){
