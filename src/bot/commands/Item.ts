@@ -9,6 +9,8 @@ import {RichEmbed} from 'discord.js';
 import { EMBED_COLORS } from '../util/ChatHelpers';
 import { ScalingLevel } from "../../core/item/WeaponAttack";
 import { Attribute } from "../../core/creature/AttributeSet";
+import { DamageScaling } from "../../core/damage/DamageScaling";
+import { DamageType } from "../../core/item/WeaponAttackStep";
 
 export default class Item extends Command{
     constructor(bag:CommandBag){
@@ -90,15 +92,25 @@ export default class Item extends Command{
                 );
             }
 
+            const pc = await bag.socket.getPlayer(bag.message.author.id);
+
             const attacksStr = weapon.attacks
             .map(function(attack){
                 const special = attack.specialDescription?'\nSpecial: '+attack.specialDescription:'';4
 
                 const chargesRequired = attack.chargesRequired > 0 ? '\nRequires ' + attack.chargesRequired +' charges': '';
 
-                const msg = `
-${attack.minBaseDamage} to ${attack.maxBaseDamage} ${attack.damageType} damage${special}
-${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttribute]} points${chargesRequired}`;
+                const scalingStat = Attribute[attack.scalingAttribute];
+
+                let yourDamageStr = '';
+
+                if(pc){
+                    const yourMinDamage = DamageScaling.ByAttribute(attack.minBaseDamage,pc.stats[scalingStat]);
+                    const yourMaxDamage = DamageScaling.ByAttribute(attack.maxBaseDamage,pc.stats[scalingStat]);
+                    yourDamageStr = `\n(${yourMinDamage} - ${yourMaxDamage} with your stats)`;
+                }
+                const msg = `${attack.minBaseDamage} - ${attack.maxBaseDamage} ${DamageType[attack.damageType]} damage${special}${yourDamageStr}
+${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttribute]}${chargesRequired}`;
 
                 embed.addField('(Attack) '+attack.title,msg);
             })

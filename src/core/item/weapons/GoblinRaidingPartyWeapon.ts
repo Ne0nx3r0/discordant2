@@ -3,7 +3,7 @@ import ItemId from '../../item/ItemId';
 import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
-import DamageScaling from '../../damage/DamageScaling';
+import {DamageScaling} from '../../damage/DamageScaling';
 import Creature from '../../creature/Creature';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { Attribute } from "../../creature/AttributeSet";

@@ -1,6 +1,6 @@
 import { DamageFuncBag, IWeaponAttackDamages } from '../item/WeaponAttackStep';
 import { Attribute } from "../creature/AttributeSet";
-import DamageScaling from './DamageScaling';
+import {DamageScaling} from './DamageScaling';
 import { WeaponDamageType } from "../item/WeaponAttack";
 
 export function DefaultDamageFunc(bag: DamageFuncBag): Array<IWeaponAttackDamages> {
