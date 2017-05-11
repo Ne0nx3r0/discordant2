@@ -21,6 +21,7 @@ enum ItemId {
     StoneAxe,
     StoneDagger,
     AlphaKey,
+    Tent,
 }
 
 export default ItemId;

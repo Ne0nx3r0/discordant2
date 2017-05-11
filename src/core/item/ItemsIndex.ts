@@ -16,3 +16,4 @@ export { Bane } from './misc/Bane';
 export { Acai } from './misc/Acai';
 export { Fox } from './misc/Fox';
 export { AlphaKey } from './misc/AlphaKey';
+export { Tent } from './misc/Tent';

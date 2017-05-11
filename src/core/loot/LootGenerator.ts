@@ -1,6 +1,7 @@
 import ItemBase from '../item/ItemBase';
 import { HandAxe,WoodShield,HuntingSword,WornLeathers,TabletOfHealing,TabletOfPoison,SonicLongsword,StoneAxe,StoneDagger,Vial,Sage,Yerba,Bane,Acai,Fox } from "../item/ItemsIndex";
 import ItemId from '../item/ItemId';
+import { Tent } from "../item/misc/Tent";
 
 export interface IGenerateLootBag{
     startingNode:string;
@@ -21,17 +22,20 @@ export default class LootGenerator{
         this.addLootItem('common.weapons.physical',WoodShield,0.5);
         this.addLootItem('common.weapons.physical',HuntingSword,0.4);
         this.addLootItem('common.equipment.armor',WornLeathers,0.4);
-        this.addLootItem('uncommon.weapons.tablets',TabletOfHealing,0.2);
-        this.addLootItem('uncommon.weapons.tablets',TabletOfPoison,0.2);
-        this.addLootItem('rare.weapons.thunder',SonicLongsword,0.05);
-        this.addLootItem('rare.weapons.physical',StoneAxe,0.05);
-        this.addLootItem('uncommon.weapons.physical',StoneDagger,0.15);
         this.addLootItem('common.consumables',Vial,0.8);
         this.addLootItem('common.herbs',Sage,0.5);
         this.addLootItem('common.herbs',Yerba,0.5);
         this.addLootItem('common.herbs',Bane,0.5);
         this.addLootItem('common.herbs',Fox,0.5);
         this.addLootItem('common.herbs',Acai,1);
+
+        this.addLootItem('uncommon.weapons.tablets',TabletOfHealing,0.2);
+        this.addLootItem('uncommon.weapons.tablets',TabletOfPoison,0.2);
+        this.addLootItem('uncommon.weapons.physical',StoneDagger,0.15);
+        this.addLootItem('uncommon.consumables',Tent,0.2);
+
+        this.addLootItem('rare.weapons.thunder',SonicLongsword,0.05);
+        this.addLootItem('rare.weapons.physical',StoneAxe,0.05);
     }
 
     addLootItem(node:string,item:ItemBase,rarity:number){
