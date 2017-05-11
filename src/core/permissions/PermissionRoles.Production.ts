@@ -27,6 +27,7 @@ export const PlayerPermissions = [
     PermissionId.Help,
     PermissionId.Give,
     PermissionId.Equip,
+    PermissionId.Items,
     PermissionId.Unequip,
     PermissionId.Use,
     PermissionId.Challenge,

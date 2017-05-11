@@ -4,6 +4,7 @@ interface ItemBaseBag{
     description:string;
     goldValue: number;
     buyCost?: number;
+    showInItems?: boolean;
 }
 
 export {ItemBaseBag}
@@ -14,6 +15,7 @@ export default class ItemBase{
     description:string;
     goldValue:number;
     buyCost:number;
+    showInItems:boolean;
     
     constructor(bag:ItemBaseBag){
         this.id = bag.id;
@@ -21,5 +23,6 @@ export default class ItemBase{
         this.description = bag.description;
         this.goldValue = bag.goldValue;
         this.buyCost = bag.buyCost || null;
+        this.showInItems = bag.showInItems == undefined ? true : bag.showInItems;
     }
 }

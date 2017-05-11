@@ -14,6 +14,7 @@ export const PlayerPermissions = [
     PermissionId.Stats,
     PermissionId.WishCalc,
     PermissionId.Party,
+    PermissionId.Items,
     PermissionId.PartyNew,
     PermissionId.PartyInvite,
     PermissionId.PartyJoin,
