@@ -24,13 +24,18 @@ export default class Party extends Command{
             return;
         }
 
+        let partyMagicFind = party.leader.stats.magicFind;
+
         const members = party.members.map(function(member){
+            partyMagicFind += member.stats.magicFind;
+            
             return `${member.title} (${member.hpCurrent} / ${member.stats.hpTotal})`;
         }).join('\n');
 
         bag.message.channel.sendMessage(`${party.title} in <#${party.channel}>
 Leader: ${party.leader.title} (${party.leader.hpCurrent} / ${party.leader.stats.hpTotal})
 Members: ${members}
+Total Magic Find: ${partyMagicFind}
 `);
     }
 }

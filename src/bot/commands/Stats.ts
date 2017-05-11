@@ -48,12 +48,12 @@ export default class Begin extends Command{
 
 function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     const pcAttributesStr = ''
-    +'\n'+pc.stats.strength+' Strength'
-    +'\n'+pc.stats.agility+' Agility'
-    +'\n'+pc.stats.vitality+' Vitality'
-    +'\n'+pc.stats.spirit+' Spirit'
-    +'\n'+pc.stats.charisma+' Charisma'
-    +'\n'+pc.stats.luck+' Luck';
+         +pc.stats.strength+' Strength,'
+    +' '+pc.stats.agility+' Agility,'
+    +'\n'+pc.stats.vitality+' Vitality,'
+    +' '+pc.stats.spirit+' Spirit,'
+    +'\n'+pc.stats.charisma+' Charisma,'
+    +' '+pc.stats.luck+' Luck';
 
     const resistancesStr = ''
     +'\n'+Math.floor(pc.stats.resistances.physical*100)+'% Physical'
@@ -91,8 +91,8 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                     inline: true,
                 },                
                 {
-                    name: 'Karma',
-                    value: pc.karma,
+                    name: 'Magic Find',
+                    value: pc.stats.magicFind,
                     inline: true,
                 },
                 {
@@ -114,7 +114,7 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                     name: 'Resistances',
                     value: resistancesStr,
                     inline: true,
-                }
+                },
             ]
         }
     }
