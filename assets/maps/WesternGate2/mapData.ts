@@ -78,14 +78,14 @@ const WesternGate2MapData:IMapData = {
         {
             event: EventTileLootable(),
             coords: [
-                {x:8,y:1},
-                {x:18,y:1},
-                {x:25,y:6},
-                {x:13,y:8},
-                {x:13,y:11},
-                {x:1,y:17},
-                {x:11,y:23},
-                {x:24,y:17},
+                {x:9,y:2},
+                {x:19,y:2},
+                {x:26,y:7},
+                {x:14,y:9},
+                {x:14,y:12},
+                {x:2,y:18},
+                {x:12,y:24},
+                {x:25,y:18},
             ],
         },
     ]
