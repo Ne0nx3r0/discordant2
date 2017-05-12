@@ -32,7 +32,8 @@ export default class Party extends Command{
             return `${member.title} (${member.hpCurrent} / ${member.stats.hpTotal})`;
         }).join('\n');
 
-        bag.message.channel.sendMessage(`${party.title} in <#${party.channel}>
+        bag.message.channel.sendMessage(`${party.title} in channel <#${party.channel}>
+Status: ${party.statusStr}
 Leader: ${party.leader.title} (${party.leader.hpCurrent} / ${party.leader.stats.hpTotal})
 Members: ${members}
 Total Magic Find: ${partyMagicFind}

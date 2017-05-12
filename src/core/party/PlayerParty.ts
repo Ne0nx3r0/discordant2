@@ -104,6 +104,14 @@ export default class PlayerParty{
         return this.partyStatus;
     }
 
+    returnToTown(){
+        this.exploration = null;
+        
+        this.partyStatus = PartyStatus.InTown;
+
+        this.sendChannelMessage(`The party returns to town`);
+    }
+
     explore(map:ExplorableMap){
         this.exploration = new PartyExploringMap({
             map: map,
@@ -361,7 +369,7 @@ export default class PlayerParty{
 
         new SendMessageClientRequest({
             channelId: this.channelId,
-            message: `The party has been disbanded!\n\n(Channel will be deleted in one minute)`,
+            message: `<@${this.leader.uid}> The party has been disbanded!\n\n(Channel will be deleted in one minute)`,
         }).send(this.getClient());
 
         setTimeout(()=>{
@@ -394,11 +402,26 @@ export default class PlayerParty{
             }
         });
 
+        let statusStr = '';
+
+        switch(this.partyStatus){
+            case PartyStatus.InTown:
+                statusStr = 'In town';
+            break;
+            case PartyStatus.Battling:
+                statusStr = 'Battling!';
+            break;
+            case PartyStatus.Exploring:
+                statusStr = 'Exploring '+this.exploration.map.title;
+            break;
+        }
+
         return {
             title: this.title,
             channel: this.channelId,
             members: members,
-            leader: this.leader.toSocket()
+            leader: this.leader.toSocket(),
+            statusStr: statusStr
         };
     }
 }
@@ -408,4 +431,5 @@ export interface SocketPlayerParty{
     channel: string;
     leader: SocketPlayerCharacter;
     members: Array<SocketPlayerCharacter>;
+    statusStr: string;
 }

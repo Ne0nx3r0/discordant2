@@ -378,7 +378,7 @@ export default class Game {
         const leader = await this.getPlayerCharacter(leaderUid);
 
         if(leader.status != 'inCity'){
-            throw 'You cannot create a party right now';
+            throw `You cannot create a party right now (Debug: ${leader.status}, ${leader.party?leader.party.id:'no party'})`;
         }
 
         const party = new PlayerParty({
@@ -879,8 +879,12 @@ export default class Game {
             throw `You are not registered`;
         }
 
-        if(pc.status != 'inCity'){
+        if(pc.status != 'inCity' && !pc.party){
             throw `You are not currently in town to buy from the town store`;
+        }
+
+        if(pc.party && pc.party.partyStatus != PartyStatus.InTown){
+            throw `Your party has left town already!`;
         }
 
         const item = this.items.get(itemId);

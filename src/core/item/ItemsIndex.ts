@@ -17,3 +17,4 @@ export { Acai } from './misc/Acai';
 export { Fox } from './misc/Fox';
 export { AlphaKey } from './misc/AlphaKey';
 export { Tent } from './misc/Tent';
+export { MapNorthernSteppes } from './misc/MapNorthernSteppes';

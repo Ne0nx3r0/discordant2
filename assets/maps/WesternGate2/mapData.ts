@@ -5,11 +5,14 @@ import { EventTileForagable } from '../../../src/core/map/tiles/EventTileForagab
 import ItemId from '../../../src/core/item/ItemId';
 import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable";
 import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
+import { EventTileMap } from "../../../src/core/map/tiles/EventTileMap";
+import { MapNorthernSteppes } from "../../../src/core/item/ItemsIndex";
+import { EventTileWarp } from "../../../src/core/map/tiles/EventTilePortal";
 
 export const WesternGate2MapData:IMapData = {
     startX: 26,
     startY: 22,
-    encounterChance: 0,
+    encounterChance: 0.25,
     encounters:[
         { id:CreatureId.Goblin,        weight:0.6 },
         { id:CreatureId.GoblinSoldier, weight:0.2 },
@@ -100,8 +103,21 @@ export const WesternGate2MapData:IMapData = {
             }),
             coords: [
                 {x:13,y:33},
-                {x:14,y:33},
                 {x:15,y:33},
+            ],
+        },
+        {
+            event: EventTileMap({
+                map: MapNorthernSteppes
+            }),
+            coords: [
+                {x:14,y:33},
+            ],
+        },
+        {
+            event: EventTileWarp({}),
+            coords: [
+                {x:14,y:34},
             ],
         },
         {
