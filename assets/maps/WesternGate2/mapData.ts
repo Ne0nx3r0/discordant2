@@ -9,7 +9,7 @@ import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
 export const WesternGate2MapData:IMapData = {
     startX: 26,
     startY: 22,
-    encounterChance: 0.25,
+    encounterChance: 0,
     encounters:[
         { id:CreatureId.Goblin,        weight:0.6 },
         { id:CreatureId.GoblinSoldier, weight:0.2 },
@@ -77,7 +77,7 @@ export const WesternGate2MapData:IMapData = {
             ]
         },
         {
-            event: EventTileLootable(),
+            event: EventTileLootable({}),
             coords: [
                 {x:9,y:2},
                 {x:19,y:2},
@@ -87,6 +87,18 @@ export const WesternGate2MapData:IMapData = {
                 {x:2,y:18},
                 {x:12,y:24},
                 {x:25,y:18},
+            ],
+        },
+        {
+            event: EventTileLootable({
+                onEnterMsg: `A selection of items the goblin hoard has stolen from travelers`,
+                lootSettings:{
+                    startingNode: 'root.uncommon',
+                    chanceToGenerate: 1,
+                    chanceToGoUp: 0,                   
+                }
+            }),
+            coords: [
                 {x:13,y:33},
                 {x:14,y:33},
                 {x:15,y:33},

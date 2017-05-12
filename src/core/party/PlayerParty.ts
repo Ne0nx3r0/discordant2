@@ -198,7 +198,6 @@ export default class PlayerParty{
             }
         });
 
-
         if(partyReturnFunc){
             this.partyStatus = PartyStatus.Exploring;
             

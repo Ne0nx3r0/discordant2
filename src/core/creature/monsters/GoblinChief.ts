@@ -28,6 +28,8 @@ export default class GoblinSoldier extends CreatureAIControlled{
             wishesDropped: 100,
             onDefeated: function(bag){
                 bag.party.exploration.setLocation(14,31);
+
+                bag.party.sendCurrentMapImageFile(`After defeating the chief you discover a trap door leading to the chief's lair`);
             }
         });
     }
