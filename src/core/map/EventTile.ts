@@ -14,7 +14,6 @@ export interface EventTileHandlerBag{
 
 export interface EventTileInteractBag extends EventTileHandlerBag{
     player: PlayerCharacter;
-    lootGenerator: LootGenerator;
 }
 
 interface EventTileHandlerFunc{

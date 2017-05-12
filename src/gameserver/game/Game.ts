@@ -386,7 +386,7 @@ export default class Game {
             game: this,
             title: title,
             channelId: channelId,
-            getClient: this.getClient.bind(this)
+            getClient: this.getClient.bind(this),
         });
 
         this.playerParties.set(leader.uid,party);
@@ -659,7 +659,7 @@ export default class Game {
                     .send(this.getClient());
                 }
                 
-                bag.party.returnFromBattle(battlePostBag.result);
+                bag.party.returnFromBattle(battlePostBag.result,opponent.onDefeated);
             }
         });
 
@@ -691,10 +691,7 @@ export default class Game {
             throw 'Only the party leader can direct the party!';
         }
 
-        party.explore({
-            map: WesternGate2Map,
-            lootGenerator: this.lootGenerator
-        });
+        party.explore(WesternGate2Map);
     }
 
     async interactWithCurrentTile(playerUid:string){

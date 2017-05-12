@@ -14,6 +14,7 @@ import SendAddPartyMemberClientRequest from "../../client/requests/SendAddPartyM
 import CreatureBattleTurnBased from '../battle/CreatureBattleTurnBased';
 import { BattleResult } from '../battle/CreatureBattleTurnBased';
 import LootGenerator from "../loot/LootGenerator";
+import CreatureAIControlled from "../creature/CreatureAIControlled";
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -41,6 +42,14 @@ interface PlayerPartyBag{
     channelId:string;
     game:Game;
     getClient:IGetRandomClientFunc;
+}
+
+interface IPartyReturnFuncBag{
+    party: PlayerParty;
+}
+
+interface PartyReturnFunc{
+    (bag:IPartyReturnFuncBag):void;
 }
 
 export default class PlayerParty{
@@ -95,17 +104,16 @@ export default class PlayerParty{
         return this.partyStatus;
     }
 
-    explore(bag:IPlayerPartyBag){
+    explore(map:ExplorableMap){
         this.exploration = new PartyExploringMap({
-            lootGenerator: bag.lootGenerator,
-            map: bag.map,
+            map: map,
             game: this.game,
             sendPartyMessage: this.sendChannelMessage.bind(this)
         });
 
         this.partyStatus = PartyStatus.Exploring;
 
-        this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + ` at ${bag.map.title}...`);
+        this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + ` at ${map.title}...`);
     }
 
     move(direction:PartyMoveDirection,steps:number){
@@ -179,20 +187,32 @@ export default class PlayerParty{
         .send(this.getClient());
     }
 
-    returnFromBattle(result:BattleResult){
+    returnFromBattle(result:BattleResult,partyReturnFunc?:PartyReturnFunc){
         this.members.forEach(function(pc){
             if(pc.hpCurrent < 0){
                 pc.hpCurrent = pc.stats.hpTotal * 0.05;
             }
         });
 
-        if(result == BattleResult.Team1Won || result == BattleResult.Ran){
+
+        if(partyReturnFunc){
+            this.partyStatus = PartyStatus.Exploring;
+            
+            this.members.forEach((member)=>{
+                member.status = 'inParty';
+            });
+
+            partyReturnFunc({
+                party: this,
+            });
+        }
+        else if(result == BattleResult.Team1Won || result == BattleResult.Ran){
             if(result == BattleResult.Ran){
                 this.timesRun++;
             }
 
             this.partyStatus = PartyStatus.Exploring;
-        
+
             this.members.forEach((member)=>{
                 member.status = 'inParty';
             });

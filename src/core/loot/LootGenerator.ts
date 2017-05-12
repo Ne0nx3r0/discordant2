@@ -33,7 +33,7 @@ export default class LootGenerator{
         this.addLootItem('uncommon.weapons.tablets',TabletOfPoison,0.2);
         this.addLootItem('uncommon.weapons.physical',StoneDagger,0.15);
         this.addLootItem('uncommon.consumables',Tent,0.2);
-
+        
         this.addLootItem('rare.weapons.thunder',SonicLongsword,0.05);
         this.addLootItem('rare.weapons.physical',StoneAxe,0.05);
     }

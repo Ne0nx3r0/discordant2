@@ -1,5 +1,5 @@
 import ExplorableMap from './ExplorableMap';
-import MapData from '../../../assets/maps/WesternGate2/mapData';
+import { WesternGate2MapData } from "../../../assets/maps/WesternGate2/mapData";
 /*
 const TestMap = new ExplorableMap(
     'test',
@@ -11,7 +11,7 @@ const WesternGate2Map = new ExplorableMap(
     'WesternGate2',
     'The Western Gate',
     require('../../../assets/maps/WesternGate2/map.json'),
-    MapData
+    WesternGate2MapData
 );
 
 export {

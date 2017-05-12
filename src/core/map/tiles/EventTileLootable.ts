@@ -30,7 +30,7 @@ export function EventTileLootable(){
                 bag.player.party.members.forEach((member)=>{
                     const mf = member.stats.magicFind;
 
-                    const lootItemId = bag.lootGenerator.generateLoot({
+                    const lootItemId = bag.game.lootGenerator.generateLoot({
                         startingNode: 'root.common',
                         magicFind: partyMagicFind,
                         chanceToGenerate: 0.5,

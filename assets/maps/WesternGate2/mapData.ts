@@ -5,7 +5,7 @@ import { EventTileForagable } from '../../../src/core/map/tiles/EventTileForagab
 import ItemId from '../../../src/core/item/ItemId';
 import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable";
 
-const WesternGate2MapData:IMapData = {
+export const WesternGate2MapData:IMapData = {
     startX: 26,
     startY: 22,
     encounterChance: 0.25,
@@ -90,5 +90,3 @@ const WesternGate2MapData:IMapData = {
         },
     ]
 };
-
-export default WesternGate2MapData;

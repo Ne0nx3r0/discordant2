@@ -12,7 +12,6 @@ interface IPartyExploringMapBag{
     map:ExplorableMap;
     game:Game;
     sendPartyMessage:SendPartyMessageFunc;
-    lootGenerator: LootGenerator;
 }
 
 export default class PartyExploringMap{
@@ -24,12 +23,10 @@ export default class PartyExploringMap{
     onEnterRunCounts:Map<string,number>;
     onExitRunCounts:Map<string,number>;
     onInteractRunCounts:Map<string,number>;
-    lootGenerator: LootGenerator;
-
+    
     constructor(bag:IPartyExploringMapBag){
         this.map = bag.map;
-        this.lootGenerator = bag.lootGenerator;
-
+    
         this.currentX = bag.map.mapData.startX;
         this.currentY = bag.map.mapData.startY;
 
@@ -98,7 +95,6 @@ export default class PartyExploringMap{
                 sendPartyMessage: this.sendPartyMessage,
                 game: this.game,
                 player: player,
-                lootGenerator: this.lootGenerator,
             })){
                 this.sendPartyMessage('Nothing of interest here...');
             }

@@ -4,6 +4,8 @@ import CreatureEquipment from '../../item/CreatureEquipment';
 import { BareHands, HandAxe, WornLeathers, WoodShield, StoneDagger, HuntingSword } from '../../item/ItemsIndex';
 import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
+import PlayerParty from "../../party/PlayerParty";
+import { WesternGate2Map } from "../../map/Maps";
 
 export default class GoblinSoldier extends CreatureAIControlled{
     constructor(){
@@ -25,6 +27,9 @@ export default class GoblinSoldier extends CreatureAIControlled{
                 weapon: HuntingSword,
             }),
             wishesDropped: 100,
+            onDefeated: function(bag){
+                bag.party.explore(WesternGate2Map);
+            }
         });
     }
 }

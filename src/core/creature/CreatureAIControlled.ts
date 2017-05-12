@@ -3,13 +3,24 @@ import { CreatureBag } from './Creature';
 import WeaponAttack from '../item/WeaponAttack';
 import WeaponAttackStep from '../item/WeaponAttackStep';
 import PlayerCharacter from './player/PlayerCharacter';
+import PlayerParty from "../party/PlayerParty";
+
+interface IOnDefeatedBag{
+    party: PlayerParty;
+}
+
+interface OnDefeatedFunc{
+    (bag: IOnDefeatedBag):void;
+}
 
 interface CreatureAIBag extends CreatureBag{
     wishesDropped:number;
+    onDefeated?:OnDefeatedFunc;
 }
 
 export default class CreatureAIControlled extends Creature{
     wishesDropped:number;
+    onDefeated: OnDefeatedFunc;
     attacks:Array<WeaponAttack>;
     
     constructor(bag:CreatureAIBag){
@@ -24,6 +35,10 @@ export default class CreatureAIControlled extends Creature{
         }
         if(bag.equipment.offhand){
             this.attacks = this.attacks.concat(bag.equipment.offhand.attacks);
+        }
+
+        if(bag.onDefeated){
+            this.onDefeated = bag.onDefeated;
         }
     }
 
