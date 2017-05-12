@@ -28,7 +28,7 @@ export default class GoblinSoldier extends CreatureAIControlled{
             }),
             wishesDropped: 100,
             onDefeated: function(bag){
-                bag.party.explore(WesternGate2Map);
+                
             }
         });
     }

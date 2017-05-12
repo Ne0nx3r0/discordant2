@@ -86,6 +86,9 @@ export const WesternGate2MapData:IMapData = {
                 {x:2,y:18},
                 {x:12,y:24},
                 {x:25,y:18},
+                {x:13,y:33},
+                {x:14,y:33},
+                {x:15,y:33},
             ],
         },
     ]
