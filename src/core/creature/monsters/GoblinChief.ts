@@ -23,12 +23,11 @@ export default class GoblinSoldier extends CreatureAIControlled{
             }),
             equipment: new CreatureEquipment({
                 armor: WornLeathers,
-                offhand: WoodShield,
-                weapon: HuntingSword,
+                weapon: StoneDagger,
             }),
             wishesDropped: 100,
             onDefeated: function(bag){
-                
+                bag.party.exploration.setLocation(14,31);
             }
         });
     }

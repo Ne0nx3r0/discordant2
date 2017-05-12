@@ -4,6 +4,7 @@ import { IMapData } from '../../../src/core/map/IMapData';
 import { EventTileForagable } from '../../../src/core/map/tiles/EventTileForagable';
 import ItemId from '../../../src/core/item/ItemId';
 import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable";
+import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
 
 export const WesternGate2MapData:IMapData = {
     startX: 26,
@@ -89,6 +90,12 @@ export const WesternGate2MapData:IMapData = {
                 {x:13,y:33},
                 {x:14,y:33},
                 {x:15,y:33},
+            ],
+        },
+        {
+            event: EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
+            coords: [
+                {x:3,y:13},
             ],
         },
     ]

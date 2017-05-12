@@ -13,7 +13,7 @@ export function EventTileForagable(title:string,itemId:ItemId){
                 bag.sendPartyMessage(`${bag.player.title} found one ${title} for each party member`);
 
                 bag.player.party.members.forEach(function(pc){
-                    bag.game.grantPlayerItem(pc.uid,itemId,1);
+                    bag.party.game.grantPlayerItem(pc.uid,itemId,1);
                 });
 
                 return true;

@@ -39,7 +39,7 @@ export const TabletOfHealing = new Weapon({
                             healAmount = healAmount * 2;
                         }
 
-                        const adjustedHealAmount = bag.defender.creature.stats.hpTotal > healAmount ? bag.defender.creature.stats.hpTotal - bag.defender.creature.hpCurrent : healAmount;
+                        const adjustedHealAmount = Math.min(healAmount,bag.defender.creature.stats.hpTotal-bag.defender.creature.hpCurrent);
 
                         return [
                             {

@@ -30,7 +30,7 @@ export function EventTileLootable(){
                 bag.player.party.members.forEach((member)=>{
                     const mf = member.stats.magicFind;
 
-                    const lootItemId = bag.game.lootGenerator.generateLoot({
+                    const lootItemId = bag.party.game.lootGenerator.generateLoot({
                         startingNode: 'root.common',
                         magicFind: partyMagicFind,
                         chanceToGenerate: 0.5,
@@ -40,11 +40,11 @@ export function EventTileLootable(){
 
                     //no item generated, this player gets gold
                     if(lootItemId != null){
-                        const item = bag.game.items.get(lootItemId);
+                        const item = bag.party.game.items.get(lootItemId);
 
                         lootLines.push(`${member.title} found ${item.title}`);
                         
-                        bag.game.grantPlayerItem(member.uid,lootItemId,1);
+                        bag.party.game.grantPlayerItem(member.uid,lootItemId,1);
                     }
                     else{
                         if(Math.random() < 0.2){
@@ -54,7 +54,7 @@ export function EventTileLootable(){
 
                             lootLines.push(`${member.title} found ${wishesAmount} wishes`);                        
 
-                            bag.game.grantPlayerWishes(member.uid,wishesAmount);
+                            bag.party.game.grantPlayerWishes(member.uid,wishesAmount);
                         }
                         else{
                             const goldBase = Math.round(XPToLevel[member.level]/20);
@@ -63,7 +63,7 @@ export function EventTileLootable(){
 
                             lootLines.push(`${member.title} found ${goldAmount} gold`);
 
-                            bag.game.grantPlayerGold(member.uid,goldAmount);
+                            bag.party.game.grantPlayerGold(member.uid,goldAmount);
                         }
                     }
                 });

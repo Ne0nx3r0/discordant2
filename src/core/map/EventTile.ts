@@ -1,6 +1,7 @@
 import PlayerCharacter from '../creature/player/PlayerCharacter';
 import Game from '../../gameserver/game/Game';
 import LootGenerator from "../loot/LootGenerator";
+import PlayerParty from "../party/PlayerParty";
 
 export interface SendPartyMessageFunc{
     (msg:string):void;
@@ -9,7 +10,7 @@ export interface SendPartyMessageFunc{
 export interface EventTileHandlerBag{
     runCount: number;//number of times the event has fired for this tile on this adventure (starts with 0)
     sendPartyMessage: SendPartyMessageFunc;
-    game: Game;
+    party: PlayerParty;
 }
 
 export interface EventTileInteractBag extends EventTileHandlerBag{

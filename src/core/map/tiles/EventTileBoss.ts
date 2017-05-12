@@ -12,7 +12,7 @@ export function EventTileForagable(title:string,itemId:ItemId){
             if(bag.runCount == 0){
                 bag.sendPartyMessage(`${bag.player.title} found ${title}!`);
 
-                bag.game.grantPlayerItem(bag.player.uid,itemId,1);
+                bag.party.game.grantPlayerItem(bag.player.uid,itemId,1);
 
                 return true;
             }

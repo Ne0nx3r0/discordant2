@@ -3,6 +3,7 @@ import Game from '../../gameserver/game/Game';
 import { SendPartyMessageFunc } from '../map/EventTile';
 import PlayerCharacter from '../creature/player/PlayerCharacter';
 import LootGenerator from "../loot/LootGenerator";
+import PlayerParty from "./PlayerParty";
 
 type PartyMoveDirection = 'U' | 'L' | 'D' | 'R';
 
@@ -10,7 +11,7 @@ export {PartyMoveDirection}
 
 interface IPartyExploringMapBag{
     map:ExplorableMap;
-    game:Game;
+    party:PlayerParty;
     sendPartyMessage:SendPartyMessageFunc;
 }
 
@@ -18,23 +19,21 @@ export default class PartyExploringMap{
     map:ExplorableMap;
     currentX:number;
     currentY:number;
-    game: Game;
+    party:PlayerParty;
     sendPartyMessage:SendPartyMessageFunc;
     onEnterRunCounts:Map<string,number>;
-    onExitRunCounts:Map<string,number>;
     onInteractRunCounts:Map<string,number>;
     
     constructor(bag:IPartyExploringMapBag){
         this.map = bag.map;
-    
+        this.party = bag.party;
+
         this.currentX = bag.map.mapData.startX;
         this.currentY = bag.map.mapData.startY;
 
-        this.game = bag.game;
         this.sendPartyMessage = bag.sendPartyMessage;
 
         this.onEnterRunCounts = new Map();
-        this.onExitRunCounts = new Map();
         this.onInteractRunCounts = new Map();
     }
 
@@ -56,6 +55,13 @@ export default class PartyExploringMap{
         else if(direction == 'R') this.currentX += 1;
     }
 
+    setLocation(x:number,y:number){
+        this.currentX = x;
+        this.currentY = y;
+
+        this.onEnterCurrentTile();
+    }
+
     getEncounterChance():number{
         return this.map.getEncounterChance();
     }
@@ -75,7 +81,7 @@ export default class PartyExploringMap{
             event.onEnter({
                 runCount: runCounts,
                 sendPartyMessage: this.sendPartyMessage,
-                game: this.game,
+                party: this.party,
             });
 
             this.onEnterRunCounts.set(xDashY,runCounts+1);
@@ -93,7 +99,7 @@ export default class PartyExploringMap{
             if(!event.onInteract({
                 runCount: runCounts,
                 sendPartyMessage: this.sendPartyMessage,
-                game: this.game,
+                party: this.party,
                 player: player,
             })){
                 this.sendPartyMessage('Nothing of interest here...');

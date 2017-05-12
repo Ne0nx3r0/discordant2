@@ -107,7 +107,7 @@ export default class PlayerParty{
     explore(map:ExplorableMap){
         this.exploration = new PartyExploringMap({
             map: map,
-            game: this.game,
+            party: this,
             sendPartyMessage: this.sendChannelMessage.bind(this)
         });
 
@@ -142,7 +142,7 @@ export default class PlayerParty{
             this.exploration.move(direction);
 
             if(this.exploration.getEncounterChance() > Math.random()){
-                this.monsterEncounter();
+                this.randomMonsterEncounter();
 
                 return;
             }
@@ -153,19 +153,23 @@ export default class PlayerParty{
         this.exploration.onEnterCurrentTile();
     }
 
-    monsterEncounter(){
+    randomMonsterEncounter(){
+        const monsterId = this.exploration.getRandomEncounterMonsterId();
+        
+        this.monsterEncounter(monsterId);
+    }
+
+    monsterEncounter(monsterId:number){
         const partyMembers = [];
 
         this.members.forEach(function(pc){
             partyMembers.push(pc);
         });
 
-        const opponentId = this.exploration.getRandomEncounterMonsterId();
-
         this.currentBattle = this.game.createMonsterBattle({
             party: this,
             partyMembers: partyMembers,
-            opponentId: opponentId,
+            opponentId: monsterId,
             startDelay: 2000,
             runChance: 1 / (this.timesRun+1)
         });
