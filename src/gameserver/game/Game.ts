@@ -863,6 +863,7 @@ export default class Game {
             luck: tempPC.attribute_luck,
             charisma: tempPC.attribute_charisma
         };
+        
         pc.updateStats();
 
         return pc;

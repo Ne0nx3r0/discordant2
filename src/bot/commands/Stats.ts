@@ -92,7 +92,7 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                 },                
                 {
                     name: 'Magic Find',
-                    value: pc.stats.magicFind,
+                    value: pc.stats.magicFind*10,
                     inline: true,
                 },
                 {

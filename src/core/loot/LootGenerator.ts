@@ -1,5 +1,5 @@
 import ItemBase from '../item/ItemBase';
-import { HandAxe,WoodShield,HuntingSword,WornLeathers,TabletOfHealing,TabletOfPoison,SonicLongsword,StoneAxe,StoneDagger,Vial,Sage,Yerba,Bane,Acai,Fox } from "../item/ItemsIndex";
+import { HandAxe, WoodShield, HuntingSword, WornLeathers, TabletOfHealing, TabletOfPoison, SonicLongsword, StoneAxe, StoneDagger, Vial, Sage, Yerba, Bane, Acai, Fox, RingOfFortune } from "../item/ItemsIndex";
 import ItemId from '../item/ItemId';
 import { Tent } from "../item/misc/Tent";
 
@@ -34,6 +34,7 @@ export default class LootGenerator{
         this.addLootItem('uncommon.weapons.physical',StoneDagger,0.15);
         this.addLootItem('uncommon.consumables',Tent,0.2);
         
+        this.addLootItem('rare.equipment.jewelry',RingOfFortune,0.01)
         this.addLootItem('rare.weapons.thunder',SonicLongsword,0.05);
         this.addLootItem('rare.weapons.physical',StoneAxe,0.05);
     }

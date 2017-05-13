@@ -36,7 +36,7 @@ export default class Party extends Command{
 Status: ${party.statusStr}
 Leader: ${party.leader.title} (${party.leader.hpCurrent} / ${party.leader.stats.hpTotal})
 Members: ${members}
-Total Magic Find: ${partyMagicFind}
+Total Magic Find: ${partyMagicFind*10}
 `);
     }
 }

@@ -18,3 +18,4 @@ export { Fox } from './misc/Fox';
 export { AlphaKey } from './misc/AlphaKey';
 export { Tent } from './misc/Tent';
 export { MapNorthernSteppes } from './misc/MapNorthernSteppes';
+export { RingOfFortune } from './jewelry/RingOfFortune';

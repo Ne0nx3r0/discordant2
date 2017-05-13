@@ -23,6 +23,7 @@ enum ItemId {
     AlphaKey,
     Tent,
     MapNorthernSteppes,
+    RingOfFortune,
 }
 
 export default ItemId;

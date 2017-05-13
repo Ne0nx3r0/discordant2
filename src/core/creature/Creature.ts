@@ -72,7 +72,7 @@ export default class Creature{
                 chaos:0,
             },
             hpTotal: 0,
-            magicFind: Math.floor(this.attributes.luck / 10),
+            magicFind: this.attributes.luck * 0.1,
         };
 
         this.equipment.forEach(function(item:ItemEquippable,slot:EquipmentSlot){
