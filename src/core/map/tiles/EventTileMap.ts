@@ -21,7 +21,7 @@ export function EventTileMap(tileBag:EventTileMapBag){
                     .id,1);
                 });
                 
-                bag.party.sendChannelMessage(`The party discovered ${tileBag.map.title}`);
+                bag.party.sendChannelMessage(`The party discovered ${tileBag.map.title} (Note: map doesn't work yet, more maps coming soon!)`);
 
                 return true;
             }
