@@ -97,7 +97,7 @@ export default class PlayerParty{
     }
 
     get id():string{
-        return this.leader.uid;
+        return this.channelId;
     }
 
     get status():PartyStatus{

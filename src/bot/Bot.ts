@@ -94,8 +94,14 @@ export default class Bot{
         try{
             //Clean up any party channels
             this.client.channels.array()
-            .forEach((channel:TextChannel,index:number)=>{
+            .forEach(async (channel:TextChannel,index:number)=>{
                 if(channel.name && (channel.name.startsWith(this.commandPrefix+'pvp-') || channel.name.startsWith(this.commandPrefix+'party-'))){
+                    const channelInUse = await this.socket.isChannelInUse(channel.id);
+                    
+                    if(!channelInUse){
+                        return;
+                    }
+
                     deleteChannelDelay = deleteChannelDelay + 2000;
 
                     setTimeout(()=>{

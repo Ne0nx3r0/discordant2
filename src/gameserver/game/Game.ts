@@ -389,7 +389,7 @@ export default class Game {
             getClient: this.getClient.bind(this),
         });
 
-        this.playerParties.set(leader.uid,party);
+        this.playerParties.set(channelId,party);
     }
 
     async createPvPInvite(senderUid:string,receiverUid:string){
@@ -685,7 +685,7 @@ export default class Game {
             throw 'Only the party leader can direct the party';
         }
 
-        const party = this.playerParties.get(player.uid);
+        const party = player.party;
 
         if(!party){
             throw 'Only the party leader can direct the party!';
@@ -719,7 +719,7 @@ export default class Game {
             throw 'Only the party leader can invite people to the party';
         }
 
-        const party = this.playerParties.get(player.uid);
+        const party = player.party;
 
         if(!party){
             throw 'Only the party leader can direct the party!';
@@ -803,7 +803,7 @@ export default class Game {
             throw 'You are not currently in a party';
         }
 
-        const party = this.playerParties.get(player.uid);
+        const party = player.party;
 
         if(!party){
             throw 'Only the party leader can disband the party';
@@ -813,8 +813,8 @@ export default class Game {
     }
 
     //Warning: PlayerParty is responsible for calling this
-    _deleteParty(partyId:string){
-        this.playerParties.delete(partyId);
+    _deleteParty(partyChannelId:string){
+        this.playerParties.delete(partyChannelId);
     }
 
     async moveParty(leaderUid:string,direction:PartyMoveDirection,steps:number):Promise<void>{
@@ -832,7 +832,7 @@ export default class Game {
             throw 'Only the party leader can move the party';
         }
 
-        const party = this.playerParties.get(player.uid);
+        const party = player.party;
 
         if(!party){
             throw 'Only the party leader can move the party';
@@ -1147,6 +1147,14 @@ export default class Game {
         const offers = await DBGetNewestActiveMarketOffers(this.db,page);
 
         return offers;
+    }
+
+    isChannelStillInUse(channelId:string):boolean{
+        if(this.playerParties.has(channelId)){
+            return true;
+        }
+
+        return false;
     }
 
     async getPlayerParty(playerUid: string):Promise<PlayerParty>{

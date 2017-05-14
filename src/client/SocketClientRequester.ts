@@ -61,6 +61,7 @@ import BattleSkipRequest from '../gameserver/socket/requests/BattleSkipRequest';
 import BattleRunRequest from '../gameserver/socket/requests/BattleRunRequest';
 import BuyItemRequest from '../gameserver/socket/requests/BuyItemRequest';
 import SetPlayerDescriptionRequest from '../gameserver/socket/requests/SetPlayerDescriptionRequest';
+import IsChannelInUseRequest from '../gameserver/socket/requests/IsChannelInUseRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -430,6 +431,15 @@ export default class SocketClientRequester{
             amount: amount,
         })
         .send(this.sioc);
+    }
+
+    async isChannelInUse(channelId:string):Promise<boolean>{
+        const response = await (new IsChannelInUseRequest({
+            channelId: channelId
+        })
+        .send(this.sioc));
+
+        return response.inUse;
     }
 
     async setPlayerDescription(playerUid:string,description:string):Promise<void>{
