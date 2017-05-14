@@ -98,7 +98,7 @@ export default class Bot{
                 if(channel.name && (channel.name.startsWith(this.commandPrefix+'pvp-') || channel.name.startsWith(this.commandPrefix+'party-'))){
                     const channelInUse = await this.socket.isChannelInUse(channel.id);
                     
-                    if(!channelInUse){
+                    if(channelInUse){
                         return;
                     }
 
