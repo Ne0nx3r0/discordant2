@@ -39,7 +39,7 @@ export const HuntingSword = new Weapon({
             minBaseDamage: 5,
             maxBaseDamage: 10,
             damageType: DamageType.physical,
-            specialDescription: 'Attacks 1-3 times',
+            specialDescription: 'Attacks 1-4 times',
             chargesRequired: 1,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.C,
@@ -47,7 +47,7 @@ export const HuntingSword = new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} takes multiple slices at {defender}',
                     damageFunc: function(bag){
-                        const attacksCount = Math.floor(Math.random() * 3)+1;
+                        const attacksCount = Math.floor(Math.random() * 4)+1;
                         
                         bag.battle.queueBattleMessage(['Hit '+attacksCount+ 'times!']);
                         
