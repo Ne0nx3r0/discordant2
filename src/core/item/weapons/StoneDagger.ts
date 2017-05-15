@@ -31,7 +31,7 @@ export const StoneDagger = new Weapon({
             scalingLevel: ScalingLevel.C,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} slashses {defender} with a stone dagger',
+                    attackMessage: '{attacker} slashes {defender} with a stone dagger',
                     damageFunc: DefaultDamageFunc,
                 }),
             ],

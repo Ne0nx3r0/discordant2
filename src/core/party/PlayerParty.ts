@@ -130,7 +130,7 @@ export default class PlayerParty{
         }
         
         if(this.partyStatus != PartyStatus.Exploring){
-            throw this.partyPlural('You','Your party')+' must be exploring a map.';
+            throw this.partyPlural('You','Your party')+' must be exploring a map';
         }
 
         for(var i=0;i<steps;i++){
