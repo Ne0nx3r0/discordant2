@@ -289,6 +289,9 @@ export default class Game {
         }
 
         await DBTransferPlayerItem(this.db,fromPlayer.uid,toPlayer.uid,itemBase.id,amount);
+
+        fromPlayer.inventory._removeItem(itemBase,amount);
+        toPlayer.inventory._addItem(itemBase,amount);
     }
 
     async equipPlayerItem(uid:string,itemId:number,offhand:boolean):Promise<number>{

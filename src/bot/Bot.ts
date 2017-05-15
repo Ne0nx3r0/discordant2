@@ -131,7 +131,7 @@ export default class Bot{
         if(message.author.id == this.client.user.id){
             return;
         }
-
+        
         //Ignore non-prefix messages
         if(!message.content.startsWith(this.commandPrefix) && !message.content.toUpperCase().startsWith(this.commandPrefix.toUpperCase())){
             return;
