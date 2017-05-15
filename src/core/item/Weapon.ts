@@ -1,17 +1,9 @@
 import WeaponAttack from './WeaponAttack';
 import Creature from '../creature/Creature';
 import ItemEquippable from './ItemEquippable';
-import {ItemEquippableBag} from './ItemEquippable';
+import { ItemEquippableBag, UseRequirements } from './ItemEquippable';
 import {EquipmentSlot} from './CreatureEquipment';
-
-interface useRequirements{
-    Strength?:number,
-    Agility?:number,
-    Vitality?:number,
-    Spirit?:number,
-    Luck?:number,
-    Class?:number,
-}
+import Use from '../../bot/commands/Use';
 
 interface ItemWeaponBag{
     id:number;
@@ -21,13 +13,12 @@ interface ItemWeaponBag{
     damageBlocked:number;
     chanceToCritical?: number;
     criticalMultiplier?: number;
-    useRequirements:useRequirements;
+    useRequirements:UseRequirements;
     attacks:Array<WeaponAttack>;    
 }
 
 export default class Weapon extends ItemEquippable{
     attacks:Array<WeaponAttack>;
-    useRequirements:useRequirements;
     damageBlocked:number;//0.0 to 0.45 describing the % of damage this weapon blocks when the player blocks
     chanceToCritical: number;
     criticalMultiplier: number;
@@ -38,6 +29,7 @@ export default class Weapon extends ItemEquippable{
             title:bag.title,
             description:bag.description,
             goldValue: bag.goldValue,
+            useRequirements: bag.useRequirements,
             slotType:'weapon'//also offhand, but for slot type they are all primary
         });
 
@@ -48,7 +40,6 @@ export default class Weapon extends ItemEquippable{
         this.attacks.forEach((attack)=>{
             attack.weapon = this;
         });
-        this.useRequirements = bag.useRequirements || {};
     }
 
     findAttack(attackName:string):WeaponAttack{

@@ -16,7 +16,7 @@ export const TabletOfHealing = new Weapon({
     damageBlocked: 0.05,
     goldValue: 120,
     useRequirements:{
-        Spirit: 16
+        spirit: 16
     },
     chanceToCritical: 0.05,
     attacks: [

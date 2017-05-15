@@ -321,6 +321,14 @@ export default class Game {
 
         const itemEquippable:ItemEquippable = itemBase as ItemEquippable;
 
+        for(var useRequirement in itemEquippable.useRequirements){
+            const requirementAmount = itemEquippable.useRequirements[useRequirement];
+
+            if(player.stats[useRequirement] < requirementAmount){
+                throw `You need at least ${requirementAmount} ${useRequirement} to use ${itemBase.title}`;
+            }
+        }
+
         if(offhand && !(itemBase instanceof Weapon)){
             throw `${itemBase.title} cannot be equipped as an offhand weapon`;
         }

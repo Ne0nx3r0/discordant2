@@ -16,7 +16,7 @@ export const HuntingSword = new Weapon({
     damageBlocked: 0.05,
     goldValue: 30,
     useRequirements: {
-        Strength: 12
+        strength: 12
     },//no use requirements
     attacks: [
         new WeaponAttack({

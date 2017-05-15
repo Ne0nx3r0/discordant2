@@ -15,7 +15,7 @@ export const SonicLongsword = new Weapon({
     damageBlocked: 0.05,
     goldValue: 100,
     useRequirements:{
-        Agility: 20
+        agility: 20
     },
     attacks: [
         new WeaponAttack({

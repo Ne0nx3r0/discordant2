@@ -18,7 +18,7 @@ export const StoneAxe = new Weapon({
     description: 'A large slab of solid rock carved into a vaguely axe-like shape. The "blade" is large and sturdy enough to be used as a shield.',
     damageBlocked: 0.4,
     useRequirements:{
-        Strength: 20,
+        strength: 20,
     },
     goldValue: 30,
     attacks: [

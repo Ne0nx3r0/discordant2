@@ -18,7 +18,7 @@ export const WoodShield = new Weapon({
     damageBlocked: 0.30,
     goldValue: 50,
     useRequirements: {
-        Strength: 10
+        strength: 10
     },
     attacks: [
         new WeaponAttack({

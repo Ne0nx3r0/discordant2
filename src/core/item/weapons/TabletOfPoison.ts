@@ -15,7 +15,7 @@ export const TabletOfPoison =  new Weapon({
     damageBlocked: 0.05,
     goldValue: 100,
     useRequirements:{
-        Spirit: 18
+        spirit: 18
     },
     attacks: [
         new WeaponAttack({

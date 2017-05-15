@@ -17,7 +17,7 @@ export const HandAxe = new Weapon({
     damageBlocked: 0.05,
     goldValue: 30,
     useRequirements:{
-        Strength: 10
+        strength: 10
     },
     attacks:[
         new WeaponAttack({

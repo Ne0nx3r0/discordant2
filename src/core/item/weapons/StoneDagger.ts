@@ -18,7 +18,7 @@ export const StoneDagger = new Weapon({
     description: 'A slab of solid rock carved into a vaguely dagger-like shape. Though referred to as "stone", the material seems far stronger than any typical rock. The dagger might also function as a small shield.',
     damageBlocked: 0.2,
     useRequirements:{
-        Strength: 12,
+        strength: 12,
     },
     goldValue: 40,
     attacks: [

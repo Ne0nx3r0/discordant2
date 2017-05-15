@@ -7,6 +7,16 @@ import { EquipmentSlot } from './CreatureEquipment';
 export interface ItemEquippableBag extends ItemBaseBag{
     slotType:EquipmentSlot;
     onAddBonuses?:OnAddBonusesHandler;
+    useRequirements?:UseRequirements;
+}
+
+export interface UseRequirements{
+    strength?:number,
+    agility?:number,
+    vitality?:number,
+    spirit?:number,
+    charisma?:number,
+    luck?:number,
 }
 
 interface OnAddBonusesHandler{
@@ -28,6 +38,7 @@ interface OnAddBonusesHandler{
 export default class ItemEquippable extends ItemBase{
     slotType:EquipmentSlot;
     onAddBonuses?:OnAddBonusesHandler;
+    useRequirements:UseRequirements;
 
     constructor(bag:ItemEquippableBag){
         super(bag);
@@ -35,5 +46,7 @@ export default class ItemEquippable extends ItemBase{
         this.slotType = bag.slotType;
 
         if(bag.onAddBonuses) this.onAddBonuses = bag.onAddBonuses;
+
+        this.useRequirements = bag.useRequirements || {};
     }
 }

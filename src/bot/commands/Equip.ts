@@ -18,8 +18,6 @@ export default class Equip extends Command{
     }
 
     async run(bag:CommandRunBag){
-        //TODO: don't allow equipping items while in battle
-
         const offhand:boolean = bag.params[bag.params.length-1] == 'offhand';
 
         const itemName = offhand ? bag.params.slice(0,-1).join(' ') : bag.params.join(' ');
