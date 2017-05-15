@@ -24,7 +24,7 @@ export default class Use extends Command{
         }
 
         if(!(item instanceof ItemUsable)){
-            throw `${item.title} is not a usable item, ${bag.message.author.username}`;
+            throw `${item.title} is not a usable item`;
         }
 
         const useMessage = await bag.socket.useItem(bag.message.author.id,item.id);
