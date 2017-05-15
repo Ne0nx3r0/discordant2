@@ -34,7 +34,7 @@ export default async function DBBuyMarketOffer(db:DatabaseService,playerUid:stri
     catch(ex){
         //Kind of hackish - "custom" exception
         if(ex.code == 'P0002'){
-            throw ex.message;
+            throw ex.toString();
         }
 
         throw ex;

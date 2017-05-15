@@ -18,7 +18,7 @@ export default async function DBConvertWishesToGold(db:DatabaseService,uid:strin
     catch(ex){
         //Kind of hackish - "custom" exception
         if(ex.code == 'P0002'){
-            throw ex.message;
+            throw ex.toString();
         }
 
         throw ex;
