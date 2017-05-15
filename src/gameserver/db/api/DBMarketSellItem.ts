@@ -15,7 +15,7 @@ export default async function DBMarketSellItem(db:DatabaseService,bag:MarketSell
     catch(ex){
         //Kind of hackish - "custom" exception from transfer_player_item function
         if(ex.code == 'P0002'){
-            throw ex.message;
+            throw ex.toString();
         }
 
         throw ex;

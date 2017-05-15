@@ -14,7 +14,7 @@ export default async function DBStopMarketOffer(db:DatabaseService,offerId:numbe
     catch(ex){
         //Kind of hackish - "custom" exception
         if(ex.code == 'P0002'){
-            throw ex.message;
+            throw ex.toString();
         }
 
         throw ex;

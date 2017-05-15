@@ -13,7 +13,7 @@ export async function DBSellItem(db:DatabaseService,uid:string,itemId:number,amo
     catch(ex){
         //Kind of hackish - "custom" exception from transfer_player_item function
         if(ex.code == 'P0002'){
-            throw ex.error;
+            throw ex.toString();
         }
 
         throw ex;
