@@ -261,6 +261,10 @@ export default class Game {
         if(amount < 1){
             throw 'Cannot transfer a negative item';
         }
+
+        if(fromUID == toUID){
+            throw `Cannot give items to yourself :|`;
+        }
         
         const fromPlayer = await this.getPlayerCharacter(fromUID);
 

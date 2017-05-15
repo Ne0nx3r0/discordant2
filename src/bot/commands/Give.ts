@@ -25,6 +25,10 @@ export default class Give extends Command{
             return;
         }
 
+        if(tagUserId == bag.message.author.id){
+            throw `You want to give it to yourself? :|`;
+        }
+
         const giveTo = await bag.socket.getPlayer(tagUserId);
 
         if(!giveTo){
