@@ -330,6 +330,8 @@ export default class Game {
             }
         }
 
+        player.updateStats();
+
         return itemUnequippedId;
     }
 
@@ -358,6 +360,8 @@ export default class Game {
         delete player.equipment._items[slot];
 
         player.inventory._addItem(itemUnequipped,1);
+
+        player.updateStats();
 
         return itemUnequipped.id;
     }
