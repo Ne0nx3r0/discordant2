@@ -14,7 +14,7 @@ export const Dagger = new Weapon({
     title: 'Dagger',
     description: 'Among the simplest and earliest weapons ever conceived, the dagger remains a staple of both self-defense and close-quarters battle.',
     damageBlocked: 0.05,
-    goldValue: 30,
+    goldValue: 10,
     useRequirements: {},
     attacks: [
         new WeaponAttack({
