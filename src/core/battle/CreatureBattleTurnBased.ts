@@ -531,6 +531,10 @@ export default class CreatureBattleTurnBased{
     }
 
     participantDefeated(participant:IBattleCreature){
+        if(this.battleHasEnded){
+            return;
+        }
+
         participant.defeated = true;
         participant.blocking = false;
         participant.charges = 0;
