@@ -28,6 +28,7 @@ enum ItemId {
     RingOfHealth,
     RingOfStrength,
     RingOfAgility,
+    Dagger,    
 }
 
 export default ItemId;

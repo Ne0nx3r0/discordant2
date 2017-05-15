@@ -6,6 +6,7 @@ import {TabletOfHealing} from '../../item/weapons/TabletOfHealing';
 import Collection from '../../../util/Collection';
 import { WoodShield } from "../../item/weapons/WoodShield";
 import { HuntingSword } from '../../item/weapons/HuntingSword';
+import { Dagger } from '../../item/weapons/Dagger';
 
 enum CharacterClassId{
     Nobody,
@@ -69,7 +70,7 @@ addClass(new CharacterClass(
         luck: 8,
     }),
     new CreatureEquipment({
-        weapon: HuntingSword,
+        weapon: Dagger,
         offhand: TabletOfHealing,
     }),
 ));

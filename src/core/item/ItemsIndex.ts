@@ -7,6 +7,7 @@ export { WornLeathers } from './clothing/WornLeathers';
 export { TabletOfHealing } from './weapons/TabletOfHealing';
 export { TabletOfPoison } from './weapons/TabletOfPoison';
 export { SonicLongsword } from './weapons/SonicLongsword';
+export { Dagger } from './weapons/Dagger';
 export { StoneAxe } from './weapons/StoneAxe';
 export { StoneDagger } from './weapons/StoneDagger';
 export { Vial } from './misc/Vial';
