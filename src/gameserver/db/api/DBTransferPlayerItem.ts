@@ -12,6 +12,7 @@ const DBTransferPlayerItem = async function(db:DatabaseService,fromUid:string,to
         const result = await db.getPool().query(queryStr,[fromUid,toUid,itemId,amount]);
     }
     catch(ex){
+        console.log('from dbtransfer',ex);
         //Kind of hackish - "custom" exception from transfer_player_item function
         if(ex.code == 'P0002'){
             throw ex.error;
