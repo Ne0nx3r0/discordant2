@@ -17,6 +17,12 @@ export default class Party extends Command{
     }
 
     async run(bag:CommandRunBag){
+        if(bag.params[0] == 'rock'){
+            bag.message.channel.sendMessage(`:beers: :musical_note: SORRY. FOR. PARTY. ROCKING. :musical_note: :beers:`);
+
+            return;
+        }
+
         const party:SocketPlayerParty = await bag.socket.getPlayerParty(bag.message.author.id);
 
         if(!party){
