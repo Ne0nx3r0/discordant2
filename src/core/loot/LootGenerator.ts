@@ -5,7 +5,7 @@ import { Tent } from "../item/misc/Tent";
 
 export interface IGenerateLootBag{
     startingNode:string;
-    chanceToGenerate:number;
+    chanceToGenerate?:number;
     chanceToGoUp?:number;
     maxStepsUp?:number;
     magicFind?:number;
@@ -17,7 +17,7 @@ export default class LootGenerator{
     constructor(){
         this.lootNodes = new Map();
         this.lootNodes.set( 'root' , new LootNode('root',null) );
-
+/*
         this.addLootItem('common.weapons.physical',HandAxe,0.5);
         this.addLootItem('common.weapons.physical',WoodShield,0.5);
         this.addLootItem('common.weapons.physical',HuntingSword,0.4);
@@ -34,12 +34,13 @@ export default class LootGenerator{
         this.addLootItem('uncommon.weapons.physical',StoneDagger,0.15);
         this.addLootItem('uncommon.consumables',Tent,0.2);
         
-        this.addLootItem('rare.equipment.jewelry',RingOfFortune,0.01)
+        this.addLootItem('rare.equipment.jewelry',RingOfFortune,0.01);
         this.addLootItem('rare.weapons.thunder',SonicLongsword,0.05);
         this.addLootItem('rare.weapons.physical',StoneAxe,0.05);
+*/
     }
 
-    addLootItem(node:string,item:ItemBase,rarity:number){
+    addLootItem(node:string,itemId:number,rarity:number){
         const nodeSegments = node.split('.');
 
         let lootNode:LootNode;
@@ -62,22 +63,29 @@ export default class LootGenerator{
             parentNode = lootNode;
         }
 
-        const itemLootNode = new LootNode('root.'+node,parentNode,rarity,item);
+        const itemLootNode = new LootNode('root.'+node,parentNode,rarity,itemId);
         
-        this.lootNodes.set('root.'+node+'.'+ItemId[item.id],itemLootNode);
+        this.lootNodes.set('root.'+node+'.'+ItemId[itemId],itemLootNode);
         
         lootNode.addChild(itemLootNode);
     }
 
     generateLoot(bag:IGenerateLootBag):number{
-        let lootNode = this.lootNodes.get(bag.startingNode);
+        let startingNode = bag.startingNode;
+
+        if(!startingNode.startsWith('root')){
+            startingNode = 'root.'+startingNode;
+        }
+
+        let lootNode = this.lootNodes.get(startingNode);
 
         if(!lootNode){
-            throw 'Invalid loot starting node root.'+bag.startingNode;
+            throw 'Invalid loot starting node root.'+startingNode;
         }
 
         //Check if this call will even generate loot
-        if(Math.random() > bag.chanceToGenerate){
+        //default is yes always generate a loot item id
+        if(bag.chanceToGenerate && Math.random() > bag.chanceToGenerate){
             return null;
         }
 
@@ -108,12 +116,12 @@ class LootNode{
     children: Array<LootNode>;
     itemId: number;
 
-    constructor(node:string,parent:LootNode,rarity?:number,item?:ItemBase){
+    constructor(node:string,parent:LootNode,rarity?:number,itemId?:number){
         this.node = node;
         this.rarity = rarity;
         this.children = [];
         this.parent = parent;
-        this.itemId = item ? item.id : null;
+        this.itemId = itemId || null;
     }
 
     hasChildren():boolean{
@@ -128,7 +136,7 @@ class LootNode{
         let rollMax = 0;
 
         const tempRarities = this.children.map(function(c){
-            const adjustedRarity = c.rarity + magicFind;
+            const adjustedRarity = c.rarity + magicFind / 1000;
 
             rollMax += adjustedRarity;
 

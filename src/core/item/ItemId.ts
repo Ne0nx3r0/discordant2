@@ -24,6 +24,10 @@ enum ItemId {
     Tent,
     MapNorthernSteppes,
     RingOfFortune,
+    WornLeatherHelmet,
+    RingOfHealth,
+    RingOfStrength,
+    RingOfAgility,
 }
 
 export default ItemId;

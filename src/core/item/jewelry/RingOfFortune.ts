@@ -10,6 +10,6 @@ export const RingOfFortune = new ItemEquippable({
     goldValue: 100,
     slotType:'ring',
     onAddBonuses:function(stats:ICreatureStatSet){
-        stats.magicFind += 1;
+        stats.magicFind += 10;
     }
 });

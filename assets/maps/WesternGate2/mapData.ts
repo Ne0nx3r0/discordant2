@@ -8,6 +8,24 @@ import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
 import { EventTileMap } from "../../../src/core/map/tiles/EventTileMap";
 import { MapNorthernSteppes } from "../../../src/core/item/ItemsIndex";
 import { EventTileWarp } from "../../../src/core/map/tiles/EventTilePortal";
+import LootGenerator from '../../../src/core/loot/LootGenerator';
+
+export const lootGenerator = new LootGenerator();
+
+lootGenerator.addLootItem('common',ItemId.HuntingSword,0.25);
+lootGenerator.addLootItem('common',ItemId.HandAxe,0.25);
+
+lootGenerator.addLootItem('common',ItemId.WornLeathers,0.4);
+lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.4);
+lootGenerator.addLootItem('common',ItemId.WoodShield,0.4);
+
+lootGenerator.addLootItem('common',ItemId.Vial,1);
+
+lootGenerator.addLootItem('rare',ItemId.RingOfAgility,0.1);
+lootGenerator.addLootItem('rare',ItemId.RingOfHealth,0.1);
+lootGenerator.addLootItem('rare',ItemId.RingOfStrength,0.1);
+lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
+lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
 
 export const WesternGate2MapData:IMapData = {
     startX: 26,
@@ -80,7 +98,14 @@ export const WesternGate2MapData:IMapData = {
             ]
         },
         {
-            event: EventTileLootable({}),
+            event: EventTileLootable({
+                lootGenerator: lootGenerator,
+                lootSettings:{
+                    startingNode: 'common',
+                    chanceToGoUp: 0.5,   
+                    maxStepsUp: 1,                
+                }
+            }),
             coords: [
                 {x:9,y:2},
                 {x:19,y:2},
@@ -95,10 +120,9 @@ export const WesternGate2MapData:IMapData = {
         {
             event: EventTileLootable({
                 onEnterMsg: `A selection of items the goblin hoard has stolen from travelers`,
+                lootGenerator: lootGenerator,
                 lootSettings:{
-                    startingNode: 'root.uncommon',
-                    chanceToGenerate: 1,
-                    chanceToGoUp: 0,                   
+                    startingNode: 'rare',      
                 }
             }),
             coords: [

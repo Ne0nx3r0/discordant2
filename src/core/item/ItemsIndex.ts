@@ -1,3 +1,4 @@
+import { WornLeatherHelmet } from './clothing/WornLeatherHelmet';
 export { BareHands } from './weapons/BareHands';
 export { HandAxe } from './weapons/HandAxe';
 export { WoodShield } from './weapons/WoodShield';
@@ -19,3 +20,7 @@ export { AlphaKey } from './misc/AlphaKey';
 export { Tent } from './misc/Tent';
 export { MapNorthernSteppes } from './misc/MapNorthernSteppes';
 export { RingOfFortune } from './jewelry/RingOfFortune';
+export { RingOfAgility } from './jewelry/RingOfAgility';
+export { RingOfStrength } from './jewelry/RingOfStrength';
+export { RingOfHealth } from './jewelry/RingOfHealth';
+export { WornLeatherHelmet } from './clothing/WornLeatherHelmet';

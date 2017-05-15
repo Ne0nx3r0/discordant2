@@ -1,0 +1,14 @@
+armor - damage defense
+hat - damage defense, special text effects
+
+amulet - attribute bonuses, magic find, damage bonus
+ring - attribute bonuses, magic find, damage bonus
+
+offhand - weapons, tablets, shields
+weapon - weapons, tablets, shields
+
+pouch - egg, wish saver, auto-consumables
+
+Light Armor - fire, thunder focus
+Medium Armor - all four even
+Heavy Armor - physical, acid  focus

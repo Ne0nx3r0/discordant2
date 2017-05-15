@@ -4,6 +4,7 @@ import ItemBase from "../../item/ItemBase";
 import PlayerCharacter from "../../creature/player/PlayerCharacter";
 import { XPToLevel } from "../../../util/XPToLevel";
 import { IGenerateLootBag } from "../../loot/LootGenerator";
+import LootGenerator from '../../loot/LootGenerator';
 
 const DEBRIS_MESSAGES = [
     `Looks like a small skirmish took place here... Maybe something useful is left?`,
@@ -12,8 +13,9 @@ const DEBRIS_MESSAGES = [
 ];
 
 interface EventTileLootableBag{
+    lootSettings:IGenerateLootBag;
     onEnterMsg?:string;
-    lootSettings?:IGenerateLootBag;
+    lootGenerator: LootGenerator;
 }
 
 export function EventTileLootable(tileBag:EventTileLootableBag){
@@ -41,26 +43,13 @@ export function EventTileLootable(tileBag:EventTileLootableBag){
                 bag.player.party.members.forEach((member)=>{
                     const mf = member.stats.magicFind;
 
-                    let lootItemId:number;
-
-                    if(tileBag.lootSettings){
-                        lootItemId = bag.party.game.lootGenerator.generateLoot({
-                            startingNode: tileBag.lootSettings.startingNode,
-                            chanceToGenerate: tileBag.lootSettings.chanceToGenerate,
-                            chanceToGoUp: tileBag.lootSettings.chanceToGoUp || 0,
-                            maxStepsUp: tileBag.lootSettings.maxStepsUp || 0,
-                            magicFind: mf,
-                        });
-                    }
-                    else{
-                        lootItemId = bag.party.game.lootGenerator.generateLoot({
-                            startingNode: 'root.common',
-                            magicFind: partyMagicFind,
-                            chanceToGenerate: 0.5,
-                            chanceToGoUp: 0.025,
-                            maxStepsUp: 1,
-                        });
-                    }
+                    let lootItemId:number = tileBag.lootGenerator.generateLoot({
+                        startingNode: tileBag.lootSettings.startingNode,
+                        chanceToGenerate: tileBag.lootSettings.chanceToGenerate,
+                        chanceToGoUp: tileBag.lootSettings.chanceToGoUp || 0,
+                        maxStepsUp: tileBag.lootSettings.maxStepsUp || 0,
+                        magicFind: mf,
+                    });
 
                     //no item generated, this player gets gold
                     if(lootItemId != null){

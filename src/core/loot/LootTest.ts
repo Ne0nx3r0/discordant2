@@ -1,6 +1,7 @@
 import LootGenerator, { IGenerateLootBag } from "./LootGenerator";
 import ItemId from '../item/ItemId';
 import FractionSimplify from "../../util/FractionSimplify";
+import { lootGenerator } from '../../../assets/maps/WesternGate2/mapData';
 
 const Table = require('cli-table');
 
@@ -9,30 +10,34 @@ const Table = require('cli-table');
 const LOOT_TEST_RUNS = 100000;
 
 const LOOT_TEST_SETTINGS:IGenerateLootBag = {
-    startingNode: 'root',
+    startingNode: 'common',
     chanceToGenerate: 1,
-    chanceToGoUp: 0.1,
+    chanceToGoUp: 0.5,
     maxStepsUp: 6,
 };
 
 const MF_RATES = [
-    0.00,
-    0.10,
-    0.20,
-    0.30,
-    0.40,
-    0.50,
+       0,
+       5,
+      10,
+      20,
+      30,
+      40,
+      50,
+     100,
+     150,
+     200,
 ];
 
 //////////////// END SETTINGS /////////////
 
-const lootGenerator = new LootGenerator();
+const lg = lootGenerator;
 
 function testLootAt(magicFind):Array<{name:string,value:number}>{
     const results = {};
 
     for(var i=0;i<LOOT_TEST_RUNS;i++){
-        const lootItemId = lootGenerator.generateLoot({
+        const lootItemId = lg.generateLoot({
             startingNode: LOOT_TEST_SETTINGS.startingNode,
             chanceToGenerate: LOOT_TEST_SETTINGS.chanceToGenerate,
             chanceToGoUp: LOOT_TEST_SETTINGS.chanceToGoUp,
@@ -61,7 +66,7 @@ function testLootAt(magicFind):Array<{name:string,value:number}>{
 const table = new Table({
     head: [LOOT_TEST_RUNS+' runs','Rarity'].concat(
         MF_RATES.map(function(rate){
-            return (rate*100)+' MF';
+            return rate+' MF';
         })
     ),
 });

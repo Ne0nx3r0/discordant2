@@ -74,11 +74,9 @@ export default class Game {
     playerParties:Map<string,PlayerParty>;
     activeBattles:Map<string,CreatureBattleTurnBased>;
     mapUrlCache: MapUrlCache;
-    lootGenerator: LootGenerator;
 
     constructor(bag:GameServerBag){
         this.db = bag.db;
-        this.lootGenerator = new LootGenerator();
 
         //assume stricter production perms, but we don't check perms serverside
         this.permissions = new PermissionsService(true);
