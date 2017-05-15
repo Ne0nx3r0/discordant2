@@ -16,7 +16,7 @@ const DBTransferPlayerItem = async function(db:DatabaseService,fromUid:string,to
         if(ex.code == 'P0002'){
             throw ex.error;
         }
-
+console.log(ex);
         throw ex;
     }   
 }
