@@ -35,6 +35,7 @@ export default class ServerRequest{
                 });
             }
             catch(ex){
+                console.log('from _send',ex);
                 reject(ex);
             }
         });
