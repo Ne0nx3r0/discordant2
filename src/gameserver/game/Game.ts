@@ -280,6 +280,10 @@ export default class Game {
             throw 'Invalid item id '+itemId;
         }
 
+        if(!fromPlayer.inventory.hasItem(itemBase,amount)){
+            throw `You only have ${fromPlayer.inventory.getItemAmount(itemBase)} ${itemBase.title}`;
+        }
+
         await DBTransferPlayerItem(this.db,fromPlayer.uid,toPlayer.uid,itemBase.id,amount);
     }
 
