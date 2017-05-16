@@ -425,6 +425,10 @@ export default class CreatureBattleTurnBased{
     }
 
     getBattleCreatureForAction(creature:Creature):IBattleCreature{
+        if(this.battleHasEnded){
+            throw `The battle has ended`;
+        }
+
         const bc = this.participantsLookup.get(creature);
 
         if(!bc){
