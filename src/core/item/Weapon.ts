@@ -1,7 +1,7 @@
 import WeaponAttack from './WeaponAttack';
 import Creature from '../creature/Creature';
 import ItemEquippable from './ItemEquippable';
-import { ItemEquippableBag, UseRequirements } from './ItemEquippable';
+import { ItemEquippableBag, UseRequirements, OnAddBonusesHandler } from './ItemEquippable';
 import {EquipmentSlot} from './CreatureEquipment';
 import Use from '../../bot/commands/Use';
 
@@ -15,6 +15,7 @@ interface ItemWeaponBag{
     criticalMultiplier?: number;
     useRequirements:UseRequirements;
     attacks:Array<WeaponAttack>;    
+    onAddBonuses?:OnAddBonusesHandler;
 }
 
 export default class Weapon extends ItemEquippable{
@@ -30,6 +31,7 @@ export default class Weapon extends ItemEquippable{
             description:bag.description,
             goldValue: bag.goldValue,
             useRequirements: bag.useRequirements,
+            onAddBonuses: bag.onAddBonuses,
             slotType:'weapon'//also offhand, but for slot type they are all primary
         });
 

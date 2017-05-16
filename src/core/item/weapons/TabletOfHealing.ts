@@ -8,6 +8,7 @@ import ItemId from '../ItemId';
 import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from "../../damage/DefaultDamageFunc";
+import { EffectBless } from '../../effects/types/EffectBless';
 
 export const TabletOfHealing = new Weapon({
     id: ItemId.TabletOfHealing,
@@ -55,17 +56,19 @@ export const TabletOfHealing = new Weapon({
         }),
         new WeaponAttack({
             title: 'bless',
-            minBaseDamage: 5,
+            minBaseDamage: 10,
             maxBaseDamage: 10,
             damageType: DamageType.special,
             isFriendly: true,
-            chargesRequired: 2,
+            chargesRequired: 1,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,
+            specialDescription: `Adds 10% to all target resistances for 20 rounds`,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} reads a legend aloud blessing NOT WORKING YET {defender}',
+                    attackMessage: '{attacker} reads a legend aloud and blesses {defender}',
                     damageFunc: function(bag:DamageFuncBag){
+                        bag.battle.addTemporaryEffect(bag.defender.creature,EffectBless,20);
 
                         return [];
                     }

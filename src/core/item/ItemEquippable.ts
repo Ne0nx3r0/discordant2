@@ -19,7 +19,7 @@ export interface UseRequirements{
     luck?:number,
 }
 
-interface OnAddBonusesHandler{
+export interface OnAddBonusesHandler{
     (stats:ICreatureStatSet):void;//Modifies the statset if bonuses/penalties apply
 }
 
