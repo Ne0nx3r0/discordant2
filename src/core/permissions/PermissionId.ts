@@ -53,6 +53,7 @@ enum PermissionId{
     MarketOffer,
     MarketBuy,
     Wish,
+    Ping,
 }
 
 export default PermissionId;

@@ -50,3 +50,4 @@ export { default as DPR } from './commands/DPR';
 export { default as SetDesc } from './commands/SetDesc';
 export { default as Items } from './commands/Items';
 export { default as Party } from './commands/Party';
+export { default as Ping } from './commands/Ping';
