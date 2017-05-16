@@ -61,6 +61,19 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     +'\n'+Math.floor(pc.stats.resistances.acid*100)+'%'+' Acid'
     +'\n'+Math.floor(pc.stats.resistances.thunder*100)+'% Thunder';
 
+    function getEquipmentInSlot(slot:string){
+        if(pc.equipment[slot]){
+            return '\n'+items.get(pc.equipment[slot] as number).title+' ('+slot.substr(0,1).toUpperCase()+slot.substr(1)+')'; 
+        }
+        return '\n- ('+slot.substr(0,1).toUpperCase()+slot.substr(1)+')';
+    }
+
+    const equipmentStr = getEquipmentInSlot('hat')
+    +getEquipmentInSlot('amulet')
+    +getEquipmentInSlot('armor')
+    +getEquipmentInSlot('ring')
+    +getEquipmentInSlot('pouch');
+
     return {
         embed: {
             color: 3447003,
@@ -96,13 +109,14 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                     inline: true,
                 },
                 {
-                    name: 'Primary Weapon',
-                    value: items.get(pc.equipment.weapon || 0).title,
+                    name: 'Weapons',
+                    value: `${items.get(pc.equipment.weapon || 0).title} (Primary)
+${items.get(pc.equipment.weapon || 0).title} (Offhand)`,
                     inline: true,
                 },
                 {
-                    name: 'Offhand Weapon',
-                    value: items.get(pc.equipment.offhand || 0).title,
+                    name: 'Equipment',
+                    value: equipmentStr,
                     inline: true,
                 },
                 {
