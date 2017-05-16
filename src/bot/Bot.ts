@@ -137,6 +137,10 @@ export default class Bot{
             return;
         }
 
+        if(message.content == this.commandPrefix || message.content == this.commandPrefix.toUpperCase()){
+            return;
+        }
+
         let msgWithoutPrefix:string = message.content.substr(this.commandPrefix.length)+' ';
 
         let aliasFound = false;
