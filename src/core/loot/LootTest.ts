@@ -1,7 +1,7 @@
 import LootGenerator, { IGenerateLootBag } from "./LootGenerator";
 import ItemId from '../item/ItemId';
 import FractionSimplify from "../../util/FractionSimplify";
-import { lootGenerator } from '../../../assets/maps/WesternGate2/mapData';
+import { lootGenerator } from '../../../assets/maps/WesternGate2/WesternGate2Events';
 
 const Table = require('cli-table');
 
