@@ -24,7 +24,7 @@ lootGenerator.addLootItem('common',ItemId.Vial,1);
 export const WesternGate2Events:IMapData = {
     startX: 26,
     startY: 22,
-    encounterChance: 0.25,
+    encounterChance: 0.2,
     encounters:[
         { id:CreatureId.Goblin,        weight:0.6 },
         { id:CreatureId.GoblinSoldier, weight:0.2 },
