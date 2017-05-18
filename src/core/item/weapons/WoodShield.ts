@@ -15,17 +15,17 @@ import { ICreatureStatSet } from '../../creature/Creature';
 export const WoodShield = new Weapon({
     id: ItemId.WoodShield,
     title: 'Wood Shield',
-    description: '(+10% all resistances) A classic defense among foot soldiers and city guard, many of these were shattered as militia steel quelled the great beasts that took to roaming the plains.',
+    description: '(+5% all resistances) A classic defense among foot soldiers and city guard, many of these were shattered as militia steel quelled the great beasts that took to roaming the plains.',
     damageBlocked: 0.30,
     goldValue: 50,
     useRequirements: {
         strength: 10
     },
     onAddBonuses: function(stats:ICreatureStatSet){
-        stats.resistances.physical += 0.1;
-        stats.resistances.acid += 0.1;
-        stats.resistances.fire += 0.1;
-        stats.resistances.thunder += 0.1;
+        stats.resistances.physical += 0.05;
+        stats.resistances.acid += 0.05;
+        stats.resistances.fire += 0.05;
+        stats.resistances.thunder += 0.05;
     },
     attacks: [
         new WeaponAttack({

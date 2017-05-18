@@ -6,10 +6,10 @@ import { ICreatureStatSet } from '../../creature/Creature';
 export const WornLeathers = new ItemEquippable({
     id: ItemId.WornLeathers,
     title: 'Worn Leathers',
-    description: `(20% Physical Resistance) A set of hardened animal hide braces that cover the chest, arms and legs`,
+    description: `(15% Physical Resistance) A set of hardened animal hide braces that cover the chest, arms and legs`,
     goldValue: 30,
     slotType:'armor',
     onAddBonuses:function(stats:ICreatureStatSet){
-        stats.resistances.physical += 0.2;
+        stats.resistances.physical += 0.15;
     }
 });
