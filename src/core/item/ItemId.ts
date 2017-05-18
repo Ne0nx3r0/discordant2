@@ -29,6 +29,7 @@ enum ItemId {
     RingOfStrength,
     RingOfAgility,
     Dagger,    
+    TabletOfFire,
 }
 
 export default ItemId;

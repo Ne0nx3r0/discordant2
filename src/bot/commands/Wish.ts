@@ -12,7 +12,7 @@ export default class SetRole extends Command{
         super({
             name: 'wish',
             description: 'Use wishes to take an action. Wishes convert to 2gp each, respec costs the current amount of wishes to level.',
-            usage: 'wish <gold|respec|strength|agility|vitality|spirit|luck|charisma>',
+            usage: 'wish <strength|agility|vitality|spirit|luck|charisma|gold>',
             permissionNode: PermissionId.Wish,
             minParams: 1,
         });
