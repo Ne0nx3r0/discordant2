@@ -9,7 +9,7 @@ export default class GoblinSneak extends CreatureAIControlled{
     constructor(){
         super({
             id: CreatureId.GoblinSneak,
-            title: 'Goblin Sneak',
+            title: 'Goblin Sniper',
             description: 'A goblin master of poisons',
             attributes: new AttributeSet({
                 strength: 4,
