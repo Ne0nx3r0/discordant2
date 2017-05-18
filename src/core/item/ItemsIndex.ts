@@ -25,3 +25,4 @@ export { RingOfAgility } from './jewelry/RingOfAgility';
 export { RingOfStrength } from './jewelry/RingOfStrength';
 export { RingOfHealth } from './jewelry/RingOfHealth';
 export { WornLeatherHelmet } from './clothing/WornLeatherHelmet';
+export { TabletOfFire } from './clothing/TabletOfFire';
