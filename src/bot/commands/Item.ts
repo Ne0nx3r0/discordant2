@@ -66,11 +66,15 @@ export default class Item extends Command{
                 true
             );
 
-            const useRequirementsStr = Object.keys(weapon.useRequirements)
+            let useRequirementsStr = Object.keys(weapon.useRequirements)
             .map(function(key){
                 return weapon.useRequirements[key]+' '+key;
             })
             .join(', ');
+
+            if(useRequirementsStr == ''){
+                useRequirementsStr = 'None';
+            }
 
             embed.addField(
                 'Use Requirements',
