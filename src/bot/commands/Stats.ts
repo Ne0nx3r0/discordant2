@@ -111,7 +111,7 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                 {
                     name: 'Weapons',
                     value: `${items.get(pc.equipment.weapon || 0).title} (Primary)
-${items.get(pc.equipment.weapon || 0).title} (Offhand)`,
+${items.get(pc.equipment.offhand || 0).title} (Offhand)`,
                     inline: true,
                 },
                 {
