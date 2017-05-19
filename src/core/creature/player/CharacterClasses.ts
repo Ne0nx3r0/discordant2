@@ -33,7 +33,6 @@ addClass(new CharacterClass(
         agility: 10,
         vitality: 10,
         spirit: 10,
-        charisma: 10,
         luck: 10,
     })
 ));
@@ -47,8 +46,7 @@ addClass(new CharacterClass(
         agility: 12,
         vitality: 14,
         spirit: 4,
-        charisma: 6,
-        luck: 12,
+        luck: 8,
     }),
     new CreatureEquipment({
         armor: WornLeathers,
@@ -65,8 +63,7 @@ addClass(new CharacterClass(
         strength: 6,
         agility: 6,
         vitality: 12,
-        spirit: 16,
-        charisma: 12,
+        spirit: 18,
         luck: 8,
     }),
     new CreatureEquipment({

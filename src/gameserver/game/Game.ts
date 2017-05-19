@@ -133,7 +133,6 @@ export default class Game {
                     agility: dbPlayer.attribute_agility,
                     vitality: dbPlayer.attribute_vitality,
                     spirit: dbPlayer.attribute_spirit,
-                    charisma: dbPlayer.attribute_charisma,
                     luck: dbPlayer.attribute_luck,
                 }),
                 class: CharacterClasses.get(dbPlayer.class),
@@ -882,7 +881,6 @@ export default class Game {
             vitality:  tempPC.attribute_vitality,
             spirit: tempPC.attribute_spirit,
             luck: tempPC.attribute_luck,
-            charisma: tempPC.attribute_charisma
         };
         
         pc.updateStats();
@@ -953,7 +951,6 @@ export default class Game {
         pc.attributes.agility = pc.class.startingAttributes.agility;
         pc.attributes.vitality = pc.class.startingAttributes.vitality; 
         pc.attributes.spirit = pc.class.startingAttributes.spirit;
-        pc.attributes.charisma = pc.class.startingAttributes.charisma;
         pc.attributes.luck = pc.class.startingAttributes.luck;
         pc.level = 1;
         pc.updateStats();

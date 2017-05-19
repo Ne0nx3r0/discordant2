@@ -52,7 +52,6 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     +' '+pc.stats.agility+' Agility,'
     +'\n'+pc.stats.vitality+' Vitality,'
     +' '+pc.stats.spirit+' Spirit,'
-    +'\n'+pc.stats.charisma+' Charisma,'
     +' '+pc.stats.luck+' Luck';
 
     const resistancesStr = ''

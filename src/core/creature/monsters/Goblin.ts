@@ -17,7 +17,6 @@ export default class Goblin extends CreatureAIControlled{
                 vitality: 4,
                 spirit: 0,
                 luck: 0,
-                charisma: 0,
             }),
             equipment: new CreatureEquipment({
                 weapon: BareHands

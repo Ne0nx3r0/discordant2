@@ -5,14 +5,14 @@ import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import { WishType } from '../../gameserver/socket/requests/LevelUpRequest';
 
-const WishTypes = ['STRENGTH', 'AGILITY', 'VITALITY', 'SPIRIT', 'LUCK', 'CHARISMA'];
+const WishTypes = ['STRENGTH', 'AGILITY', 'VITALITY', 'SPIRIT', 'LUCK'];
 
 export default class SetRole extends Command{
     constructor(bag:CommandBag){
         super({
             name: 'wish',
             description: 'Use wishes to take an action. Wishes convert to 2gp each, respec costs the current amount of wishes to level.',
-            usage: 'wish <strength|agility|vitality|spirit|luck|charisma|gold>',
+            usage: 'wish <strength|agility|vitality|spirit|luck|gold>',
             permissionNode: PermissionId.Wish,
             minParams: 1,
         });
@@ -80,10 +80,6 @@ export default class SetRole extends Command{
             
             case 'LUCK':
                 msg = `You use your wishes to become luckier (${pc.stats.luck})`;
-            break;
-
-            case 'CHARISMA':
-                msg = `You use your wishes to become more charming (${pc.stats.charisma})`;
             break;
         }
 

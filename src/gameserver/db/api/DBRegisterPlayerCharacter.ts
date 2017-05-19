@@ -29,11 +29,10 @@ export default async function(db:DatabaseService,bag:DBRegisterbag):Promise<DBPl
                 attribute_agility,
                 attribute_vitality,
                 attribute_spirit,
-                attribute_charisma,
                 attribute_luck,
                 role
             )
-            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11);
+            VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);
     `;
 
     const insertPlayerParams:Array<any> = [
@@ -45,7 +44,6 @@ export default async function(db:DatabaseService,bag:DBRegisterbag):Promise<DBPl
         bag.class.startingAttributes.agility,
         bag.class.startingAttributes.vitality,
         bag.class.startingAttributes.spirit,
-        bag.class.startingAttributes.charisma,
         bag.class.startingAttributes.luck,
         'player'
     ];

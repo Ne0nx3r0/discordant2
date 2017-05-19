@@ -17,7 +17,6 @@ CREATE TABLE public.player
     attribute_agility smallint NOT NULL DEFAULT 0,
     attribute_vitality smallint NOT NULL DEFAULT 0,
     attribute_spirit smallint NOT NULL DEFAULT 0,
-    attribute_charisma smallint NOT NULL DEFAULT 0,
     attribute_luck smallint NOT NULL DEFAULT 0,
     karma integer NOT NULL DEFAULT 1,
     role character varying COLLATE pg_catalog."default" NOT NULL DEFAULT 'player'::character varying,

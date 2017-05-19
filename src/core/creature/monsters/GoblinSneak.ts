@@ -17,7 +17,6 @@ export default class GoblinSneak extends CreatureAIControlled{
                 vitality: 8,
                 spirit: 12,
                 luck: 0,
-                charisma: 0,
             }),
             equipment: new CreatureEquipment({
                 weapon: GoblinSneakWeapon

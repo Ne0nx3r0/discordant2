@@ -17,7 +17,6 @@ export default class GoblinSoldier extends CreatureAIControlled{
                 vitality: 6,
                 spirit: 0,
                 luck: 0,
-                charisma: 0,
             }),
             equipment: new CreatureEquipment({
                 armor: WornLeathers,

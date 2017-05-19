@@ -15,7 +15,6 @@ export interface UseRequirements{
     agility?:number,
     vitality?:number,
     spirit?:number,
-    charisma?:number,
     luck?:number,
 }
 

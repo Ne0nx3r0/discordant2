@@ -15,7 +15,6 @@ export interface DBPlayer{
     attribute_agility: number;
     attribute_vitality: number;
     attribute_spirit: number;
-    attribute_charisma: number;
     attribute_luck: number;
     inventory:Array<DBInventoryItem>;
     equipment:Array<DBEquipmentItem>;

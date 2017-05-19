@@ -3,7 +3,6 @@ export enum Attribute{
     agility,
     vitality,
     spirit,
-    charisma,
     luck
 }
 
@@ -12,7 +11,6 @@ export interface AttributeBag{
     agility:number;
     vitality:number;
     spirit:number;
-    charisma:number;
     luck:number;
 }
 
@@ -21,7 +19,6 @@ export default class AttributeSet{
     agility:number;
     vitality:number;
     spirit:number;
-    charisma:number;
     luck:number;
 
     constructor(bag:AttributeBag){
@@ -29,7 +26,6 @@ export default class AttributeSet{
         this.agility = bag.agility || 0;//required to use light weapons, increases fire resistance
         this.vitality = bag.vitality || 0;// increases hp
         this.spirit = bag.spirit || 0;// required to use legends, increases legend damage
-        this.charisma = bag.charisma || 0;//increases pet damage
         this.luck = bag.luck || 0; // better item finds, chance for criticals, increases thunder resistance
     }
 }

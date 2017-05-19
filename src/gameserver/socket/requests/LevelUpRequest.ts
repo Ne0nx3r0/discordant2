@@ -3,7 +3,7 @@ import ServerRequest from '../ServerRequest';
 import { SocketPlayerCharacter } from '../../../core/creature/player/PlayerCharacter';
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 
-export type WishType = 'strength' | 'agility'| 'vitality'| 'spirit' | 'luck' | 'charisma';
+export type WishType = 'strength' | 'agility'| 'vitality'| 'spirit' | 'luck';
 
 export interface LevelUpData extends ServerRequestData{
     uid: string;

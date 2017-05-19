@@ -14,9 +14,8 @@ const queryStr = `
         attribute_agility = $4,
         attribute_vitality = $5,
         attribute_spirit = $6,
-        attribute_charisma = $7,
-        attribute_luck = $8
-    WHERE uid = $1 AND wishes >= $9;
+        attribute_luck = $7
+    WHERE uid = $1 AND wishes >= $8;
 `;
 
 const DBRespecPlayer = async function(db:DatabaseService,pc:PlayerCharacter,wishesNeeded:number,wishesToGrant:number):Promise<void>{
@@ -28,7 +27,6 @@ const DBRespecPlayer = async function(db:DatabaseService,pc:PlayerCharacter,wish
         attributes.agility,
         attributes.vitality,
         attributes.spirit,
-        attributes.charisma,
         attributes.luck,
         wishesNeeded,
     ]);
