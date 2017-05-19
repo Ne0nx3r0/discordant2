@@ -25,7 +25,7 @@ export const TabletOfFire = new Weapon({
             title: 'flame',
             minBaseDamage: 40,
             maxBaseDamage: 60,
-            specialDescription: 'Consumes up to 10 charges, damage increases by each additional charge consumed',
+         //   specialDescription: 'Consumes up to 10 charges, damage increases by each additional charge consumed',
             damageType: DamageType.fire,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,
@@ -35,7 +35,7 @@ export const TabletOfFire = new Weapon({
                     attackMessage: '{attacker} reads a healing legend outloudand launches a blaze of fire at {defender}',
                     damageFunc: function(bag:DamageFuncBag){
                         let fireAmount = (Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage;
-
+/*
                         const extraChargesConsumed = bag.attacker.charges;
 
                         bag.attacker.charges = 0;
@@ -75,7 +75,7 @@ export const TabletOfFire = new Weapon({
                                 if(extraChargesConsumed > 8){
                                     bag.attacker.charges = extraChargesConsumed - 8;
                                 }
-                        }
+                        }*/
 
                         if(bag.isCritical){
                             fireAmount = fireAmount * 2;
