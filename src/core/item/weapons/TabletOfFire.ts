@@ -23,12 +23,12 @@ export const TabletOfFire = new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'flame',
-            minBaseDamage: 35,
-            maxBaseDamage: 55,
+            minBaseDamage: 25,
+            maxBaseDamage: 50,
          //   specialDescription: 'Consumes up to 10 charges, damage increases by each additional charge consumed',
             damageType: DamageType.fire,
             scalingAttribute: Attribute.spirit,
-            scalingLevel: ScalingLevel.B,
+            scalingLevel: ScalingLevel.C,
             chargesRequired: 3,
             steps: [
                 new WeaponAttackStep({

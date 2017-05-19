@@ -13,7 +13,6 @@ export const SonicLongsword = new Weapon({
     title: 'Sonic Longsword',
     description: `A blade whose hilt generates an electric charge which is inflicted on enemies`,
     damageBlocked: 0.05,
-    chanceToCritical: 0.1,
     goldValue: 100,
     useRequirements:{
         agility: 20
