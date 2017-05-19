@@ -20,14 +20,15 @@ export default class Top extends Command{
 
     async run(bag:CommandRunBag){
         const leadOptionStr = bag.params[0];
+        const leadOption = LeadPlayerOption[leadOptionStr];
 
-        if(!leadOptionStr){
+        if(leadOption === undefined){
             bag.message.channel.sendMessage(this.getUsage());
 
             return;
         }
 
-        const topPlayers = await bag.socket.getTopPlayers(LeadPlayerOption[leadOptionStr]);
+        const topPlayers = await bag.socket.getTopPlayers(leadOption);
 
         bag.message.channel.sendMessage(`Top players by ${leadOptionStr}
 ${topPlayers.map(function(p){return p.title + ' - ' + p.amount;}).join('\n')}`);

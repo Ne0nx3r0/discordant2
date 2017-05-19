@@ -8,7 +8,7 @@ import { ITopPlayer } from '../../socket/requests/GetTopPlayersRequest';
 const queryStr = `
     SELECT username,{column}
     FROM player
-    ORDER BY $1 DESC
+    ORDER BY {column} DESC
     LIMIT 10;
 `;
 
@@ -25,7 +25,7 @@ export const DBGetTopPlayers = async function(db:DatabaseService,type:LeadPlayer
     else /*if(type == LeadPlayerOption.wishes)*/ attributeStr = 'wishes';
 
     
-    const results = await db.getPool().query(queryStr.replace('{column}',attributeStr),[attributeStr]);
+    const results = await db.getPool().query(queryStr.replace(/\{column\}/g,attributeStr),[]);
 
     if(results.rows.length == 0){
         throw 'No players found?';
