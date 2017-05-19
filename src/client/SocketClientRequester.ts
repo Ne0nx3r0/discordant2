@@ -62,6 +62,8 @@ import BattleRunRequest from '../gameserver/socket/requests/BattleRunRequest';
 import BuyItemRequest from '../gameserver/socket/requests/BuyItemRequest';
 import SetPlayerDescriptionRequest from '../gameserver/socket/requests/SetPlayerDescriptionRequest';
 import IsChannelInUseRequest from '../gameserver/socket/requests/IsChannelInUseRequest';
+import { LeadPlayerOption } from '../bot/commands/Lead';
+import GetTopPlayersRequest from "../gameserver/socket/requests/GetTopPlayersRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -107,6 +109,16 @@ export default class SocketClientRequester{
         });
 
         return request.send(this.sioc);
+    }
+
+    async getTopPlayers(leadOption:LeadPlayerOption){
+        const request = new GetTopPlayersRequest({
+            type: leadOption
+        });
+
+        const response = await request.send(this.sioc);
+
+        return response.players;
     }
 
     registerPlayer(data:RegisterPlayerData):Promise<SocketPlayerCharacter>{

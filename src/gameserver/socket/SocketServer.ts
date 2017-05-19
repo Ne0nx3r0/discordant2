@@ -50,6 +50,7 @@ import BattleSkipRequest from './requests/BattleSkipRequest';
 import BattleRunRequest from './requests/BattleRunRequest';
 import BuyItemRequest from './requests/BuyItemRequest';
 import LeavePartyRequest from './requests/LeavePartyRequest';
+import GetTopPlayersRequest from './requests/GetTopPlayersRequest';
 import { SetPlayerDescriptionData } from './requests/SetPlayerDescriptionRequest';
 import SetPlayerDescriptionRequest from './requests/SetPlayerDescriptionRequest';
 import IsChannelInUseRequest from './requests/IsChannelInUseRequest';
@@ -133,6 +134,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new LeavePartyRequest(null));
             this.registerHandler(registeredEvents,client,new SetPlayerDescriptionRequest(null));
             this.registerHandler(registeredEvents,client,new IsChannelInUseRequest(null));
+            this.registerHandler(registeredEvents,client,new GetTopPlayersRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

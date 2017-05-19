@@ -57,6 +57,9 @@ import { IPostBattleBag, BattleResult } from '../../core/battle/CreatureBattleTu
 import { DBBuyItem } from "../db/api/DBBuyItem";
 import { DBSetPlayerDescription } from "../db/api/DBSetPlayerDescription";
 import LootGenerator from "../../core/loot/LootGenerator";
+import { ITopPlayer } from '../socket/requests/GetTopPlayersRequest';
+import { LeadPlayerOption } from '../../bot/commands/Lead';
+import { DBGetTopPlayers } from '../db/api/DBGetTopPlayers';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -1208,6 +1211,12 @@ export default class Game {
         pc.gold += gold;
 
         return [gold,pc.gold];
+    }
+
+    async getTopPlayers(type:LeadPlayerOption):Promise<Array<ITopPlayer>>{
+        const topPlayers = await DBGetTopPlayers(this.db,type);
+
+        return topPlayers;
     }
 }
 
