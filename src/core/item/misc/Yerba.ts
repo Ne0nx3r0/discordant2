@@ -5,6 +5,7 @@ import PlayerCharacter from '../../creature/player/PlayerCharacter';
 import BattleTemporaryEffectAttributeBoost from '../../effects/BattleTemporaryEffectAttributeBoost';
 import EffectId from '../../effects/EffectId';
 import { Attribute } from "../../creature/AttributeSet";
+import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 
 export const Yerba = new ItemUsable({
     id: ItemId.Yerba,
@@ -18,11 +19,12 @@ export const Yerba = new ItemUsable({
         }
     },
     onUse: function(user:PlayerCharacter):string{
-        user.battle.addTemporaryEffect(user,new BattleTemporaryEffectAttributeBoost({
+        user.battle.addTemporaryEffect(user,new BattleTemporaryEffect({
             id: EffectId.Yerba,
             title: `Yerba`,
-            attribute: Attribute.vitality,
-            amount: 10,
+            onAddBonuses:function(stats){
+                stats.hpTotal += 50;
+            }
         }),30);
 
         return null;

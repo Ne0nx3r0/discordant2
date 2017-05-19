@@ -85,8 +85,12 @@ export default class Creature{
             }
         });
 
+        //If an effect increased HP directly then they get that added to current HP immediately
+        //vitality increases on the other hand don't get this benefit to prevent re-requip exploits
+        this.hpCurrent += stats.hpTotal;
+
         //These could be adjusted by bonuses
-        stats.hpTotal += stats.vitality * 10,
+        stats.hpTotal += stats.vitality * 10;
 
         stats.resistances.fire += Math.floor(stats.agility/3)/100;
         stats.resistances.acid += Math.floor(stats.strength/3)/100;
