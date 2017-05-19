@@ -23,13 +23,28 @@ export const StoneAxe = new Weapon({
     goldValue: 30,
     attacks: [
         new WeaponAttack({
-            title: 'slam',
-            minBaseDamage: 40,
-            maxBaseDamage: 60,
+            title: 'slash',
+            minBaseDamage: 13,
+            maxBaseDamage: 20,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
-            scalingLevel: ScalingLevel.D,
-            chargesRequired: 2,
+            scalingLevel: ScalingLevel.C,
+            steps: [
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} slashes their stone axe at {defender}',
+                    damageFunc: DefaultDamageFunc,
+                }),
+            ],
+            aiUseWeight: 0.9
+        }),
+        new WeaponAttack({
+            title: 'slam',
+            minBaseDamage: 50,
+            maxBaseDamage: 70,
+            damageType: DamageType.physical,
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.C,
+            chargesRequired: 3,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slams their axe down on {defender}',
