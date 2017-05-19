@@ -63,8 +63,8 @@ addClass(new CharacterClass(
         strength: 6,
         agility: 6,
         vitality: 12,
-        spirit: 18,
-        luck: 8,
+        spirit: 16,
+        luck: 10,
     }),
     new CreatureEquipment({
         weapon: Dagger,
