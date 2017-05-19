@@ -62,7 +62,7 @@ import BattleRunRequest from '../gameserver/socket/requests/BattleRunRequest';
 import BuyItemRequest from '../gameserver/socket/requests/BuyItemRequest';
 import SetPlayerDescriptionRequest from '../gameserver/socket/requests/SetPlayerDescriptionRequest';
 import IsChannelInUseRequest from '../gameserver/socket/requests/IsChannelInUseRequest';
-import { LeadPlayerOption } from '../bot/commands/Lead';
+import { LeadPlayerOption } from '../bot/commands/Top';
 import GetTopPlayersRequest from "../gameserver/socket/requests/GetTopPlayersRequest";
 
 export type SocketClientPushType = 'PlayerRoleUpdated';

@@ -58,7 +58,7 @@ import { DBBuyItem } from "../db/api/DBBuyItem";
 import { DBSetPlayerDescription } from "../db/api/DBSetPlayerDescription";
 import LootGenerator from "../../core/loot/LootGenerator";
 import { ITopPlayer } from '../socket/requests/GetTopPlayersRequest';
-import { LeadPlayerOption } from '../../bot/commands/Lead';
+import { LeadPlayerOption } from '../../bot/commands/Top';
 import { DBGetTopPlayers } from '../db/api/DBGetTopPlayers';
 
 export interface GameServerBag{

@@ -2,7 +2,7 @@ import DatabaseService from '../DatabaseService';
 import InventoryItem from '../../../core/item/InventoryItem';
 import { EquipmentSlot } from '../../../core/item/CreatureEquipment';
 import { DBPlayer } from '../DBInterfaces';
-import { LeadPlayerOption } from '../../../bot/commands/Lead';
+import { LeadPlayerOption } from '../../../bot/commands/Top';
 import { ITopPlayer } from '../../socket/requests/GetTopPlayersRequest';
 
 const queryStr = `

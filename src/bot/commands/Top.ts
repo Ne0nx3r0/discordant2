@@ -7,12 +7,12 @@ import CharacterClasses from '../../core/creature/player/CharacterClasses';
 export enum LeadPlayerOption{wishes,gold,level,strength,agility,vitality,spirit,luck};
 const LeadPlayerOptions = ['wishes','gold','level','strength','agility','vitality','spirit','luck'];
 
-export default class Lead extends Command{
+export default class Top extends Command{
     constructor(bag:CommandBag){
         super({
-            name: 'lead',
+            name: 'top',
             description: 'Check leaderboard stats',
-            usage: 'lead ['+LeadPlayerOptions.join('|')+']',
+            usage: 'top ['+LeadPlayerOptions.join('|')+']',
             permissionNode: PermissionId.Lead,
             minParams: 1,
         });

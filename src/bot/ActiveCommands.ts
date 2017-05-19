@@ -40,7 +40,7 @@ export { default as MarketNew } from './commands/MarketNew';
 export { default as MarketOffer } from './commands/MarketOffer';
 export { default as MarketList } from './commands/MarketList';
 export { default as MarketBuy } from './commands/MarketBuy';
-export { default as Lead } from './commands/Lead';
+export { default as Top } from './commands/Top';
 export { default as Interact } from './commands/Interact';
 export { default as BattleSkip } from './commands/BattleSkip';
 export { default as BattleRun } from './commands/BattleRun';

@@ -2,7 +2,7 @@ import { ServerResponse, ServerRequestData, ServerRequestReceiveBag } from '../S
 import ServerRequest from '../ServerRequest';
 import { SocketPlayerCharacter } from '../../../core/creature/player/PlayerCharacter';
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
-import { LeadPlayerOption } from '../../../bot/commands/Lead';
+import { LeadPlayerOption } from '../../../bot/commands/Top';
 
 export interface GetTopPlayersData extends ServerRequestData{
     type: LeadPlayerOption;
