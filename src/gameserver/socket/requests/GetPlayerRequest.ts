@@ -5,6 +5,7 @@ import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 
 export interface GetPlayerData extends ServerRequestData{
     uid: string;
+    expectedUsername?: string;
 }
 
 export interface GetPlayerResponse extends ServerResponse{
@@ -21,7 +22,7 @@ export default class GetPlayerRequest extends ServerRequest{
     }
 
     async receive(bag:ServerRequestReceiveBag,data:GetPlayerData):Promise<GetPlayerResponse>{
-        const player:PlayerCharacter = await bag.game.getPlayerCharacter(data.uid);
+        const player:PlayerCharacter = await bag.game.getPlayerCharacter(data.uid,data.expectedUsername);
 
         if(!player){
             return {

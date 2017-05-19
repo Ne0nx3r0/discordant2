@@ -60,6 +60,7 @@ import LootGenerator from "../../core/loot/LootGenerator";
 import { ITopPlayer } from '../socket/requests/GetTopPlayersRequest';
 import { LeadPlayerOption } from '../../bot/commands/Top';
 import { DBGetTopPlayers } from '../db/api/DBGetTopPlayers';
+import DBSetPlayerUsername from '../db/api/DBSetPlayerUsername';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -94,7 +95,7 @@ export default class Game {
         this.getClient = bag.getRandomClient;
     }
 
-    async getPlayerCharacter(uid:string):Promise<PlayerCharacter>{
+    async getPlayerCharacter(uid:string,expectedUsername?:string):Promise<PlayerCharacter>{
         let player = this.cachedPCs.get(uid);
 
         if(!player){
@@ -150,6 +151,12 @@ export default class Game {
             this.cachedPCs.set(player.uid,player);
         }
 
+        if(expectedUsername && player.title != expectedUsername){
+            await DBSetPlayerUsername(this.db,player.uid,expectedUsername);
+
+            player.title = expectedUsername;
+        }
+        
         return player;
     }
 

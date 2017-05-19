@@ -95,9 +95,10 @@ export default class SocketClientRequester{
         return request.send(this.sioc);
     }
 
-    getPlayer(playerUID:string):Promise<SocketPlayerCharacter>{
+    getPlayer(playerUID:string,expectedUsername?:string):Promise<SocketPlayerCharacter>{
         const request = new GetPlayerRequest({
-            uid: playerUID
+            uid: playerUID,
+            expectedUsername: expectedUsername
         });
 
         return request.send(this.sioc);

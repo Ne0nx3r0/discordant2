@@ -36,7 +36,14 @@ export default class Begin extends Command{
             return;
         }
 
-        const player = await bag.socket.getPlayer(tagUserId);
+        let player;
+
+        if(tagUserId == bag.message.author.id){
+            player = await bag.socket.getPlayer(tagUserId,bag.message.author.username);
+        }
+        else{
+            player = await bag.socket.getPlayer(tagUserId);
+        }
 
         if(!player){
             throw 'Player not found';
