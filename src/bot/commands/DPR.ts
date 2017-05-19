@@ -34,7 +34,7 @@ export default class DPR extends Command{
         const weapon = item as Weapon;
 
         const dprs = weapon.attacks.map(function(attack){
-            return attack.title+ ' - ' +Math.round(CalculateDamagePerRound(attack));
+            return attack.title+ ' - ' +CalculateDamagePerRound(attack);
         }).join('\n');
 
         bag.message.channel.sendMessage(`The DPRs for ${weapon.title}'s attacks are:\n${dprs}`);
