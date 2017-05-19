@@ -39,7 +39,7 @@ export const StoneAxe = new Weapon({
         }),
         new WeaponAttack({
             title: 'slam',
-            minBaseDamage: 50,
+            minBaseDamage: 40,
             maxBaseDamage: 70,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
