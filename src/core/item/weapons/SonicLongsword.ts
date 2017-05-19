@@ -13,6 +13,7 @@ export const SonicLongsword = new Weapon({
     title: 'Sonic Longsword',
     description: `A blade whose hilt generates an electric charge which is inflicted on enemies`,
     damageBlocked: 0.05,
+    chanceToCritical: 0.1,
     goldValue: 100,
     useRequirements:{
         agility: 20
@@ -20,8 +21,8 @@ export const SonicLongsword = new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'swing',
-            minBaseDamage: 10,
-            maxBaseDamage: 40,
+            minBaseDamage: 1,
+            maxBaseDamage: 30,
             damageType: DamageType.thunder,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.B,
