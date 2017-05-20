@@ -61,12 +61,8 @@ export const WesternGate2Events:IMapData = {
         {
             event: EventTileForagable('Fox',ItemId.Fox),
             coords: [
-                {x:8,y:16},
-                {x:9,y:16},
                 {x:8,y:17},
                 {x:9,y:17},
-                {x:17,y:18},
-                {x:17,y:19},
                 {x:18,y:18},
                 {x:18,y:19},
             ]
@@ -76,9 +72,7 @@ export const WesternGate2Events:IMapData = {
             coords: [
                 {x:10,y:21},
                 {x:11,y:21},
-                {x:23,y:3},
                 {x:24,y:3},
-                {x:23,y:4},
                 {x:24,y:4},
             ]
         },
@@ -96,9 +90,10 @@ export const WesternGate2Events:IMapData = {
                 lootGenerator: lootGenerator,
                 lootSettings:{
                     startingNode: 'common',
-                    chanceToGoUp: 0.5,   
-                    maxStepsUp: 1,                
-                }
+                    chanceToGenerate: 0.6,        
+                },
+                wishesMax: 40,
+                goldMax: 50,
             }),
             coords: [
                 {x:9,y:2},
@@ -112,13 +107,13 @@ export const WesternGate2Events:IMapData = {
             ],
         },
         {
-            event: EventTileWarp({}),
+            event: EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
             coords: [
-                {x:14,y:34},
+                {x:3,y:12},
             ],
         },
         {
-            event: EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
+            event: EventTileWarp({}),
             coords: [
                 {x:3,y:13},
             ],

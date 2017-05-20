@@ -16,6 +16,8 @@ interface EventTileLootableBag{
     lootSettings:IGenerateLootBag;
     onEnterMsg?:string;
     lootGenerator: LootGenerator;
+    wishesMax: number;
+    goldMax: number;
 }
 
 export function EventTileLootable(tileBag:EventTileLootableBag){
@@ -51,7 +53,7 @@ export function EventTileLootable(tileBag:EventTileLootableBag){
                         magicFind: mf,
                     });
 
-                    //no item generated, this player gets gold
+                    //Either they got an item, or we give them wishes or gold
                     if(lootItemId != null){
                         const item = bag.party.game.items.get(lootItemId);
 
@@ -61,18 +63,14 @@ export function EventTileLootable(tileBag:EventTileLootableBag){
                     }
                     else{
                         if(Math.random() < 0.2){
-                            const wishesBase = XPToLevel[member.level]/100;
-
-                            const wishesAmount = Math.round(wishesBase/2 + Math.random() * wishesBase / 2);
+                            const wishesAmount = Math.round(tileBag.wishesMax/2 + Math.random() * tileBag.wishesMax / 2);
 
                             lootLines.push(`${member.title} found ${wishesAmount} wishes`);                        
 
                             bag.party.game.grantPlayerWishes(member.uid,wishesAmount);
                         }
                         else{
-                            const goldBase = Math.round(XPToLevel[member.level]/10);
-
-                            const goldAmount = Math.round(goldBase/2 + Math.random() * goldBase / 2);
+                            const goldAmount = Math.round(tileBag.goldMax/2 + Math.random() * tileBag.goldMax / 2);
 
                             lootLines.push(`${member.title} found ${goldAmount} gold`);
 
