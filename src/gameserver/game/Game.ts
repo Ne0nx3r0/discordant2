@@ -374,6 +374,60 @@ export default class Game {
         return itemUnequippedId;
     }
 
+    async refreshPlayer(playerUid:string):Promise<void>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'That player is not registered yet';
+        }
+
+        const dbPlayer = await DBGetPlayerCharacter(this.db,pc.uid);
+
+        if(!dbPlayer){
+            throw `Player not found in DB but is in memory :thinking:`;
+        }
+console.log('doing it');
+        const inventory = new Map<number,InventoryItem>();
+
+        if(dbPlayer.inventory){
+            dbPlayer.inventory.forEach((item:DBInventoryItem)=>{
+                inventory.set(item.item_id,new InventoryItem(this.items.get(item.item_id),item.amount));
+            });
+        }
+
+        const pcInventory = new PlayerInventory(inventory);
+        
+        const equipment = {};
+
+        if(dbPlayer.equipment){
+            dbPlayer.equipment.forEach((item:DBEquipmentItem)=>{
+                equipment[item.slot] = this.items.get(item.item_id);
+            });
+        }
+
+        const pcEquipment = new CreatureEquipment(equipment);
+
+        pc.title = dbPlayer.username;
+        pc.level = dbPlayer.level;
+        pc.description = dbPlayer.description;
+        pc.attributes = new AttributeSet({
+            strength: dbPlayer.attribute_strength,
+            agility: dbPlayer.attribute_agility,
+            vitality: dbPlayer.attribute_vitality,
+            spirit: dbPlayer.attribute_spirit,
+            luck: dbPlayer.attribute_luck,
+        });
+        pc.class = CharacterClasses.get(dbPlayer.class);
+        pc.equipment = pcEquipment;
+        pc.inventory = pcInventory;
+        pc.gold = dbPlayer.gold;
+        pc.wishes = dbPlayer.wishes;
+        pc.role = this.permissions.getRole(dbPlayer.role);
+        pc.karma = dbPlayer.karma;
+
+        pc.updateStats();
+    }
+
     async equipCheck(player:PlayerCharacter):Promise<Array<ItemEquippable>>{
         const removedItems:Array<ItemEquippable> = [];
 

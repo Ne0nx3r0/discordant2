@@ -64,6 +64,7 @@ import SetPlayerDescriptionRequest from '../gameserver/socket/requests/SetPlayer
 import IsChannelInUseRequest from '../gameserver/socket/requests/IsChannelInUseRequest';
 import { LeadPlayerOption } from '../bot/commands/Top';
 import GetTopPlayersRequest from "../gameserver/socket/requests/GetTopPlayersRequest";
+import PlayerRefreshRequest from '../gameserver/socket/requests/PlayerRefreshRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -356,6 +357,13 @@ export default class SocketClientRequester{
         .send(this.sioc);
 
         return response.offers;
+    }
+
+    async refreshPlayer(playerUid:string):Promise<void>{
+        await new PlayerRefreshRequest({
+            uid: playerUid
+        })
+        .send(this.sioc);
     }
 
     async marketGetPlayerOffers(playerUid:string):Promise<Array<SocketActiveMarketOffer>>{
