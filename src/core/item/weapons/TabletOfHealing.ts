@@ -67,12 +67,12 @@ export const TabletOfHealing = new Weapon({
             chargesRequired: 1,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.B,
-            specialDescription: `Adds 10% to all target resistances for 20 rounds`,
+            specialDescription: `Adds 10 to all target resistances for 10 rounds`,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a legend aloud and blesses {defender}',
                     damageFunc: function(bag:DamageFuncBag){
-                        bag.battle.addTemporaryEffect(bag.defender.creature,EffectBless,20);
+                        bag.battle.addTemporaryEffect(bag.defender.creature,EffectBless,10);
 
                         return [];
                     }
