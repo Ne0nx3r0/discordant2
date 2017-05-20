@@ -333,10 +333,10 @@ export default class Game {
         const removedItems = await this.equipCheck(player);
 
         if(removedItems.length > 0){
-            throw 'Unable to complete your request, the following items were removed because you no longer meet their requirements: '
+            throw 'The following items were removed because you no longer meet their requirements: '
             +removedItems.map(function(item){
                 return item.title;
-            }).join(', ');
+            }).join(', ')+'\n\nYou can try to equip your item again now.';
         }
 
         const itemEquippable:ItemEquippable = itemBase as ItemEquippable;
