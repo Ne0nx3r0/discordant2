@@ -66,7 +66,7 @@ export const TabletOfHealing = new Weapon({
             isFriendly: true,
             chargesRequired: 1,
             scalingAttribute: Attribute.spirit,
-            scalingLevel: ScalingLevel.B,
+            scalingLevel: ScalingLevel.No,
             specialDescription: `Adds 10 to all target resistances for 10 rounds`,
             steps: [
                 new WeaponAttackStep({
