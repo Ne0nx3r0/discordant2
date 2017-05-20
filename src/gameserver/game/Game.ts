@@ -386,7 +386,7 @@ export default class Game {
         if(!dbPlayer){
             throw `Player not found in DB but is in memory :thinking:`;
         }
-console.log('doing it');
+        
         const inventory = new Map<number,InventoryItem>();
 
         if(dbPlayer.inventory){
