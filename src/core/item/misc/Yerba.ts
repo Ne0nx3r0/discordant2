@@ -10,7 +10,7 @@ import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 export const Yerba = new ItemUsable({
     id: ItemId.Yerba,
     title: 'Yerba',
-    description: '(During a battle: boosts VIT) Eriodictyon crassifolium, a shrub beloved by butterflies and other small bugs. When chewed it embues the chewer with a sense of bravery and purpose.',
+    description: '(During a battle: +50HP) Eriodictyon crassifolium, a shrub beloved by butterflies and other small bugs. When chewed it embues the chewer with a sense of bravery and purpose.',
     goldValue: 20,
     battleExhaustion: 1,
     canUse: function(user:PlayerCharacter){

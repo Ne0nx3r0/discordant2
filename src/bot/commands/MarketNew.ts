@@ -38,15 +38,15 @@ export default class MarketNew extends Command{
             return;
         }
 
-        let msg = `Newest for sale offers (Page ${page}):\n\n`;
+        let msg = `\`\`\`xml\nNewest items for sale (Page #${page})\n`;
 
         msg += marketOffers.map(function(offer){
             const offerSid = MarketOfferEncoder.encode(offer.id);
             const itemName = bag.items.get(offer.item).title;
 
-            return `${offerSid} ${itemName} ${offer.price}GP each (${offer.amountLeft} left, ${offer.price*offer.amountLeft}GP buyout)`;
+            return `< ${offerSid} - ${itemName} = ${offer.price}GP (${offer.amountLeft} left) >`;
         }).join('\n');
 
-        bag.message.channel.sendMessage(msg);
+        bag.message.channel.sendMessage(msg+'```');
     }
 }

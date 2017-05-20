@@ -48,9 +48,9 @@ export default class MarketList extends Command{
 
         const offers:Array<SocketActiveMarketOffer> = await bag.socket.marketGetPlayerOffers(tagUserId);
 
-        let msg = bag.message.author.id == tagUserId ? `Your` : shopPlayer.title+`'s`;
+        let msg = '```xml\n'+ (bag.message.author.id == tagUserId ? `Your` : shopPlayer.title+`'s`);
         
-        msg += ` shop offers\n\n`;
+        msg += ` shop offers\n`;
 
         if(offers == null){
             msg += 'No offers found';
@@ -59,10 +59,10 @@ export default class MarketList extends Command{
             msg += offers.map(function(offer){
                 const offerSid = MarketOfferEncoder.encode(offer.id);
 
-                return `${offerSid} ${offer.price}GP each (${offer.amountLeft} left, ${offer.price*offer.amountLeft}GP buyout)`;
+                return `< ${offerSid} - ${bag.items.get(offer.item).title} = ${offer.price}GP (${offer.amountLeft} left) >`;
             }).join('\n');
         }
 
-        bag.message.channel.sendMessage(msg);
+        bag.message.channel.sendMessage(msg+'```');
     }
 }
