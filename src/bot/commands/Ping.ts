@@ -5,9 +5,9 @@ import PermissionId from '../../core/permissions/PermissionId';
 export default class Pong extends Command{
     constructor(bag:CommandBag){
         super({
-            name: 'pong',
+            name: 'ping',
             description: 'Check bot response time',
-            usage: 'pong',
+            usage: 'ping',
             permissionNode: PermissionId.Ping,
             minParams: 0,
         });
