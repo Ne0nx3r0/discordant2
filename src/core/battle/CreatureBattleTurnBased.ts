@@ -507,14 +507,19 @@ export default class CreatureBattleTurnBased{
             }
             else{
                 const damageTypeStr = DamageType[wad.type];
-                const damageResisted = Math.round(wad.amount * wad.target.creature.stats.resistances[damageTypeStr]);
-                const damageTaken = wad.amount - damageResisted;
+                
+                const resistance = wad.target.creature.stats.resistances[damageTypeStr];
+                
+                const damageTaken = Math.max(wad.amount-resistance,Math.ceil(wad.amount * 0.1));
+
+                const damageResisted = wad.amount - damageTaken;
+
                 const resistedStr = damageResisted == 0 ? '' : `, resisted ${damageResisted}`;
 
                 defender.creature.hpCurrent -= Math.round(damageTaken);
 
                 damagesMsgs.push(
-                    `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${wad.amount} ${damageTypeStr.toUpperCase()} damage${resistedStr}`
+                    `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${damageTypeStr.toUpperCase()} damage${resistedStr}`
                 );
             }
  

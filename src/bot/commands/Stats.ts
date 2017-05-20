@@ -62,10 +62,10 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     +' '+pc.stats.luck+' Luck';
 
     const resistancesStr = ''
-    +'\n'+Math.floor(pc.stats.resistances.physical*100)+'% Physical'
-    +'\n'+Math.floor(pc.stats.resistances.fire*100)+'%'+' Fire'
-    +'\n'+Math.floor(pc.stats.resistances.acid*100)+'%'+' Acid'
-    +'\n'+Math.floor(pc.stats.resistances.thunder*100)+'% Thunder';
+    +'\n'+Math.floor(pc.stats.resistances.physical)+' Physical'
+    +'\n'+Math.floor(pc.stats.resistances.fire)+' Fire'
+    +'\n'+Math.floor(pc.stats.resistances.acid)+' Acid'
+    +'\n'+Math.floor(pc.stats.resistances.thunder)+' Thunder';
 
     function getEquipmentInSlot(slot:string){
         if(pc.equipment[slot]){
