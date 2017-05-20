@@ -51,7 +51,7 @@ export const StoneAxe = new Weapon({
                     damageFunc: DefaultDamageFunc,
                 }),
             ],
-            aiUseWeight: 0.9
+            aiUseWeight: 0.1
         }),
         new WeaponAttack({
             title: 'rage',
@@ -82,7 +82,7 @@ export const StoneAxe = new Weapon({
                     },
                 }),
             ],
-            aiUseWeight: 0.1
+            aiUseWeight: 0.0
         }),
     ]
 });

@@ -54,6 +54,7 @@ enum PermissionId{
     MarketBuy,
     Wish,
     Ping,
+    Refresh,
 }
 
 export default PermissionId;
