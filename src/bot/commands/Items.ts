@@ -1,32 +1,46 @@
 import Command, { CommandBag, CommandRunBag } from "../Command";
 import PermissionId from '../../core/permissions/PermissionId';
+import ItemBase from '../../core/item/ItemBase';
+import AllItems from '../../core/item/AllItems';
 
 export default class Items extends Command {
+    itemStrs:Array<string>;
+    
     constructor(bag:CommandBag){
         super({
             name: 'items',
-            description: 'List in-game items',
-            usage: 'item <itemName>',
+            description: 'List or search through in-game items',
+            usage: 'items [page#]',
             permissionNode: PermissionId.Items,
             minParams: 0,
+        });
+
+        const items = new AllItems();
+
+        this.itemStrs = [];
+
+        items.items.forEach((item)=>{
+            if(item.showInItems){
+                this.itemStrs.push('< '+item.title + ' = '+item.goldValue+'GP >');
+            }
+        });
+
+        this.itemStrs.sort(function(a,b){
+            return a.localeCompare(b);
         });
     }
 
     async run(bag:CommandRunBag){
-        const itemsList = [];
+        let page = parseInt(bag.params[0]);
 
-        bag.items.items.forEach(function(item){
-            if(item.showInItems){
-                itemsList.push(item.title);
-            }
-        });
+        if(isNaN(page)){
+            page = 1;
+        }
 
-        itemsList.sort(function(a,b){
-            return a.localeCompare(b);
-        });
+        const itemsListStr = this.itemStrs.slice(10 * (page-1), 10 * (page-1) + 9)
+        .join('\n');
 
-        const itemsListStr = itemsList.join(', ');
-
-        bag.message.channel.sendMessage(`Here are the known items: \n${itemsListStr}`);
+        bag.message.channel.sendMessage(`\`\`\`xml\nItem Title (Sell price) Page #${page}\n${itemsListStr}\n\`\`\``);
     }
 }
+
