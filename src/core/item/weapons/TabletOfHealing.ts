@@ -36,6 +36,10 @@ export const TabletOfHealing = new Weapon({
                     damageFunc: function(bag:DamageFuncBag){
                         let healAmount = Math.round((Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage);
 
+                        const scalingAttribute = Attribute[bag.step.attack.scalingAttribute];
+                        
+                        healAmount = DamageScaling.ByAttribute(healAmount,bag.attacker.creature.stats[scalingAttribute]);
+
                         if(bag.isCritical){
                             healAmount = healAmount * 2;
                         }
