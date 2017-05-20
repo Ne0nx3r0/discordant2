@@ -38,7 +38,7 @@ export default class MarketNew extends Command{
             return;
         }
 
-        let msg = `\`\`\`xml\nNewest items for sale (Page #${page})\n`;
+        let msg = `\`\`\`xml\nNewest items for sale (Page ${page})\n`;
 
         msg += marketOffers.map(function(offer){
             const offerSid = MarketOfferEncoder.encode(offer.id);

@@ -16,6 +16,7 @@ export const BareHands = new Weapon({
     damageBlocked: 0.01,
     useRequirements: {},//no use requirements
     chanceToCritical: 0.2,
+    showInItems: false,
     goldValue: 0,
     attacks: [
         new WeaponAttack({

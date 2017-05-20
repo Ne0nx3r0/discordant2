@@ -16,6 +16,7 @@ interface ItemWeaponBag{
     useRequirements:UseRequirements;
     attacks:Array<WeaponAttack>;    
     onAddBonuses?:OnAddBonusesHandler;
+    showInItems?:boolean;
 }
 
 export default class Weapon extends ItemEquippable{
@@ -32,6 +33,7 @@ export default class Weapon extends ItemEquippable{
             goldValue: bag.goldValue,
             useRequirements: bag.useRequirements,
             onAddBonuses: bag.onAddBonuses,
+            showInItems: bag.showInItems,
             slotType:'weapon'//also offhand, but for slot type they are all primary
         });
 
