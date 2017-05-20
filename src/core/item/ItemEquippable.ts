@@ -48,4 +48,16 @@ export default class ItemEquippable extends ItemBase{
 
         this.useRequirements = bag.useRequirements || {};
     }
+
+    canEquip(creature:Creature){
+        for(var useRequirement in this.useRequirements){
+            const requirementAmount = this.useRequirements[useRequirement];
+
+            if(creature.stats[useRequirement] < requirementAmount){
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

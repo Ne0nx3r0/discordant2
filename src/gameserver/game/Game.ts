@@ -61,6 +61,7 @@ import { ITopPlayer } from '../socket/requests/GetTopPlayersRequest';
 import { LeadPlayerOption } from '../../bot/commands/Top';
 import { DBGetTopPlayers } from '../db/api/DBGetTopPlayers';
 import DBSetPlayerUsername from '../db/api/DBSetPlayerUsername';
+import SendPMClientRequest from '../../client/requests/SendPMClientRequest';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -328,6 +329,16 @@ export default class Game {
             throw `${itemBase.title} is not equippable`;
         }
 
+        //check if they have any "illegal" equips
+        const removedItems = await this.equipCheck(player);
+
+        if(removedItems.length > 0){
+            throw 'Unable to complete your request, the following items were removed because you no longer meet their requirements: '
+            +removedItems.map(function(item){
+                return item.title;
+            }).join(', ');
+        }
+
         const itemEquippable:ItemEquippable = itemBase as ItemEquippable;
 
         for(var useRequirement in itemEquippable.useRequirements){
@@ -361,6 +372,21 @@ export default class Game {
         player.updateStats();
 
         return itemUnequippedId;
+    }
+
+    async equipCheck(player:PlayerCharacter):Promise<Array<ItemEquippable>>{
+        const removedItems:Array<ItemEquippable> = [];
+
+        for(const slot in player.equipment._items){
+            const item = player.equipment[slot];
+
+            if(!item.canEquip(player)){
+                await this.unequipPlayerItem(player.uid,slot as EquipmentSlot);
+                removedItems.push(item);
+            }
+        }
+
+        return removedItems;
     }
 
     async unequipPlayerItem(uid:string,slot:EquipmentSlot):Promise<number>{
