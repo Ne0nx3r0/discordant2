@@ -19,10 +19,9 @@ export const EffectBless = new BattleTemporaryEffect({
         effectBag.sendBattleEmbed([`-${effectBag.target.title}'s blessing wore off`]);
     },
     onAddBonuses:function(stats){
-        stats.resistances.physical += 0.1;
-        stats.resistances.fire += 0.1;
-        stats.resistances.thunder += 0.1;
-        stats.resistances.chaos += 0.1;
-        stats.resistances.acid += 0.1;
+        stats.resistances.physical += 10;
+        stats.resistances.fire += 10;
+        stats.resistances.thunder += 10;
+        stats.resistances.acid += 10;
     }
 });
