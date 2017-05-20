@@ -35,48 +35,11 @@ export const TabletOfFire = new Weapon({
                     attackMessage: '{attacker} reads a healing legend outloudand launches a blaze of fire at {defender}',
                     damageFunc: function(bag:DamageFuncBag){
                         let fireAmount = (Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage;
-/*
-                        const extraChargesConsumed = bag.attacker.charges;
 
-                        bag.attacker.charges = 0;
+                        const scalingAttribute = Attribute[bag.step.attack.scalingAttribute];
 
-                        const baseModifier = extraChargesConsumed * 0.1;
-                        const totalModifier = baseModifier * extraChargesConsumed;
-
-                        switch(extraChargesConsumed){
-                            case 0:
+                        fireAmount = DamageScaling.ByAttribute(fireAmount,bag.attacker.creature.stats[scalingAttribute]);
                         
-                            break;
-                            case 1:
-                                fireAmount = fireAmount * 2.2;
-                            break;
-                            case 2:
-                                fireAmount = fireAmount * 3.6;
-                            break;
-                            case 3:
-                                fireAmount = fireAmount * 5.2;
-                            break;
-                            case 4:
-                                fireAmount = fireAmount * 6.4;
-                            break;
-                            case 5: 
-                                fireAmount = fireAmount * 8;
-                            break;
-                            case 6: 
-                                fireAmount = fireAmount * 10;
-                            break;
-                            case 7: 
-                                fireAmount = fireAmount * 12;
-                            break;
-                            default: //8+
-                                fireAmount = fireAmount * 14;
-
-                                //give some back since we max at 8 (+2 taken already)
-                                if(extraChargesConsumed > 8){
-                                    bag.attacker.charges = extraChargesConsumed - 8;
-                                }
-                        }*/
-
                         if(bag.isCritical){
                             fireAmount = fireAmount * 2;
                         }
