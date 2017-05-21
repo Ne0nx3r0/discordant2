@@ -231,7 +231,17 @@ export default class PlayerParty{
             this.sendCurrentMapImageFile(this.partyPlural('You survived!','Your party survived!'));
         }
         else{
-            this.sendChannelMessage('Your party was defeated!');
+            let wishesLostStr = '';
+
+            this.members.forEach((member)=>{
+                const wishesLost = Math.round( Math.random() * (member.wishes*0.25) + (member.wishes*0.25) );
+
+                this.game.grantPlayerWishes(member.uid,wishesLost);
+
+                wishesLostStr += '\n'+member.title+' lost '+wishesLost+' wishes';
+            });
+
+            this.sendChannelMessage('Your party was defeated!\n'+wishesLostStr);
 
             setTimeout(()=>{
                 this.playerActionDisband();

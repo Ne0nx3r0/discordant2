@@ -6,7 +6,7 @@ import ItemId from '../../../src/core/item/ItemId';
 import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable";
 import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
 import { EventTileMap } from "../../../src/core/map/tiles/EventTileMap";
-import { MapNorthernSteppes } from "../../../src/core/item/ItemsIndex";
+import { NorthernSteppesMapPiece } from "../../../src/core/item/ItemsIndex";
 import { EventTileWarp } from "../../../src/core/map/tiles/EventTilePortal";
 import LootGenerator from '../../../src/core/loot/LootGenerator';
 
