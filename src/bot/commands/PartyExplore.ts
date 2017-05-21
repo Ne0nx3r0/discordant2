@@ -42,7 +42,7 @@ export default class PartyExplore extends Command{
             }
         }
         else{
-            await bag.socket.setPartyExploring(bag.message.author.id,'Western Gate');
+            await bag.socket.setPartyExploring(bag.message.author.id,'WESTERN GATE');
         }
     }
 }

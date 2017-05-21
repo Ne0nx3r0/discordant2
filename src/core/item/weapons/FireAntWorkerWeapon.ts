@@ -28,18 +28,37 @@ export const FireAntWorkerWeapon = new Weapon({
                     damageFunc: DefaultDamageFunc,
                 })
             ],
-            aiUseWeight: 0.6
+            aiUseWeight: 0.8
+        }),
+        new WeaponAttack({
+            title: 'flame',
+            minBaseDamage: 20,
+            maxBaseDamage: 40,
+            damageType: DamageType.fire,
+            scalingAttribute: Attribute.agility,
+            scalingLevel: ScalingLevel.No,
+            steps: [
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} sprays fire at {defender}',
+                    damageFunc: DefaultDamageFunc,
+                }),
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} recovers from their attack',
+                    damageFunc: function(){return [];},
+                })
+            ],
+            aiUseWeight: 0.4
         }),
         new WeaponAttack({
             title: 'heal',
             minBaseDamage: 10,
-            maxBaseDamage: 30,
+            maxBaseDamage: 20,
             damageType: DamageType.healing,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} recovers some HP using stored nutrients',
+                    attackMessage: '{attacker} recovers its health using stored nutrients',
                     damageFunc: function(bag){
                         const minDamage = bag.step.attack.minBaseDamage;
                         const maxDamage = bag.step.attack.maxBaseDamage;
@@ -53,7 +72,7 @@ export const FireAntWorkerWeapon = new Weapon({
                     },
                 })
             ],
-            aiUseWeight: 0.4
+            aiUseWeight: 0.2
         })
     ]
 });

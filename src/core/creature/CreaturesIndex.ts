@@ -5,3 +5,4 @@ export { default as GoblinSneak } from './monsters/GoblinSneak';
 export { default as GoblinChief } from './monsters/GoblinChief';
 export { default as FireAntSoldier } from './monsters/FireAntSoldier';
 export { default as FireAntWorker } from './monsters/FireAntWorker';
+export { default as FireAntMite } from './monsters/FireAntWorker';

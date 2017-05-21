@@ -786,7 +786,7 @@ export default class Game {
         return this.mapUrlCache.getSliceRemoteUrl(imageSrc);
     }
 
-    //returns true if a map piece item was consumed
+    //returns the item id of an item that was consumed to access the map
     async setPartyExploring(leaderUid:string,mapName:string):Promise<ItemId>{
         const player = await this.getPlayerCharacter(leaderUid);
 
@@ -806,17 +806,19 @@ export default class Game {
 
         const map:ExplorableMap = WorldMaps[mapName];
 
-        if(!map.mapItem || !player.inventory.hasItem(map.mapItem,1)){
-            party.explore(map);
+        if(map){
+            if(!map.mapItem || player.inventory.hasItem(map.mapItem,1)){
+                party.explore(map);
 
-            return null;
-        } 
-        else if(map.pieceItem ||player.inventory.hasItem(map.pieceItem,1)){
-            await this.takePlayerItem(player.uid,map.pieceItem.id,1);
+                return null;
+            } 
+            else if(map.pieceItem && player.inventory.hasItem(map.pieceItem,1)){
+                await this.takePlayerItem(player.uid,map.pieceItem.id,1);
 
-            party.explore(map);
+                party.explore(map);
 
-            return map.pieceItem.id;
+                return map.pieceItem.id;
+            }
         }
 
         throw `The map doesn't exist or you don't have an item to access it`;

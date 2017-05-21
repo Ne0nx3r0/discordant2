@@ -22,8 +22,8 @@ const MapRedForest = new ExplorableMap({
 });
 
 const WorldMaps = {
-    'Red Forest': MapRedForest,
-    'Western Gate': MapWesternGate,
+    'RED FOREST': MapRedForest,
+    'WESTERN GATE': MapWesternGate,
 };
 
 export {

@@ -14,7 +14,7 @@ export const lootGenerator = new LootGenerator();
 
 export const RedForestEvents:IMapData = {
     startX: 26,
-    startY: 20,
+    startY: 19,
     encounterChance: 0.2,
     encounters:[
         { id:CreatureId.FireAntMite,    weight: 0.3 },
