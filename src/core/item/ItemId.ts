@@ -22,7 +22,7 @@ enum ItemId {
     StoneDagger,
     AlphaKey,
     Tent,
-    MapNorthernSteppes,
+    NorthernSteppesMapPiece,
     RingOfFortune,
     WornLeatherHelmet,
     RingOfHealth,

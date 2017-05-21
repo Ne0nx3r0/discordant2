@@ -19,7 +19,7 @@ export { Acai } from './misc/Acai';
 export { Fox } from './misc/Fox';
 export { AlphaKey } from './misc/AlphaKey';
 export { Tent } from './misc/Tent';
-export { MapNorthernSteppes } from './misc/MapNorthernSteppes';
+export { NorthernSteppesMapPiece } from './misc/NorthernSteppesMapPiece';
 export { RingOfFortune } from './jewelry/RingOfFortune';
 export { RingOfAgility } from './jewelry/RingOfAgility';
 export { RingOfStrength } from './jewelry/RingOfStrength';

@@ -5,7 +5,10 @@ export function EventTileForagable(title:string,itemId:ItemId){
     return new EventTile({
         onEnter: function(bag){
             if(bag.runCount == 0){
-                bag.sendPartyMessage(`There's a small patch of ${title} shrubs.`);
+                bag.sendPartyMessage(`There's a small patch of ${title} shrubs`);
+            }
+            else{
+                bag.sendPartyMessage(`The remains of an epic battle`);
             }
         },
         onInteract: function(bag){
