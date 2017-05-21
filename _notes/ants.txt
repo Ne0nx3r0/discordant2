@@ -1,0 +1,21 @@
+mite
+- steal hp attack
+
+drone
+-weak standard fire attack
+
+worker
+-weak fire attack
+-heal self effect
+
+soldier
+-strong fire attack
+-explode
+
+infected
+-strong physical attack
+-spread infection (vitality -1 each turn)
+
+queen
+- battle effect (worker damages player a small amount)
+- battle effect (ups resistance)
