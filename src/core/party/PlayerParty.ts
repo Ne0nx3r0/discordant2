@@ -340,6 +340,10 @@ export default class PlayerParty{
             throw 'Party leaders cannot leave, they must disband the party';
         }
 
+        if(this.partyStatus == PartyStatus.Battling){
+            throw 'You can\'t leave during a battle!';
+        }
+
         this.members.delete(pc.uid);
 
         pc.party = null;
@@ -352,6 +356,10 @@ export default class PlayerParty{
     }
 
     playerActionDisband(){
+        if(this.partyStatus == PartyStatus.Battling){
+            throw 'You can\'t disband during a battle!';
+        }
+
         const members:Array<PlayerCharacter> = [];
 
         this.members.forEach(function(pc){
