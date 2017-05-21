@@ -25,8 +25,8 @@ export default class Shop extends Command{
             }
         });
 
-        bag.message.channel.sendMessage(`The town shop has these items for sale:\n\n`+forSaleItems.map(function(item){
-            return item.title + ' - ' + item.buyCost + 'GP';
-        }).join('\n'));
+        bag.message.channel.sendMessage(`\`\`\`xml\nTown shop has these items for sale:\n`+forSaleItems.map(function(item){
+            return '< '+item.title + ' = ' + item.buyCost + 'GP >';
+        }).join('\n')+'```');
     }
 }
