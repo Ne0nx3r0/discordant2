@@ -30,6 +30,13 @@ export default class PartyExplore extends Command{
             throw 'Your party is at <#'+pc.partyChannelId+'>';
         }
 
-        await bag.socket.setPartyExploring(bag.message.author.id);
+        if(bag.params.length > 0){
+            const mapName = bag.params.join(' ').toUpperCase();
+
+            await bag.socket.setPartyExploring(bag.message.author.id,mapName);
+        }
+        else{
+            await bag.socket.setPartyExploring(bag.message.author.id,'Western Gate');
+        }
     }
 }

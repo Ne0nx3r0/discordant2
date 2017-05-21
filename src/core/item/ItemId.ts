@@ -22,7 +22,7 @@ enum ItemId {
     StoneDagger,
     AlphaKey,
     Tent,
-    NorthernSteppesMapPiece,
+    RedForestMapPiece,
     RingOfFortune,
     WornLeatherHelmet,
     RingOfHealth,
@@ -30,6 +30,7 @@ enum ItemId {
     RingOfAgility,
     Dagger,    
     TabletOfFire,
+    RedForestMap,
 }
 
 export default ItemId;

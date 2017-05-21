@@ -21,6 +21,10 @@ export default class PartyNew extends Command{
     async run(bag:CommandRunBag){
         const player = await bag.socket.getPlayer(bag.message.author.id);
 
+        if(player.status == 'inParty'){
+            throw `You are already in a party at <#${player.partyChannelId}?`;
+        }
+
         if(player.status != 'inCity'){
             throw 'You cannot create a party now';
         }

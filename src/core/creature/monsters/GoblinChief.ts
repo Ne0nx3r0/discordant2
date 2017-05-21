@@ -5,7 +5,7 @@ import { BareHands, HandAxe, WornLeathers, WoodShield, StoneDagger, HuntingSword
 import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
 import PlayerParty from "../../party/PlayerParty";
-import { WesternGate2Map, WesternGate2LootMap } from "../../map/Maps";
+import { MapWesternGate } from "../../map/Maps";
 import { StoneAxe } from '../../item/weapons/StoneAxe';
 
 export default class GoblinSoldier extends CreatureAIControlled{
@@ -25,12 +25,7 @@ export default class GoblinSoldier extends CreatureAIControlled{
                 armor: WornLeathers,
                 weapon: StoneAxe,
             }),
-            wishesDropped: 100,
-            onDefeated: function(bag){
-                bag.party.sendChannelMessage(`After defeating the chief you discover a trap door leading to the chief's lair`); 
-
-                bag.party.explore(WesternGate2LootMap);
-            }
+            wishesDropped: 100
         });
     }
 }

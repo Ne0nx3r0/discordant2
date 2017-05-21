@@ -26,7 +26,7 @@ import { IGetRandomClientFunc } from '../socket/SocketServer';
 import PlayerParty, { PartyStatus } from "../../core/party/PlayerParty";
 import AllCreaturesAIControlled from "../../core/creature/AllCreaturesAIControlled";
 import MapUrlCache from '../../core/map/MapUrlCache';
-import { WesternGate2Map } from "../../core/map/Maps";
+import { MapWesternGate } from "../../core/map/Maps";
 import { PartyMoveDirection } from "../../core/party/PartyExploringMap";
 import { WishType } from '../socket/requests/LevelUpRequest';
 import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
@@ -801,7 +801,7 @@ export default class Game {
             throw 'Only the party leader can direct the party!';
         }
 
-        party.explore(WesternGate2Map);
+        party.explore(MapWesternGate);
     }
 
     async interactWithCurrentTile(playerUid:string){
