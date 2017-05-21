@@ -45,8 +45,8 @@ interface IExplorableMapBag{
     title:string;
     mapJson:MapJson;
     mapData:IMapData;
-    pieceItem: ItemBase;
-    mapItem: ItemBase;
+    pieceItem?: ItemBase;
+    mapItem?: ItemBase;
 }
 
 export default class ExplorableMap{

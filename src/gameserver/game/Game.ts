@@ -806,12 +806,12 @@ export default class Game {
 
         const map:ExplorableMap = WorldMaps[mapName];
 
-        if(!player.inventory.hasItem(map.mapItem,1)){
+        if(!map.mapItem || !player.inventory.hasItem(map.mapItem,1)){
             party.explore(map);
 
             return null;
         } 
-        else if(player.inventory.hasItem(map.pieceItem,1)){
+        else if(map.pieceItem ||player.inventory.hasItem(map.pieceItem,1)){
             await this.takePlayerItem(player.uid,map.pieceItem.id,1);
 
             party.explore(map);

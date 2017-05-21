@@ -10,8 +10,6 @@ const MapWesternGate = new ExplorableMap({
     title: 'Western Gate',
     mapJson: require('../../../assets/maps/WesternGate2/WesternGate2Layout.json'),
     mapData: WesternGate2Events,
-    pieceItem: null,
-    mapItem: null
 });
 
 const MapRedForest = new ExplorableMap({
