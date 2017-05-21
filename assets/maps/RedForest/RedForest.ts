@@ -12,23 +12,9 @@ import LootGenerator from '../../../src/core/loot/LootGenerator';
 
 export const lootGenerator = new LootGenerator();
 
-lootGenerator.addLootItem('common',ItemId.HuntingSword,0.25);
-lootGenerator.addLootItem('common',ItemId.HandAxe,0.25);
-lootGenerator.addLootItem('common',ItemId.WornLeathers,0.4);
-lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.4);
-lootGenerator.addLootItem('common',ItemId.WoodShield,0.4);
-lootGenerator.addLootItem('common',ItemId.Vial,1);
-
-
-lootGenerator.addLootItem('rare',ItemId.RingOfAgility,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfHealth,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfStrength,0.1);
-lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
-lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
-
-export const WesternGate2Events:IMapData = {
+export const RedForestEvents:IMapData = {
     startX: 26,
-    startY: 22,
+    startY: 20,
     encounterChance: 0.2,
     encounters:[
         { id:CreatureId.Goblin,        weight:0.4 },
@@ -39,55 +25,41 @@ export const WesternGate2Events:IMapData = {
         {
             event: EventTileForagable('Acai',ItemId.Acai),
             coords: [
-                {x:20,y:24},
-                {x:19,y:24},
-                {x:20,y:13},
-                {x:21,y:13},
-                {x:4,y:3},
-                {x:5,y:3},
-                {x:6,y:4},
-                {x:2,y:8},
-                {x:2,y:9},
+                {x:3,y:3},
+                {x:3,y:4},
+                {x:3,y:5},
+                {x:32,y:2},
+                {x:33,y:2},
             ]
         },
         {
             event: EventTileForagable('Bane',ItemId.Bane),
             coords: [
-                {x:12,y:4},
-                {x:12,y:5},
-                {x:13,y:4},
-                {x:13,y:5},
-                {x:3,y:23},
-                {x:4,y:23},
-                {x:3,y:24},
-                {x:4,y:24},
+                {x:15,y:11},
+                {x:15,y:12},
+                {x:16,y:11},
+                {x:16,y:12},
             ]
         },
         {
             event: EventTileForagable('Fox',ItemId.Fox),
             coords: [
-                {x:8,y:17},
-                {x:9,y:17},
-                {x:18,y:18},
-                {x:18,y:19},
+                {x:4,y:12},
+                {x:5,y:12},
             ]
         },
         {
             event: EventTileForagable('Sage',ItemId.Sage),
             coords: [
-                {x:10,y:21},
-                {x:11,y:21},
-                {x:24,y:3},
-                {x:24,y:4},
+                {x:17,y:7},
+                {x:18,y:7},
             ]
         },
         {
             event: EventTileForagable('Yerba',ItemId.Yerba),
             coords: [
-                {x:7,y:9},
-                {x:8,y:9},
-                {x:7,y:10},
-                {x:8,y:10},
+                {x:37,y:19},
+                {x:38,y:19},
             ]
         },
         {
@@ -97,23 +69,20 @@ export const WesternGate2Events:IMapData = {
                     startingNode: 'common',
                     chanceToGenerate: 0.6,        
                 },
-                wishesMax: 40,
-                goldMax: 50,
+                wishesMax: 60,
+                goldMax: 100,
             }),
             coords: [
-                {x:9,y:2},
-                {x:19,y:2},
-                {x:26,y:7},
-                {x:14,y:9},
-                {x:14,y:12},
-                {x:2,y:18},
-                {x:12,y:24},
-                {x:25,y:18},
+                {x:3,y:10},
+                {x:9,y:6},
+                {x:8,y:18},
+                {x:39,y:14},
+                {x:28,y:2},
             ],
         },
         {
             event: EventTileLootable({
-                onEnterMsg: `A selection of items the goblin hoard has stolen from travelers`,
+                onEnterMsg: `Items imbued with the essence of the fire ants`,
                 lootGenerator: lootGenerator,
                 lootSettings:{
                     startingNode: 'rare',   
@@ -123,19 +92,19 @@ export const WesternGate2Events:IMapData = {
                 goldMax: 100,
             }),
             coords: [
-                {x:3,y:13},
+                {x:13,y:2},
             ],
         },
         {
-            event: EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
+            event: EventTileMonster(`You've found the queen of the fire ants!`,CreatureId.GoblinChief),
             coords: [
-                {x:3,y:12},
+                {x:14,y:2},
             ],
         },
         {
-            event: EventTileWarp({}),
+            event: EventTileMonster(`You've found a fire ant royal guard!`,CreatureId.GoblinChief),
             coords: [
-                {x:2,y:13},
+                {x:14,y:2},
             ],
         },
     ]

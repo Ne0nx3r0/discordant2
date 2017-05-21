@@ -5,6 +5,11 @@ enum CreatureId{
     GoblinSoldier,
     GoblinSneak,
     GoblinChief,
+    FireAntDrone,
+    FireAntWorker,
+    FireAntSoldier,
+    FireAntRoyalGuard,
+    FireAntQueen,
 }
 
 export default CreatureId;
