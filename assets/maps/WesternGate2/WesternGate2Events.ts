@@ -14,12 +14,17 @@ export const lootGenerator = new LootGenerator();
 
 lootGenerator.addLootItem('common',ItemId.HuntingSword,0.25);
 lootGenerator.addLootItem('common',ItemId.HandAxe,0.25);
-
 lootGenerator.addLootItem('common',ItemId.WornLeathers,0.4);
 lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.4);
 lootGenerator.addLootItem('common',ItemId.WoodShield,0.4);
-
 lootGenerator.addLootItem('common',ItemId.Vial,1);
+
+
+lootGenerator.addLootItem('rare',ItemId.RingOfAgility,0.1);
+lootGenerator.addLootItem('rare',ItemId.RingOfHealth,0.1);
+lootGenerator.addLootItem('rare',ItemId.RingOfStrength,0.1);
+lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
+lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
 
 export const WesternGate2Events:IMapData = {
     startX: 26,
@@ -107,15 +112,32 @@ export const WesternGate2Events:IMapData = {
             ],
         },
         {
+            event: EventTileLootable({
+                onEnterMsg: `A selection of items the goblin hoard has stolen from travelers`,
+                lootGenerator: lootGenerator,
+                lootSettings:{
+                    startingNode: 'rare',   
+                    chanceToGenerate: 1,   
+                },
+                wishesMax: 100,
+                goldMax: 100,
+            }),
+            coords: [
+                {x:3,y:13},
+            ],
+        },
+        {
             event: EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
             coords: [
                 {x:3,y:12},
             ],
         },
         {
-            event: EventTileWarp({}),
+            event: EventTileWarp({
+                toMap: RedForest
+            }),
             coords: [
-                {x:3,y:13},
+                {x:2,y:13},
             ],
         },
     ]
