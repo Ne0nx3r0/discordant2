@@ -1,12 +1,9 @@
 mite
 - steal hp attack
 
-drone
--weak standard fire attack
-
 worker
 -weak fire attack
--heal self effect
+-heal self effecst
 
 soldier
 -strong fire attack

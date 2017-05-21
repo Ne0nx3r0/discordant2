@@ -2,13 +2,15 @@ import { ServerResponse, ServerRequestData, ServerRequestReceiveBag } from '../S
 import ServerRequest from '../ServerRequest';
 import { SocketPlayerCharacter } from '../../../core/creature/player/PlayerCharacter';
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
+import ItemId from '../../../core/item/ItemId';
 
 export interface SetPartyExploringData extends ServerRequestData{
     uid: string;
+    map: string;
 }
 
 export interface SetPartyExploringResponse extends ServerResponse{
-
+    consumedItem: ItemId;
 }
 
 export default class SetPartyExploringRequest extends ServerRequest{
@@ -16,15 +18,16 @@ export default class SetPartyExploringRequest extends ServerRequest{
         super('SetPartyExploring',data);
     }
 
-    async send(sioc:SocketIOClient.Socket):Promise<void>{
-        await this._send(sioc) as SetPartyExploringResponse;
+    async send(sioc:SocketIOClient.Socket):Promise<SetPartyExploringResponse>{
+        return await this._send(sioc) as SetPartyExploringResponse;
     }
 
     async receive(bag:ServerRequestReceiveBag,data:SetPartyExploringData):Promise<SetPartyExploringResponse>{
-        await bag.game.setPartyExploring(data.uid);
+        const itemIdConsumed = await bag.game.setPartyExploring(data.uid,data.map);
 
         return {
             success: true,
+            consumedItem: itemIdConsumed,
         };
     }
 }

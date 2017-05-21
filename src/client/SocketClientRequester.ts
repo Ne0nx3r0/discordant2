@@ -65,6 +65,7 @@ import IsChannelInUseRequest from '../gameserver/socket/requests/IsChannelInUseR
 import { LeadPlayerOption } from '../bot/commands/Top';
 import GetTopPlayersRequest from "../gameserver/socket/requests/GetTopPlayersRequest";
 import PlayerRefreshRequest from '../gameserver/socket/requests/PlayerRefreshRequest';
+import ItemId from '../core/item/ItemId';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -238,11 +239,14 @@ export default class SocketClientRequester{
         return request.send(this.sioc);
     }
     
-    setPartyExploring(leaderUid:string):Promise<void>{
-        return new SetPartyExploringRequest({
-            uid:leaderUid
+    async setPartyExploring(leaderUid:string,mapName:string):Promise<ItemId>{
+        const response = await new SetPartyExploringRequest({
+            uid: leaderUid,
+            map: mapName,
         })
         .send(this.sioc);
+
+        return response.consumedItem;
     }
 
     invitePlayerToJoinParty(leaderUid:string,invitedUid:string):Promise<void>{

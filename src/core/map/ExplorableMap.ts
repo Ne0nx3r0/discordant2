@@ -1,5 +1,7 @@
 import EventTile from "./EventTile";
 import { IMapData } from './IMapData';
+import ItemId from '../item/ItemId';
+import ItemBase from '../item/ItemBase';
 
 interface StartingPoint {
     x:number;
@@ -38,6 +40,15 @@ interface MapDataJson{
     portals:Array<MapDataTrigger>;
 }
 
+interface IExplorableMapBag{
+    fileName:string;
+    title:string;
+    mapJson:MapJson;
+    mapData:IMapData;
+    pieceItem: ItemBase;
+    mapItem: ItemBase;
+}
+
 export default class ExplorableMap{
     fileName:string;
     title:string;
@@ -45,12 +56,16 @@ export default class ExplorableMap{
     mapJson:MapJson;
     mapData:IMapData;
     eventTiles:Map<string,EventTile>;
+    pieceItem: ItemBase;
+    mapItem: ItemBase;
 
-    constructor(fileName:string,title:string,mapJson:MapJson,mapData:IMapData){
-        this.fileName = fileName;
-        this.title = title;
-        this.mapJson = mapJson;
-        this.mapData = mapData;
+    constructor(bag:IExplorableMapBag){
+        this.fileName = bag.fileName;
+        this.title = bag.title;
+        this.mapJson = bag.mapJson;
+        this.mapData = bag.mapData;
+        this.mapItem = bag.mapItem;
+        this.pieceItem = bag.pieceItem;
         
         for(var i=0;i<this.mapJson.layers.length;i++){
             const layer = this.mapJson.layers[i];
@@ -67,7 +82,7 @@ export default class ExplorableMap{
 
         this.eventTiles = new Map();
 
-        mapData.eventTiles.forEach((mapEventTile)=>{
+        bag.mapData.eventTiles.forEach((mapEventTile)=>{
             mapEventTile.coords.forEach((coords)=>{
                 this.eventTiles.set(coords.x+'-'+coords.y,mapEventTile.event);
             });

@@ -32,6 +32,9 @@ enum ItemId {
     TabletOfFire,
     RedForestMap,
     FireAntMiteWeapon,
+    FireAntWorkerWeapon,
+    FireAntSoldierWeapon,
+    FireAntCarapace,
 }
 
 export default ItemId;

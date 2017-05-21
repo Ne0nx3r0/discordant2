@@ -6,7 +6,7 @@ import ItemId from '../../../src/core/item/ItemId';
 import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable";
 import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
 import { EventTileMap } from "../../../src/core/map/tiles/EventTileMap";
-import { NorthernSteppesMapPiece } from "../../../src/core/item/ItemsIndex";
+import { RedForestMapPiece } from "../../../src/core/item/ItemsIndex";
 import { EventTileWarp } from "../../../src/core/map/tiles/EventTilePortal";
 import LootGenerator from '../../../src/core/loot/LootGenerator';
 
@@ -17,9 +17,9 @@ export const RedForestEvents:IMapData = {
     startY: 20,
     encounterChance: 0.2,
     encounters:[
-        { id:CreatureId.Goblin,        weight:0.4 },
-        { id:CreatureId.GoblinSoldier, weight:0.1 },
-        { id:CreatureId.GoblinSneak,   weight:0.1 },
+        { id:CreatureId.FireAntMite,    weight: 0.3 },
+        { id:CreatureId.FireAntWorker,  weight: 0.3 },
+        { id:CreatureId.FireAntSoldier, weight: 0.1 },
     ],
     eventTiles: [
         {

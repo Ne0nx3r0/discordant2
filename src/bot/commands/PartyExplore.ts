@@ -33,7 +33,13 @@ export default class PartyExplore extends Command{
         if(bag.params.length > 0){
             const mapName = bag.params.join(' ').toUpperCase();
 
-            await bag.socket.setPartyExploring(bag.message.author.id,mapName);
+            const itemIdConsumed = await bag.socket.setPartyExploring(bag.message.author.id,mapName);
+            
+            if(itemIdConsumed){
+                const itemConsumed = bag.items.get(itemIdConsumed);
+
+                bag.message.channel.sendMessage(`A ${itemConsumed.title} was consumed`);
+            }
         }
         else{
             await bag.socket.setPartyExploring(bag.message.author.id,'Western Gate');

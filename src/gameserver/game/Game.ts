@@ -26,7 +26,7 @@ import { IGetRandomClientFunc } from '../socket/SocketServer';
 import PlayerParty, { PartyStatus } from "../../core/party/PlayerParty";
 import AllCreaturesAIControlled from "../../core/creature/AllCreaturesAIControlled";
 import MapUrlCache from '../../core/map/MapUrlCache';
-import { MapWesternGate } from "../../core/map/Maps";
+import { MapWesternGate, WorldMaps } from "../../core/map/Maps";
 import { PartyMoveDirection } from "../../core/party/PartyExploringMap";
 import { WishType } from '../socket/requests/LevelUpRequest';
 import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
@@ -62,6 +62,8 @@ import { LeadPlayerOption } from '../../bot/commands/Top';
 import { DBGetTopPlayers } from '../db/api/DBGetTopPlayers';
 import DBSetPlayerUsername from '../db/api/DBSetPlayerUsername';
 import SendPMClientRequest from '../../client/requests/SendPMClientRequest';
+import ExplorableMap from '../../core/map/ExplorableMap';
+import ItemId from '../../core/item/ItemId';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -784,7 +786,8 @@ export default class Game {
         return this.mapUrlCache.getSliceRemoteUrl(imageSrc);
     }
 
-    async setPartyExploring(leaderUid:string):Promise<void>{
+    //returns true if a map piece item was consumed
+    async setPartyExploring(leaderUid:string,mapName:string):Promise<ItemId>{
         const player = await this.getPlayerCharacter(leaderUid);
 
         if(!player){
@@ -801,7 +804,22 @@ export default class Game {
             throw 'Only the party leader can direct the party!';
         }
 
-        party.explore(MapWesternGate);
+        const map:ExplorableMap = WorldMaps[mapName];
+
+        if(!player.inventory.hasItem(map.mapItem,1)){
+            party.explore(map);
+
+            return null;
+        } 
+        else if(player.inventory.hasItem(map.pieceItem,1)){
+            await this.takePlayerItem(player.uid,map.pieceItem.id,1);
+
+            party.explore(map);
+
+            return map.pieceItem.id;
+        }
+
+        throw `The map doesn't exist or you don't have an item to access it`;
     }
 
     async interactWithCurrentTile(playerUid:string){

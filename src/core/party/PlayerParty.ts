@@ -113,6 +113,10 @@ export default class PlayerParty{
     }
 
     explore(map:ExplorableMap){
+        if(this.partyStatus == PartyStatus.Battling){
+            throw 'The party is in a battle right now!';
+        }
+
         this.exploration = new PartyExploringMap({
             map: map,
             party: this,

@@ -8,11 +8,11 @@ export default class FireAntMite extends CreatureAIControlled{
     constructor(){
         super({
             id: CreatureId.FireAntMite,
-            title: 'Fire Ant Mite',
+            title: 'Giant Ant Mite',
             description: 'A common parasite that lives off of giant fire ants',
             attributes: new AttributeSet({
                 strength: 12,
-                agility: 16,
+                agility: 20,
                 vitality: 8,
                 spirit: 0,
                 luck: 0,
@@ -20,7 +20,7 @@ export default class FireAntMite extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: FireAntMiteWeapon
             }),
-            wishesDropped: 30,
+            wishesDropped: 40,
         });
     }
 }

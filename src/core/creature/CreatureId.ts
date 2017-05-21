@@ -6,7 +6,6 @@ enum CreatureId{
     GoblinSneak,
     GoblinChief,
     FireAntMite,
-    FireAntDrone,
     FireAntWorker,
     FireAntSoldier,
     FireAntInfected,

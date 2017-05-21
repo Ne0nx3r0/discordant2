@@ -6,7 +6,7 @@ import ItemId from '../../../src/core/item/ItemId';
 import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable";
 import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
 import { EventTileMap } from "../../../src/core/map/tiles/EventTileMap";
-import { NorthernSteppesMapPiece } from "../../../src/core/item/ItemsIndex";
+import { RedForestMapPiece } from "../../../src/core/item/ItemsIndex";
 import { EventTileWarp } from "../../../src/core/map/tiles/EventTilePortal";
 import LootGenerator from '../../../src/core/loot/LootGenerator';
 
@@ -112,6 +112,12 @@ export const WesternGate2Events:IMapData = {
             ],
         },
         {
+            event: EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
+            coords: [
+                {x:3,y:11},
+            ],
+        },
+        {
             event: EventTileLootable({
                 onEnterMsg: `A selection of items the goblin hoard has stolen from travelers`,
                 lootGenerator: lootGenerator,
@@ -123,13 +129,15 @@ export const WesternGate2Events:IMapData = {
                 goldMax: 100,
             }),
             coords: [
-                {x:3,y:13},
+                {x:3,y:12},
             ],
         },
         {
-            event: EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
+            event: EventTileMap({
+                map: RedForestMapPiece
+            }),
             coords: [
-                {x:3,y:12},
+                {x:3,y:13},
             ],
         },
         {
