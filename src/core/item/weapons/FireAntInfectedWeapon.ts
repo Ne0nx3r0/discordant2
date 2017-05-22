@@ -45,9 +45,24 @@ export const FireAntInfectedWeapon = new Weapon({
     goldValue:0,
     attacks: [
         new WeaponAttack({
+            title: 'bite',
+            minBaseDamage: 10,
+            maxBaseDamage: 20,
+            damageType: DamageType.physical,
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.No,
+            steps: [
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} bites {defender} with a damaged pair of jaws',
+                    damageFunc: DefaultDamageFunc,
+                })
+            ],
+            aiUseWeight: 1.2
+        }),
+        new WeaponAttack({
             title: 'flamespray',
-            minBaseDamage: 20,
-            maxBaseDamage: 40,
+            minBaseDamage: 15,
+            maxBaseDamage: 30,
             damageType: DamageType.fire,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
@@ -61,7 +76,7 @@ export const FireAntInfectedWeapon = new Weapon({
                     damageFunc: function(){return [];},
                 })
             ],
-            aiUseWeight: 0.3
+            aiUseWeight: 0.4
         }),
         new WeaponAttack({
             title: 'infect',

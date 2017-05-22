@@ -17,8 +17,8 @@ export const FireAntSoldierWeapon = new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'bite',
-            minBaseDamage: 16,
-            maxBaseDamage: 26,
+            minBaseDamage: 10,
+            maxBaseDamage: 20,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,
