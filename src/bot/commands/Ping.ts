@@ -14,7 +14,10 @@ export default class Pong extends Command{
     }
 
     async run(bag:CommandRunBag){
-        const time = Math.round((Date.now() - bag.message.createdAt.getTime())/10)/100;
+        const timeMS = Date.now() - bag.message.createdAt.getTime();
+
+        const time = Math.round(timeMS/10)/100;
+
         bag.message.channel.sendMessage(`Pong! (${time}s)`);
     }
 }
