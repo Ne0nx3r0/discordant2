@@ -219,7 +219,7 @@ export default class CreatureBattleTurnBased{
         let teamExhausted = true;
 
         this.participants.forEach(function(p){
-            if(!p.exhausted && p.teamNumber == bc.teamNumber){
+            if(!p.defeated && !p.exhausted && p.teamNumber == bc.teamNumber){
                 teamExhausted = false;
             }
         });
