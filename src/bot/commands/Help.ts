@@ -91,6 +91,7 @@ ${aliasesStr}
 `User`,
 `${p}begin, ${p}classes,
 ${p}stats, ${p}wish,
+${p}ping
 `,
 true
         );
