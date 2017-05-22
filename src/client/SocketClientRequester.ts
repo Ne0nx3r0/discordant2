@@ -66,6 +66,7 @@ import { LeadPlayerOption } from '../bot/commands/Top';
 import GetTopPlayersRequest from "../gameserver/socket/requests/GetTopPlayersRequest";
 import PlayerRefreshRequest from '../gameserver/socket/requests/PlayerRefreshRequest';
 import ItemId from '../core/item/ItemId';
+import SendPartyMapImageRequest from '../gameserver/socket/requests/SendPartyMapImageRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -471,6 +472,13 @@ export default class SocketClientRequester{
         await new SetPlayerDescriptionRequest({
             uid: playerUid,
             description: description,
+        })
+        .send(this.sioc);
+    }
+
+    sendPartyMapImage(playerUid:string):Promise<void>{
+        return new SendPartyMapImageRequest({
+            uid: playerUid
         })
         .send(this.sioc);
     }

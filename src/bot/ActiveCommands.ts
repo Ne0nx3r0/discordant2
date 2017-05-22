@@ -52,3 +52,4 @@ export { default as Items } from './commands/Items';
 export { default as Party } from './commands/Party';
 export { default as Ping } from './commands/Ping';
 export { default as Refresh } from './commands/Refresh';
+export { default as PartyMap } from './commands/PartyMap';

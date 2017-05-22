@@ -1325,6 +1325,30 @@ export default class Game {
 
         return topPlayers;
     }
+
+    async sendPartyMapImage(playerUid:string):Promise<void>{
+        const player = await this.getPlayerCharacter(playerUid);
+
+        if(!player){
+            throw 'You are not registered';
+        }
+
+        if(player.status == 'inBattle'){
+            throw 'You cannot move the party right now';
+        }
+
+        if(player.status != 'inParty'){
+            throw 'Only the party leader can move the party';
+        }
+
+        const party = player.party;
+
+        if(!party){
+            throw 'You are not in a party';
+        }
+
+        party.sendCurrentMapImageFile('You are here');
+    }
 }
 
 export interface IRemoveBattleFunc{
