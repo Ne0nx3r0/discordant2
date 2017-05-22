@@ -111,7 +111,10 @@ export default class Item extends Command{
                 if(pc){
                     const yourMinDamage = DamageScaling.ByAttribute(attack.minBaseDamage,pc.stats[scalingStat]);
                     const yourMaxDamage = DamageScaling.ByAttribute(attack.maxBaseDamage,pc.stats[scalingStat]);
-                    yourDamageStr = `\n(${yourMinDamage} - ${yourMaxDamage} with your stats)`;
+
+                    if(attack.scalingLevel != ScalingLevel.No){
+                        yourDamageStr = `\n(${yourMinDamage} - ${yourMaxDamage} with your stats)`;
+                    }
                 }
                 const msg = `${attack.minBaseDamage} - ${attack.maxBaseDamage} ${DamageType[attack.damageType]} damage${yourDamageStr}${special}
 ${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttribute]}${chargesRequired}`;
