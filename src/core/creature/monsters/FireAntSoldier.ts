@@ -5,6 +5,7 @@ import CreatureEquipment from '../../item/CreatureEquipment';
 import { FireAntMiteWeapon } from '../../item/weapons/FireAntMiteWeapon';
 import { FireAntSoldierWeapon } from '../../item/weapons/FireAntSoldierWeapon';
 import ItemId from '../../item/ItemId';
+import { FireAntSkin } from '../../item/clothing/FireAntSkin';
 
 export default class FireAntSoldier extends CreatureAIControlled{
     constructor(){
@@ -20,7 +21,8 @@ export default class FireAntSoldier extends CreatureAIControlled{
                 luck: 0,
             }),
             equipment: new CreatureEquipment({
-                weapon: FireAntSoldierWeapon
+                weapon: FireAntSoldierWeapon,
+                armor: FireAntSkin,
             }),
             wishesDropped: 60,
             onDefeated: function(bag){

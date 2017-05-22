@@ -4,6 +4,7 @@ import AttributeSet from '../AttributeSet';
 import CreatureEquipment from '../../item/CreatureEquipment';
 import { FireAntMiteWeapon } from '../../item/weapons/FireAntMiteWeapon';
 import { FireAntQueenWeapon } from '../../item/weapons/FireAntQueenWeapon';
+import { FireAntSkin } from '../../item/clothing/FireAntSkin';
 
 export default class FireAntQueen extends CreatureAIControlled{
     constructor(){
@@ -19,7 +20,8 @@ export default class FireAntQueen extends CreatureAIControlled{
                 luck: 0,
             }),
             equipment: new CreatureEquipment({
-                weapon: FireAntQueenWeapon
+                weapon: FireAntQueenWeapon,
+                armor: FireAntSkin,
             }),
             wishesDropped: 300,
         });
