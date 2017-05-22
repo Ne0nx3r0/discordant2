@@ -35,4 +35,3 @@ export { TabletOfFire } from './weapons/TabletOfFire';
 export { MapAfterRedForestPiece } from './maps/MapAfterRedForestPiece';
 export { RedForestMapPiece } from './maps/RedForestMapPiece';
 export { RedForestMap } from './maps/RedForestMap';
-export { FireAntSkin } from './clothing/FireAntSkin';
