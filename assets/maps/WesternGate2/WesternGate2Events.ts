@@ -18,7 +18,7 @@ lootGenerator.addLootItem('common',ItemId.HandAxe,0.1);
 lootGenerator.addLootItem('common',ItemId.WornLeathers,0.3);
 lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.3);
 lootGenerator.addLootItem('common',ItemId.Vial,1);
-lootGenerator.addLootItem('common',ItemId.RedForestMapPiece,0.1);
+lootGenerator.addLootItem('common',ItemId.RedForestMapPiece,0.3);
 
 lootGenerator.addLootItem('rare',ItemId.RingOfAgility,0.1);
 lootGenerator.addLootItem('rare',ItemId.RingOfHealth,0.1);
@@ -27,7 +27,7 @@ lootGenerator.addLootItem('rare',ItemId.RingOfLuck,0.1);
 lootGenerator.addLootItem('rare',ItemId.RingOfSpirit,0.1);
 lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
 lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
-lootGenerator.addLootItem('common',ItemId.RedForestMapPiece,0.1);
+lootGenerator.addLootItem('rare',ItemId.RedForestMapPiece,0.4);
 
 export const WesternGate2Events:IMapData = {
     startX: 26,

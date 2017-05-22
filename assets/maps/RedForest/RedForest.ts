@@ -24,14 +24,14 @@ lootGenerator.addLootItem('common',ItemId.AmuletOfAgility,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfSpirit,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfLuck,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfStrength,0.05);
-lootGenerator.addLootItem('common',ItemId.MapAfterRedForestPiece,0.05);
+lootGenerator.addLootItem('common',ItemId.MapAfterRedForestPiece,0.5);
 
 lootGenerator.addLootItem('rare',ItemId.AmuletOfAgility,0.1);
 lootGenerator.addLootItem('rare',ItemId.AmuletOfSpirit,0.1);
 lootGenerator.addLootItem('rare',ItemId.AmuletOfLuck,0.1);
 lootGenerator.addLootItem('rare',ItemId.TabletOfFire,0.1);
 lootGenerator.addLootItem('rare',ItemId.RingOfFortune,0.02);
-lootGenerator.addLootItem('rare',ItemId.MapAfterRedForestPiece,0.1);
+lootGenerator.addLootItem('rare',ItemId.MapAfterRedForestPiece,0.2);
 
 export const RedForestEvents:IMapData = {
     startX: 26,
