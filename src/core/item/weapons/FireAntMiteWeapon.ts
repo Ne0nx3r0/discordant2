@@ -31,12 +31,12 @@ export const FireAntMiteWeapon = new Weapon({
                             {
                                 target: bag.defender,
                                 type: DamageType.physical,
-                                amount:damage
+                                amount: damage
                             },
                             {
                                 target: bag.attacker,
                                 type: DamageType.healing,
-                                amount:5
+                                amount: 5
                             }
                         ];
                     }

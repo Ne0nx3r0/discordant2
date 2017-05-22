@@ -12,13 +12,13 @@ import LootGenerator from '../../../src/core/loot/LootGenerator';
 
 export const lootGenerator = new LootGenerator();
 
-lootGenerator.addLootItem('common',ItemId.HuntingSword,0.25);
-lootGenerator.addLootItem('common',ItemId.WoodShield,0.4);
-lootGenerator.addLootItem('common',ItemId.HandAxe,0.25);
-lootGenerator.addLootItem('common',ItemId.WornLeathers,0.4);
-lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.4);
+lootGenerator.addLootItem('common',ItemId.HuntingSword,0.1);
+lootGenerator.addLootItem('common',ItemId.WoodShield,0.3);
+lootGenerator.addLootItem('common',ItemId.HandAxe,0.1);
+lootGenerator.addLootItem('common',ItemId.WornLeathers,0.3);
+lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.3);
 lootGenerator.addLootItem('common',ItemId.Vial,1);
-
+lootGenerator.addLootItem('common',ItemId.RedForestMapPiece,0.1);
 
 lootGenerator.addLootItem('rare',ItemId.RingOfAgility,0.1);
 lootGenerator.addLootItem('rare',ItemId.RingOfHealth,0.1);
@@ -26,8 +26,8 @@ lootGenerator.addLootItem('rare',ItemId.RingOfStrength,0.1);
 lootGenerator.addLootItem('rare',ItemId.RingOfLuck,0.1);
 lootGenerator.addLootItem('rare',ItemId.RingOfSpirit,0.1);
 lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
-lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
 lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
+lootGenerator.addLootItem('common',ItemId.RedForestMapPiece,0.1);
 
 export const WesternGate2Events:IMapData = {
     startX: 26,
@@ -106,7 +106,6 @@ export const WesternGate2Events:IMapData = {
             coords: [
                 {x:9,y:2},
                 {x:19,y:2},
-                {x:26,y:7},
                 {x:14,y:9},
                 {x:14,y:12},
                 {x:2,y:18},
@@ -133,20 +132,13 @@ export const WesternGate2Events:IMapData = {
             }),
             coords: [
                 {x:3,y:12},
-            ],
-        },
-        {
-            event: EventTileMap({
-                map: RedForestMapPiece
-            }),
-            coords: [
-                {x:3,y:13},
+                {x:26,y:7},
             ],
         },
         {
             event: EventTileWarp({}),
             coords: [
-                {x:2,y:13},
+                {x:3,y:13},
             ],
         },
     ]

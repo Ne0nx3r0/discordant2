@@ -2,7 +2,7 @@ import ItemBase from '../ItemBase';
 import ItemId from '../ItemId';
 import InventoryItem from "../InventoryItem";
 
-export const ScarabToken = new ItemBase({
+export const FireAntCarapace = new ItemBase({
     id: ItemId.FireAntCarapace,
     title: 'Fire Ant Carapace',
     goldValue: 25,

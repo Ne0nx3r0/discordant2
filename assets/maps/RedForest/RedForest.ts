@@ -61,7 +61,7 @@ export const RedForestEvents:IMapData = {
             ]
         },
         {
-            event: EventTileForagable('Bane',ItemId.Agave),
+            event: EventTileForagable('Agave',ItemId.Agave),
             coords: [
                 {x:4,y:15},
                 {x:4,y:16},
@@ -121,6 +121,8 @@ export const RedForestEvents:IMapData = {
             }),
             coords: [
                 {x:13,y:2},
+                {x:13,y:3},
+                {x:38,y:2},
             ],
         },
         {
@@ -131,14 +133,6 @@ export const RedForestEvents:IMapData = {
         },
         {
             event: EventTileMonster(`What?! This one is acting strange...`,CreatureId.FireAntInfected),
-            coords: [
-                {x:38,y:3},
-            ],
-        },
-        {
-            event: EventTileMap({
-                map: MapAfterRedForestPiece,
-            }),
             coords: [
                 {x:38,y:3},
             ],
