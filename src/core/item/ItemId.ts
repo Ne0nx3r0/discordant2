@@ -43,6 +43,8 @@ enum ItemId {
     AmuletOfLuck,
     AmuletOfStrength,
     AmuletOfAgility,
+    FireAntInfectedWeapon,
+    FireAntQueenWeapon,
 }
 
 export default ItemId;

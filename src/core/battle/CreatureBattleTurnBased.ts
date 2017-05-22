@@ -145,7 +145,8 @@ export default class CreatureBattleTurnBased{
                 if(effect.onRoundBegin && !this.battleHasEnded){
                     effect.onRoundBegin({
                         target: p.creature,
-                        sendBattleEmbed: this.queueBattleMessage
+                        sendBattleEmbed: this.queueBattleMessage,
+                        battle: this,
                     });
 
                     if(p.creature.hpCurrent<1){
@@ -608,7 +609,8 @@ export default class CreatureBattleTurnBased{
         if(effect.onAdded){
             effect.onAdded({
                 target: target,
-                sendBattleEmbed: this.queueBattleMessage
+                sendBattleEmbed: this.queueBattleMessage,
+                battle: this,
             });
         }
     }
@@ -617,7 +619,8 @@ export default class CreatureBattleTurnBased{
         if(effect.onRemoved){
             effect.onRemoved({
                 target:target,
-                sendBattleEmbed: this.queueBattleMessage
+                sendBattleEmbed: this.queueBattleMessage,
+                battle: this,
             });
         }
 

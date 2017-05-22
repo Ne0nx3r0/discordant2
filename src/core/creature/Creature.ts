@@ -81,7 +81,7 @@ export default class Creature{
 
         this.tempEffects.forEach(function(roundsLeft:number,effect:BattleTemporaryEffect){
             if(effect.onAddBonuses){
-                effect.onAddBonuses(stats);
+                effect.onAddBonuses(stats,roundsLeft);
             }
         });
 

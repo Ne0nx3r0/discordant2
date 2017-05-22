@@ -20,7 +20,7 @@ export default class Inventory extends Command{
     async run(bag:CommandRunBag){
         let page = parseInt(bag.params[0]);
 
-        if(isNaN(page)){
+        if(isNaN(page) || page < 1){
             page = 1;
         }
 

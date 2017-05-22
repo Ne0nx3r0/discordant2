@@ -8,6 +8,10 @@ enum EffectId {
     Rage,
     Bless,
     Agave,
+    FireAntInfected,
+    FireAntInfectionStep,
+    FireAntQueenHarden,
+    FireAntQueenPheromone,
 }
 
 export default EffectId;

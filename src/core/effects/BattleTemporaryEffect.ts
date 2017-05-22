@@ -2,14 +2,16 @@ import Creature from '../creature/Creature';
 import EffectId from './EffectId';
 import { ICreatureStatSet } from '../creature/Creature';
 import { IWeaponAttackDamages } from '../item/WeaponAttackStep';
+import CreatureBattleTurnBased from '../battle/CreatureBattleTurnBased';
 
 interface BattleEmbedFunc{
     (msg:Array<string>):void;
 }
 
 export interface EffectEventBag{
-    target:Creature
+    target:Creature;
     sendBattleEmbed:BattleEmbedFunc;
+    battle:CreatureBattleTurnBased;
 }
 
 interface RoundEffectFunc{
@@ -21,7 +23,7 @@ interface RoundEffectAttackFunc{
 }
 
 interface RoundEffectStatsFunc{
-    (stats:ICreatureStatSet):void;/* modify the stats object and let it fall back to the caller */
+    (stats:ICreatureStatSet,roundsLeft:number):void;/* modify the stats object and let it fall back to the caller */
 }
 
 export type EffectEventHandler = 'onAdded' | 'onRoundBegin' | 'onAttack' | 'onAttacked' | 'onRemoved';
