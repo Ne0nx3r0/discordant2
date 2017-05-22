@@ -8,3 +8,4 @@ export { default as FireAntSoldier } from './monsters/FireAntSoldier';
 export { default as FireAntWorker } from './monsters/FireAntWorker';
 export { default as FireAntInfected } from './monsters/FireAntInfected';
 export { default as FireAntQueen } from './monsters/FireAntQueen';
+export { default as FireAntMite } from './monsters/FireAntMite';
