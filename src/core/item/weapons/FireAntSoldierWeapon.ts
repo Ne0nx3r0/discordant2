@@ -17,8 +17,8 @@ export const FireAntSoldierWeapon = new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'bite',
-            minBaseDamage: 18,
-            maxBaseDamage: 30,
+            minBaseDamage: 16,
+            maxBaseDamage: 26,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,
@@ -32,8 +32,8 @@ export const FireAntSoldierWeapon = new Weapon({
         }),
         new WeaponAttack({
             title: 'flame',
-            minBaseDamage: 30,
-            maxBaseDamage: 50,
+            minBaseDamage: 15,
+            maxBaseDamage: 30,
             damageType: DamageType.fire,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
