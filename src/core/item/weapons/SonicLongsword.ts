@@ -20,8 +20,8 @@ export const SonicLongsword = new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'swing',
-            minBaseDamage: 1,
-            maxBaseDamage: 30,
+            minBaseDamage: 5,
+            maxBaseDamage: 25,
             damageType: DamageType.thunder,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.B,

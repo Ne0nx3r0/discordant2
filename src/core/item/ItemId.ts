@@ -35,6 +35,14 @@ enum ItemId {
     FireAntWorkerWeapon,
     FireAntSoldierWeapon,
     FireAntCarapace,
+    MapAfterRedForestPiece,
+    MapAfterRedForest,
+    RingOfSpirit,
+    RingOfLuck,
+    AmuletOfSpirit,
+    AmuletOfLuck,
+    AmuletOfStrength,
+    AmuletOfAgility,
 }
 
 export default ItemId;

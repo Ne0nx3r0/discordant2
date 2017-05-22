@@ -13,16 +13,19 @@ import LootGenerator from '../../../src/core/loot/LootGenerator';
 export const lootGenerator = new LootGenerator();
 
 lootGenerator.addLootItem('common',ItemId.HuntingSword,0.25);
+lootGenerator.addLootItem('common',ItemId.WoodShield,0.4);
 lootGenerator.addLootItem('common',ItemId.HandAxe,0.25);
 lootGenerator.addLootItem('common',ItemId.WornLeathers,0.4);
 lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.4);
-lootGenerator.addLootItem('common',ItemId.WoodShield,0.4);
 lootGenerator.addLootItem('common',ItemId.Vial,1);
 
 
 lootGenerator.addLootItem('rare',ItemId.RingOfAgility,0.1);
 lootGenerator.addLootItem('rare',ItemId.RingOfHealth,0.1);
 lootGenerator.addLootItem('rare',ItemId.RingOfStrength,0.1);
+lootGenerator.addLootItem('rare',ItemId.RingOfLuck,0.1);
+lootGenerator.addLootItem('rare',ItemId.RingOfSpirit,0.1);
+lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
 lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
 lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
 

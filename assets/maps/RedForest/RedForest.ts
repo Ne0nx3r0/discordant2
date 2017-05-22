@@ -9,8 +9,22 @@ import { EventTileMap } from "../../../src/core/map/tiles/EventTileMap";
 import { RedForestMapPiece } from "../../../src/core/item/ItemsIndex";
 import { EventTileWarp } from "../../../src/core/map/tiles/EventTilePortal";
 import LootGenerator from '../../../src/core/loot/LootGenerator';
+import { EventTileDrinkableWater } from '../../../src/core/map/tiles/EventTileDrinkableWater';
+import { MapAfterRedForestPiece } from '../../../src/core/item/maps/MapAfterRedForestPiece';
+import EventTile from '../../../src/core/map/EventTile';
 
 export const lootGenerator = new LootGenerator();
+
+lootGenerator.addLootItem('common',ItemId.Vial,1);
+lootGenerator.addLootItem('common',ItemId.HuntingSword,0.25);
+lootGenerator.addLootItem('common',ItemId.WoodShield,0.25);
+lootGenerator.addLootItem('common',ItemId.WornLeathers,0.25);
+lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.25);
+
+lootGenerator.addLootItem('rare',ItemId.AmuletOfAgility,0.1);
+lootGenerator.addLootItem('rare',ItemId.AmuletOfSpirit,0.1);
+lootGenerator.addLootItem('rare',ItemId.AmuletOfLuck,0.1);
+lootGenerator.addLootItem('rare',ItemId.AmuletOfStrength,0.1);
 
 export const RedForestEvents:IMapData = {
     startX: 26,
@@ -39,6 +53,15 @@ export const RedForestEvents:IMapData = {
                 {x:15,y:12},
                 {x:16,y:11},
                 {x:16,y:12},
+            ]
+        },
+        {
+            event: EventTileForagable('Bane',ItemId.Agave),
+            coords: [
+                {x:4,y:15},
+                {x:4,y:16},
+                {x:4,y:17},
+                {x:3,y:17},
             ]
         },
         {
@@ -96,15 +119,79 @@ export const RedForestEvents:IMapData = {
             ],
         },
         {
-            event: EventTileMonster(`You've found the queen of the fire ants!`,CreatureId.GoblinChief),
+            event: EventTileMonster(`You've found the queen of the fire ants!`,CreatureId.FireAntQueen),
             coords: [
                 {x:14,y:2},
             ],
         },
         {
-            event: EventTileMonster(`You've found a fire ant royal guard!`,CreatureId.GoblinChief),
+            event: EventTileMonster(`What?! This one is acting strange...`,CreatureId.FireAntInfected),
             coords: [
-                {x:14,y:2},
+                {x:38,y:3},
+            ],
+        },
+        {
+            event: EventTileMap({
+                map: MapAfterRedForestPiece,
+            }),
+            coords: [
+                {x:38,y:3},
+            ],
+        },
+        {
+            event: EventTileDrinkableWater(),
+            coords:[
+                {x:26,y:8},
+                {x:27,y:8},
+                {x:28,y:8},
+                {x:29,y:8},
+                {x:30,y:8},
+                {x:31,y:8},
+                {x:32,y:8},
+                {x:33,y:8},
+                {x:34,y:8},
+                {x:22,y:9},
+                {x:23,y:9},
+                {x:24,y:9},
+                {x:25,y:9},
+                {x:26,y:9},
+                {x:35,y:9},
+                {x:20,y:10},
+                {x:21,y:10},
+                {x:22,y:10},
+                {x:36,y:10},
+                {x:19,y:11},
+                {x:36,y:11},
+                {x:19,y:12},
+                {x:36,y:12},
+                {x:20,y:13},
+                {x:21,y:13},
+                {x:22,y:13},
+                {x:23,y:13},
+                {x:24,y:13},
+                {x:25,y:13},
+                {x:26,y:13},
+                {x:35,y:13},
+                {x:27,y:14},
+                {x:28,y:14},
+                {x:29,y:14},
+                {x:30,y:14},
+                {x:31,y:14},
+                {x:32,y:14},
+                {x:33,y:14},
+                {x:34,y:14},
+            ]
+        },
+        {
+            event: new EventTile({
+                onEnter:function(bag){
+                    bag.sendPartyMessage(`Coming soon...`);
+                }
+            }),
+            coords: [
+                {x:4,y:3},
+                {x:5,y:3},
+                {x:6,y:3},
             ],
         },
     ]
