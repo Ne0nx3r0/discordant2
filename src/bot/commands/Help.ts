@@ -125,8 +125,8 @@ true
 `Party`,
 `${p}party, ${p}pnew,
 ${p}pinvite, ${p}pyes, ${p}pno,
-${p}pdisband, ${p}pleave,
-${p}pexplore, ${p}pmove`,
+${p}pdisband, ${p}pleave, ${p}pmap,
+${p}pexplore, ${p}pmove `, 
 true
         );
 
