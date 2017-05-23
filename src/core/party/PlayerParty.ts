@@ -205,7 +205,7 @@ export default class PlayerParty{
 
     returnFromBattle(result:BattleResult,partyReturnFunc?:PartyReturnFunc){
         this.members.forEach(function(pc){
-            if(pc.hpCurrent < 0){
+            if(pc.hpCurrent < 1){
                 pc.hpCurrent = pc.stats.hpTotal * 0.05;
             }
         });
@@ -221,7 +221,8 @@ export default class PlayerParty{
                 party: this,
             });
         }
-        else if(result == BattleResult.Team1Won || result == BattleResult.Ran){
+
+        if(result == BattleResult.Team1Won || result == BattleResult.Ran){
             if(result == BattleResult.Ran){
                 this.timesRun++;
             }
@@ -232,6 +233,14 @@ export default class PlayerParty{
                 member.status = 'inParty';
             });
 
+            this.currentBattle = null;
+
+            this.members.forEach(function(member){
+                member.status = 'inParty';
+            });
+
+            this.exploration.onEnterCurrentTile();
+            
             this.sendCurrentMapImageFile(this.partyPlural('You survived!','Your party survived!'));
         }
         else{
@@ -245,23 +254,16 @@ export default class PlayerParty{
                 wishesLostStr += '\n'+member.title+' lost '+wishesLost+' wishes';
             });
 
-            this.sendChannelMessage('Your party was defeated!\n'+wishesLostStr);
+            this.sendChannelMessage('Your party was defeated!\n\nYou wake up back in town...\n'+wishesLostStr);
 
             this.partyStatus = PartyStatus.InTown;
+
+            this.currentBattle = null;
 
             this.members.forEach((member)=>{
                 member.status = 'inParty';
             });
-
-            return;
         }
-
-        this.currentBattle = null;
-        this.members.forEach(function(member){
-            member.status = 'inParty';
-        });
-
-        this.exploration.onEnterCurrentTile();
     }
 
     playerActionInteract(uid:string):void{

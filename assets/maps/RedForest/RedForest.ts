@@ -12,6 +12,7 @@ import LootGenerator from '../../../src/core/loot/LootGenerator';
 import { EventTileDrinkableWater } from '../../../src/core/map/tiles/EventTileDrinkableWater';
 import { MapAfterRedForestPiece } from '../../../src/core/item/maps/MapAfterRedForestPiece';
 import EventTile from '../../../src/core/map/EventTile';
+import { AmuletOfHealth } from '../../../src/core/item/jewelry/AmuletOfHealth';
 
 export const lootGenerator = new LootGenerator();
 
@@ -24,12 +25,15 @@ lootGenerator.addLootItem('common',ItemId.AmuletOfAgility,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfSpirit,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfLuck,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfStrength,0.05);
+lootGenerator.addLootItem('common',ItemId.AmuletOfHealth,0.05);
 lootGenerator.addLootItem('common',ItemId.MapAfterRedForestPiece,1);
 
 lootGenerator.addLootItem('rare',ItemId.AmuletOfAgility,0.1);
 lootGenerator.addLootItem('rare',ItemId.AmuletOfSpirit,0.1);
 lootGenerator.addLootItem('rare',ItemId.AmuletOfLuck,0.1);
 lootGenerator.addLootItem('rare',ItemId.TabletOfFire,0.1);
+lootGenerator.addLootItem('rare',ItemId.AmuletOfStrength,0.1);
+lootGenerator.addLootItem('rare',ItemId.AmuletOfHealth,0.1);
 lootGenerator.addLootItem('rare',ItemId.RingOfFortune,0.02);
 lootGenerator.addLootItem('rare',ItemId.MapAfterRedForestPiece,0.2);
 
