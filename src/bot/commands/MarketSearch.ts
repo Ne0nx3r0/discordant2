@@ -33,16 +33,21 @@ export default class MarketSearch extends Command{
 
         const marketOffers:Array<SocketActiveMarketOffer> = await bag.socket.marketGetOffers(item.id);
 
-        let msg = `\`\`\`xml\nCurrent offers for ${item.title}\n`;
 
-        if(marketOffers){
-            msg += marketOffers.map(function(offer){
-                const offerSid = MarketOfferEncoder.encode(offer.id);
+        if(!marketOffers){
+            bag.message.channel.sendMessage(`No offers found`);
 
-                return `< ${offerSid} ${bag.items.get(offer.item).title} = ${offer.price}GP (${offer.amountLeft} left) >`;
-            }).join('\n');
+            return;    
         }
 
+        let msg = `\`\`\`xml\nCurrent offers for ${item.title}\n`;
+
+        msg += marketOffers.map(function(offer){
+            const offerSid = MarketOfferEncoder.encode(offer.id);
+
+            return `< ${offerSid} ${bag.items.get(offer.item).title} = ${offer.price}GP (${offer.amountLeft} left) >`;
+        }).join('\n');
+        
         bag.message.channel.sendMessage(msg+'```');
     }
 }
