@@ -35,11 +35,13 @@ export default class MarketSearch extends Command{
 
         let msg = `\`\`\`xml\nCurrent offers for ${item.title}\n`;
 
-        msg += marketOffers.map(function(offer){
-            const offerSid = MarketOfferEncoder.encode(offer.id);
+        if(marketOffers){
+            msg += marketOffers.map(function(offer){
+                const offerSid = MarketOfferEncoder.encode(offer.id);
 
-            return `< ${offerSid} ${bag.items.get(offer.item).title} = ${offer.price}GP (${offer.amountLeft} left) >`;
-        }).join('\n');
+                return `< ${offerSid} ${bag.items.get(offer.item).title} = ${offer.price}GP (${offer.amountLeft} left) >`;
+            }).join('\n');
+        }
 
         bag.message.channel.sendMessage(msg+'```');
     }
