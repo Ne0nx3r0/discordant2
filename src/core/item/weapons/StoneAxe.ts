@@ -60,7 +60,7 @@ export const StoneAxe = new Weapon({
             maxBaseDamage: 0,
             damageType: DamageType.special,
             scalingAttribute: Attribute.strength,
-            scalingLevel: ScalingLevel.D,
+            scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} rages letting out a terrifying scream',
@@ -71,7 +71,7 @@ export const StoneAxe = new Weapon({
                                 id: EffectId.Rage,
                                 title: 'Rage',
                                 onAddBonuses: function(stats){
-                                    stats.vitality -= 6;
+                                    stats.vitality -= 4;
                                     stats.strength += 10;
                                 }
                             }),
