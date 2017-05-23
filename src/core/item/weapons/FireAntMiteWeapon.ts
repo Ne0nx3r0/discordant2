@@ -36,7 +36,7 @@ export const FireAntMiteWeapon = new Weapon({
                             {
                                 target: bag.attacker,
                                 type: DamageType.healing,
-                                amount: 5
+                                amount: Math.min(5,bag.attacker.creature.stats.hpTotal-bag.attacker.creature.hpCurrent)
                             }
                         ];
                     }

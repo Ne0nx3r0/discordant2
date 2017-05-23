@@ -247,9 +247,13 @@ export default class PlayerParty{
 
             this.sendChannelMessage('Your party was defeated!\n'+wishesLostStr);
 
-            setTimeout(()=>{
-                this.playerActionDisband();
-            },10000);
+            this.partyStatus = PartyStatus.InTown;
+
+            this.members.forEach((member)=>{
+                member.status = 'inParty';
+            });
+
+            return;
         }
 
         this.currentBattle = null;
