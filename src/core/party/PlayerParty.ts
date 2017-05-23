@@ -240,7 +240,7 @@ export default class PlayerParty{
             this.members.forEach((member)=>{
                 const wishesLost = Math.round( Math.random() * (member.wishes*0.25) + (member.wishes*0.25) );
 
-                this.game.grantPlayerWishes(member.uid,wishesLost);
+                this.game.grantPlayerWishes(member.uid,0-wishesLost);
 
                 wishesLostStr += '\n'+member.title+' lost '+wishesLost+' wishes';
             });
