@@ -37,7 +37,7 @@ export default class Items extends Command {
             page = 1;
         }
 
-        const itemsListStr = this.itemStrs.slice(10 * (page-1), 10 * (page-1) + 9)
+        const itemsListStr = this.itemStrs.slice(10 * (page-1), 10 * (page-1) + 10)
         .join('\n');
 
         const maxPage = Math.ceil(bag.items.items.size / 10); 

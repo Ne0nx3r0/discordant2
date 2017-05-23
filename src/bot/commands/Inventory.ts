@@ -34,7 +34,7 @@ export default class Inventory extends Command{
                 return bag.items.get(a.id).title.localeCompare(bag.items.get(b.id).title);
             });
 
-            const inventorySlice = playerInventory.slice(10 * (page-1), 10 * (page-1) + 9);
+            const inventorySlice = playerInventory.slice(10 * (page-1), 10 * (page-1) + 10);
             
             let maxSpacer = 0;
 
