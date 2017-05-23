@@ -103,8 +103,8 @@ export const FireAntQueenWeapon = new Weapon({
         }),
         new WeaponAttack({
             title: 'flame',
-            minBaseDamage: 10,
-            maxBaseDamage: 20,
+            minBaseDamage: 30,
+            maxBaseDamage: 50,
             damageType: DamageType.fire,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
@@ -118,7 +118,7 @@ export const FireAntQueenWeapon = new Weapon({
                     damageFunc: function(){return [];},
                 })
             ],
-            aiUseWeight: 0.3
+            aiUseWeight: 0.4
         }),
     ]
 });
