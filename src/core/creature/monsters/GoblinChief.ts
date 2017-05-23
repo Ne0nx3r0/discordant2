@@ -14,6 +14,7 @@ export default class GoblinSoldier extends CreatureAIControlled{
             id: CreatureId.GoblinChief,
             title: 'Goblin Chief',
             description: 'The highest ranked of the local tribe of goblins, often a position earned through blood and deceit.',
+            allowRun: false,
             attributes: new AttributeSet({
                 strength: 20,
                 agility: 20,

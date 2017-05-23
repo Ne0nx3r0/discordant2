@@ -16,17 +16,20 @@ interface OnDefeatedFunc{
 interface CreatureAIBag extends CreatureBag{
     wishesDropped:number;
     onDefeated?:OnDefeatedFunc;
+    allowRun?: boolean;
 }
 
 export default class CreatureAIControlled extends Creature{
     wishesDropped:number;
     onDefeated: OnDefeatedFunc;
     attacks:Array<WeaponAttack>;
+    allowRun: boolean;
     
     constructor(bag:CreatureAIBag){
         super(bag);
         
         this.wishesDropped = bag.wishesDropped;
+        this.allowRun = bag.allowRun == undefined ? true : bag.allowRun;
 
         this.attacks = [];
 

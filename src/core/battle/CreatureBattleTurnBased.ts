@@ -277,6 +277,20 @@ export default class CreatureBattleTurnBased{
 
         const bc = this.getBattleCreatureForAction(pc);
 
+        for(var i=0;i<this.participants.length;i++){
+            const participant = this.participants[i];
+
+            if(participant.teamNumber != bc.teamNumber 
+            && !participant.defeated
+            && participant.creature instanceof CreatureAIControlled){
+                const aiParticipant = participant.creature as CreatureAIControlled;
+
+                if(!aiParticipant.allowRun){
+                    throw `You can't run from ${participant.creature.title}`;
+                }
+            }
+        }
+
         if(Math.random() < this.runChance){
             const partyMembers = this.participants
             .filter(function(p){

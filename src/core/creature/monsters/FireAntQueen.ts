@@ -12,6 +12,7 @@ export default class FireAntQueen extends CreatureAIControlled{
             id: CreatureId.FireAntQueen,
             title: 'Giant Fire Ant Queen',
             description: 'A common parasite that lives off of giant fire ants',
+            allowRun: false,
             attributes: new AttributeSet({
                 strength: 0,
                 agility: 0,
