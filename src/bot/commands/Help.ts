@@ -98,9 +98,8 @@ true
         
         embed.addField(
 `Battle`,
-`${p}attack, ${p}block,
-${p}charge, ${p}offhand,
-${p}use`,
+`${p}attack, ${p}offhand, 
+${p}charge, ${p}use`,
 true
         );
         
