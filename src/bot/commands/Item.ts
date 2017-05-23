@@ -11,6 +11,8 @@ import { ScalingLevel } from "../../core/item/WeaponAttack";
 import { Attribute } from "../../core/creature/AttributeSet";
 import { DamageScaling } from "../../core/damage/DamageScaling";
 import { DamageType } from "../../core/item/WeaponAttackStep";
+import { ItemRecipe } from '../../core/item/ItemRecipe';
+import AllItems from '../../core/item/AllItems';
 
 export default class Item extends Command{
     constructor(bag:CommandBag){
@@ -129,15 +131,45 @@ ${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttr
         }
         else{
             const itemBuyCost = item.buyCost ? `\nBuyable for ${item.buyCost}GP` : '';
+
+            const recipeStr = item.recipe ? getRecipeString(item.recipe,bag.items) :'';
+
             bag.message.channel.sendMessage('',this.getEmbed(`
 ${item.title} 
 
 Sellable for ${item.goldValue}GP${itemBuyCost}
 
-${item.description}
+${item.description}${recipeStr}
 `,EmbedColors.INFO));
         }
 
 
     }
+}
+
+function getRecipeString(recipe:ItemRecipe,items:AllItems):string{
+    if(!recipe){
+        return '';
+    }
+
+    let recipeStr = '\n\nRecipe: '+recipe.components.map(function(component){
+        const item = items.get(component.itemId);
+
+        if(item){
+            return component.amount + ' ' + item.title;
+        }
+        
+        return component.amount + ' Item ID '+component.itemId;
+    }).join(', ');
+
+    if(recipe.wishes){
+        if(recipe.wishes == 1){
+            recipeStr += ' and '+recipe.wishes+' wish';
+        }
+        else{
+            recipeStr += ' and '+recipe.wishes+' wishes';
+        }
+    }
+
+    return recipeStr;
 }

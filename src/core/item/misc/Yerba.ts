@@ -27,6 +27,6 @@ export const Yerba = new ItemUsable({
             }
         }),30);
 
-        return null;
+        return `+50HP`;
     }
 });
