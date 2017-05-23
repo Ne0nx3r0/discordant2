@@ -5,7 +5,7 @@ export function EventTileForagable(title:string,itemId:ItemId){
     return new EventTile({
         onEnter: function(bag){
             if(bag.runCount == 0){
-                bag.sendPartyMessage(`There's a small patch of ${title} shrubs.`);
+                bag.sendPartyMessage(`There's a small patch of ${title} plants. (\`di\` to interact)`);
             }
         },
         onInteract: function(bag){

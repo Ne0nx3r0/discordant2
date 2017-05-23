@@ -7,9 +7,9 @@ import { IGenerateLootBag } from "../../loot/LootGenerator";
 import LootGenerator from '../../loot/LootGenerator';
 
 const DEBRIS_MESSAGES = [
-    `Looks like a small skirmish took place here... Maybe something useful is left?`,
-    `Someone left a burlap sack on the ground. Coud be a trap.`,
-    `A large cracked chest left behind from a caravan or passing trader`,
+    `Looks like a small skirmish took place here... Maybe something useful is left? (\`di\` to interact)`,
+    `Someone left a burlap sack on the ground. Coud be a trap. (\`di\` to interact)`,
+    `A large cracked chest left behind from a caravan or passing trader (\`di\` to interact)`,
 ];
 
 interface EventTileLootableBag{
