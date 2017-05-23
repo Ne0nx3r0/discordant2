@@ -2,6 +2,7 @@ import ItemBase from '../ItemBase';
 import ItemId from '../ItemId';
 import ItemUsable from '../ItemUsable';
 import PlayerCharacter from '../../creature/player/PlayerCharacter';
+import WishCalc from '../../../bot/commands/WishCalc';
 
 export const Vial = new ItemUsable({
     id: ItemId.Vial,
@@ -10,6 +11,15 @@ export const Vial = new ItemUsable({
     goldValue: 10,
     buyCost: 20,
     battleExhaustion: 1,
+    recipe:{
+        components:[
+            {
+                itemId: ItemId.Acai,
+                amount: 1,
+            },
+        ],
+        wishes: 1,
+    },
     canUse: function(user:PlayerCharacter){
         if(user.hpCurrent >= user.stats.hpTotal){
             throw `${user.title}'s HP is already full`;

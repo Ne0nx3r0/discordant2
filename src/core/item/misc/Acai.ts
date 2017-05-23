@@ -6,7 +6,7 @@ import PlayerCharacter from '../../creature/player/PlayerCharacter';
 export const Acai = new ItemUsable({
     id: ItemId.Acai,
     title: 'Acai',
-    goldValue: 6,
+    goldValue: 4,
     description: '(Restores 20 HP) A wild berry whose nutritious nectars have healing properties.',
     battleExhaustion: 1,
     canUse: function(user:PlayerCharacter){

@@ -9,7 +9,7 @@ import { Attribute } from "../../creature/AttributeSet";
 export const Bane = new ItemUsable({
     id: ItemId.Bane,
     title: 'Bane',
-    description: '(During a battle: boosts STR) Wolf\'s Bane, a poisonus wild flower used by many a hunter to subdue prey.',
+    description: '(During a battle: boosts STR) Wolf\'s Bane, a poisonous wild flower used by many a hunter to subdue prey.',
     goldValue: 10,
     battleExhaustion: 1,
     canUse: function(user:PlayerCharacter){
