@@ -1,3 +1,5 @@
+import { ItemRecipe } from './ItemRecipe';
+
 interface ItemBaseBag{
     id:number;
     title:string;
@@ -5,6 +7,7 @@ interface ItemBaseBag{
     goldValue: number;
     buyCost?: number;
     showInItems?: boolean;
+    recipe?:ItemRecipe;
 }
 
 export {ItemBaseBag}
@@ -16,6 +19,7 @@ export default class ItemBase{
     goldValue:number;
     buyCost:number;
     showInItems:boolean;
+    recipe:ItemRecipe;
     
     constructor(bag:ItemBaseBag){
         this.id = bag.id;
@@ -24,5 +28,6 @@ export default class ItemBase{
         this.goldValue = bag.goldValue;
         this.buyCost = bag.buyCost || null;
         this.showInItems = bag.showInItems == undefined ? true : bag.showInItems;
+        this.recipe = bag.recipe;
     }
 }

@@ -3,51 +3,34 @@ import { CommandBag, CommandRunBag } from '../Command';
 import PermissionId from '../../core/permissions/PermissionId';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
+import ParseNumber from '../../util/ParseNumber';
 
 export default class SetRole extends Command{
     constructor(bag:CommandBag){
         super({
-            name: 'setrole',
-            description: 'Set a user\'s role',
-            usage: 'setrole <@username> <roleName>',
-            permissionNode: PermissionId.SetRole,
-            minParams: 2,
+            name: 'craft',
+            description: 'Craft an item',
+            usage: 'craft <item name>',
+            permissionNode: PermissionId.Craft,
+            minParams: 1,
         });
     }
 
     async run(bag:CommandRunBag){
-        if(bag.params.length < 2){
-            bag.message.channel.sendMessage(this.getUsage());
+        //The last param may be part of the request or it might be a number
+        const amountWantedStr = bag.params[bag.params.length-1];
+        let amountWanted:number = ParseNumber(amountWantedStr);
+        let itemWantedStr;
 
-            return;
+        //assume everything after the first element is the item name
+        if(isNaN(amountWanted)){
+            amountWanted = 1;
+            itemWantedStr = bag.params.slice(1).join(' ');
+        }
+        else{
+            itemWantedStr = bag.params.slice(1,-1).join(' ');
         }
 
-        const tagUserId = this.getUserTagId(bag.params[0]);
-
-        if(!tagUserId){
-            bag.message.channel.sendMessage('That player is not registered, '+bag.message.author.username);
-
-            return;
-        }
-
-        const roleStr = bag.params[1];
-
-        if(!bag.permissions.isRole(roleStr)){
-            bag.message.channel.sendMessage(`${roleStr} is not a valid role, ${bag.message.author.username}`);
-
-            return;
-        }
-
-        const setRolePC = await bag.socket.getPlayer(tagUserId);
-
-        if(!setRolePC){
-            bag.message.channel.sendMessage(`That user is not registered, ${bag.message.author.username}`);
-
-            return;
-        }
-
-        await bag.socket.setPlayerRole(setRolePC.uid,roleStr);
-
-        bag.message.channel.sendMessage(`${setRolePC.title} was granted the \`${roleStr}\` role, ${bag.message.author.username}`);
+        bag.message.channel.sendMessage(`Coming soon`);
     }
 }

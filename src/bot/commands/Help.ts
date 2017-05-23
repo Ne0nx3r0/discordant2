@@ -117,7 +117,7 @@ true
 `${p}item, ${p}items, ${p}inv,
 ${p}shop, ${p}buy, ${p}sell,
 ${p}equip, ${p}unequip,
-${p}use, ${p}give`,
+${p}use, ${p}give, ${p}pay`,
 true
         );
 

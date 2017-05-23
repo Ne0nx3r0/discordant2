@@ -411,3 +411,25 @@ BEGIN
   PERFORM grant_player_item(inBuyerUid,inItemId,inAmountToBuy);
 END
 $$;
+
+
+
+CREATE OR REPLACE FUNCTION transfer_player_gold(fromPlayerUID bigint,toPlayerUID bigint,transferAmount int) 
+RETURNS void LANGUAGE plpgsql AS
+$$
+
+BEGIN
+  UPDATE player SET gold = gold - transferAmount WHERE uid = fromPlayerUID AND gold >= transferAmount;
+  IF NOT FOUND THEN 
+    RAISE EXCEPTION 'You do not have % gold',transferAmount
+          USING ERRCODE = 'P0002';
+  END IF; 
+
+  UPDATE player SET gold = gold + transferAmount WHERE uid = toPlayerUID;
+  IF NOT FOUND THEN 
+    RAISE EXCEPTION 'Player UID % is not registered yet',toPlayerUID
+          USING ERRCODE = 'P0002';
+  END IF; 
+END
+
+$$;

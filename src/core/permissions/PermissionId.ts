@@ -57,6 +57,7 @@ enum PermissionId{
     Refresh,
     PartyMap,
     Craft,
+    Pay,
 }
 
 export default PermissionId;

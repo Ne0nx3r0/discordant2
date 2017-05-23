@@ -64,6 +64,7 @@ import DBSetPlayerUsername from '../db/api/DBSetPlayerUsername';
 import SendPMClientRequest from '../../client/requests/SendPMClientRequest';
 import ExplorableMap from '../../core/map/ExplorableMap';
 import ItemId from '../../core/item/ItemId';
+import { DBTransferPlayerGold } from '../db/api/DBTransferPlayerGold';
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -1324,6 +1325,39 @@ export default class Game {
         const topPlayers = await DBGetTopPlayers(this.db,type);
 
         return topPlayers;
+    }
+
+    async transferPlayerGold(fromUid:string,toUid:string,amount:number):Promise<void>{
+        if(isNaN(amount) || amount < 1){
+            throw `Invalid amount`;
+        }
+
+        amount = Math.round(amount);
+
+        if(fromUid == toUid){
+            throw `You can't pay yourself`;
+        }
+
+        const fromPC = await this.getPlayerCharacter(fromUid);
+
+        if(!fromPC){
+            throw `Invalid gold sender`;
+        }
+
+        if(fromPC.gold < amount){
+            throw `You only have ${fromPC.gold}GP`;
+        }
+
+        const toPC = await this.getPlayerCharacter(toUid);
+        
+        if(!toPC){
+            throw `That player is not registered`;
+        }
+
+        await DBTransferPlayerGold(this.db,fromPC.uid,toPC.uid,amount);
+
+        fromPC.gold -= amount;
+        toPC.gold += amount;
     }
 
     async sendPartyMapImage(playerUid:string):Promise<void>{

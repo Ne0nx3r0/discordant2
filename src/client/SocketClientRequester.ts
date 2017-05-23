@@ -67,6 +67,7 @@ import GetTopPlayersRequest from "../gameserver/socket/requests/GetTopPlayersReq
 import PlayerRefreshRequest from '../gameserver/socket/requests/PlayerRefreshRequest';
 import ItemId from '../core/item/ItemId';
 import SendPartyMapImageRequest from '../gameserver/socket/requests/SendPartyMapImageRequest';
+import TransferPlayerGoldRequest from '../gameserver/socket/requests/TransferPlayerGoldRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -479,6 +480,15 @@ export default class SocketClientRequester{
     sendPartyMapImage(playerUid:string):Promise<void>{
         return new SendPartyMapImageRequest({
             uid: playerUid
+        })
+        .send(this.sioc);
+    }
+
+    transferGold(fromUid:string,toUid:string,amount:number):Promise<void>{
+        return new TransferPlayerGoldRequest({
+            from: fromUid,
+            to: toUid,
+            amount: amount
         })
         .send(this.sioc);
     }

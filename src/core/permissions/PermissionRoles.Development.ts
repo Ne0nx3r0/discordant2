@@ -58,7 +58,8 @@ export const PlayerPermissions = [
     PermissionId.Ping,
     PermissionId.BattleRun,
     PermissionId.Refresh,
-    PermissionId.PartyMap,
+    PermissionId.Craft,
+    PermissionId.Pay,
 ].concat(AnonymousPermissions).sort();
 
 export const TesterPermissions = [

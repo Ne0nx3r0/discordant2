@@ -56,6 +56,7 @@ import SetPlayerDescriptionRequest from './requests/SetPlayerDescriptionRequest'
 import IsChannelInUseRequest from './requests/IsChannelInUseRequest';
 import PlayerRefreshRequest from './requests/PlayerRefreshRequest';
 import SendPartyMapImageRequest from './requests/SendPartyMapImageRequest';
+import TransferPlayerGoldRequest from './requests/TransferPlayerGoldRequest';
 
 interface SocketServerBag{
     port:number;
@@ -139,6 +140,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new GetTopPlayersRequest(null));
             this.registerHandler(registeredEvents,client,new PlayerRefreshRequest(null));
             this.registerHandler(registeredEvents,client,new SendPartyMapImageRequest(null));
+            this.registerHandler(registeredEvents,client,new TransferPlayerGoldRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript
