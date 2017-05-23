@@ -56,6 +56,7 @@ enum PermissionId{
     Ping,
     Refresh,
     PartyMap,
+    Craft,
 }
 
 export default PermissionId;

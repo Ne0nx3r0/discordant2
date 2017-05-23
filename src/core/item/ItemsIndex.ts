@@ -1,4 +1,5 @@
 import { WornLeatherHelmet } from './clothing/WornLeatherHelmet';
+import { AmuletOfHealth } from './jewelry/AmuletOfHealth';
 export { BareHands } from './weapons/BareHands';
 export { HandAxe } from './weapons/HandAxe';
 export { WoodShield } from './weapons/WoodShield';
@@ -30,6 +31,7 @@ export { AmuletOfAgility } from './jewelry/AmuletOfAgility';
 export { AmuletOfStrength } from './jewelry/AmuletOfStrength';
 export { AmuletOfLuck } from './jewelry/AmuletOfLuck';
 export { AmuletOfSpirit } from './jewelry/AmuletOfSpirit';
+export { AmuletOfHealth } from './jewelry/AmuletOfHealth';
 export { WornLeatherHelmet } from './clothing/WornLeatherHelmet';
 export { TabletOfFire } from './weapons/TabletOfFire';
 export { MapAfterRedForestPiece } from './maps/MapAfterRedForestPiece';

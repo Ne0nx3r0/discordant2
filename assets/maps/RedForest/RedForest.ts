@@ -24,7 +24,7 @@ lootGenerator.addLootItem('common',ItemId.AmuletOfAgility,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfSpirit,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfLuck,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfStrength,0.05);
-lootGenerator.addLootItem('common',ItemId.MapAfterRedForestPiece,0.5);
+lootGenerator.addLootItem('common',ItemId.MapAfterRedForestPiece,1);
 
 lootGenerator.addLootItem('rare',ItemId.AmuletOfAgility,0.1);
 lootGenerator.addLootItem('rare',ItemId.AmuletOfSpirit,0.1);
@@ -97,7 +97,7 @@ export const RedForestEvents:IMapData = {
                 lootGenerator: lootGenerator,
                 lootSettings:{
                     startingNode: 'common',
-                    chanceToGenerate: 0.6,        
+                    chanceToGenerate: 0.8,        
                 },
                 wishesMax: 60,
                 goldMax: 100,

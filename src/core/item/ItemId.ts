@@ -46,6 +46,7 @@ enum ItemId {
     FireAntInfectedWeapon,
     FireAntQueenWeapon,
     FireAntSkin,
+    AmuletOfHealth,
 }
 
 export default ItemId;

@@ -23,7 +23,7 @@ const XPToLevel = [0,   450,//level 1 xp needed to get to level 2
     2300,
     2500,
     2700,
-    2900,
+    3000,
     3500,
     4000,
     4500,
