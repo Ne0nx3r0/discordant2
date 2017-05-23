@@ -57,8 +57,8 @@ export const FireAntQueenWeapon = new Weapon({
     title: 'Fire Ant Queen Weapon',
     description: 'A creature item',
     damageBlocked: 0.05,
-    useRequirements:{},
-    goldValue:0,
+    useRequirements: {},
+    goldValue: 0,
     attacks: [
         new WeaponAttack({
             title: 'protect',
@@ -103,8 +103,8 @@ export const FireAntQueenWeapon = new Weapon({
         }),
         new WeaponAttack({
             title: 'flame',
-            minBaseDamage: 30,
-            maxBaseDamage: 50,
+            minBaseDamage: 20,
+            maxBaseDamage: 40,
             damageType: DamageType.fire,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
