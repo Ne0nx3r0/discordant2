@@ -13,7 +13,7 @@ export default class GoblinSneak extends CreatureAIControlled{
             description: 'A goblin master of poisons',
             attributes: new AttributeSet({
                 strength: 4,
-                agility: 16,
+                agility: 10,
                 vitality: 8,
                 spirit: 12,
                 luck: 0,

@@ -17,7 +17,7 @@ export default class GoblinSoldier extends CreatureAIControlled{
             allowRun: false,
             attributes: new AttributeSet({
                 strength: 20,
-                agility: 20,
+                agility: 16,
                 vitality: 20,
                 spirit: 0,
                 luck: 0,

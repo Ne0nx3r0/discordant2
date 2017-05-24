@@ -14,7 +14,7 @@ export default class GoblinRaidingParty extends CreatureAIControlled{
             description: 'A roaming party of goblins looking for careless adventurer\'s to rob... or worse.',
             attributes: new AttributeSet({
                 strength: 18,
-                agility: 20,
+                agility: 10,
                 vitality: 10,
                 spirit: 0,
                 luck: 0,
