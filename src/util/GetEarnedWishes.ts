@@ -1,6 +1,7 @@
 import { XPToLevel } from "./XPToLevel";
 
-const PARTY_PENALTY = 0.15;
+const PARTY_PENALTY = 0.15;//per party member penalty
+const MAX_LEVEL_DIFFERENCE = 10;//max difference in levels before a level penalty applies
 
 interface WishesBag{
     baseWishes:number;
@@ -17,8 +18,8 @@ export default function GetEarnedWishes(bag:WishesBag){
     // Adjust base wishes
     const adjustedWishes = bag.baseWishes * partyPenalty;
 
-    //If player is within 5 levels of the top player skip level difference penalty
-    if(bag.highestLevel - bag.playerLevel <= 5){
+    //If player is within MAX_LEVEL_DIFFERENCE levels of the top player skip level difference penalty
+    if(bag.highestLevel - bag.playerLevel <= MAX_LEVEL_DIFFERENCE){
         return Math.round(adjustedWishes);
     }
 
