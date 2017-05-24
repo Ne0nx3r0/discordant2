@@ -139,8 +139,18 @@ ${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttr
             let equipSlot = '';
             let useInBattle = '';
             let useWhileExploring = '';
+            let requirementsStr = '';
 
             if(item instanceof ItemEquippable){
+                const requirementKeys = Object.keys(item.useRequirements);
+
+                if(requirementKeys.length > 0){
+                    requirementsStr = '\nRequires '+requirementKeys.map(function(key){
+                        return item.useRequirements[key]+' '+key;
+                    })
+                    .join(', ');
+                }
+
                 equipSlot = '\nCan be equipped to '+item.slotType+' slot';
             }
 
@@ -154,7 +164,7 @@ ${item.title}
 
 ${item.description}
 
-Sellable for ${item.goldValue}GP${itemBuyCost}${equipSlot+useInBattle+useWhileExploring}${recipeStr}`,EmbedColors.INFO));
+Sellable for ${item.goldValue}GP${itemBuyCost}${equipSlot+requirementsStr+useInBattle+useWhileExploring}${recipeStr}`,EmbedColors.INFO));
         }
 
 
