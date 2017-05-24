@@ -795,14 +795,14 @@ export default class Game {
             throw 'You are not registered';
         }
 
-        if(player.status != 'inParty'){
-            throw 'Only the party leader can direct the party';
-        }
-
         const party = player.party;
 
         if(!party){
-            throw 'Only the party leader can direct the party!';
+            throw 'You are not in a party right now';
+        }
+
+        if(player != party.leader){
+            throw `Only the party leader can move the party`;
         }
 
         const map:ExplorableMap = WorldMaps[mapName];
@@ -936,7 +936,7 @@ export default class Game {
 
         const party = player.party;
 
-        if(!party){
+        if(!party || party.leader != player){
             throw 'Only the party leader can disband the party';
         }
 
@@ -959,14 +959,14 @@ export default class Game {
             throw 'You cannot move the party right now';
         }
 
-        if(player.status != 'inParty'){
-            throw 'Only the party leader can move the party';
-        }
-
         const party = player.party;
 
         if(!party){
-            throw 'Only the party leader can move the party';
+            throw 'You are not in a party';
+        }
+
+        if(player != party.leader){
+            throw `Only the party leader can move the party`;
         }
         
         party.move(direction,steps);
@@ -1108,7 +1108,7 @@ export default class Game {
         if(!item.canUseInbattle && pc.status == 'inBattle'){
             throw `You cannot use ${item.title} during a battle'`;
         }
-        else if(item.canUseInbattle && pc.status != 'inBattle'){
+        else if(item.canUseInbattle && !item.canUseInParty && pc.status != 'inBattle'){
             throw `You must be in a battle to use ${item.title}`;
         }
 

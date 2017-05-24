@@ -24,7 +24,7 @@ export const Vial = new ItemUsable({
     canUseInParty: true,
     canUse: function(user:PlayerCharacter,target:PlayerCharacter){
         if(target.hpCurrent >= target.stats.hpTotal){
-            throw `${user.title}'s HP is already full`;
+            throw `${target.title}'s HP is already full`;
         }
     },
     onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{

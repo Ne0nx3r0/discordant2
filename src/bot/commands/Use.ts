@@ -20,11 +20,11 @@ export default class Use extends Command{
         let itemName;
 
         if(targetUid){
-            itemName = bag.params.slice(0,-1);
+            itemName = bag.params.slice(0,-1).join(' ');
         }
         else{
-            targetUid = bag.message.author.id;
             itemName = bag.params.join(' ');
+            targetUid = bag.message.author.id;
         }
 
         const item = bag.items.findByName(itemName);
