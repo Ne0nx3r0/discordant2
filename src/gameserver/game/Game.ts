@@ -339,7 +339,7 @@ export default class Game {
             throw 'The following items were removed because you no longer meet their requirements: '
             +removedItems.map(function(item){
                 return item.title;
-            }).join(', ')+'\n\nYou can try to equip your item again now.';
+            }).join(', ')+'\n\nYou can try to equip your item again now';
         }
 
         const itemEquippable:ItemEquippable = itemBase as ItemEquippable;
