@@ -525,21 +525,29 @@ export default class CreatureBattleTurnBased{
                 );
             }
             else{
+                let dodged = false;
+
                 //check if they dodged the attack
-                const scalingAttribute = Attribute[queuedAttackStep.step.attack.scalingAttribute];
+                if(wad.target.creature instanceof PlayerCharacter){
+                    const scalingAttribute = Attribute[queuedAttackStep.step.attack.scalingAttribute];
 
-                const attackerStat = attacker.creature.stats[scalingAttribute];
-                const defenderAgility = wad.target.creature.stats.agility;
+                    const attackerStat = attacker.creature.stats[scalingAttribute];
+                    const defenderAgility = wad.target.creature.stats.agility;
 
-                const dodge = GetDodgePercent(attackerStat,defenderAgility);
-                const roll = Math.random();
+                    const dodge = GetDodgePercent(attackerStat,defenderAgility);
+                    const chargeBonusToHit = queuedAttackStep.step.attack.chargesRequired / 2;
+                    const roll = Math.random() * ( 1 + chargeBonusToHit);
 
-                if(roll < dodge){
-                    damagesMsgs.push(
-                        `+ ${wadc.title} DODGED the attack!`
-                    );
+                    if(roll < dodge){
+                        damagesMsgs.push(
+                            `+ ${wadc.title} DODGED the attack!`
+                        );
+
+                        dodged = true;
+                    }
                 }
-                else{
+
+                if(!dodged){
                     const damageTypeStr = DamageType[wad.type];
                     
                     const resistance = wad.target.creature.stats.resistances[damageTypeStr];
