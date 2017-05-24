@@ -772,7 +772,7 @@ export default class Game {
                     .send(this.getClient());
                 }
                 
-                bag.party.returnFromBattle(battlePostBag.result,opponent.onDefeated);
+                bag.party.returnFromBattle(battlePostBag.result,battlePostBag.result==BattleResult.Team1Won?opponent.onDefeated:null);
             }
         });
 
