@@ -49,6 +49,7 @@ enum ItemId {
     AmuletOfHealth,
     RedEyeRing,
     Revive,
+    ClothTunic,
 }
 
 export default ItemId;
