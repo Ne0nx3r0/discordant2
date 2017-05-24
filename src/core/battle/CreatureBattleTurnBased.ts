@@ -11,6 +11,7 @@ import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
 import { SocketCreature } from '../creature/Creature';
 import { IWeaponAttackDamages, DamageType } from '../item/WeaponAttackStep';
 import { GetDodgePercent } from '../../util/GetDodgePercent';
+import { Attribute } from '../creature/AttributeSet';
 
 export enum BattleResult{
     Team1Won,
@@ -525,14 +526,15 @@ export default class CreatureBattleTurnBased{
             }
             else{
                 //check if they dodged the attack
-                const scalingAttribute = queuedAttackStep.step.attack.scalingAttribute;
+                const scalingAttribute = Attribute[queuedAttackStep.step.attack.scalingAttribute];
 
                 const attackerStat = attacker.creature.stats[scalingAttribute];
                 const defenderAgility = wad.target.creature.stats.agility;
 
                 const dodge = GetDodgePercent(attackerStat,defenderAgility);
+                const roll = Math.random();
 
-                if(Math.random() < dodge){
+                if(roll < dodge){
                     damagesMsgs.push(
                         `+ ${wadc.title} DODGED the attack!`
                     );
