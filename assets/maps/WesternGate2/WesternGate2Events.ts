@@ -31,7 +31,7 @@ lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedForestMapPiece,0.4);
 
 export const WesternGate2Events:IMapData = {
-    startX: 26,
+    startX: 25,
     startY: 22,
     encounterChance: 0.2,
     encounters:[
