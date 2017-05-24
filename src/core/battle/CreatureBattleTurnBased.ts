@@ -415,7 +415,9 @@ export default class CreatureBattleTurnBased{
 
             this.participants.forEach(function(bc){
                 if(!bc.defeated && bc.teamNumber != bca.teamNumber){
-                    survivingEnemies.push(bc);
+                    for(var i=0;i<bc.creature.stats.redEye;i++){
+                        survivingEnemies.push(bc);
+                    }
                 }
             });
 

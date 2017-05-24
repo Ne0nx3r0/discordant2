@@ -21,6 +21,7 @@ export interface ICreatureStatSet{
     hpTotal: number;
     resistances: IResistances;
     magicFind: number;
+    redEye: number;
 }
 
 export interface CreatureBag{
@@ -57,12 +58,13 @@ export default class Creature{
 
     updateStats(){
         const stats:ICreatureStatSet = {
-            strength:this.attributes.strength,
-            agility:this.attributes.agility,
-            vitality:this.attributes.vitality,
-            spirit:this.attributes.spirit,
-            luck:this.attributes.luck,
-            resistances:{
+            redEye: 1,
+            strength: this.attributes.strength,
+            agility: this.attributes.agility,
+            vitality: this.attributes.vitality,
+            spirit: this.attributes.spirit,
+            luck: this.attributes.luck,
+            resistances: {
                 physical:0,
                 fire:0,
                 acid:0,
