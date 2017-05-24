@@ -12,7 +12,7 @@ export default class FireAntMite extends CreatureAIControlled{
             description: 'A common parasite that lives off of giant fire ants',
             attributes: new AttributeSet({
                 strength: 12,
-                agility: 20,
+                agility: 40,
                 vitality: 8,
                 spirit: 0,
                 luck: 0,

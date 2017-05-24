@@ -13,7 +13,7 @@ export default class Goblin extends CreatureAIControlled{
             description: 'A low level generic creature',
             attributes: new AttributeSet({
                 strength: 4,
-                agility: 4,
+                agility: 10,
                 vitality: 4,
                 spirit: 0,
                 luck: 0,

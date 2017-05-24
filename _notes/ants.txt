@@ -16,3 +16,8 @@ infected
 queen
 - battle effect (worker damages player a small amount)
 - battle effect (ups resistance)
+
+
+Armor (+10 fire resis, +4 physical resis)
+Helmet (+5 fire resis, +2 physical resis)
+Shield (+5 fire resis, +3 physical resis)

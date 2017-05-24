@@ -15,7 +15,7 @@ export default class FireAntSoldier extends CreatureAIControlled{
             description: 'A common parasite that lives off of giant fire ants',
             attributes: new AttributeSet({
                 strength: 20,
-                agility: 20,
+                agility: 30,
                 vitality: 20,
                 spirit: 0,
                 luck: 0,

@@ -15,7 +15,7 @@ export default class FireAntQueen extends CreatureAIControlled{
             allowRun: false,
             attributes: new AttributeSet({
                 strength: 0,
-                agility: 0,
+                agility: 10,
                 vitality: 30,
                 spirit: 0,
                 luck: 0,

@@ -55,3 +55,4 @@ export { default as Refresh } from './commands/Refresh';
 export { default as PartyMap } from './commands/PartyMap';
 export { default as Pay } from './commands/Pay';
 export { default as Craft } from './commands/Craft';
+export { default as DodgeCalc } from './commands/DodgeCalc';

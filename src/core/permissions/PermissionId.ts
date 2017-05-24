@@ -58,6 +58,7 @@ enum PermissionId{
     PartyMap,
     Craft,
     Pay,
+    DodgeCalc,
 }
 
 export default PermissionId;

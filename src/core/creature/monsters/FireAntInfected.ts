@@ -14,7 +14,7 @@ export default class FireAntInfected extends CreatureAIControlled{
             allowRun: false,
             attributes: new AttributeSet({
                 strength: 24,
-                agility: 10,
+                agility: 40,
                 vitality: 30,
                 spirit: 0,
                 luck: 0,

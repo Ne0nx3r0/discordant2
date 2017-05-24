@@ -10,6 +10,7 @@ import WeaponAttackStep from '../item/WeaponAttackStep';
 import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
 import { SocketCreature } from '../creature/Creature';
 import { IWeaponAttackDamages, DamageType } from '../item/WeaponAttackStep';
+import { GetDodgePercent } from '../../util/GetDodgePercent';
 
 export enum BattleResult{
     Team1Won,
@@ -523,28 +524,43 @@ export default class CreatureBattleTurnBased{
                 );
             }
             else{
-                const damageTypeStr = DamageType[wad.type];
-                
-                const resistance = wad.target.creature.stats.resistances[damageTypeStr];
-                
-                let damageTaken = wad.amount - resistance;
-                let minDamage = wad.amount * 0.2;
+                //check if they dodged the attack
+                const scalingAttribute = queuedAttackStep.step.attack.scalingAttribute;
 
-                if(damageTaken < minDamage){
-                    damageTaken = minDamage;
+                const attackerStat = attacker.creature.stats[scalingAttribute];
+                const defenderAgility = wad.target.creature.stats.agility;
+
+                const dodge = GetDodgePercent(attackerStat,defenderAgility);
+
+                if(Math.random() < dodge){
+                    damagesMsgs.push(
+                        `+ ${wadc.title} DODGED the attack!`
+                    );
                 }
+                else{
+                    const damageTypeStr = DamageType[wad.type];
+                    
+                    const resistance = wad.target.creature.stats.resistances[damageTypeStr];
+                    
+                    let damageTaken = wad.amount - resistance;
+                    let minDamage = wad.amount * 0.2;
 
-                damageTaken = Math.round(damageTaken);
+                    if(damageTaken < minDamage){
+                        damageTaken = minDamage;
+                    }
 
-                const damageResisted = wad.amount - damageTaken;
+                    damageTaken = Math.round(damageTaken);
 
-                const resistedStr = damageResisted == 0 ? '' : `, resisted ${damageResisted}`;
+                    const damageResisted = wad.amount - damageTaken;
 
-                wad.target.creature.hpCurrent -= damageTaken;
+                    const resistedStr = damageResisted == 0 ? '' : `, resisted ${damageResisted}`;
 
-                damagesMsgs.push(
-                    `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${damageTypeStr.toUpperCase()} damage${resistedStr}`
-                );
+                    wad.target.creature.hpCurrent -= damageTaken;
+
+                    damagesMsgs.push(
+                        `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${damageTypeStr.toUpperCase()} damage${resistedStr}`
+                    );
+                }
             }
  
             if(wad.target.creature.hpCurrent < 1 && defeatedParticipants.indexOf(wad.target) == -1){
