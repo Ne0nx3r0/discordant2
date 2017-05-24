@@ -528,9 +528,10 @@ export default class CreatureBattleTurnBased{
                 const resistance = wad.target.creature.stats.resistances[damageTypeStr];
                 
                 let damageTaken = wad.amount - resistance;
+                let minDamage = wad.amount * 0.2;
 
-                if(damageTaken < 0){
-                    damageTaken = 0;
+                if(damageTaken < minDamage){
+                    damageTaken = minDamage;
                 }
 
                 damageTaken = Math.round(damageTaken);
