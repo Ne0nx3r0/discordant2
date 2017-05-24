@@ -6,7 +6,7 @@ import { ICreatureStatSet } from '../../creature/Creature';
 export const ClothTunic = new ItemEquippable({
     id: ItemId.ClothTunic,
     title: 'Cloth Tunic',
-    description: `(+1 Physical Resistance) A very basic robe worn by the everyday man.`,
+    description: `(+1 Physical Resistance) A very basic robe worn by commoners and adventurers alike.`,
     goldValue: 15,
     slotType:'armor',
     onAddBonuses:function(stats:ICreatureStatSet){

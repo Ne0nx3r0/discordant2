@@ -40,4 +40,4 @@ export { RedForestMap } from './maps/RedForestMap';
 export { FireAntCarapace } from './misc/FireAntCarapace';
 export { Revive } from './misc/Revive';
 export { RedEyeRing } from './jewelry/RedEyeRing';
-export { ClothTunic } from './jewelry/ClothTunic';
+export { ClothTunic } from './clothing/ClothTunic';
