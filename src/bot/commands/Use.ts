@@ -8,14 +8,24 @@ export default class Use extends Command{
         super({
             name: 'use',
             description: 'Use an item',
-            usage: 'use <itemName>',
+            usage: 'use <itemName> [@target]',
             permissionNode: PermissionId.Use,
             minParams: 1,
         });
     }
 
     async run(bag:CommandRunBag){
-        const itemName = bag.params.join(' ');
+        let targetUid = this.getUserTagId(bag.params[bag.params.length-1]);
+
+        let itemName;
+
+        if(targetUid){
+            itemName = bag.params.slice(0,-1);
+        }
+        else{
+            targetUid = bag.message.author.id;
+            itemName = bag.params.join(' ');
+        }
 
         const item = bag.items.findByName(itemName);
 
@@ -27,7 +37,7 @@ export default class Use extends Command{
             throw `${item.title} is not a usable item`;
         }
 
-        const useMessage = await bag.socket.useItem(bag.message.author.id,item.id);
+        const useMessage = await bag.socket.useItem(bag.message.author.id,targetUid,item.id);
 
         //May be null
         if(useMessage){

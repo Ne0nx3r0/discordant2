@@ -9,16 +9,18 @@ export const Acai = new ItemUsable({
     goldValue: 4,
     description: '(Restores 20 HP) A wild berry whose nutritious nectars have healing properties.',
     battleExhaustion: 1,
-    canUse: function(user:PlayerCharacter){
-        if(user.hpCurrent >= user.stats.hpTotal){
-            throw `${user.title}'s HP is already full`;
+    canUseInbattle: true,
+    canUseInParty: true,
+    canUse: function(user:PlayerCharacter,target:PlayerCharacter){
+        if(target.hpCurrent >= target.stats.hpTotal){
+            throw `${target.title}'s HP is already full`;
         }
     },
-    onUse: function(user:PlayerCharacter):string{
-        const amountToHeal = Math.min( 20 , user.stats.hpTotal-user.hpCurrent );
+    onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
+        const amountToHeal = Math.min( 20 , target.stats.hpTotal-target.hpCurrent );
 
-        user.hpCurrent += amountToHeal;
+        target.hpCurrent += amountToHeal;
 
-        return `${user.title} healed ${amountToHeal}HP, now has ${user.hpCurrent}/${user.stats.hpTotal}HP`;
+        return `${target.title} healed ${amountToHeal}HP, now has ${target.hpCurrent}/${target.stats.hpTotal}HP`;
     }
 });

@@ -20,16 +20,18 @@ export const Vial = new ItemUsable({
         ],
         wishes: 1,
     },
-    canUse: function(user:PlayerCharacter){
-        if(user.hpCurrent >= user.stats.hpTotal){
+    canUseInbattle: true,
+    canUseInParty: true,
+    canUse: function(user:PlayerCharacter,target:PlayerCharacter){
+        if(target.hpCurrent >= target.stats.hpTotal){
             throw `${user.title}'s HP is already full`;
         }
     },
-    onUse: function(user:PlayerCharacter):string{
-        const amountToHeal = Math.min( 50 , user.stats.hpTotal-user.hpCurrent );
+    onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
+        const amountToHeal = Math.min( 50 , target.stats.hpTotal-target.hpCurrent );
 
-        user.hpCurrent += amountToHeal;
+        target.hpCurrent += amountToHeal;
 
-        return `${user.title} healed ${amountToHeal}HP, now has ${user.hpCurrent}/${user.stats.hpTotal}HP`;
+        return `${target.title} healed ${amountToHeal}HP, now has ${target.hpCurrent}/${target.stats.hpTotal}HP`;
     }
 });

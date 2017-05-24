@@ -5,6 +5,7 @@ import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 
 export interface UseItemData extends ServerRequestData{
     uid: string;
+    target: string;
     item: number;
 }
 
@@ -22,7 +23,7 @@ export default class UseItemRequest extends ServerRequest{
     }
 
     async receive(bag:ServerRequestReceiveBag,data:UseItemData):Promise<UseItemResponse>{
-        const message = await bag.game.useItem(data.uid,data.item);
+        const message = await bag.game.useItem(data.uid,data.target,data.item);
 
         return {
             success: true,

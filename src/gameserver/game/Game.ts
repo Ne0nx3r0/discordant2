@@ -1067,11 +1067,28 @@ export default class Game {
         pc.updateStats();
     }
 
-    async useItem(playerUid:string,itemId:number):Promise<string>{
+    async useItem(playerUid:string,targetUid:string,itemId:number):Promise<string>{
         const pc = await this.getPlayerCharacter(playerUid);
 
         if(!pc){
             throw 'You are not registered';
+        }
+
+        let target;
+
+        if(playerUid == targetUid){
+            target = pc;
+        }
+        else{
+            target = await this.getPlayerCharacter(targetUid);
+
+            if(!target){
+                throw 'Invalid target';
+            }
+
+            if(target.party != pc.party){
+                throw `You are not in a party with ${target.title}`;
+            }
         }
 
         const item = this.items.get(itemId);
@@ -1088,8 +1105,15 @@ export default class Game {
             throw `You don't have any ${item.title}`;
         }
 
+        if(!item.canUseInbattle && pc.status == 'inBattle'){
+            throw `You cannot use ${item.title} during a battle'`;
+        }
+        else if(item.canUseInbattle && pc.status != 'inBattle'){
+            throw `You must be in a battle to use ${item.title}`;
+        }
+
         //Will throw error if something goes wrong
-        item.canUse(pc);
+        if(item.canUse) item.canUse(pc,target);
 
         //If they are in a battle, the battle is responsible for notifying the player in the message queue
         let onUseMsg = null;
@@ -1097,10 +1121,10 @@ export default class Game {
         //If they are in a battle the battle needs a chance to reject if the player is exhausted
         if(pc.battle){
             //Throws error if something is wrong, also exhausts player so they can't take another action
-            pc.battle.playerActionUseItem(pc,item);
+            pc.battle.playerActionUseItem(pc,target,item);
         }
         else{
-            onUseMsg = item.onUse(pc);//allowed to throw error
+            onUseMsg = item.onUse(pc,target);//allowed to throw error
         }
         
         await this.takePlayerItem(pc.uid,item.id,1);//May throw error

@@ -9,13 +9,9 @@ export const Tent = new ItemUsable({
     description: '(Heals 100 HP for all party members) A small bag of camping equipment which can be deployed to allow a party to safely rest for a time.',
     goldValue: 40,
     buyCost: 80,
-    battleExhaustion: -1,
-    canUse: function(user:PlayerCharacter){
-        if(user.status == 'inBattle'){
-            throw `You cannot use this in battle!`;
-        }
-    },
-    onUse: function(user:PlayerCharacter):string{
+    canUseInbattle: false,
+    canUseInParty: true,
+    onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
         if(!user.party){
             const amountHealed = Math.min(100,user.stats.hpTotal-user.hpCurrent);
 

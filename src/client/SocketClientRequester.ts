@@ -329,9 +329,10 @@ export default class SocketClientRequester{
         .send(this.sioc);
     }
 
-    async useItem(playerUid:string,itemId:number):Promise<string>{
+    async useItem(playerUid:string,targetUid:string,itemId:number):Promise<string>{
         const response = await new UseItemRequest({
             uid: playerUid,
+            target: targetUid,
             item: itemId,
         })
         .send(this.sioc);

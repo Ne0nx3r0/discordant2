@@ -48,6 +48,7 @@ enum ItemId {
     FireAntSkin,
     AmuletOfHealth,
     RedEyeRing,
+    Revive,
 }
 
 export default ItemId;

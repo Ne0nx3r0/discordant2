@@ -12,14 +12,11 @@ export const Agave = new ItemUsable({
     title: 'Agave',
     description: '(During a battle: +5 physical & fire resistance for 30 rounds) Agave Azuricana, once called "honey water" for its delicious nectar and capacity for being brewed into spirits.',
     goldValue: 25,
+    canUseInbattle: true,
+    canUseInParty: false,
     battleExhaustion: 1,
-    canUse: function(user:PlayerCharacter){
-        if(user.battle == null){
-            throw 'You are not currently in a battle';
-        }
-    },
-    onUse: function(user:PlayerCharacter):string{
-        user.battle.addTemporaryEffect(user,new BattleTemporaryEffect({
+    onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
+        target.battle.addTemporaryEffect(target,new BattleTemporaryEffect({
             id: EffectId.Agave,
             title: `Agave`,
             onAddBonuses:function(stats){

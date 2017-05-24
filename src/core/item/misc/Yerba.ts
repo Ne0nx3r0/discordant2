@@ -13,13 +13,10 @@ export const Yerba = new ItemUsable({
     description: '(During a battle: +50HP for 30 rounds) Eriodictyon crassifolium, a shrub beloved by butterflies and other small bugs. When chewed it embues the chewer with a sense of bravery and purpose.',
     goldValue: 20,
     battleExhaustion: 1,
-    canUse: function(user:PlayerCharacter){
-        if(user.battle == null){
-            throw 'You are not currently in a battle';
-        }
-    },
-    onUse: function(user:PlayerCharacter):string{
-        user.battle.addTemporaryEffect(user,new BattleTemporaryEffect({
+    canUseInbattle: true,
+    canUseInParty: false,
+    onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
+        target.battle.addTemporaryEffect(target,new BattleTemporaryEffect({
             id: EffectId.Yerba,
             title: `Yerba`,
             onAddBonuses:function(stats){

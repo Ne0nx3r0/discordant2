@@ -11,14 +11,11 @@ export const Sage = new ItemUsable({
     title: 'Sage',
     description: '(During a battle: boosts SPR) Salvia officinalis, a minty wild flower known to raise mental acuteness and state of mind of those who consume it.',
     goldValue: 15,
+    canUseInbattle: true,
+    canUseInParty: false,
     battleExhaustion: 1,
-    canUse: function(user:PlayerCharacter){
-        if(user.battle == null){
-            throw 'You are not currently in a battle';
-        }
-    },
-    onUse: function(user:PlayerCharacter):string{
-        user.battle.addTemporaryEffect(user,new BattleTemporaryEffectAttributeBoost({
+    onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
+        target.battle.addTemporaryEffect(target,new BattleTemporaryEffectAttributeBoost({
             id: EffectId.Sage,
             title: `Sage`,
             attribute: Attribute.spirit,

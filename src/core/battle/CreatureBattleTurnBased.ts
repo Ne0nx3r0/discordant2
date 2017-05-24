@@ -358,10 +358,10 @@ export default class CreatureBattleTurnBased{
         }
     }
 
-    playerActionUseItem(pc:PlayerCharacter,item:ItemUsable){
+    playerActionUseItem(pc:PlayerCharacter,target:PlayerCharacter,item:ItemUsable){
         const bc = this.getBattleCreatureForAction(pc);
 
-        const onUseMsg = item.onUse(pc);
+        const onUseMsg = item.onUse(pc,target);
 
         this.queueBattleMessage([
             `${pc.title} used ${item.title}`,
@@ -665,6 +665,17 @@ export default class CreatureBattleTurnBased{
         }
 
         return [];
+    }
+
+    revive(creature:Creature,hpAmount:number){
+        const bc = this.participantsLookup.get(creature);
+
+        if(!bc.defeated){
+            throw `${creature.title} has not been defeated yet!`;
+        }
+
+        bc.defeated = false;
+        bc.creature.hpCurrent = Math.min(hpAmount,bc.creature.stats.hpTotal);
     }
 
     queueBattleMessage(msg:Array<string>){
