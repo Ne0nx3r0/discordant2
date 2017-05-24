@@ -13,6 +13,8 @@ import { DamageScaling } from "../../core/damage/DamageScaling";
 import { DamageType } from "../../core/item/WeaponAttackStep";
 import { ItemRecipe } from '../../core/item/ItemRecipe';
 import AllItems from '../../core/item/AllItems';
+import ItemEquippable from '../../core/item/ItemEquippable';
+import ItemUsable from '../../core/item/ItemUsable';
 
 export default class Item extends Command{
     constructor(bag:CommandBag){
@@ -134,13 +136,25 @@ ${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttr
 
             const recipeStr = item.recipe ? getRecipeString(item.recipe,bag.items) :'';
 
+            let equipSlot = '';
+            let useInBattle = '';
+            let useWhileExploring = '';
+
+            if(item instanceof ItemEquippable){
+                equipSlot = '\nCan be equipped to '+item.slotType+' slot';
+            }
+
+            if(item instanceof ItemUsable){
+                useInBattle = item.canUseInbattle ? '\nCan be used during battle' : '';
+                useWhileExploring = item.canUseInParty ? '\nCan be used outside of battle' : '';
+            }
+
             bag.message.channel.sendMessage('',this.getEmbed(`
-${item.title} 
+${item.title}
 
-Sellable for ${item.goldValue}GP${itemBuyCost}
+${item.description}
 
-${item.description}${recipeStr}
-`,EmbedColors.INFO));
+Sellable for ${item.goldValue}GP${itemBuyCost}${equipSlot+useInBattle+useWhileExploring}${recipeStr}`,EmbedColors.INFO));
         }
 
 
