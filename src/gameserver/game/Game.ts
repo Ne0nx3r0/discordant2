@@ -500,7 +500,7 @@ export default class Game {
         }
 
         if(pc.wishes < item.recipe.wishes){
-            throw `You need ${item.recipe.wishes} to craft ${item.title}`;
+            throw `You need ${item.recipe.wishes} wishes to craft ${item.title}`;
         }
 
         item.recipe.components.forEach((component)=>{
