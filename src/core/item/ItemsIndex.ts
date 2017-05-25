@@ -41,3 +41,4 @@ export { FireAntCarapace } from './misc/FireAntCarapace';
 export { Revive } from './misc/Revive';
 export { RedEyeRing } from './jewelry/RedEyeRing';
 export { ClothTunic } from './clothing/ClothTunic';
+export { MapAfterRedForest } from './maps/MapAfterRedForest';

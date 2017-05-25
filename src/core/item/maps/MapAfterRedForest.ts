@@ -2,17 +2,17 @@ import ItemBase from '../ItemBase';
 import ItemId from '../ItemId';
 import InventoryItem from "../InventoryItem";
 
-export const RedForestMap = new ItemBase({
-    id: ItemId.RedForestMap,
-    title: 'Red Forest Map',
+export const MapAfterRedForest = new ItemBase({
+    id: ItemId.MapAfterRedForest,
+    title: 'Map After Red Forest',
     goldValue: 100,
-    description: 'A map of the Red Forest',
-    showInItems: false,
+    description: '<Coming soon!>',
     recipe: {
         components: [{
             itemId: ItemId.RedForestMapPiece,
             amount: 10,
         }],
-        wishes: 50,
-    }
+        wishes: 100,
+    },
+    showInItems: false,
 });
