@@ -9,7 +9,7 @@ export const MapAfterRedForest = new ItemBase({
     description: '<Coming soon!>',
     recipe: {
         components: [{
-            itemId: ItemId.RedForestMapPiece,
+            itemId: ItemId.MapAfterRedForestPiece,
             amount: 10,
         }],
         wishes: 100,
