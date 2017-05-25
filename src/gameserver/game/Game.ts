@@ -504,10 +504,10 @@ export default class Game {
         }
 
         item.recipe.components.forEach((component)=>{
-            if(!pc.inventory.hasItem(component.itemId,component.amount)){
+            if(!pc.inventory.hasItem(component.itemId,component.amount*amountWanted)){
                 const missingItemTitle = this.items.get(component.itemId).title;
 
-                throw `You need at least ${component.amount} ${missingItemTitle} to craft ${amountWanted} ${item.title}`;
+                throw `You need at least ${component.amount*amountWanted} ${missingItemTitle} to craft ${amountWanted} ${item.title}`;
             }
         });
 
@@ -518,7 +518,7 @@ export default class Game {
         });
 
         pc.inventory._addItem(item,amountWanted);
-        pc.wishes -= item.recipe.wishes;
+        pc.wishes -= item.recipe.wishes*amountWanted;
     }
 
     async setPlayerRole(uid:string,role:string):Promise<void>{
