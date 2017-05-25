@@ -53,6 +53,8 @@ enum ItemId {BareHands,HandAxe,
     FireAntShield,
     Tequila,
     ClothHood,
+    TabletOfFaith,
+    TabletOfDespair,
 }
 
 export default ItemId;
