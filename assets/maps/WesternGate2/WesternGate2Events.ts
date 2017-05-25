@@ -18,6 +18,7 @@ lootGenerator.addLootItem('common',ItemId.HandAxe,0.1);
 lootGenerator.addLootItem('common',ItemId.WornLeathers,0.3);
 lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.3);
 lootGenerator.addLootItem('common',ItemId.ClothTunic,0.3);
+lootGenerator.addLootItem('common',ItemId.ClothHood,0.3);
 lootGenerator.addLootItem('common',ItemId.Vial,1);
 lootGenerator.addLootItem('common',ItemId.RedForestMapPiece,0.3);
 
