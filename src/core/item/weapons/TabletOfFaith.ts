@@ -69,8 +69,8 @@ export const TabletOfFaith = new Weapon({
         }),
         new WeaponAttack({
             title: 'prayer',
-            minBaseDamage: 10,
-            maxBaseDamage: 10,
+            minBaseDamage: 15,
+            maxBaseDamage: 15,
             damageType: DamageType.healing,
             isFriendly: true,
             chargesRequired: 2,
@@ -87,7 +87,7 @@ export const TabletOfFaith = new Weapon({
                                     id: EffectId.Prayer,
                                     title: 'Prayer',
                                     onRoundBegin: function(bag){
-                                        let hpHealed = Math.min(10,bag.target.stats.hpTotal-bag.target.hpCurrent);
+                                        let hpHealed = Math.min(15,bag.target.stats.hpTotal-bag.target.hpCurrent);
 
                                         bag.target.hpCurrent += hpHealed;
 
