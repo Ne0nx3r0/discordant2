@@ -48,10 +48,10 @@ export const TabletOfFaith = new Weapon({
                         if(bag.isCritical){
                             healAmount = healAmount * 2;
                         }
-
-                        const adjustedHealAmount = Math.min(healAmount,bag.defender.creature.stats.hpTotal-bag.defender.creature.hpCurrent);
                         
                         bag.battle.participants.forEach(function(p){
+                            const adjustedHealAmount = Math.min(healAmount,p.creature.stats.hpTotal-p.creature.hpCurrent);
+
                             if(p.teamNumber == bag.attacker.teamNumber && !p.defeated){
                                 damages.push({
                                     target: p,
