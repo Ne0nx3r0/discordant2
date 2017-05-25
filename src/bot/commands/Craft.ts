@@ -52,6 +52,6 @@ export default class SetRole extends Command{
         })
         .join(', ');
 
-        bag.message.channel.sendMessage(`Used ${item.recipe.wishes} wishes to transform ${componentsStr} into **${amountWanted} ${item.title}**, ${bag.message.author.username}`);
+        bag.message.channel.sendMessage(`Used ${item.recipe.wishes} ${item.recipe.wishes == 1 ? 'wish' : 'wishes'} to transform ${componentsStr} into **${amountWanted} ${item.title}**, ${bag.message.author.username}`);
     }
 }
