@@ -10,13 +10,17 @@ export default async function DBCraftItem(db:DatabaseService,uid:string,item:Ite
         {
             query: 'UPDATE player SET wishes = wishes - $1 where uid = $2',
             params: [item.recipe.wishes,uid],
+        },
+        {
+            query: 'SELECT grant_player_item($1,$2,$3)',
+            params: [uid,item.id,amount],
         }
     ];
 
     item.recipe.components.forEach(function(component){
         queries.push({
             query: 'SELECT take_player_item($1,$2,$3)',
-            params: [uid,item.id,amount],
+            params: [uid,component.itemId,amount],
         });
     });
 

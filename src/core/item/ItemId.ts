@@ -1,6 +1,4 @@
-enum ItemId {
-    BareHands,
-    HandAxe,
+enum ItemId {BareHands,HandAxe,
     WoodShield,
     HuntingSword,
     WornLeathers,
