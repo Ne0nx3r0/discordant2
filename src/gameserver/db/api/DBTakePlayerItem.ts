@@ -8,5 +8,14 @@ const queryStr = `
 `;
 
 export default async function DBTakePlayerItem(db:DatabaseService,uid:string,itemId:number,amount:number):Promise<void>{
-    const result = await db.getPool().query(queryStr,[uid,itemId,amount]);
+    try{
+        const result = await db.getPool().query(queryStr,[uid,itemId,amount]);    
+    }
+    catch(ex){
+        //Kind of hackish - "custom" exception from transfer_player_item function
+        if(ex.code == 'P0002'){
+            throw ex.toString();
+        }
+        throw ex;
+    }   
 }

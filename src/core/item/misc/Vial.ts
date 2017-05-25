@@ -15,7 +15,7 @@ export const Vial = new ItemUsable({
         components:[
             {
                 itemId: ItemId.Acai,
-                amount: 1,
+                amount: 2,
             },
         ],
         wishes: 1,

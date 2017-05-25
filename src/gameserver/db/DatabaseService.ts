@@ -1,7 +1,7 @@
 import Logger from '../log/Logger';
 const pg = require('pg');
 
-interface batchQuery{
+export interface BatchQuery{
     query:string;
     params?:Array<any>;
 }
@@ -56,7 +56,7 @@ export default class DatabaseService{
     }
 
     //https://github.com/brianc/node-postgres/wiki/Transactions
-    runBatch(queries:Array<batchQuery>):any{
+    runBatch(queries:Array<BatchQuery>):any{
         const pool = this.pool;
 
         return new Promise((resolve,reject)=>{

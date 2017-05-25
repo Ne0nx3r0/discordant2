@@ -10,7 +10,7 @@ export default class SetRole extends Command{
         super({
             name: 'craft',
             description: 'Craft an item',
-            usage: 'craft <item name>',
+            usage: 'craft <item name> [amount]',
             permissionNode: PermissionId.Craft,
             minParams: 1,
         });
@@ -25,12 +25,24 @@ export default class SetRole extends Command{
         //assume everything after the first element is the item name
         if(isNaN(amountWanted)){
             amountWanted = 1;
-            itemWantedStr = bag.params.slice(1).join(' ');
+            itemWantedStr = bag.params.slice(0).join(' ');
         }
         else{
-            itemWantedStr = bag.params.slice(1,-1).join(' ');
+            itemWantedStr = bag.params.slice(0,-1).join(' ');
         }
 
-        bag.message.channel.sendMessage(`Coming soon`);
+        const item = bag.items.findByName(itemWantedStr);
+
+        if(!item){
+            throw `Unknown item ${itemWantedStr}`;
+        }
+
+        if(!item.recipe){
+            throw `${item.title} has no known recipe`;
+        }
+
+        await bag.socket.craftItem(bag.message.author.id,item.id,amountWanted);
+
+        bag.message.channel.sendMessage(`Crafted ${amountWanted} ${item.title}, ${bag.message.author.username}`);
     }
 }

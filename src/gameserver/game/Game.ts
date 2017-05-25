@@ -65,6 +65,7 @@ import SendPMClientRequest from '../../client/requests/SendPMClientRequest';
 import ExplorableMap from '../../core/map/ExplorableMap';
 import ItemId from '../../core/item/ItemId';
 import { DBTransferPlayerGold } from '../db/api/DBTransferPlayerGold';
+import DBCraftItem from "../db/api/DBCraftItem";
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -243,7 +244,7 @@ export default class Game {
 
         player.inventory._addItem(itemBase,amount);
 
-        return player.inventory.getItemAmount(itemBase);
+        return player.inventory.getItemAmount(itemBase.id);
     }
 
     async takePlayerItem(uid:string,itemId:number,amount:number):Promise<number>{
@@ -267,7 +268,7 @@ export default class Game {
 
         player.inventory._removeItem(itemBase,amount);
 
-        return player.inventory.getItemAmount(itemBase);
+        return player.inventory.getItemAmount(itemBase.id);
     }
 
     async transferPlayerItem(fromUID:string,toUID:string,itemId:number,amount:number):Promise<void>{
@@ -297,8 +298,8 @@ export default class Game {
             throw 'Invalid item id '+itemId;
         }
 
-        if(!fromPlayer.inventory.hasItem(itemBase,amount)){
-            throw `You only have ${fromPlayer.inventory.getItemAmount(itemBase)} ${itemBase.title}`;
+        if(!fromPlayer.inventory.hasItem(itemBase.id,amount)){
+            throw `You only have ${fromPlayer.inventory.getItemAmount(itemBase.id)} ${itemBase.title}`;
         }
 
         await DBTransferPlayerItem(this.db,fromPlayer.uid,toPlayer.uid,itemBase.id,amount);
@@ -324,7 +325,7 @@ export default class Game {
             throw 'Invalid item id '+itemId;
         }
 
-        if(!player.inventory.hasItem(itemBase,1)){
+        if(!player.inventory.hasItem(itemBase.id,1)){
             throw `You have no ${itemBase.title}`;
         }
         
@@ -475,6 +476,44 @@ export default class Game {
         player.updateStats();
 
         return itemUnequipped.id;
+    }
+
+    async craftItem(playerUid:string,itemId:number,amountWanted:number):Promise<void>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw `You are not registered`;
+        }
+
+        const item = this.items.get(itemId);
+
+        if(!item){
+            throw `Invalid item id ${itemId}`;
+        }
+
+        if(!item.recipe){
+            throw `${item.title} does not have a recipe`;
+        }
+
+        if(pc.wishes < item.recipe.wishes){
+            throw `You need ${item.recipe.wishes} to craft ${item.title}`;
+        }
+
+        item.recipe.components.forEach((component)=>{
+            if(!pc.inventory.hasItem(component.itemId,component.amount)){
+                const missingItemTitle = this.items.get(component.itemId).title;
+
+                throw `You need at least ${component.amount} ${missingItemTitle} to craft ${amountWanted} ${item.title}`;
+            }
+        });
+
+        await DBCraftItem(this.db,pc.uid,item,amountWanted);
+
+        item.recipe.components.forEach((component)=>{
+            pc.inventory._removeItem(this.items.get(component.itemId),component.amount * amountWanted);
+        });
+
+        pc.inventory._addItem(item,amountWanted);
     }
 
     async setPlayerRole(uid:string,role:string):Promise<void>{
@@ -808,12 +847,12 @@ export default class Game {
         const map:ExplorableMap = WorldMaps[mapName];
 
         if(map){
-            if(!map.mapItem || player.inventory.hasItem(map.mapItem,1)){
+            if(!map.mapItem || player.inventory.hasItem(map.mapItem.id,1)){
                 party.explore(map);
 
                 return null;
             } 
-            else if(map.pieceItem && player.inventory.hasItem(map.pieceItem,1)){
+            else if(map.pieceItem && player.inventory.hasItem(map.pieceItem.id,1)){
                 await this.takePlayerItem(player.uid,map.pieceItem.id,1);
 
                 party.explore(map);
@@ -1101,7 +1140,7 @@ export default class Game {
             throw `${item.title} is not usable`;
         }
 
-        if(!pc.inventory.hasItem(item,1)){
+        if(!pc.inventory.hasItem(item.id,1)){
             throw `You don't have any ${item.title}`;
         }
 
@@ -1278,7 +1317,7 @@ export default class Game {
             throw 'Invalid item id '+itemId;
         }
 
-        const amountHas = pc.inventory.getItemAmount(item);
+        const amountHas = pc.inventory.getItemAmount(item.id);
 
         if(amountHas == 0){
             throw 'You do not have any '+item.title;

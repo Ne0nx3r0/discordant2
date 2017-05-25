@@ -1,6 +1,7 @@
 import InventoryItem from './InventoryItem';
 import ItemBase from './ItemBase';
 import { SocketInventoryItem } from './InventoryItem';
+import ItemId from './ItemId';
 
 export interface DBItemBag{
     id:number;
@@ -45,8 +46,8 @@ export default class PlayerInventory{
         }
     }
 
-    hasItem(itemBase:ItemBase,amount:number):boolean{
-        const item = this.items.get(itemBase.id);
+    hasItem(itemId:ItemId,amount:number):boolean{
+        const item = this.items.get(itemId);
         
         if(item){
             return item.amount >= amount;
@@ -55,8 +56,8 @@ export default class PlayerInventory{
         return false;
     }
 
-    getItemAmount(item:ItemBase){
-        const it = this.items.get(item.id);
+    getItemAmount(itemId:ItemId){
+        const it = this.items.get(itemId);
 
         if(!it){
             return 0;

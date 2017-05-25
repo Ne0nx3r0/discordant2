@@ -68,6 +68,7 @@ import PlayerRefreshRequest from '../gameserver/socket/requests/PlayerRefreshReq
 import ItemId from '../core/item/ItemId';
 import SendPartyMapImageRequest from '../gameserver/socket/requests/SendPartyMapImageRequest';
 import TransferPlayerGoldRequest from '../gameserver/socket/requests/TransferPlayerGoldRequest';
+import CraftItemRequest from '../gameserver/socket/requests/CraftItemRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -489,6 +490,15 @@ export default class SocketClientRequester{
         return new TransferPlayerGoldRequest({
             from: fromUid,
             to: toUid,
+            amount: amount
+        })
+        .send(this.sioc);
+    }
+
+    craftItem(playerUid:string,itemId:number,amount:number):Promise<void>{
+        return new CraftItemRequest({
+            uid: playerUid,
+            item: itemId,
             amount: amount
         })
         .send(this.sioc);
