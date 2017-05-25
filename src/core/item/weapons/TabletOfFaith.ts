@@ -71,7 +71,7 @@ export const TabletOfFaith = new Weapon({
             title: 'prayer',
             minBaseDamage: 10,
             maxBaseDamage: 10,
-            damageType: DamageType.special,
+            damageType: DamageType.healing,
             isFriendly: true,
             chargesRequired: 2,
             scalingAttribute: Attribute.spirit,
