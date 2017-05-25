@@ -23,7 +23,6 @@ export const WoodShield = new Weapon({
     },
     onAddBonuses: function(stats:ICreatureStatSet){
         stats.resistances.physical += 2;
-        stats.resistances.acid += 2;
         stats.resistances.fire += 2;
         stats.resistances.thunder += 2;
     },
