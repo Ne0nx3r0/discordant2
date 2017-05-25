@@ -48,10 +48,12 @@ export default class SetRole extends Command{
         await bag.socket.craftItem(bag.message.author.id,item.id,amountWanted);
 
         const componentsStr = item.recipe.components.map(function(component){
-            return component.amount + ' ' + bag.items.get(component.itemId).title;
+            return component.amount*amountWanted + ' ' + bag.items.get(component.itemId).title;
         })
         .join(', ');
 
-        bag.message.channel.sendMessage(`Used ${item.recipe.wishes} ${item.recipe.wishes == 1 ? 'wish' : 'wishes'} to transform ${componentsStr} into **${amountWanted} ${item.title}**, ${bag.message.author.username}`);
+        const totalWishes = item.recipe.wishes * amountWanted;
+
+        bag.message.channel.sendMessage(`Used ${totalWishes} ${totalWishes == 1 ? 'wish' : 'wishes'} to transform ${componentsStr} into **${amountWanted} ${item.title}**, ${bag.message.author.username}`);
     }
 }
