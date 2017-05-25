@@ -42,3 +42,6 @@ export { Revive } from './misc/Revive';
 export { RedEyeRing } from './jewelry/RedEyeRing';
 export { ClothTunic } from './clothing/ClothTunic';
 export { MapAfterRedForest } from './maps/MapAfterRedForest';
+export { FireAntArmor } from './clothing/FireAntArmor';
+export { FireAntHelmet } from './clothing/FireAntHelmet';
+export { FireAntShield } from './weapons/FireAntShield';

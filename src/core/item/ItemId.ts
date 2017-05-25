@@ -48,6 +48,9 @@ enum ItemId {BareHands,HandAxe,
     RedEyeRing,
     Revive,
     ClothTunic,
+    FireAntArmor,
+    FireAntHelmet,
+    FireAntShield,
 }
 
 export default ItemId;
