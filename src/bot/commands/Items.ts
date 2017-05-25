@@ -40,7 +40,7 @@ export default class Items extends Command {
         const itemsListStr = this.itemStrs.slice(10 * (page-1), 10 * (page-1) + 10)
         .join('\n');
 
-        const maxPage = Math.ceil(bag.items.items.size / 10); 
+        const maxPage = Math.floor(bag.items.items.size / 10); 
 
         bag.message.channel.sendMessage(`\`\`\`xml\nItems & sell prices - Page ${page} of ${maxPage}\n${itemsListStr}\n\`\`\``);
     }
