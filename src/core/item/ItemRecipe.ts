@@ -1,9 +1,9 @@
 import ItemId from './ItemId';
 
 export interface ItemRecipe{
-    components?:Array<{
+    components:Array<{
         itemId: ItemId,
         amount: number,
     }>;
-    wishes?: number;
+    wishes: number;
 }

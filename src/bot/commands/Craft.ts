@@ -31,6 +31,10 @@ export default class SetRole extends Command{
             itemWantedStr = bag.params.slice(0,-1).join(' ');
         }
 
+        if(amountWanted < 1){
+            amountWanted = 1;
+        }
+
         const item = bag.items.findByName(itemWantedStr);
 
         if(!item){
@@ -43,6 +47,11 @@ export default class SetRole extends Command{
 
         await bag.socket.craftItem(bag.message.author.id,item.id,amountWanted);
 
-        bag.message.channel.sendMessage(`Crafted ${amountWanted} ${item.title}, ${bag.message.author.username}`);
+        const componentsStr = item.recipe.components.map(function(component){
+            return component.amount + ' ' + bag.items.get(component.itemId);
+        })
+        .join(', ');
+
+        bag.message.channel.sendMessage(`Used ${item.recipe.wishes} wishes to transform ${componentsStr} into ${amountWanted} ${item.title}, ${bag.message.author.username}`);
     }
 }

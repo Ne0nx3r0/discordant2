@@ -481,6 +481,10 @@ export default class Game {
     async craftItem(playerUid:string,itemId:number,amountWanted:number):Promise<void>{
         const pc = await this.getPlayerCharacter(playerUid);
 
+        if(amountWanted < 1){
+            throw `You must craft at least 1 item`;
+        }
+
         if(!pc){
             throw `You are not registered`;
         }
@@ -514,6 +518,7 @@ export default class Game {
         });
 
         pc.inventory._addItem(item,amountWanted);
+        pc.wishes -= item.recipe.wishes;
     }
 
     async setPlayerRole(uid:string,role:string):Promise<void>{
