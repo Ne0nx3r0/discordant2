@@ -9,7 +9,7 @@ export default async function DBCraftItem(db:DatabaseService,uid:string,item:Ite
     const queries:Array<BatchQuery> = [
         {
             query: 'UPDATE player SET wishes = wishes - $1 where uid = $2',
-            params: [item.recipe.wishes,uid],
+            params: [item.recipe.wishes * amount,uid],
         },
         {
             query: 'SELECT grant_player_item($1,$2,$3)',
@@ -20,7 +20,7 @@ export default async function DBCraftItem(db:DatabaseService,uid:string,item:Ite
     item.recipe.components.forEach(function(component){
         queries.push({
             query: 'SELECT take_player_item($1,$2,$3)',
-            params: [uid,component.itemId,amount],
+            params: [uid,component.itemId,amount * component.amount],
         });
     });
 
