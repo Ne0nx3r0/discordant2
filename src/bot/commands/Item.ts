@@ -103,7 +103,7 @@ export default class Item extends Command{
             if(item.recipe){
                 embed.addField(
                     'Recipe',
-                    getRecipeString(item.recipe,bag.items),
+                    getRecipeString(item.recipe,bag.items).split(' and ').join('\n'),
                     true
                 );
             }
