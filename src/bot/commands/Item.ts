@@ -100,6 +100,14 @@ export default class Item extends Command{
                 );
             }
 
+            if(item.recipe){
+                embed.addField(
+                    'Recipe',
+                    getRecipeString(item.recipe,bag.items),
+                    true
+                );
+            }
+
             const pc = await bag.socket.getPlayer(bag.message.author.id);
 
             const attacksStr = weapon.attacks

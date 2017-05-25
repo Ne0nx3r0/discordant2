@@ -51,6 +51,7 @@ enum ItemId {BareHands,HandAxe,
     FireAntArmor,
     FireAntHelmet,
     FireAntShield,
+    Tequila,
 }
 
 export default ItemId;

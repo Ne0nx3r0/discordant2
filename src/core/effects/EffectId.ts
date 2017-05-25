@@ -12,6 +12,7 @@ enum EffectId {
     FireAntInfectionStep,
     FireAntQueenHarden,
     FireAntQueenPheromone,
+    Tequila,
 }
 
 export default EffectId;
