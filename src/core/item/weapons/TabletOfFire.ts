@@ -17,7 +17,7 @@ export const TabletOfFire = new Weapon({
     damageBlocked: 0.05,
     goldValue: 150,
     useRequirements:{
-        spirit: 20
+        spirit: 24
     },
     chanceToCritical: 0.05,
     attacks: [
@@ -29,7 +29,7 @@ export const TabletOfFire = new Weapon({
             damageType: DamageType.fire,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.C,
-            chargesRequired: 3,
+            chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a healing legend outloud and launches a blaze of fire at {defender}',
