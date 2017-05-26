@@ -15,7 +15,7 @@ export function EventTileDrinkableWater(){
 
             bag.party.sendChannelMessage(`The party rests and has a refreshing drink of water! (+20hp to all party members)`);
 
-            if(bag.party.exploration.getEncounterChance() > Math.random()){
+            if(bag.party.exploration.getEncounterChance()*2 > Math.random()){
                 bag.party.randomMonsterEncounter();
             }
 
