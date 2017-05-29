@@ -15,11 +15,11 @@ export default class PvPBattleEndedClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestPvPBattleEndedData):Promise<void>{
-        bag.channel.sendMessage('```fix\nBattle Over\n```');
+        bag.channel.send('```fix\nBattle Over\n```');
 
-        bag.channel.sendMessage('',getEmbed(`:tada: ${data.winner.title} has defeated ${data.loser.title} :tada:`));
+        bag.channel.send('',getEmbed(`:tada: ${data.winner.title} has defeated ${data.loser.title} :tada:`));
 
-        bag.channel.sendMessage('',getEmbed(`Channel will expire in 1 minute`));
+        bag.channel.send('',getEmbed(`Channel will expire in 1 minute`));
         
         setTimeout(function(){
             bag.channel.delete();

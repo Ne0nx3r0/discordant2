@@ -17,7 +17,7 @@ export default class SetRole extends Command{
 
     async run(bag:CommandRunBag){
         if(bag.params.length < 2){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.send(this.getUsage());
 
             return;
         }
@@ -25,7 +25,7 @@ export default class SetRole extends Command{
         const tagUserId = this.getUserTagId(bag.params[0]);
 
         if(!tagUserId){
-            bag.message.channel.sendMessage('That player is not registered, '+bag.message.author.username);
+            bag.message.channel.send('That player is not registered, '+bag.message.author.username);
 
             return;
         }
@@ -33,7 +33,7 @@ export default class SetRole extends Command{
         const roleStr = bag.params[1];
 
         if(!bag.permissions.isRole(roleStr)){
-            bag.message.channel.sendMessage(`${roleStr} is not a valid role, ${bag.message.author.username}`);
+            bag.message.channel.send(`${roleStr} is not a valid role, ${bag.message.author.username}`);
 
             return;
         }
@@ -41,13 +41,13 @@ export default class SetRole extends Command{
         const setRolePC = await bag.socket.getPlayer(tagUserId);
 
         if(!setRolePC){
-            bag.message.channel.sendMessage(`That user is not registered, ${bag.message.author.username}`);
+            bag.message.channel.send(`That user is not registered, ${bag.message.author.username}`);
 
             return;
         }
 
         await bag.socket.setPlayerRole(setRolePC.uid,roleStr);
 
-        bag.message.channel.sendMessage(`${setRolePC.title} was granted the \`${roleStr}\` role, ${bag.message.author.username}`);
+        bag.message.channel.send(`${setRolePC.title} was granted the \`${roleStr}\` role, ${bag.message.author.username}`);
     }
 }

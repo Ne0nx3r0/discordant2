@@ -32,7 +32,7 @@ export default class MarketList extends Command{
             tagUserId = this.getUserTagId(bag.params[0]);
 
             if(!tagUserId){
-                bag.message.channel.sendMessage(this.getUsage());
+                bag.message.channel.send(this.getUsage());
 
                 return;
             }
@@ -41,7 +41,7 @@ export default class MarketList extends Command{
         const shopPlayer = await bag.socket.getPlayer(tagUserId);
 
         if(!shopPlayer){
-            bag.message.channel.sendMessage('Player not found');
+            bag.message.channel.send('Player not found');
 
             return;
         }
@@ -63,6 +63,6 @@ export default class MarketList extends Command{
             }).join('\n');
         }
 
-        bag.message.channel.sendMessage(msg+'```');
+        bag.message.channel.send(msg+'```');
     }
 }

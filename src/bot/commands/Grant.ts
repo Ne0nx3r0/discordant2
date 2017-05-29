@@ -20,7 +20,7 @@ export default class Inventory extends Command{
         const tagUserId = this.getUserTagId(bag.params[0]);
 
         if(!tagUserId){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.send(this.getUsage());
 
             return;
         }
@@ -28,7 +28,7 @@ export default class Inventory extends Command{
         const giveTo = await bag.socket.getPlayer(tagUserId);
 
         if(!giveTo){
-            bag.message.channel.sendMessage('Player not found');
+            bag.message.channel.send('Player not found');
 
             return;
         }
@@ -50,31 +50,31 @@ export default class Inventory extends Command{
         if(itemWantedStr == 'wishes'){
             const newWishAmount = await bag.socket.grantWishes(giveTo.uid,amountWanted);
 
-            bag.message.channel.sendMessage(`${bag.message.author.username} created ${amountWanted} wishes for ${giveTo.title}`);
+            bag.message.channel.send(`${bag.message.author.username} created ${amountWanted} wishes for ${giveTo.title}`);
         }
         else if(itemWantedStr == 'gold'){
             const newXPAmount = await bag.socket.grantGold(giveTo.uid,amountWanted);
 
-            bag.message.channel.sendMessage(`${bag.message.author.username} created ${amountWanted} gold for ${giveTo.title}`);
+            bag.message.channel.send(`${bag.message.author.username} created ${amountWanted} gold for ${giveTo.title}`);
         }
         else{//an item
             const itemWanted = bag.items.findByName(itemWantedStr);
 
             if(!itemWanted){
-                bag.message.channel.sendMessage('Unable to find '+itemWantedStr+', '+bag.message.author.username);
+                bag.message.channel.send('Unable to find '+itemWantedStr+', '+bag.message.author.username);
 
                 return;
             }
 
             if(amountWanted < 1){
-                bag.message.channel.sendMessage('You cannot give someone a negative item, '+bag.message.author.username);
+                bag.message.channel.send('You cannot give someone a negative item, '+bag.message.author.username);
 
                 return;
             }
 
             const newItemAmount = await bag.socket.grantItem(giveTo.uid,itemWanted,amountWanted);
         
-            bag.message.channel.sendMessage(`${bag.message.author.username} created ${amountWanted} ${itemWanted.title} for ${giveTo.title}`);
+            bag.message.channel.send(`${bag.message.author.username} created ${amountWanted} ${itemWanted.title} for ${giveTo.title}`);
         }
     }
 }

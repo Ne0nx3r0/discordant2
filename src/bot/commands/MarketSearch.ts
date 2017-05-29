@@ -35,7 +35,7 @@ export default class MarketSearch extends Command{
 
 
         if(!marketOffers){
-            bag.message.channel.sendMessage(`No offers found`);
+            bag.message.channel.send(`No offers found`);
 
             return;    
         }
@@ -48,6 +48,6 @@ export default class MarketSearch extends Command{
             return `< ${offerSid} ${bag.items.get(offer.item).title} = ${offer.price}GP (${offer.amountLeft} left) >`;
         }).join('\n');
         
-        bag.message.channel.sendMessage(msg+'```');
+        bag.message.channel.send(msg+'```');
     }
 }

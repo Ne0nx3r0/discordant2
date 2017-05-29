@@ -37,6 +37,6 @@ export default class DPR extends Command{
             return attack.title+ ' - ' +CalculateDamagePerRound(attack);
         }).join('\n');
 
-        bag.message.channel.sendMessage(`The DPRs for ${weapon.title}'s attacks are:\n${dprs}`);
+        bag.message.channel.send(`The DPRs for ${weapon.title}'s attacks are:\n${dprs}`);
     }
 }

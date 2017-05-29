@@ -24,7 +24,7 @@ export default class Equip extends Command{
         const slot:EquipmentSlot = bag.params[0] as EquipmentSlot;
 
         if(ValidEquipmentSlots.indexOf(slot) == -1){
-            bag.message.channel.sendMessage(`${slot} is not a valid equipment slot`);
+            bag.message.channel.send(`${slot} is not a valid equipment slot`);
 
             return;
         }
@@ -35,6 +35,6 @@ export default class Equip extends Command{
 
         const itemUnequipped = bag.items.get(itemUnequippedId);
 
-        bag.message.channel.sendMessage(`Unequipped ${itemUnequipped.title}, ${bag.message.author.username}`);
+        bag.message.channel.send(`Unequipped ${itemUnequipped.title}, ${bag.message.author.username}`);
     }
 }

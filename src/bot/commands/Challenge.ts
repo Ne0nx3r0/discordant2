@@ -31,7 +31,7 @@ export default class Challenge extends Command{
             const invite:SocketPvPInvite = await bag.socket.getPvPInvite(bag.message.author.id);
 
             if(!invite){
-                bag.message.channel.sendMessage('You do not have a pending invite, '+bag.message.author.username);
+                bag.message.channel.send('You do not have a pending invite, '+bag.message.author.username);
 
                 return;
             }
@@ -48,7 +48,7 @@ export default class Challenge extends Command{
                 throw ex;
             }
 
-            bag.message.channel.sendMessage(`The duel between <@${invite.sender.uid}> and <@${invite.receiver.uid}> begins in 30 seconds in <#${channel.id}>`);
+            bag.message.channel.send(`The duel between <@${invite.sender.uid}> and <@${invite.receiver.uid}> begins in 30 seconds in <#${channel.id}>`);
 
             return;
         }
@@ -57,7 +57,7 @@ export default class Challenge extends Command{
         const tagUserId = this.getUserTagId(bag.params[0]);
         
         if(!tagUserId){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.send(this.getUsage());
 
             return;
         }
@@ -69,7 +69,7 @@ export default class Challenge extends Command{
         //Will throw error if something goes wrong
         await bag.socket.createPvPInvite(bag.message.author.id,tagUserId);
 
-        bag.message.channel.sendMessage(`${bag.message.author.username} challenged <@${tagUserId}> to a duel! (expires in 60 seconds)
+        bag.message.channel.send(`${bag.message.author.username} challenged <@${tagUserId}> to a duel! (expires in 60 seconds)
 
 You can reply \`${bag.commandPrefix}caccept\` or \`${bag.commandPrefix}cdeny\``);
     }

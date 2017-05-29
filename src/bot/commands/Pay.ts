@@ -20,7 +20,7 @@ export default class Pay extends Command{
         const tagUserId = this.getUserTagId(bag.params[0]);
 
         if(!tagUserId){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.send(this.getUsage());
 
             return;
         }
@@ -51,6 +51,6 @@ export default class Pay extends Command{
             payAmount
         );
     
-        bag.message.channel.sendMessage(`${bag.message.author.username} gave ${payTo.title} ${payAmount}GP`);
+        bag.message.channel.send(`${bag.message.author.username} gave ${payTo.title} ${payAmount}GP`);
     }
 }

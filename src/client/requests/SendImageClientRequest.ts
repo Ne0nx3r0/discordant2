@@ -13,7 +13,7 @@ export default class SendImageClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestSendImageData):Promise<void>{
-        bag.channel.sendMessage('',{
+        bag.channel.send('',{
             embed: {
                 color: 0x36393E,
                 image: { 

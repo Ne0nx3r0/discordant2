@@ -20,6 +20,6 @@ export default class SetDesc extends Command{
 
         await bag.socket.setPlayerDescription(bag.message.author.id,description);
 
-        bag.message.channel.sendMessage(`Your description has been updated, ${bag.message.author.username}`);
+        bag.message.channel.send(`Your description has been updated, ${bag.message.author.username}`);
     }
 }

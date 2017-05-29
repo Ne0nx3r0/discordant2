@@ -27,13 +27,13 @@ export default class Refresh extends Command{
         }
 
         if(!tagUserId){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.send(this.getUsage());
 
             return;
         }
 
         await bag.socket.refreshPlayer(tagUserId);
 
-        bag.message.channel.sendMessage(`Refreshed data for player id ${tagUserId}`);
+        bag.message.channel.send(`Refreshed data for player id ${tagUserId}`);
     }
 }

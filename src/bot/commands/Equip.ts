@@ -47,10 +47,10 @@ export default class Equip extends Command{
         const itemUnequipped = bag.items.get(itemUnequippedId);
 
         if(itemUnequipped){
-            bag.message.channel.sendMessage(`Equipped ${itemBaseToEquip.title}, unequipped ${itemUnequipped.title}`);
+            bag.message.channel.send(`Equipped ${itemBaseToEquip.title}, unequipped ${itemUnequipped.title}`);
         }
         else{
-            bag.message.channel.sendMessage(`Equipped ${itemBaseToEquip.title} `);
+            bag.message.channel.send(`Equipped ${itemBaseToEquip.title} `);
         }
     }
 }

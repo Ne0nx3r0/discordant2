@@ -44,6 +44,6 @@ Starting equipment:
 ${equipStr}`;
         });
 
-        bag.message.channel.sendMessage('',this.getEmbed(msgEmbed,0x63FF47));
+        bag.message.channel.send('',this.getEmbed(msgEmbed,0x63FF47));
     }
 }

@@ -31,7 +31,7 @@ export default class Begin extends Command{
         }
 
         if(!tagUserId){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.send(this.getUsage());
             
             return;
         }
@@ -49,7 +49,7 @@ export default class Begin extends Command{
             throw 'Player not found';
         }
 
-        bag.message.channel.sendMessage("",getEmbed(player,bag.items) as MessageOptions);
+        bag.message.channel.send("",getEmbed(player,bag.items) as MessageOptions);
     }
 }
 

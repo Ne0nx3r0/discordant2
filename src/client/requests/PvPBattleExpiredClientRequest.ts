@@ -13,11 +13,11 @@ export default class PvPBattleExpiredClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestPvPBattleExpiredData):Promise<void>{
-        bag.channel.sendMessage('```fix\nBattle Expired\n```');
+        bag.channel.send('```fix\nBattle Expired\n```');
 
-        bag.channel.sendMessage('',getEmbed(`Neither player participated so the battle ended in a draw`));
+        bag.channel.send('',getEmbed(`Neither player participated so the battle ended in a draw`));
 
-        bag.channel.sendMessage('',getEmbed(`Channel will expire in 1 minute`));
+        bag.channel.send('',getEmbed(`Channel will expire in 1 minute`));
 
         setTimeout(function(){
             bag.channel.delete();

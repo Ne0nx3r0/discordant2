@@ -18,6 +18,6 @@ export default class Pong extends Command{
 
         const time = Math.round(timeMS/10)/100;
 
-        bag.message.channel.sendMessage(`Pong! (${time}s)`);
+        bag.message.channel.send(`Pong! (${time}s)`);
     }
 }

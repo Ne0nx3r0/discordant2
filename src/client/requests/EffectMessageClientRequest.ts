@@ -14,6 +14,6 @@ export default class EffectMessageClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestEffectMessageData):Promise<void>{
-        bag.channel.sendMessage('',getEmbed(data.msg,data.color));
+        bag.channel.send('',getEmbed(data.msg,data.color));
     }
 }

@@ -34,7 +34,7 @@ export default class MarketNew extends Command{
         const marketOffers:Array<SocketActiveMarketOffer> = await bag.socket.getNewestActiveMarketOffers(page);
 
         if(marketOffers == null){
-            bag.message.channel.sendMessage(`No offers found, ${bag.message.author.username}`);
+            bag.message.channel.send(`No offers found, ${bag.message.author.username}`);
             return;
         }
 
@@ -47,6 +47,6 @@ export default class MarketNew extends Command{
             return `< ${offerSid} - ${itemName} = ${offer.price}GP (${offer.amountLeft} left) >`;
         }).join('\n');
 
-        bag.message.channel.sendMessage(msg+'```');
+        bag.message.channel.send(msg+'```');
     }
 }

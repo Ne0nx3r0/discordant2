@@ -52,7 +52,7 @@ export default class Inventory extends Command{
             });
         }
 
-        bag.message.channel.sendMessage('```xml\n'+bag.message.author.username+'\'s Items (Page #'+page+'): \n'+playerItems.join('\n')+'\n```');
+        bag.message.channel.send('```xml\n'+bag.message.author.username+'\'s Items (Page #'+page+'): \n'+playerItems.join('\n')+'\n```');
     }
 }
 

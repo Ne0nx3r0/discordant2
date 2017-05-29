@@ -25,6 +25,6 @@ export default class DodgeCalc extends Command{
 
         const dodge = GetDodgePercent(attackerStat,defenderAgility);
 
-        bag.message.channel.sendMessage(`With attacker stat ${attackerStat} and AGL ${defenderAgility} dodge is **${Math.round(dodge*100)}%**`);
+        bag.message.channel.send(`With attacker stat ${attackerStat} and AGL ${defenderAgility} dodge is **${Math.round(dodge*100)}%**`);
     }
 }

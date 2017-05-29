@@ -17,13 +17,13 @@ export default class Begin extends Command{
 
     async run(bag:CommandRunBag){
         if(bag.role.title != 'anonymous'){
-            bag.message.channel.sendMessage('You are already registered, '+bag.message.author.username);
+            bag.message.channel.send('You are already registered, '+bag.message.author.username);
             
             return;
         }
 
         if(bag.params.length<1){
-            bag.message.channel.sendMessage('Usage: '+this.usage);
+            bag.message.channel.send('Usage: '+this.usage);
 
             return;
         }
@@ -36,7 +36,7 @@ export default class Begin extends Command{
         });
 
         if(!characterClass){
-            bag.message.channel.sendMessage(`${className} is not a valid class, ${author.username}`);
+            bag.message.channel.send(`${className} is not a valid class, ${author.username}`);
 
             return;
         }
@@ -48,6 +48,6 @@ export default class Begin extends Command{
             classId: characterClass.id,
         });
 
-        bag.message.channel.sendMessage(`You were successfully registered, ${player.title}!`);
+        bag.message.channel.send(`You were successfully registered, ${player.title}!`);
     }
 }

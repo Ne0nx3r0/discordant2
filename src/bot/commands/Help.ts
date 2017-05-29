@@ -52,7 +52,7 @@ export default class Inventory extends Command{
             }
             
             if(!command){
-                bag.message.channel.sendMessage('Unknown command: '+commandStr);
+                bag.message.channel.send('Unknown command: '+commandStr);
             
                 return;
             }
@@ -67,7 +67,7 @@ export default class Inventory extends Command{
                 });
             }
 
-            bag.message.channel.sendMessage('',this.getEmbed(`
+            bag.message.channel.send('',this.getEmbed(`
 **${bag.commandPrefix.toLowerCase()}${command.name}** ${redirectedFrom}
 
 ${command.description}

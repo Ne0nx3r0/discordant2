@@ -13,6 +13,6 @@ export default class SendPMClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestSendPMData):Promise<void>{
-        bag.channel.client.users.get(data.playerUid).sendMessage(data.message);
+        bag.channel.client.users.get(data.playerUid).send(data.message);
     }
 }

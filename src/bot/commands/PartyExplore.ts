@@ -38,7 +38,7 @@ export default class PartyExplore extends Command{
             if(itemIdConsumed){
                 const itemConsumed = bag.items.get(itemIdConsumed);
 
-                bag.message.channel.sendMessage(`A ${itemConsumed.title} was consumed`);
+                bag.message.channel.send(`A ${itemConsumed.title} was consumed`);
             }
         }
         else{

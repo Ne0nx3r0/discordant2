@@ -21,7 +21,7 @@ export default class WishCalc extends Command{
     async run(bag:CommandRunBag){
         for(var i=0;i<4;i++){
             if(isNaN(parseInt(bag.params[i]))){
-                bag.message.channel.sendMessage(this.getUsage());
+                bag.message.channel.send(this.getUsage());
 
                 return;
             }
@@ -34,6 +34,6 @@ export default class WishCalc extends Command{
             partySize: parseInt(bag.params[3])
         });
 
-        bag.message.channel.sendMessage(`${earnedWishes} wishes, ${bag.message.author.username}`);
+        bag.message.channel.send(`${earnedWishes} wishes, ${bag.message.author.username}`);
     }
 }

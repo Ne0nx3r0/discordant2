@@ -18,7 +18,7 @@ export default class Party extends Command{
 
     async run(bag:CommandRunBag){
         if(bag.params[0] == 'rock'){
-            bag.message.channel.sendMessage(`:beers: :musical_note: SORRY. FOR. PARTY. ROCKING. :musical_note: :beers:`);
+            bag.message.channel.send(`:beers: :musical_note: SORRY. FOR. PARTY. ROCKING. :musical_note: :beers:`);
 
             return;
         }
@@ -26,7 +26,7 @@ export default class Party extends Command{
         const party:SocketPlayerParty = await bag.socket.getPlayerParty(bag.message.author.id);
 
         if(!party){
-            bag.message.channel.sendMessage(`You are not in a party right now, ${bag.message.author.username}`);
+            bag.message.channel.send(`You are not in a party right now, ${bag.message.author.username}`);
             return;
         }
 
@@ -38,7 +38,7 @@ export default class Party extends Command{
             return `${member.title} (${member.hpCurrent} / ${member.stats.hpTotal})`;
         }).join('\n');
 
-        bag.message.channel.sendMessage(`${party.title} in channel <#${party.channel}>
+        bag.message.channel.send(`${party.title} in channel <#${party.channel}>
 Status: ${party.statusStr}
 Leader: ${party.leader.title} (${party.leader.hpCurrent} / ${party.leader.stats.hpTotal})
 Members: ${members}

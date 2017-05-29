@@ -34,13 +34,13 @@ export default class CoopBattleEndedClientRequest extends ClientRequest{
                 });
             }
 
-            bag.channel.sendMessage(msg);
+            bag.channel.send(msg);
 
-            bag.channel.sendMessage('',getEmbed('\n:tada: YOU WERE VICTORIOUS :tada:',EMBED_COLORS.INFO));
+            bag.channel.send('',getEmbed('\n:tada: YOU WERE VICTORIOUS :tada:',EMBED_COLORS.INFO));
         }
         else{
-            bag.channel.sendMessage(msg);
-            bag.channel.sendMessage('',getEmbed('\n:dizzy_face: YOU WERE DEFEATED :dizzy_face:',EMBED_COLORS.POISON));
+            bag.channel.send(msg);
+            bag.channel.send('',getEmbed('\n:dizzy_face: YOU WERE DEFEATED :dizzy_face:',EMBED_COLORS.POISON));
         }
     }
 }

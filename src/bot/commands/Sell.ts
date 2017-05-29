@@ -34,19 +34,19 @@ export default class Sell extends Command{
         const itemWanted = bag.items.findByName(itemWantedStr);
 
         if(!itemWanted){
-            bag.message.channel.sendMessage('Unable to find '+itemWantedStr+', '+bag.message.author.username);
+            bag.message.channel.send('Unable to find '+itemWantedStr+', '+bag.message.author.username);
 
             return;
         }
 
         if(amountToSell < 1){
-            bag.message.channel.sendMessage('You must sell at least 1, '+bag.message.author.username);
+            bag.message.channel.send('You must sell at least 1, '+bag.message.author.username);
 
             return;
         }
 
         await bag.socket.sellItem(bag.message.author.id,itemWanted,amountToSell);
 
-        bag.message.channel.sendMessage(`${bag.message.author.username} sold ${amountToSell} ${itemWanted.title} for ${amountToSell*itemWanted.goldValue}GP`);
+        bag.message.channel.send(`${bag.message.author.username} sold ${amountToSell} ${itemWanted.title} for ${amountToSell*itemWanted.goldValue}GP`);
     }
 }

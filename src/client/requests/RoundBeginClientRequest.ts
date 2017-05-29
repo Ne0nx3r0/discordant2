@@ -42,6 +42,6 @@ export default class RoundBeginClientRequest extends ClientRequest{
         .map(formatbc)
         .join(', ');
 
-        bag.channel.sendMessage('```diff\n--- YOUR MOVE ---\n'+team1Msg+'\n\n'+team2Msg+'```');
+        bag.channel.send('```diff\n--- YOUR MOVE ---\n'+team1Msg+'\n\n'+team2Msg+'```');
     }
 }

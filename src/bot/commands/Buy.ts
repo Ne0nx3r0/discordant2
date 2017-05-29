@@ -34,25 +34,25 @@ export default class Buy extends Command{
         const itemWanted = bag.items.findByName(itemWantedStr);
 
         if(!itemWanted){
-            bag.message.channel.sendMessage('Unable to find '+itemWantedStr+', '+bag.message.author.username);
+            bag.message.channel.send('Unable to find '+itemWantedStr+', '+bag.message.author.username);
 
             return;
         }
 
         if(!itemWanted.buyCost){
-            bag.message.channel.sendMessage(`${itemWanted.title} cannot be purchased from the town store`);
+            bag.message.channel.send(`${itemWanted.title} cannot be purchased from the town store`);
 
             return;
         }
 
         if(amountToBuy < 1){
-            bag.message.channel.sendMessage('You must buy at least 1, '+bag.message.author.username);
+            bag.message.channel.send('You must buy at least 1, '+bag.message.author.username);
 
             return;
         }
 
         await bag.socket.buyItem(bag.message.author.id,itemWanted,amountToBuy);
 
-        bag.message.channel.sendMessage(`You purchase ${amountToBuy} ${itemWanted.title} from the town market for ${amountToBuy*itemWanted.buyCost}GP, ${bag.message.author.username}`);
+        bag.message.channel.send(`You purchase ${amountToBuy} ${itemWanted.title} from the town market for ${amountToBuy*itemWanted.buyCost}GP, ${bag.message.author.username}`);
     }
 }

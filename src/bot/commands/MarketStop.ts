@@ -26,6 +26,6 @@ export default class MarketStop extends Command{
         const response = await bag.socket.marketStop(bag.message.author.id,offerId);
         const item = bag.items.get(response.item);
 
-        bag.message.channel.sendMessage(`${offerSid} stopped, received ${response.amount} ${item.title} that did not sell.`);
+        bag.message.channel.send(`${offerSid} stopped, received ${response.amount} ${item.title} that did not sell.`);
     }
 }

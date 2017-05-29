@@ -41,7 +41,7 @@ export default class Use extends Command{
 
         //May be null
         if(useMessage){
-            bag.message.channel.sendMessage(useMessage);
+            bag.message.channel.send(useMessage);
         }
     }
 }

@@ -18,6 +18,6 @@ export default class SetRole extends Command{
     async run(bag:CommandRunBag){
         bag.handlers.setLockdown(true);
         
-        bag.message.channel.sendMessage(`Bot is now on lockdown mode, ${bag.message.author.username}`);
+        bag.message.channel.send(`Bot is now on lockdown mode, ${bag.message.author.username}`);
     }
 }

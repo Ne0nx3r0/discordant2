@@ -59,7 +59,7 @@ export async function BotAttackCommand(bag:CommandRunBag,offhand:boolean){
             return attack.title;
         }).join(', ');
 
-        bag.message.channel.sendMessage(wantedAttackStr+' is not a valid attack, '+bag.message.author.username+'. '+weapon.title+' has: '+validAttacks);
+        bag.message.channel.send(wantedAttackStr+' is not a valid attack, '+bag.message.author.username+'. '+weapon.title+' has: '+validAttacks);
 
         return;
     }

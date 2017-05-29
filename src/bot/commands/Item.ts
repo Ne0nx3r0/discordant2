@@ -29,7 +29,7 @@ export default class Item extends Command{
 
     async run(bag:CommandRunBag){
         if(bag.params.length < 1){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.send(this.getUsage());
 
             return;
         }
@@ -39,7 +39,7 @@ export default class Item extends Command{
         const item = bag.items.findByName(itemName);
 
         if(!item){
-            bag.message.channel.sendMessage(itemName+' not found, '+bag.message.author.username);
+            bag.message.channel.send(itemName+' not found, '+bag.message.author.username);
 
             return;
         }
@@ -167,7 +167,7 @@ ${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttr
                 useWhileExploring = item.canUseInParty ? '\nCan be used outside of battle' : '';
             }
 
-            bag.message.channel.sendMessage('',this.getEmbed(`
+            bag.message.channel.send('',this.getEmbed(`
 ${item.title}
 
 ${item.description}

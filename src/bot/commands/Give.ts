@@ -20,7 +20,7 @@ export default class Give extends Command{
         const tagUserId = this.getUserTagId(bag.params[0]);
 
         if(!tagUserId){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.send(this.getUsage());
 
             return;
         }
@@ -52,13 +52,13 @@ export default class Give extends Command{
         const itemWanted = bag.items.findByName(itemWantedStr);
 
         if(!itemWanted){
-            bag.message.channel.sendMessage('Unable to find '+itemWantedStr+', '+bag.message.author.username);
+            bag.message.channel.send('Unable to find '+itemWantedStr+', '+bag.message.author.username);
 
             return;
         }
 
         if(amountWanted < 1){
-            bag.message.channel.sendMessage('You cannot give someone a negative item, '+bag.message.author.username);
+            bag.message.channel.send('You cannot give someone a negative item, '+bag.message.author.username);
 
             return;
         }
@@ -70,6 +70,6 @@ export default class Give extends Command{
             amount: amountWanted,
         });
     
-        bag.message.channel.sendMessage(`${bag.message.author.username} gave ${giveTo.title} ${amountWanted} ${itemWanted.title}`);
+        bag.message.channel.send(`${bag.message.author.username} gave ${giveTo.title} ${amountWanted} ${itemWanted.title}`);
     }
 }

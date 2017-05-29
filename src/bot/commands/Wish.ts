@@ -25,20 +25,20 @@ export default class SetRole extends Command{
             const amount = parseInt(bag.params[1]);
 
             if(isNaN(amount)){
-                bag.message.channel.sendMessage(`Invalid amount, ${bag.message.author.username}`);
+                bag.message.channel.send(`Invalid amount, ${bag.message.author.username}`);
 
                 return;
             }
 
             if(amount < 1){
-                bag.message.channel.sendMessage(`You stare up to the sky with hope in your eyes... But nothing happens, ${bag.message.author.username}`);
+                bag.message.channel.send(`You stare up to the sky with hope in your eyes... But nothing happens, ${bag.message.author.username}`);
 
                 return;
             }
 
             const response = await bag.socket.convertWishesToGold(bag.message.author.id,amount);
 
-            bag.message.channel.sendMessage(`You use your wishes to become ${response.goldGained}GP richer, ${response.goldTotal}GP total`);
+            bag.message.channel.send(`You use your wishes to become ${response.goldGained}GP richer, ${response.goldTotal}GP total`);
 
             return;
         }
@@ -46,13 +46,13 @@ export default class SetRole extends Command{
         if(wishType == 'RESPEC'){ 
             await bag.socket.respecPlayer(bag.message.author.id);
 
-            bag.message.channel.sendMessage(`You use your wishes to realign your strengths`);
+            bag.message.channel.send(`You use your wishes to realign your strengths`);
 
             return;
         }
 
         if(WishTypes.indexOf(wishType) == -1){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.send(this.getUsage());
 
             return;
         }
@@ -83,6 +83,6 @@ export default class SetRole extends Command{
             break;
         }
 
-        bag.message.channel.sendMessage(`${msg}, ${bag.message.author.username}`);
+        bag.message.channel.send(`${msg}, ${bag.message.author.username}`);
     }
 }

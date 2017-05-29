@@ -33,7 +33,7 @@ export default class MarketSearch extends Command{
         const offer = await bag.socket.getMarketOffer(offerId);
         const offerItem = bag.items.get(offer.item);
 
-        bag.message.channel.sendMessage(`Offer ${offerSid}
+        bag.message.channel.send(`Offer ${offerSid}
 ${offer.ended ? '\nENDED\n~~' : ''}${offer.amountLeft} ${offerItem.title} for sale at ${offer.price}GP each${offer.ended ? '~~' : ''}
 
 Seller: ${offer.sellerTitle}

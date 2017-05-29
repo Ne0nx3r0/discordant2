@@ -23,14 +23,14 @@ export default class Top extends Command{
         const leadOption = LeadPlayerOption[leadOptionStr];
 
         if(leadOption === undefined){
-            bag.message.channel.sendMessage(this.getUsage());
+            bag.message.channel.send(this.getUsage());
 
             return;
         }
 
         const topPlayers = await bag.socket.getTopPlayers(leadOption);
 
-        bag.message.channel.sendMessage(`Top players by ${leadOptionStr}
+        bag.message.channel.send(`Top players by ${leadOptionStr}
 ${topPlayers.map(function(p){return p.title + ' - ' + p.amount;}).join('\n')}`);
     }
 }

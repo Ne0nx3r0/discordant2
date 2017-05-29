@@ -20,6 +20,6 @@ export default class Inventory extends Command{
 
         bag.handlers.setPlayingGame(status);
 
-        bag.message.channel.sendMessage(`Set current game to "${status}", ${bag.message.author.username}`);
+        bag.message.channel.send(`Set current game to "${status}", ${bag.message.author.username}`);
     }
 }

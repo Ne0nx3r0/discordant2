@@ -54,6 +54,6 @@ export default class SetRole extends Command{
 
         const totalWishes = item.recipe.wishes * amountWanted;
 
-        bag.message.channel.sendMessage(`Used ${totalWishes} ${totalWishes == 1 ? 'wish' : 'wishes'} to transform ${componentsStr} into **${amountWanted} ${item.title}**, ${bag.message.author.username}`);
+        bag.message.channel.send(`Used ${totalWishes} ${totalWishes == 1 ? 'wish' : 'wishes'} to transform ${componentsStr} into **${amountWanted} ${item.title}**, ${bag.message.author.username}`);
     }
 }

@@ -43,6 +43,6 @@ console.log(ex);
             throw ex;
         }
 
-        bag.message.channel.sendMessage(`Your party is ready at <#${partyChannel.id}>, ${bag.message.author.username}`);
+        bag.message.channel.send(`Your party is ready at <#${partyChannel.id}>, ${bag.message.author.username}`);
     }
 }

@@ -15,6 +15,6 @@ export default class PassedOutRequest extends ClientRequest{
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestPassedOutData):Promise<void>{
         const wishesLost = data.lostWishes?` (Lost ${data.lostWishes} wishes)`:'';
 
-        bag.channel.sendMessage(`:skull_crossbones: ${data.creatureTitle} passed out!${wishesLost} :skull_crossbones:`);
+        bag.channel.send(`:skull_crossbones: ${data.creatureTitle} passed out!${wishesLost} :skull_crossbones:`);
     }
 }

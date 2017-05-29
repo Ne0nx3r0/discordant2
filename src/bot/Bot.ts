@@ -166,7 +166,7 @@ export default class Bot{
         const expireMS = nowMS - COOLDOWN_MS;
 
         if(lastCommandMS && lastCommandMS > expireMS){
-            message.channel.sendMessage(`You are sending commands too fast, ${message.author.username}`);
+            message.channel.send(`You are sending commands too fast, ${message.author.username}`);
 
             return;
         }
@@ -181,23 +181,23 @@ export default class Bot{
                 const playerRole:PermissionRole = this.permissions.getRole(playerRoleStr);
 
                 if(this.lockdown && this.ownerUIDs.indexOf(playerUID) == -1){
-                    message.channel.sendMessage(`Bot on lockdown, only owners may use commands.`);
+                    message.channel.send(`Bot on lockdown, only owners may use commands.`);
 
                     return;
                 }
 
                 if(!playerRole.has(command.permissionNode) && this.ownerUIDs.indexOf(playerUID) == -1){
                     if(playerRole.title == 'anonymous'){
-                        message.channel.sendMessage(`You can register with \`dbegin\``);
+                        message.channel.send(`You can register with \`dbegin\``);
                     }
                     else{
-                        message.channel.sendMessage(`You are not allowed to use this command, ${message.author.username}`);
+                        message.channel.send(`You are not allowed to use this command, ${message.author.username}`);
                     }
                     return;
                 }
 
                 if(command.minParams > params.length){
-                    message.channel.sendMessage(command.getUsage());
+                    message.channel.send(command.getUsage());
 
                     return;
                 }
@@ -221,7 +221,7 @@ export default class Bot{
                 });
             }
             catch(errorMsg){
-                message.channel.sendMessage(errorMsg+', '+message.author.username);
+                message.channel.send(errorMsg+', '+message.author.username);
             }
         })();
     }

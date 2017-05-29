@@ -12,6 +12,6 @@ export default class SendMessageClientRequest extends ClientRequest{
     }
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestSendMessageData):Promise<void>{
-        bag.channel.sendMessage(data.message);
+        bag.channel.send(data.message);
     }
 }
