@@ -153,7 +153,11 @@ export default class PlayerParty{
 
             this.exploration.move(direction);
 
-            if(this.exploration.getEncounterChance() > Math.random()){
+            //If an eventtile was encountered stop the party
+            if(this.exploration.onEnterCurrentTile()){
+                return;
+            }
+            else if(this.exploration.getEncounterChance() > Math.random()){
                 this.randomMonsterEncounter();
 
                 return;

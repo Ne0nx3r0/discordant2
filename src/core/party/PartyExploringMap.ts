@@ -70,7 +70,7 @@ export default class PartyExploringMap{
         return this.map.getRandomEncounterMonsterId();
     }
 
-    onEnterCurrentTile(){
+    onEnterCurrentTile():boolean{
         const xDashY = this.currentX+'-'+this.currentY;
 
         const event = this.map.getTileEvent(xDashY);
@@ -85,7 +85,11 @@ export default class PartyExploringMap{
             });
 
             this.onEnterRunCounts.set(xDashY,runCounts+1);
+
+            return true;
         }
+
+        return false;
     }
 
     onInteractCurrentTile(player:PlayerCharacter){
