@@ -9,7 +9,7 @@ export default class Daily extends Command{
         super({
             name: 'daily',
             description: 'Set a user\'s role',
-            usage: 'daily <@username> <roleName>',
+            usage: 'daily',
             permissionNode: PermissionId.Daily,
             minParams: 0,
         });
