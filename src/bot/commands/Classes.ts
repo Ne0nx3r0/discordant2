@@ -2,7 +2,7 @@ import Command from '../Command';
 import { CommandBag, CommandRunBag } from '../Command';
 import PermissionId from '../../core/permissions/PermissionId';
 import CharacterClass from '../../core/creature/player/CharacterClass';
-import CharacterClasses from '../../core/creature/player/CharacterClasses';
+import CharacterClasses, { CharacterClassId } from '../../core/creature/player/CharacterClasses';
 
 export default class Inventory extends Command{
     constructor(bag:CommandBag){
@@ -21,6 +21,10 @@ export default class Inventory extends Command{
         let msgEmbed = 'Available classes:';
 
         CharacterClasses.forEach(function(c:CharacterClass,key){
+            if(c.id == CharacterClassId.Nobody){
+                return;
+            }
+            
             let equipStr = '';
             
             if(c.startingEquipment.amulet) equipStr += ', '+c.startingEquipment.amulet.title;

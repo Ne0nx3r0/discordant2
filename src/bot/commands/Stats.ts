@@ -112,6 +112,11 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                     name: 'Magic Find',
                     value: pc.stats.magicFind,
                     inline: true,
+                },            
+                {
+                    name: 'Karma',
+                    value: pc.karma,
+                    inline: true,
                 },
                 {
                     name: 'Weapons',

@@ -59,6 +59,7 @@ enum PermissionId{
     Craft,
     Pay,
     DodgeCalc,
+    Daily
 }
 
 export default PermissionId;

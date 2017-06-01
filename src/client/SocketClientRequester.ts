@@ -69,6 +69,7 @@ import ItemId from '../core/item/ItemId';
 import SendPartyMapImageRequest from '../gameserver/socket/requests/SendPartyMapImageRequest';
 import TransferPlayerGoldRequest from '../gameserver/socket/requests/TransferPlayerGoldRequest';
 import CraftItemRequest from '../gameserver/socket/requests/CraftItemRequest';
+import GetDailyRequest from '../gameserver/socket/requests/GetDailyRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -502,5 +503,14 @@ export default class SocketClientRequester{
             amount: amount
         })
         .send(this.sioc);
+    }
+
+    async getDaily(playerUid:string):Promise<string>{
+        const response = await new GetDailyRequest({
+            uid: playerUid
+        })
+        .send(this.sioc);
+        
+        return response.message;
     }
 }

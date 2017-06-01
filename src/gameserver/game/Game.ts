@@ -66,6 +66,13 @@ import ExplorableMap from '../../core/map/ExplorableMap';
 import ItemId from '../../core/item/ItemId';
 import { DBTransferPlayerGold } from '../db/api/DBTransferPlayerGold';
 import DBCraftItem from "../db/api/DBCraftItem";
+import { DBGrantPlayerKarma } from '../db/api/DBGrantPlayerKarma';
+import { DBDailyReward } from '../db/api/DBDailyReward';
+import moment = require("moment");
+
+//how often players can get a daily reward
+// Sssh 23 hours
+const DAILY_MS = 23 * 60 * 60 * 1000;
 
 export interface GameServerBag{
     db: DatabaseService;
@@ -150,7 +157,8 @@ export default class Game {
                 gold: dbPlayer.gold,
                 wishes: dbPlayer.wishes,
                 role: this.permissions.getRole(dbPlayer.role),
-                karma: dbPlayer.karma
+                karma: dbPlayer.karma,
+                lastDaily: dbPlayer.last_daily*1
             });
 
             this.cachedPCs.set(player.uid,player);
@@ -198,6 +206,7 @@ export default class Game {
             level: 0,
             role: this.permissions.getRole('player'),
             karma: 0,
+            lastDaily: new Date().getTime()
         });
 
         return player;
@@ -209,6 +218,16 @@ export default class Game {
         const leftOver = await DBGrantPlayerWishes(this.db,uid,amount);
 
         player.wishes += amount;
+
+        return leftOver;
+    }
+
+    async grantPlayerKarma(uid:string,amount:number):Promise<number>{
+        const player = await this.getPlayerCharacter(uid);
+
+        const leftOver = await DBGrantPlayerKarma(this.db,uid,amount);
+
+        player.karma += amount;
 
         return leftOver;
     }
@@ -1450,6 +1469,46 @@ export default class Game {
         }
 
         party.sendCurrentMapImageFile('You are here');
+    }
+
+    async getDaily(playerUid:string):Promise<string>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw `You are not registered yet!`;
+        }
+
+        const nowMS = new Date().getTime();
+        const nextDaily = pc.lastDaily + DAILY_MS;
+
+        if(nowMS < nextDaily){
+            const differenceHours = moment(new Date(nextDaily)).diff(moment(new Date(nowMS)),'hours');
+
+            if(differenceHours == 1){
+                const differenceMinutes = moment(new Date(nextDaily)).diff(moment(new Date(nowMS)),'minutes');
+
+                if(differenceMinutes == 1){
+                    return 'Seriously? You can\'t chill out for one minute?';
+                }
+
+                return `You must wait ${differenceMinutes} ${differenceMinutes==1?'minute':'minutes'}`;
+            }
+
+            return `You must wait ${differenceHours} ${differenceHours==1?'hour':'hours'}`;
+        }
+
+        const wishesToLevel = XPToLevel[pc.level];
+
+        //1% to 5% of wishes needed to level up
+        const wishesEarned = Math.round(Math.random() * wishesToLevel * 0.04 + wishesToLevel * 0.01);
+
+        const wishesLeft = await DBDailyReward(this.db,pc.uid,wishesEarned);
+
+        pc.wishes = wishesLeft;
+        pc.karma++;
+        pc.lastDaily = new Date().getTime();
+
+        return `You got 1 karma and ${wishesEarned} wishes!`;
     }
 }
 

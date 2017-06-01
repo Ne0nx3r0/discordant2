@@ -18,6 +18,7 @@ export interface DBPlayer{
     attribute_luck: number;
     inventory:Array<DBInventoryItem>;
     equipment:Array<DBEquipmentItem>;
+    last_daily: number;
 }
 
 export interface DBEquipmentItem{

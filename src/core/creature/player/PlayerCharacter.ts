@@ -33,6 +33,7 @@ interface PCConfig{
     wishes:number;
     role:PermissionRole;
     karma:number;
+    lastDaily:number;
 }
 
 export default class PlayerCharacter extends Creature{
@@ -47,7 +48,7 @@ export default class PlayerCharacter extends Creature{
     inventory:PlayerInventory;
     role:PermissionRole;
     karma:number;
-    lastCommand:number;
+    lastDaily:number;
 
     constructor(o:PCConfig){
         super({
@@ -70,7 +71,7 @@ export default class PlayerCharacter extends Creature{
         this.status = 'inCity';
         this.party = null;
         this.battle = null;
-        this.lastCommand = 0;
+        this.lastDaily = o.lastDaily;
     }
 
     get isPartyLeader():boolean{

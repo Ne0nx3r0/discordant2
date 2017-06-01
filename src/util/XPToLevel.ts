@@ -1,4 +1,4 @@
-const XPToLevel = [0,   450,//level 1 xp needed to get to level 2
+const XPToLevel = [0,/*not used*/   450,//level 1 xp needed to get to level 2
     500,
     550,
     600,
