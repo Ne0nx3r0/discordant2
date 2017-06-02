@@ -7,8 +7,8 @@ export const Tent = new ItemUsable({
     id: ItemId.Tent,
     title: 'Tent',
     description: '(Heals 100 HP for all party members) A small bag of camping equipment which can be deployed to allow a party to safely rest for a time.',
-    goldValue: 40,
-    buyCost: 80,
+    goldValue: 25,
+    buyCost: 50,
     canUseInbattle: false,
     canUseInParty: true,
     onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
