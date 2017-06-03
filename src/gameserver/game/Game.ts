@@ -1484,10 +1484,10 @@ export default class Game {
         if(nowMS < nextDaily){
             const differenceHours = moment(new Date(nextDaily)).diff(moment(new Date(nowMS)),'hours');
 
-            if(differenceHours == 1){
+            if(differenceHours == 0){
                 const differenceMinutes = moment(new Date(nextDaily)).diff(moment(new Date(nowMS)),'minutes');
 
-                if(differenceMinutes == 1){
+                if(differenceMinutes == 0){
                     return 'Seriously? You can\'t chill out for one minute?';
                 }
 
