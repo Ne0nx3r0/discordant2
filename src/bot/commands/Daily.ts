@@ -8,7 +8,7 @@ export default class Daily extends Command{
     constructor(bag:CommandBag){
         super({
             name: 'daily',
-            description: 'Set a user\'s role',
+            description: 'Get a free daily gift for playing!',
             usage: 'daily',
             permissionNode: PermissionId.Daily,
             minParams: 0,
