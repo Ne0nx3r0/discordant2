@@ -89,6 +89,8 @@ export default class Bot{
     }
 
     handleReady(){
+        this.client.user.setStatus("online");
+
         setTimeout(()=>{
             this.setPlayingGame(this.commandPrefix+'help for commands');
         },500);
@@ -218,6 +220,7 @@ export default class Bot{
                         createPartyChannel: this.createPartyChannel.bind(this),
                         deleteChannel: this.deleteChannel.bind(this),
                         setLockdown: this.setLockdown.bind(this),
+                        logout: this.logout.bind(this),
                     },
                     permissions: this.permissions
                 });
@@ -234,6 +237,10 @@ export default class Bot{
 
     setPlayingGame(msg:string){
         this.client.user.setGame(msg);
+    }
+
+    logout(){
+        this.client.user.setStatus("invisible");
     }
 
     getChannelById(channelId:string):TextChannel{
