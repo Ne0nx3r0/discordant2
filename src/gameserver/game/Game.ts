@@ -1491,10 +1491,10 @@ export default class Game {
                     return 'Seriously? You can\'t chill out for one minute?';
                 }
 
-                return `You must wait ${differenceMinutes} ${differenceMinutes==1?'minute':'minutes'}`;
+                return `You must wait ${1+differenceMinutes} ${differenceMinutes==0?'minute':'minutes'}`;
             }
 
-            return `You must wait ${differenceHours} ${differenceHours==1?'hour':'hours'}`;
+            return `You must wait ${1+differenceHours} ${differenceHours==0?'hour':'hours'}`;
         }
 
         const wishesToLevel = XPToLevel[pc.level];
