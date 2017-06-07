@@ -52,7 +52,7 @@ interface IExplorableMapBag{
 export default class ExplorableMap{
     fileName:string;
     title:string;
-    triggersLayer:number;
+    pathLayer:number;
     mapJson:MapJson;
     mapData:IMapData;
     eventTiles:Map<string,EventTile>;
@@ -70,14 +70,14 @@ export default class ExplorableMap{
         for(var i=0;i<this.mapJson.layers.length;i++){
             const layer = this.mapJson.layers[i];
 
-            if(layer.name == 'walls'){
-                this.triggersLayer = i;
+            if(layer.name == 'path'){
+                this.pathLayer = i;
                 break; 
             }
         }
 
-        if(this.triggersLayer === undefined){
-            throw 'No walls layer defined in map '+this.fileName;
+        if(this.pathLayer === undefined){
+            throw 'No path layer defined in map '+this.fileName;
         }
 
         this.eventTiles = new Map();
@@ -94,7 +94,7 @@ export default class ExplorableMap{
     }
 
     isWalkable(x:number,y:number):boolean{
-        return this.mapJson.layers[this.triggersLayer].data[(y-1)*this.mapJson.width+x-1] != 1;
+        return this.mapJson.layers[this.pathLayer].data[(y-1)*this.mapJson.width+x-1] == 1;
     }
 
     getEncounterChance(){
