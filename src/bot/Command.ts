@@ -24,7 +24,6 @@ export interface BotHandlers{
     createPartyChannel(guild:Guild,partyName:string,leaderUid:string):TextChannel;
     setLockdown(lockdown:boolean):void;
     deleteChannel: DeleteChannelFunc;
-    logout():void;
 }
 
 export interface CommandRunBag{
