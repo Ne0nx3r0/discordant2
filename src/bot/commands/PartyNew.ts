@@ -22,7 +22,7 @@ export default class PartyNew extends Command{
         const player = await bag.socket.getPlayer(bag.message.author.id);
 
         if(player.status == 'inParty'){
-            throw `You are already in a party at <#${player.partyChannelId}?`;
+            throw `You are already in a party at <#${player.partyChannelId}>`;
         }
 
         if(player.status != 'inCity'){
