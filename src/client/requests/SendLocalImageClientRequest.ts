@@ -1,5 +1,5 @@
 import ClientRequest from '../ClientRequest';
-import { TextChannel } from 'discord.js';
+import { TextChannel, Message } from 'discord.js';
 import { ClientRequestData, ClientRequestReceiveBag } from '../ClientRequest';
 import { SocketClientBag } from '../SocketClientRequester';
 import SetSliceRemoteUrlRequest from '../../gameserver/socket/requests/SetSliceRemoteUrlRequest';
@@ -17,7 +17,12 @@ export default class SendLocalImageClientRequest extends ClientRequest{
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestSendLocalImageData):Promise<void>{
         try{
-            const resultMessage = await bag.channel.sendFile(data.imageSrc,data.locationName+'.png',data.message);
+            const resultMessage:Message = await bag.channel.send(data.message,{
+                file:{
+                    attachment: data.imageSrc,
+                    name: data.locationName+'.png',
+                }
+            }) as Message;
 
             const cacheUrl = resultMessage.attachments.first().url;      
 
