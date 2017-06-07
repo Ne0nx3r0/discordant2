@@ -124,6 +124,8 @@ export default class Bot{
         }
 
         this.setPlayingGame(this.commandPrefix+'help for commands');
+        
+        this.client.user.setStatus("online");
     }
 
     handleMessage(message:Message){
@@ -216,6 +218,7 @@ export default class Bot{
                         createPartyChannel: this.createPartyChannel.bind(this),
                         deleteChannel: this.deleteChannel.bind(this),
                         setLockdown: this.setLockdown.bind(this),
+                        logout: this.logout.bind(this)
                     },
                     permissions: this.permissions
                 });
@@ -236,6 +239,10 @@ export default class Bot{
 
     getChannelById(channelId:string):TextChannel{
         return this.client.channels.get(channelId) as TextChannel;
+    }
+
+    logout(){
+        this.client.user.setStatus("invisible");
     }
 
     async createPvPChannel(guild:Guild,invite:SocketPvPInvite):Promise<TextChannel>{

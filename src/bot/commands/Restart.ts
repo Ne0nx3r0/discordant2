@@ -22,6 +22,8 @@ export default class Restart extends Command{
         setTimeout(function(){
             new RestartRequest({}).send(bag.socket.sioc);
 
+            bag.handlers.logout();
+
             process.exit();
         },500);
     }
