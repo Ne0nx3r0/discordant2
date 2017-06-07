@@ -89,6 +89,8 @@ export default class Bot{
     }
 
     handleReady(){
+        this.setPlayingGame(this.commandPrefix+'help for commands');
+
         let deleteChannelDelay = 2000;
 
         try{
@@ -122,8 +124,6 @@ export default class Bot{
         catch(ex){
             this.logger.error(ex);
         }
-
-        this.setPlayingGame(this.commandPrefix+'help for commands');
     }
 
     handleMessage(message:Message){
