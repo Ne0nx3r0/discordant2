@@ -19,10 +19,10 @@ export default class Restart extends Command{
     async run(bag:CommandRunBag){
         bag.message.channel.send('Restarting bot & API server...');
 
+        bag.handlers.logout();
+
         setTimeout(function(){
             new RestartRequest({}).send(bag.socket.sioc);
-
-            bag.handlers.logout();
 
             process.exit();
         },500);
