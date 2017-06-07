@@ -89,7 +89,9 @@ export default class Bot{
     }
 
     handleReady(){
-        this.setPlayingGame(this.commandPrefix+'help for commands');
+        setTimeout(()=>{
+            this.setPlayingGame(this.commandPrefix+'help for commands');
+        },500);
 
         let deleteChannelDelay = 2000;
 
