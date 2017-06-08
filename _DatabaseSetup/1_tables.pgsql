@@ -19,7 +19,7 @@ CREATE TABLE public.player
     attribute_spirit smallint NOT NULL DEFAULT 0,
     attribute_luck smallint NOT NULL DEFAULT 0,
     karma integer NOT NULL DEFAULT 1,
-    last_daily integer NOT NULL DEFAULT 0,
+    last_daily bigint NOT NULL DEFAULT 0,
     role character varying COLLATE pg_catalog."default" NOT NULL DEFAULT 'player'::character varying,
     created time without time zone DEFAULT now(),
     CONSTRAINT player_uid PRIMARY KEY (uid)
