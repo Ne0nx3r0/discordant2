@@ -44,7 +44,7 @@ export default class DPR extends Command{
 
         const dprs = weapon.attacks.map(function(attack){
             const dpr = Math.round(CalculateDamagePerRound(attack)*100)/100;
-            const statdpr = Math.round(dpr/statRequirementsTotal*100)/100 - 0.6;
+            const statdpr = Math.round((dpr/statRequirementsTotal)*100)/100;
 
             return attack.title+ ' - ' +dpr+ ' / '+statRequirementsTotal + ' = '+statdpr;
         }).join('\n');
