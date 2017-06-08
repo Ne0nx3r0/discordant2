@@ -12,7 +12,7 @@ import EffectId from '../../effects/EffectId';
 
 export const FireAxe = new Weapon({
     id: ItemId.FireAxe,
-    title: 'Fire Great Axe',
+    title: 'Fire Axe',
     description: `A large axe enchanted to erupt in flame when striking an opponent`,
     damageBlocked: 0.05,
     goldValue: 150,
@@ -22,8 +22,8 @@ export const FireAxe = new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'swing',
-            minBaseDamage: 30,
-            maxBaseDamage: 40,
+            minBaseDamage: 20,
+            maxBaseDamage: 30,
             damageType: DamageType.fire,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
@@ -37,12 +37,12 @@ export const FireAxe = new Weapon({
         }),        
         new WeaponAttack({
             title: 'slam',
-            minBaseDamage: 50,
-            maxBaseDamage: 60,
+            minBaseDamage: 60,
+            maxBaseDamage: 70,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            chargesRequired: 2,
+            chargesRequired: 3,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slams their axe down on {defender}',
