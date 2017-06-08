@@ -55,6 +55,9 @@ enum ItemId {BareHands,HandAxe,
     ClothHood,
     TabletOfFaith,
     TabletOfDespair,
+    FireDagger,
+    FireMace,
+    FireAxe,
 }
 
 export default ItemId;

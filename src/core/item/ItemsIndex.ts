@@ -47,3 +47,6 @@ export { FireAntHelmet } from './clothing/FireAntHelmet';
 export { FireAntShield } from './weapons/FireAntShield';
 export { ClothHood } from './clothing/ClothHood';
 export { TabletOfFaith } from './weapons/TabletOfFaith';
+export { FireDagger } from './weapons/FireDagger';
+export { FireAxe } from './weapons/FireAxe';
+export { FireMace } from './weapons/FireMace';
