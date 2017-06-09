@@ -49,6 +49,10 @@ export default class Give extends Command{
             itemWantedStr = bag.params.slice(1,-1).join(' ');
         }
 
+        if(itemWantedStr == 'gold'){
+            throw `Use \`dpay <@username> <amount>\``;
+        }
+
         const itemWanted = bag.items.findByName(itemWantedStr);
 
         if(!itemWanted){
