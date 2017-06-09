@@ -104,6 +104,10 @@ export default class PlayerParty{
         return this.partyStatus;
     }
 
+    get currentTileStopsPlayer():boolean{
+        return this.exploration.currentTileStopsPlayer;
+    }
+
     returnToTown(){
         this.exploration = null;
         
@@ -157,8 +161,8 @@ export default class PlayerParty{
 
             this.exploration.move(direction);
 
-            //If an eventtile was encountered stop the party
-            if(this.exploration.onEnterCurrentTile()){
+            //If an eventtile was encountered that stops the party
+            if(this.currentTileStopsPlayer && this.exploration.onEnterCurrentTile()){
                 return;
             }
             else if(this.exploration.getEncounterChance() > Math.random()){

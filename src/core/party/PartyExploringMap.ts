@@ -120,4 +120,12 @@ export default class PartyExploringMap{
             this.sendPartyMessage(`There doesn't seem to be anything of interest here`);
         }
     }
+
+    get currentTileStopsPlayer():boolean{
+        const xDashY = this.currentX+'-'+this.currentY;
+
+        const event = this.map.getTileEvent(xDashY);
+
+        return event && event.stopsPlayer;
+    }
 }

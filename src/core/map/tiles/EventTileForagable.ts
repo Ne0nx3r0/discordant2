@@ -3,6 +3,7 @@ import ItemId from '../../item/ItemId';
 
 export function EventTileForagable(title:string,itemId:ItemId){
     return new EventTile({
+        stopsPlayer: false,
         onEnter: function(bag){
             if(bag.runCount == 0){
                 bag.sendPartyMessage(`There's a small patch of ${title} plants. (\`di\` to interact)`);

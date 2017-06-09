@@ -22,6 +22,7 @@ interface EventTileLootableBag{
 
 export function EventTileLootable(tileBag:EventTileLootableBag){
     return new EventTile({
+        stopsPlayer: false,
         onEnter: function(bag){
             if(bag.runCount == 0){
                 if(tileBag.onEnterMsg){

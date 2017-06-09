@@ -26,19 +26,22 @@ interface EventTileInteractHandlerFunc{
 }
 
 export interface EventTileBag{
-    onEnter?:EventTileHandlerFunc;
-    onExit?:EventTileHandlerFunc;
-    onInteract?:EventTileInteractHandlerFunc;
+    onEnter?: EventTileHandlerFunc;
+    onExit?: EventTileHandlerFunc;
+    onInteract?: EventTileInteractHandlerFunc;
+    stopsPlayer?: boolean;
 }
 
 export default class EventTile{
-    onEnter:EventTileHandlerFunc;
-    onExit:EventTileHandlerFunc;
-    onInteract:EventTileInteractHandlerFunc;
+    onEnter: EventTileHandlerFunc;
+    onExit: EventTileHandlerFunc;
+    onInteract: EventTileInteractHandlerFunc;
+    stopsPlayer: boolean;
 
     constructor(bag:EventTileBag){
         this.onEnter = bag.onEnter;
         this.onExit = bag.onExit;
         this.onInteract = bag.onInteract;
+        this.stopsPlayer = bag.stopsPlayer != undefined ? bag.stopsPlayer : true;
     }
 }

@@ -3,6 +3,7 @@ import ItemId from '../../item/ItemId';
 
 export function EventTileDrinkableWater(){
     return new EventTile({
+        stopsPlayer: false,
         onEnter: function(bag){
             bag.sendPartyMessage(`Clean looking water, why not have a drink?`);
         },

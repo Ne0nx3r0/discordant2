@@ -1,6 +1,6 @@
 import ExplorableMap from './ExplorableMap';
 import { WesternGate2Events } from "../../../assets/maps/WesternGate2/WesternGate2Events";
-import { RedForestEvents } from '../../../assets/maps/RedForest/RedForest';
+import { RedForestEvents } from '../../../assets/maps/RedForest/RedForestEvents';
 import ItemId from '../item/ItemId';
 import { RedForestMapPiece } from '../item/maps/RedForestMapPiece';
 import { RedForestMap } from '../item/maps/RedForestMap';
