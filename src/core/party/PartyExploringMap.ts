@@ -48,6 +48,11 @@ export default class PartyExploringMap{
         else if(direction == 'R') return this.map.isWalkable(this.currentX+1,this.currentY);
     }
 
+    moveTo(x:number,y:number){
+        this.currentX = x;
+        this.currentY = y;
+    }
+
     move(direction:PartyMoveDirection){
              if(direction == 'U') this.currentY -= 1;
         else if(direction == 'D') this.currentY += 1;

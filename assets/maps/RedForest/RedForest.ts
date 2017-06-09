@@ -13,6 +13,7 @@ import { EventTileDrinkableWater } from '../../../src/core/map/tiles/EventTileDr
 import { MapAfterRedForestPiece } from '../../../src/core/item/maps/MapAfterRedForestPiece';
 import EventTile from '../../../src/core/map/EventTile';
 import { AmuletOfHealth } from '../../../src/core/item/jewelry/AmuletOfHealth';
+import { MapRedForestCastle } from "../../../src/core/map/Maps";
 
 export const lootGenerator = new LootGenerator();
 
@@ -40,7 +41,7 @@ lootGenerator.addLootItem('rare',ItemId.MapAfterRedForestPiece,0.2);
 export const RedForestEvents:IMapData = {
     startX: 26,
     startY: 19,
-    encounterChance: 0.2,
+    encounterChance: 0,
     encounters:[
         { id:CreatureId.FireAntMite,    weight: 0.3 },
         { id:CreatureId.FireAntWorker,  weight: 0.3 },
@@ -188,15 +189,11 @@ export const RedForestEvents:IMapData = {
             ]
         },
         {
-            event: new EventTile({
-                onEnter:function(bag){
-                    bag.sendPartyMessage(`Coming soon...`);
-                }
+            event: EventTileWarp({
+                map: MapRedForestCastle,
             }),
-            coords: [
-                {x:4,y:3},
-                {x:5,y:3},
-                {x:6,y:3},
+            coords:[
+                { x:5, y:2 },
             ],
         },
     ]

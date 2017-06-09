@@ -112,7 +112,7 @@ export default class PlayerParty{
         this.sendChannelMessage(`The party returns to town`);
     }
 
-    explore(map:ExplorableMap){
+    explore(map:ExplorableMap,x?:number,y?:number){
         if(this.partyStatus == PartyStatus.Battling){
             throw 'The party is in a battle right now!';
         }
@@ -124,6 +124,10 @@ export default class PlayerParty{
         });
 
         this.partyStatus = PartyStatus.Exploring;
+
+        if(x && y){
+            this.exploration.moveTo(x,y);
+        }
 
         this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + ` at ${map.title}...`);
     }

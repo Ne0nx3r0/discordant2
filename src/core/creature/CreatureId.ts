@@ -10,6 +10,10 @@ enum CreatureId{
     FireAntSoldier,
     FireAntInfected,
     FireAntQueen,
+    GuardianSpirit,
+    GuardianHound,
+    GiantToad,
+    GiantRat
 }
 
 export default CreatureId;

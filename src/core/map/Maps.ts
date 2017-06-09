@@ -4,6 +4,7 @@ import { RedForestEvents } from '../../../assets/maps/RedForest/RedForest';
 import ItemId from '../item/ItemId';
 import { RedForestMapPiece } from '../item/maps/RedForestMapPiece';
 import { RedForestMap } from '../item/maps/RedForestMap';
+import { RedForestCastleEvents } from "../../../assets/maps/RedForestCastle/RedForestCastleEvents";
 
 const MapWesternGate = new ExplorableMap({
     fileName: 'WesternGate2',
@@ -21,13 +22,22 @@ const MapRedForest = new ExplorableMap({
     mapItem: RedForestMap
 });
 
+const MapRedForestCastle = new ExplorableMap({
+    fileName: 'RedForestCastle',
+    title: 'Red Forest Castle',
+    mapJson: require('../../../assets/maps/RedForestCastle/RedForestCastleLayout.json'),
+    mapData: RedForestCastleEvents,
+});
+
 const WorldMaps = {
     'RED FOREST': MapRedForest,
-    'WESTERN GATE': MapWesternGate,
+    'RED FOREST CASTLE': MapRedForestCastle,
+    'WESTERN GATE': MapWesternGate, 
 };
 
 export {
     MapWesternGate,
     MapRedForest,
+    MapRedForestCastle,
     WorldMaps
 };
