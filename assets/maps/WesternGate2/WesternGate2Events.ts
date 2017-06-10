@@ -7,7 +7,7 @@ import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable
 import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
 import { EventTileMap } from "../../../src/core/map/tiles/EventTileMap";
 import { RedForestMapPiece } from "../../../src/core/item/ItemsIndex";
-import { EventTileWarp } from "../../../src/core/map/tiles/EventTilePortal";
+import { EventTileWarp } from "../../../src/core/map/tiles/EventTileWarp";
 import LootGenerator from '../../../src/core/loot/LootGenerator';
 
 export const lootGenerator = new LootGenerator();

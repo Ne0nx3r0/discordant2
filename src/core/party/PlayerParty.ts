@@ -293,6 +293,10 @@ export default class PlayerParty{
     }
 
     sendCurrentMapImageFile(msg:string){
+        if(!this.exploration){
+            throw `The party is not exploring a map`;
+        }
+
         const localUrl = this.exploration.getCurrentLocationImage();
         const cachedCDNUrl = this.game.getSliceRemoteUrl(localUrl);
 

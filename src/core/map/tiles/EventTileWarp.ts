@@ -19,7 +19,7 @@ export function EventTileWarp(tileBag:EventTileWarpBag){
         onEnter: function(bag){
             if(bag.runCount == 0){
                 const destination = tileBag.map ? 'to '+tileBag.map.title : 'back to town';
-
+console.log(tileBag,bag);
                 bag.party.sendChannelMessage(tileBag.message || `A warp pad leading ${destination}`);
             }
         },

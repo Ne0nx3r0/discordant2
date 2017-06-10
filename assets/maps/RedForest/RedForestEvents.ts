@@ -7,7 +7,7 @@ import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable
 import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
 import { EventTileMap } from "../../../src/core/map/tiles/EventTileMap";
 import { RedForestMapPiece } from "../../../src/core/item/ItemsIndex";
-import { EventTileWarp } from "../../../src/core/map/tiles/EventTilePortal";
+import { EventTileWarp } from "../../../src/core/map/tiles/EventTileWarp";
 import LootGenerator from '../../../src/core/loot/LootGenerator';
 import { EventTileDrinkableWater } from '../../../src/core/map/tiles/EventTileDrinkableWater';
 import { MapAfterRedForestPiece } from '../../../src/core/item/maps/MapAfterRedForestPiece';
@@ -193,8 +193,11 @@ export const RedForestEvents:IMapData = {
                 map: MapRedForestCastle,
             }),
             coords:[
-                { x:5, y:2 },
+//                { x:5, y:2 },
+                { x: 26, y: 18 },
             ],
         },
     ]
 };
+
+console.log(MapRedForestCastle);
