@@ -70,7 +70,7 @@ export const RedForestCastleEvents:IMapData = {
         },
         {
             event: EventTileWarp({
-                map: MapRedForest,
+                mapTitle: 'RED FOREST',
                 x: 5,
                 y: 3,
                 message: 'You exit the castle'

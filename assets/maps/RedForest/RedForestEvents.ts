@@ -190,11 +190,23 @@ export const RedForestEvents:IMapData = {
         },
         {
             event: EventTileWarp({
-                map: MapRedForestCastle,
+                mapTitle: 'RED FOREST CASTLE',
+                warpOnEnter: true,
             }),
             coords:[
 //                { x:5, y:2 },
                 { x: 26, y: 18 },
+            ],
+        },
+        {
+            event: new EventTile({
+                onEnter: function(bag){
+                    bag.party.sendCurrentMapImageFile(`The entrance to a foreboding castle`);
+                }
+            }),
+            coords:[
+//                { x:5, y:3 },
+                { x: 26, y: 19 },
             ],
         },
     ]

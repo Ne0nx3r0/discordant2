@@ -6,12 +6,12 @@ export function EventTileForagable(title:string,itemId:ItemId){
         stopsPlayer: false,
         onEnter: function(bag){
             if(bag.runCount == 0){
-                bag.sendPartyMessage(`There's a small patch of ${title} plants. (\`di\` to interact)`);
+                bag.party.sendCurrentMapImageFile(`There's a small patch of ${title} plants. (\`di\` to interact)`);
             }
         },
         onInteract: function(bag){
             if(bag.runCount == 0){
-                bag.sendPartyMessage(`${bag.player.title} found one ${title} for each party member`);
+                bag.party.sendChannelMessage(`${bag.player.title} found one ${title} for each party member`);
 
                 bag.player.party.members.forEach(function(pc){
                     bag.party.game.grantPlayerItem(pc.uid,itemId,1);

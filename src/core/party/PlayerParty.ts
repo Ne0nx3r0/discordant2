@@ -172,9 +172,9 @@ export default class PlayerParty{
             }
         }
 
-        this.sendCurrentMapImageFile(this.partyPlural('You','Your party')+' moved');
-
-        this.exploration.onEnterCurrentTile();
+        if(!this.exploration.onEnterCurrentTile()){
+            this.sendCurrentMapImageFile(this.partyPlural('You','Your party')+' moved');
+        }
     }
 
     randomMonsterEncounter(){

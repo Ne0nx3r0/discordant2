@@ -85,8 +85,8 @@ export default class PartyExploringMap{
         if(event && event.onEnter){
             event.onEnter({
                 runCount: runCounts,
-                sendPartyMessage: this.sendPartyMessage,
                 party: this.party,
+                player: this.party.leader,
             });
 
             this.onEnterRunCounts.set(xDashY,runCounts+1);
@@ -107,7 +107,6 @@ export default class PartyExploringMap{
         if(event && event.onInteract){
             if(!event.onInteract({
                 runCount: runCounts,
-                sendPartyMessage: this.sendPartyMessage,
                 party: this.party,
                 player: player,
             })){

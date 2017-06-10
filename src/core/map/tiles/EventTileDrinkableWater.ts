@@ -5,7 +5,7 @@ export function EventTileDrinkableWater(){
     return new EventTile({
         stopsPlayer: false,
         onEnter: function(bag){
-            bag.sendPartyMessage(`Clean looking water, why not have a drink?`);
+            bag.party.sendCurrentMapImageFile(`Clean looking water, why not have a drink?`);
         },
         onInteract: function(bag){
             bag.party.members.forEach(function(member){

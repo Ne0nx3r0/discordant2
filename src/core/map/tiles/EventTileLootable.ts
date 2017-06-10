@@ -26,10 +26,10 @@ export function EventTileLootable(tileBag:EventTileLootableBag){
         onEnter: function(bag){
             if(bag.runCount == 0){
                 if(tileBag.onEnterMsg){
-                    bag.sendPartyMessage(tileBag.onEnterMsg);
+                    bag.party.sendCurrentMapImageFile(tileBag.onEnterMsg);
                 }
                 else{
-                    bag.sendPartyMessage(DEBRIS_MESSAGES[Math.floor(DEBRIS_MESSAGES.length*Math.random())]);
+                    bag.party.sendCurrentMapImageFile(DEBRIS_MESSAGES[Math.floor(DEBRIS_MESSAGES.length*Math.random())]);
                 }
             }
         },
@@ -82,7 +82,7 @@ export function EventTileLootable(tileBag:EventTileLootableBag){
 
                 const lootLinesStr = lootLines.join('\n');
 
-                bag.sendPartyMessage(`The party searched the area...\n\n${lootLinesStr}`);
+                bag.party.sendChannelMessage(`The party searched the area...\n\n${lootLinesStr}`);
 
                 return true;
             }
