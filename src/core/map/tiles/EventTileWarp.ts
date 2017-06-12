@@ -1,4 +1,4 @@
-import EventTile, { EventTileHandlerBag } from '../EventTile';
+import EventTile, { EventTileHandlerBag, Coordinate } from '../EventTile';
 import ItemId from '../../item/ItemId';
 import { IGenerateLootBag } from "../../loot/LootGenerator";
 import ItemBase from "../../item/ItemBase";
@@ -11,16 +11,43 @@ import { WorldMaps } from "../Maps";
 interface EventTileWarpBag{
     mapTitle?:string;
     warpOnEnter?: boolean;
-    x?:number;
-    y?:number; 
+    toCoordinate?: Coordinate;
     message?: string;
 }
 
+export default class EventTileWarp extends EventTile{
+    mapTitle?:string;
+    warpOnEnter?: boolean;
+    toCoordinate?:Coordinate;
+    message?: string;
 
+    constructor(bag:EventTileWarpBag){
+        super({
+            stopsPlayer: true
+        });
 
-export function EventTileWarp(tileBag:EventTileWarpBag){
-    function warpParty(bag:EventTileHandlerBag):boolean{
-        const map = WorldMaps[tileBag.mapTitle.toUpperCase()];
+        this.mapTitle = bag.mapTitle;
+        this.warpOnEnter = bag.warpOnEnter;
+        this.toCoordinate = bag.toCoordinate;
+        this.message = bag.message;
+    }
+
+    onEnter(bag:EventTileHandlerBag):boolean{
+        const map = WorldMaps[this.mapTitle.toUpperCase()];
+
+        if(this.warpOnEnter){
+            return this.onInteract(bag);
+        }
+
+        const destination = map ? 'to '+map.title : 'back to town';
+
+        bag.party.sendChannelMessage(this.message || `A warp pad leading ${destination}`);
+
+        return true;
+    }
+
+    onInteract(bag:EventTileHandlerBag):boolean{
+        const map = WorldMaps[this.mapTitle.toUpperCase()];
 
         //portal to town
         if(!map){
@@ -28,17 +55,17 @@ export function EventTileWarp(tileBag:EventTileWarpBag){
         }
         //portal to the same map
         else if(map.fileName == bag.party.exploration.map.fileName){
-            if(tileBag.x && tileBag.y){
-                bag.party.exploration.moveTo(tileBag.x,tileBag.y);
+            if(this.toCoordinate){
+                bag.party.exploration.moveTo(this.toCoordinate.x,this.toCoordinate.y);
             }
             //no x/y so move to start position anyway without resetting map
             else{
-                bag.party.exploration.moveTo(tileBag.x,tileBag.y);
+                bag.party.exploration.moveTo(this.toCoordinate.x,this.toCoordinate.y);
             }
         }
         //portal to another map, specific x/y
-        else if(tileBag.x && tileBag.y){
-            bag.party.explore(map,tileBag.x,tileBag.y);
+        else if(this.toCoordinate){
+            bag.party.explore(map,this.toCoordinate.x,this.toCoordinate.y);
         }
         //portal to some other map, no x/y so use start location
         else{
@@ -47,23 +74,4 @@ export function EventTileWarp(tileBag:EventTileWarpBag){
 
         return true;
     }
-
-    return new EventTile({
-        onEnter: function(bag:EventTileHandlerBag){
-            const map = WorldMaps[tileBag.mapTitle.toUpperCase()];
-
-            if(bag.runCount == 0){
-                if(tileBag.warpOnEnter){
-                    warpParty(bag);
-                    
-                    return;
-                }
-
-                const destination = map ? 'to '+map.title : 'back to town';
-
-                bag.party.sendChannelMessage(tileBag.message || `A warp pad leading ${destination}`);
-            }
-        },
-        onInteract: warpParty
-    });
 }

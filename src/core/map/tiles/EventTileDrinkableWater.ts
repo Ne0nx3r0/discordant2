@@ -1,26 +1,32 @@
-import EventTile from '../EventTile';
+import EventTile, { EventTileHandlerBag } from '../EventTile';
 import ItemId from '../../item/ItemId';
 
-export function EventTileDrinkableWater(){
-    return new EventTile({
-        stopsPlayer: false,
-        onEnter: function(bag){
-            bag.party.sendCurrentMapImageFile(`Clean looking water, why not have a drink?`);
-        },
-        onInteract: function(bag){
-            bag.party.members.forEach(function(member){
-                if(member.hpCurrent < member.stats.hpTotal){
-                    member.hpCurrent = Math.min(member.stats.hpTotal,member.hpCurrent+20);
-                }
-            });
+export class EventTileDrinkableWater extends EventTile{
+    constructor(){
+        super({
+            stopsPlayer: false,
+        });
+    }
 
-            bag.party.sendChannelMessage(`The party rests and has a refreshing drink of water! (+20hp to all party members)`);
+    onEnter(bag:EventTileHandlerBag):boolean{
+        bag.party.sendCurrentMapImageFile(`Clean looking water, why not have a drink?`);
 
-            if(0.5 > Math.random()){
-                bag.party.randomMonsterEncounter();
+        return true;
+    }
+
+    onInteract(bag:EventTileHandlerBag):boolean {
+        bag.party.members.forEach(function(member){
+            if(member.hpCurrent < member.stats.hpTotal){
+                member.hpCurrent = Math.min(member.stats.hpTotal,member.hpCurrent+20);
             }
+        });
 
-            return true;
+        bag.party.sendChannelMessage(`The party rests and has a refreshing drink of water! (+20hp to all party members)`);
+
+        if(0.25 > Math.random()){
+            bag.party.randomMonsterEncounter();
         }
-    });
+
+        return true;
+    }
 }

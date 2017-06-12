@@ -27,6 +27,8 @@ export const MapRedForestCastle = new ExplorableMap({
     title: 'Red Forest Castle',
     mapJson: require('../../../assets/maps/RedForestCastle/RedForestCastleLayout.json'),
     mapData: RedForestCastleEvents,
+    pieceItem: RedForestMapPiece,
+    mapItem: RedForestMap,
 });
 
 export const WorldMaps = {

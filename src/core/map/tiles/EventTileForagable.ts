@@ -1,27 +1,48 @@
-import EventTile from '../EventTile';
+import EventTile, { EventTileHandlerBag } from '../EventTile';
 import ItemId from '../../item/ItemId';
 
-export function EventTileForagable(title:string,itemId:ItemId){
-    return new EventTile({
-        stopsPlayer: false,
-        onEnter: function(bag){
-            if(bag.runCount == 0){
-                bag.party.sendCurrentMapImageFile(`There's a small patch of ${title} plants. (\`di\` to interact)`);
-            }
-        },
-        onInteract: function(bag){
-            if(bag.runCount == 0){
-                bag.party.sendChannelMessage(`${bag.player.title} found one ${title} for each party member`);
+export class EventTileForagable extends EventTile{
+    title: string;
+    itemId: ItemId;
+    
+    constructor(title:string,itemId:ItemId){
+        super({
+            stopsPlayer: false,
+        });
 
-                bag.player.party.members.forEach(function(pc){
-                    bag.party.game.grantPlayerItem(pc.uid,itemId,1);
-                });
+        this.title = title;
+        this.itemId = itemId;
+    }
 
-                return true;
-            }
-            else{
-                return false;
-            }
+    onEnter(bag:EventTileHandlerBag):boolean{
+        const foragedAlready:boolean = bag.metadata.getTileData(bag.coordinate,'foragedAlready');
+
+        if(!foragedAlready){
+            bag.party.sendCurrentMapImageFile(`There's a small patch of ${this.title} plants. (\`di\` to interact)`);
+        
+            bag.metadata.setTileData(bag.coordinate,'foragedAlready',true);
+
+            return true;
         }
-    });
+
+        return false;
+    }
+
+    onInteract(bag:EventTileHandlerBag):boolean{
+        const foragedAlready:boolean = bag.metadata.getTileData(bag.coordinate,'foragedAlready');
+
+        if(!foragedAlready){
+            bag.party.sendChannelMessage(`${bag.player.title} found one ${this.title} for each party member`);
+
+            bag.player.party.members.forEach(function(pc){
+                bag.party.game.grantPlayerItem(pc.uid,this.itemId,1);
+            });
+
+            bag.metadata.setTileData(bag.coordinate,'foragedAlready',true);
+
+            return true;
+        }
+
+        return false;
+    }
 }

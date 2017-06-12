@@ -194,8 +194,7 @@ export const RedForestEvents:IMapData = {
                 warpOnEnter: true,
             }),
             coords:[
-//                { x:5, y:2 },
-                { x: 26, y: 18 },
+                { x:5, y:2 },
             ],
         },
         {
@@ -205,11 +204,8 @@ export const RedForestEvents:IMapData = {
                 }
             }),
             coords:[
-//                { x:5, y:3 },
-                { x: 26, y: 19 },
+                { x:5, y:3 },
             ],
         },
     ]
 };
-
-console.log(MapRedForestCastle);

@@ -73,11 +73,158 @@ export const RedForestCastleEvents:IMapData = {
                 mapTitle: 'RED FOREST',
                 x: 5,
                 y: 3,
-                message: 'You exit the castle'
+                message: 'You exit the castle',
+                warpOnEnter: true,
             }),
             coords: [
                 { x: 5, y: 30 },
                 { x: 6, y: 30 },
+            ],
+        },
+        //top left room
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 5,
+                y: 16,
+                message: 'You enter the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 5, y: 19 },
+            ],
+        },
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 5,
+                y: 19,
+                message: 'You leave the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 5, y: 16 },
+            ],
+        },
+        //bottom middle room
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 17,
+                y: 27,
+                message: 'You enter the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 17, y: 30 },
+            ],
+        },
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 17,
+                y: 30,
+                message: 'You leave the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 17, y: 27 },
+            ],
+        },
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 16,
+                y: 4,
+                message: 'You enter the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 14, y: 4 },
+            ],
+        },
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 14,
+                y: 4,
+                message: 'You enter the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 16, y: 4 },
+            ],
+        },
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 14,
+                y: 5,
+                message: 'You enter the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 16, y: 5 },
+            ],
+        },
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 16,
+                y: 5,
+                message: 'You enter the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 14, y: 5 },
+            ],
+        },
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 21,
+                y: 26,
+                message: 'You enter the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 23, y: 26 },
+            ],
+        },
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 21,
+                y: 27,
+                message: 'You enter the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 23, y: 27 },
+            ],
+        },
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 14,
+                y: 5,
+                message: 'You enter the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 16, y: 5 },
+            ],
+        },
+        {
+            event: EventTileWarp({
+                mapTitle: 'RED FOREST CASTLE',
+                x: 16,
+                y: 5,
+                message: 'You enter the room',
+                warpOnEnter: true,
+            }),
+            coords: [
+                { x: 14, y: 5 },
             ],
         },
     ]

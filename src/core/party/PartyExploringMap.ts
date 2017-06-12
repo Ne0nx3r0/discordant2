@@ -4,6 +4,7 @@ import { SendPartyMessageFunc } from '../map/EventTile';
 import PlayerCharacter from '../creature/player/PlayerCharacter';
 import LootGenerator from "../loot/LootGenerator";
 import PlayerParty from "./PlayerParty";
+import MapMetaDataCache from "../map/MapMetaDataCache";
 
 type PartyMoveDirection = 'U' | 'L' | 'D' | 'R';
 
@@ -21,9 +22,8 @@ export default class PartyExploringMap{
     currentY:number;
     party:PlayerParty;
     sendPartyMessage:SendPartyMessageFunc;
-    onEnterRunCounts:Map<string,number>;
-    onInteractRunCounts:Map<string,number>;
-    
+    metadata: MapMetaDataCache;
+
     constructor(bag:IPartyExploringMapBag){
         this.map = bag.map;
         this.party = bag.party;
@@ -32,9 +32,7 @@ export default class PartyExploringMap{
         this.currentY = bag.map.mapData.startY;
 
         this.sendPartyMessage = bag.sendPartyMessage;
-
-        this.onEnterRunCounts = new Map();
-        this.onInteractRunCounts = new Map();
+        this.metadata = new MapMetaDataCache();
     }
 
     getCurrentLocationImage(){
@@ -80,18 +78,16 @@ export default class PartyExploringMap{
 
         const event = this.map.getTileEvent(xDashY);
 
-        const runCounts = this.onEnterRunCounts.get(xDashY) || 0;
-
-        if(event && event.onEnter){
-            event.onEnter({
-                runCount: runCounts,
+        if(event){
+            return event.onEnter({
                 party: this.party,
                 player: this.party.leader,
+                coordinate: {
+                    x: this.currentX,
+                    y: this.currentY,
+                },
+                metadata: this.metadata,
             });
-
-            this.onEnterRunCounts.set(xDashY,runCounts+1);
-
-            return true;
         }
 
         return false;
@@ -102,18 +98,20 @@ export default class PartyExploringMap{
 
         const event = this.map.getTileEvent(xDashY);
 
-        const runCounts = this.onInteractRunCounts.get(xDashY) || 0;
-
-        if(event && event.onInteract){
-            if(!event.onInteract({
-                runCount: runCounts,
+        if(event){
+            const eventRan = event.onInteract({
                 party: this.party,
                 player: player,
-            })){
+                coordinate: {
+                    x: this.currentX,
+                    y: this.currentY,
+                },
+                metadata: this.metadata,
+            });
+            
+            if(!eventRan){
                 this.sendPartyMessage('Nothing of interest here...');
             }
-
-            this.onInteractRunCounts.set(xDashY,runCounts+1);
         }
         else{
             this.sendPartyMessage(`There doesn't seem to be anything of interest here`);

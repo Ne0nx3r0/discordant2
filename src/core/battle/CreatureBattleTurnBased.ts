@@ -12,6 +12,7 @@ import { SocketCreature } from '../creature/Creature';
 import { IWeaponAttackDamages, DamageType } from '../item/WeaponAttackStep';
 import { GetDodgePercent } from '../../util/GetDodgePercent';
 import { Attribute } from '../creature/AttributeSet';
+import ResistDamage from "../../util/ResistDamage";
 
 export enum BattleResult{
     Team1Won,
@@ -548,18 +549,7 @@ export default class CreatureBattleTurnBased{
                 }
 
                 if(!dodged){
-                    const damageTypeStr = DamageType[wad.type];
-                    
-                    const resistance = wad.target.creature.stats.resistances[damageTypeStr];
-                    
-                    let damageTaken = wad.amount - resistance;
-                    let minDamage = wad.amount * 0.2;
-
-                    if(damageTaken < minDamage){
-                        damageTaken = minDamage;
-                    }
-
-                    damageTaken = Math.round(damageTaken);
+                    const damageTaken = ResistDamage(wad.target.creature,wad.amount,wad.type);
 
                     const damageResisted = wad.amount - damageTaken;
 
@@ -568,7 +558,7 @@ export default class CreatureBattleTurnBased{
                     wad.target.creature.hpCurrent -= damageTaken;
 
                     damagesMsgs.push(
-                        `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${damageTypeStr.toUpperCase()} damage${resistedStr}`
+                        `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}`
                     );
                 }
             }
