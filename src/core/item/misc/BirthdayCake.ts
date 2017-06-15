@@ -7,7 +7,7 @@ import WishCalc from '../../../bot/commands/WishCalc';
 export const BirthdayCake = new ItemUsable({
     id: ItemId.BirthdayCake,
     title: 'Birthday Cake',
-    description: `(Fully heals party) What day is today? It is your birthday! What a day for a birthday, let's all have some cake!`,
+    description: `(Fully heals party) What day is today? It's your own birthday! What a day for a birthday, let's all have some cake!`,
     goldValue: 100,
     battleExhaustion: 1,
     canUseInbattle: true,
