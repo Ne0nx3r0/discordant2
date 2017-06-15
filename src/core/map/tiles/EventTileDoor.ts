@@ -33,7 +33,7 @@ export class EventTileDoor extends EventTile{
     }
 
     onEnter(bag:EventTileHandlerBag):boolean{
-        const hasInteracted:boolean = bag.metadata.getTileData(bag.coordinate,'hasInteracted');
+        const hasInteracted:boolean = bag.metadata.getTileData(this.from[0],'hasInteracted');
 
         if(!hasInteracted){
             bag.party.sendCurrentMapImageFile(`A doorway, it could be trapped. (\`ei\` to enter)`);
@@ -47,7 +47,7 @@ export class EventTileDoor extends EventTile{
 
     onInteract(bag:EventTileHandlerBag):boolean{
         const trapResults = [];
-        const hasInteracted:boolean = bag.metadata.getTileData(bag.coordinate,'hasInteracted');
+        const hasInteracted:boolean = bag.metadata.getTileData(this.from[0],'hasInteracted');
 
         if(this.trap && !hasInteracted){
             //trap fired
@@ -98,7 +98,7 @@ export class EventTileDoor extends EventTile{
 
         bag.party.sendCurrentMapImageFile([`Entered a new room`].concat(trapResults).join('\n'));
 
-        bag.metadata.setTileData(bag.coordinate,'hasInteracted',true);
+        bag.metadata.setTileData(this.from[0],'hasInteracted',true);
 
         return true;
     }
