@@ -38,7 +38,7 @@ lootGenerator.addLootItem('rare',ItemId.MapAfterRedForestPiece,0.2);
 export const RedForestEvents:IMapData = {
     startX: 26,
     startY: 19,
-    encounterChance: 0,
+    encounterChance: 0.3,
     encounters:[
         { id:CreatureId.FireAntMite,    weight: 0.3 },
         { id:CreatureId.FireAntWorker,  weight: 0.3 },
