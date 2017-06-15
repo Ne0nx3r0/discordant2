@@ -11,6 +11,43 @@ import LootGenerator from '../../../src/core/loot/LootGenerator';
 import { MapRedForest } from "../../../src/core/map/Maps";
 import { EventTileDoor } from "../../../src/core/map/tiles/EventTileDoor";
 import { DamageType } from "../../../src/core/item/WeaponAttackStep";
+import EventTile, { EventTileHandlerBag } from "../../../src/core/map/EventTile";
+
+class EventTileGetRedCastleLever extends EventTile{
+    constructor(){
+        super({
+            stopsPlayer: true
+        });
+    }
+
+    onEnter(bag:EventTileHandlerBag):boolean{
+        const leverSetOpen = bag.metadata.getMapData(`leverSetOpen`);   
+
+        if(!leverSetOpen){
+            bag.party.sendCurrentMapImageFile(`A strange lever...`);
+        }
+        else{
+            bag.party.sendCurrentMapImageFile(`A strange lever, it appears to be in the ON position`);
+        }
+
+        return true;
+    }
+
+    onInteract(bag:EventTileHandlerBag):boolean{
+        const leverSetOpen = bag.metadata.getMapData(`leverSetOpen`);   
+
+        if(!leverSetOpen){
+            bag.metadata.setMapData('leverSetOpen',true);
+
+            bag.party.sendChannelMessage(`A loud series of clicks echo throughout the castle`);
+        }
+        else{
+            bag.party.sendChannelMessage(`Nothing happens...`);
+        }
+
+        return true;
+    }
+}
 
 export const lootGenerator = new LootGenerator();
 
@@ -68,6 +105,10 @@ export const RedForestCastleEvents:IMapData = {
             coords: [
                 { x: 3, y: 11 },
             ],
+        },
+        {
+            event: new EventTileGetRedCastleLever(),
+            coords: [ { x:18, y:5 } ],
         },
         // Castle exit
         {
@@ -167,6 +208,21 @@ export const RedForestCastleEvents:IMapData = {
             coords: [
                 { x: 14, y: 5 },
                 { x: 16, y: 5 },
+            ],
+        },
+        // stairs
+        {
+            event: new EventTileDoor({
+                from: [{x: 9, y: 8},{x: 10, y: 8}],
+                  to: [{x: 12, y: 25},{x: 13, y: 25}],
+                  chanceTrapped: 0,
+                  enterMessage: 'A set of stairs (`ei` to interact)',
+            }),
+            coords: [
+                {x: 9, y: 8},
+                {x: 10, y: 8},
+                {x: 12, y: 25},
+                {x: 13, y: 25},
             ],
         },
     ]

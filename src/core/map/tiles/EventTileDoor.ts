@@ -12,7 +12,9 @@ interface EventTileDoorBag{
     from: Array<Coordinate>;
     to: Array<Coordinate>;
     chanceTrapped: number;
-    trap: TileTrap;
+    trap?: TileTrap;
+    enterMessage?: string;
+    interactMessage?: string;
 }
 
 export class EventTileDoor extends EventTile{
@@ -20,6 +22,8 @@ export class EventTileDoor extends EventTile{
     to: Array<Coordinate>;
     chanceTrapped: number;
     trap: TileTrap;
+    enterMessage?: string;
+    interactMessage?: string;
 
     constructor(bag:EventTileDoorBag){
         super({
@@ -30,12 +34,17 @@ export class EventTileDoor extends EventTile{
         this.to = bag.to;
         this.chanceTrapped = bag.chanceTrapped;
         this.trap = bag.trap;
+        this.enterMessage = bag.enterMessage;
+        this.interactMessage = bag.interactMessage;
     }
 
     onEnter(bag:EventTileHandlerBag):boolean{
         const hasInteracted:boolean = bag.metadata.getTileData(this.from[0],'hasInteracted');
 
-        if(!hasInteracted){
+        if(this.enterMessage){
+            bag.party.sendCurrentMapImageFile(this.enterMessage);
+        }
+        else if(!hasInteracted){
             bag.party.sendCurrentMapImageFile(`A doorway, it could be trapped. (\`ei\` to enter)`);
         }
         else{
@@ -96,7 +105,7 @@ export class EventTileDoor extends EventTile{
 
         bag.party.exploration.moveTo(toCoordinate.x,toCoordinate.y);
 
-        bag.party.sendCurrentMapImageFile([`Entered a new room`].concat(trapResults).join('\n'));
+        bag.party.sendCurrentMapImageFile([this.interactMessage || `Entered a new room`].concat(trapResults).join('\n'));
 
         bag.metadata.setTileData(this.from[0],'hasInteracted',true);
 
