@@ -36,10 +36,10 @@ export class EventTileDoor extends EventTile{
         const hasInteracted:boolean = bag.metadata.getTileData(bag.coordinate,'hasInteracted');
 
         if(!hasInteracted){
-            bag.party.sendCurrentMapImageFile(`A doorway... It could be trapped.`);
+            bag.party.sendCurrentMapImageFile(`A doorway, it could be trapped.`);
         }
         else{
-            bag.party.sendCurrentMapImageFile(`A doorway`);
+            bag.party.sendCurrentMapImageFile(`A doorway, it looks safe.`);
         }
 
         return true;
@@ -71,12 +71,24 @@ export class EventTileDoor extends EventTile{
 
         let toCoordinate:Coordinate;
 
+        //from[index] links to to[index] and vice versa
         for(var i=0;i<this.from.length;i++){
             var coordinate = this.from[i];
             
             if(coordinate.x == bag.coordinate.x && coordinate.y == bag.coordinate.y){
                 toCoordinate = coordinate;
                 break;
+            }
+        }
+
+        if(!toCoordinate){
+            for(var i=0;i<this.to.length;i++){
+                var coordinate = this.to[i];
+                
+                if(coordinate.x == bag.coordinate.x && coordinate.y == bag.coordinate.y){
+                    toCoordinate = coordinate;
+                    break;
+                }
             }
         }
 

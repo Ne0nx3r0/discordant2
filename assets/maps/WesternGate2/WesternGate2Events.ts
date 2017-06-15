@@ -3,11 +3,10 @@ import Creature from '../../../src/core/creature/Creature';
 import { IMapData } from '../../../src/core/map/IMapData';
 import { EventTileForagable } from '../../../src/core/map/tiles/EventTileForagable';
 import ItemId from '../../../src/core/item/ItemId';
-import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable";
-import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
-import { EventTileMap } from "../../../src/core/map/tiles/EventTileMap";
+import EventTileLootable from "../../../src/core/map/tiles/EventTileLootable";
+import EventTileMonster from "../../../src/core/map/tiles/EventTileMonster";
 import { RedForestMapPiece } from "../../../src/core/item/ItemsIndex";
-import { EventTileWarp } from "../../../src/core/map/tiles/EventTileWarp";
+import EventTileWarp from "../../../src/core/map/tiles/EventTileWarp";
 import LootGenerator from '../../../src/core/loot/LootGenerator';
 
 export const lootGenerator = new LootGenerator();
@@ -42,7 +41,7 @@ export const WesternGate2Events:IMapData = {
     ],
     eventTiles: [
         {
-            event: EventTileForagable('Acai',ItemId.Acai),
+            event: new EventTileForagable('Acai',ItemId.Acai),
             coords: [
                 {x:20,y:24},
                 {x:19,y:24},
@@ -56,7 +55,7 @@ export const WesternGate2Events:IMapData = {
             ]
         },
         {
-            event: EventTileForagable('Bane',ItemId.Bane),
+            event: new EventTileForagable('Bane',ItemId.Bane),
             coords: [
                 {x:12,y:4},
                 {x:12,y:5},
@@ -69,7 +68,7 @@ export const WesternGate2Events:IMapData = {
             ]
         },
         {
-            event: EventTileForagable('Fox',ItemId.Fox),
+            event: new EventTileForagable('Fox',ItemId.Fox),
             coords: [
                 {x:8,y:17},
                 {x:9,y:17},
@@ -78,7 +77,7 @@ export const WesternGate2Events:IMapData = {
             ]
         },
         {
-            event: EventTileForagable('Sage',ItemId.Sage),
+            event: new EventTileForagable('Sage',ItemId.Sage),
             coords: [
                 {x:10,y:21},
                 {x:11,y:21},
@@ -87,7 +86,7 @@ export const WesternGate2Events:IMapData = {
             ]
         },
         {
-            event: EventTileForagable('Yerba',ItemId.Yerba),
+            event: new EventTileForagable('Yerba',ItemId.Yerba),
             coords: [
                 {x:7,y:9},
                 {x:8,y:9},
@@ -96,7 +95,7 @@ export const WesternGate2Events:IMapData = {
             ]
         },
         {
-            event: EventTileLootable({
+            event: new EventTileLootable({
                 lootGenerator: lootGenerator,
                 lootSettings:{
                     startingNode: 'common',
@@ -116,13 +115,13 @@ export const WesternGate2Events:IMapData = {
             ],
         },
         {
-            event: EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
+            event: new EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
             coords: [
                 {x:3,y:11},
             ],
         },
         {
-            event: EventTileLootable({
+            event: new EventTileLootable({
                 onEnterMsg: `A selection of items the goblin hoard has stolen from travelers`,
                 lootGenerator: lootGenerator,
                 lootSettings:{
@@ -138,7 +137,7 @@ export const WesternGate2Events:IMapData = {
             ],
         },
         {
-            event: EventTileWarp({}),
+            event: new EventTileWarp({}),
             coords: [
                 {x:3,y:13},
             ],

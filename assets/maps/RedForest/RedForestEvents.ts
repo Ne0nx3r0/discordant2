@@ -3,17 +3,14 @@ import Creature from '../../../src/core/creature/Creature';
 import { IMapData } from '../../../src/core/map/IMapData';
 import { EventTileForagable } from '../../../src/core/map/tiles/EventTileForagable';
 import ItemId from '../../../src/core/item/ItemId';
-import { EventTileLootable } from "../../../src/core/map/tiles/EventTileLootable";
-import { EventTileMonster } from "../../../src/core/map/tiles/EventTileMonster";
-import { EventTileMap } from "../../../src/core/map/tiles/EventTileMap";
-import { RedForestMapPiece } from "../../../src/core/item/ItemsIndex";
-import { EventTileWarp } from "../../../src/core/map/tiles/EventTileWarp";
+import EventTileLootable from "../../../src/core/map/tiles/EventTileLootable";
+import EventTileMonster from "../../../src/core/map/tiles/EventTileMonster";
+import EventTileWarp from "../../../src/core/map/tiles/EventTileWarp";
 import LootGenerator from '../../../src/core/loot/LootGenerator';
 import { EventTileDrinkableWater } from '../../../src/core/map/tiles/EventTileDrinkableWater';
-import { MapAfterRedForestPiece } from '../../../src/core/item/maps/MapAfterRedForestPiece';
 import EventTile from '../../../src/core/map/EventTile';
-import { AmuletOfHealth } from '../../../src/core/item/jewelry/AmuletOfHealth';
 import { MapRedForestCastle } from "../../../src/core/map/Maps";
+import EventTileEnterMessage from "../../../src/core/map/tiles/EventTileEnterMessage";
 
 export const lootGenerator = new LootGenerator();
 
@@ -49,7 +46,7 @@ export const RedForestEvents:IMapData = {
     ],
     eventTiles: [
         {
-            event: EventTileForagable('Acai',ItemId.Acai),
+            event: new EventTileForagable('Acai',ItemId.Acai),
             coords: [
                 {x:3,y:3},
                 {x:3,y:4},
@@ -59,7 +56,7 @@ export const RedForestEvents:IMapData = {
             ]
         },
         {
-            event: EventTileForagable('Bane',ItemId.Bane),
+            event: new EventTileForagable('Bane',ItemId.Bane),
             coords: [
                 {x:15,y:11},
                 {x:15,y:12},
@@ -68,7 +65,7 @@ export const RedForestEvents:IMapData = {
             ]
         },
         {
-            event: EventTileForagable('Agave',ItemId.Agave),
+            event: new EventTileForagable('Agave',ItemId.Agave),
             coords: [
                 {x:4,y:15},
                 {x:4,y:16},
@@ -77,28 +74,28 @@ export const RedForestEvents:IMapData = {
             ]
         },
         {
-            event: EventTileForagable('Fox',ItemId.Fox),
+            event: new EventTileForagable('Fox',ItemId.Fox),
             coords: [
                 {x:4,y:12},
                 {x:5,y:12},
             ]
         },
         {
-            event: EventTileForagable('Sage',ItemId.Sage),
+            event: new EventTileForagable('Sage',ItemId.Sage),
             coords: [
                 {x:17,y:7},
                 {x:18,y:7},
             ]
         },
         {
-            event: EventTileForagable('Yerba',ItemId.Yerba),
+            event: new EventTileForagable('Yerba',ItemId.Yerba),
             coords: [
                 {x:37,y:19},
                 {x:38,y:19},
             ]
         },
         {
-            event: EventTileLootable({
+            event: new EventTileLootable({
                 lootGenerator: lootGenerator,
                 lootSettings:{
                     startingNode: 'common',
@@ -116,7 +113,7 @@ export const RedForestEvents:IMapData = {
             ],
         },
         {
-            event: EventTileLootable({
+            event: new EventTileLootable({
                 onEnterMsg: `Items imbued with the essence of the fire ants`,
                 lootGenerator: lootGenerator,
                 lootSettings:{
@@ -133,19 +130,19 @@ export const RedForestEvents:IMapData = {
             ],
         },
         {
-            event: EventTileMonster(`You've found the queen of the fire ants!`,CreatureId.FireAntQueen),
+            event: new EventTileMonster(`You've found the queen of the fire ants!`,CreatureId.FireAntQueen),
             coords: [
                 {x:14,y:2},
             ],
         },
         {
-            event: EventTileMonster(`What?! This one is acting strange...`,CreatureId.FireAntInfected),
+            event: new EventTileMonster(`What?! This one is acting strange...`,CreatureId.FireAntInfected),
             coords: [
                 {x:38,y:3},
             ],
         },
         {
-            event: EventTileDrinkableWater(),
+            event: new EventTileDrinkableWater(),
             coords:[
                 {x:26,y:8},
                 {x:27,y:8},
@@ -189,7 +186,7 @@ export const RedForestEvents:IMapData = {
             ]
         },
         {
-            event: EventTileWarp({
+            event: new EventTileWarp({
                 mapTitle: 'RED FOREST CASTLE',
                 warpOnEnter: true,
             }),
@@ -198,10 +195,9 @@ export const RedForestEvents:IMapData = {
             ],
         },
         {
-            event: new EventTile({
-                onEnter: function(bag){
-                    bag.party.sendCurrentMapImageFile(`The entrance to a foreboding castle`);
-                }
+            event: new EventTileEnterMessage({
+                message: `The entrance to a foreboding castle`,
+                stopsPlayer: true,
             }),
             coords:[
                 { x:5, y:3 },
