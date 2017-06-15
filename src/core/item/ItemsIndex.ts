@@ -50,3 +50,5 @@ export { TabletOfFaith } from './weapons/TabletOfFaith';
 export { FireDagger } from './weapons/FireDagger';
 export { FireAxe } from './weapons/FireAxe';
 export { FireMace } from './weapons/FireMace';
+export { RedForestCastleMapPiece } from './maps/RedForestCastleMapPiece';
+export { RedForestCastleMap } from './maps/RedForestCastleMap';

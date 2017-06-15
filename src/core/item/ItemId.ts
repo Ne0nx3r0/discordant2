@@ -58,6 +58,8 @@ enum ItemId {BareHands,HandAxe,
     FireDagger,
     FireMace,
     FireAxe,
+    RedForestCastleMapPiece,
+    RedForestCastleMap,
 }
 
 export default ItemId;
