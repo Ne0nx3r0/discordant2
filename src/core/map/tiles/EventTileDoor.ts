@@ -36,10 +36,10 @@ export class EventTileDoor extends EventTile{
         const hasInteracted:boolean = bag.metadata.getTileData(bag.coordinate,'hasInteracted');
 
         if(!hasInteracted){
-            bag.party.sendCurrentMapImageFile(`A doorway, it could be trapped.`);
+            bag.party.sendCurrentMapImageFile(`A doorway, it could be trapped. (\`ei\` to enter)`);
         }
         else{
-            bag.party.sendCurrentMapImageFile(`A doorway, it looks safe.`);
+            bag.party.sendCurrentMapImageFile(`A doorway, it looks safe. (\`ei\` to enter)`);
         }
 
         return true;
@@ -76,7 +76,7 @@ export class EventTileDoor extends EventTile{
             var coordinate = this.from[i];
             
             if(coordinate.x == bag.coordinate.x && coordinate.y == bag.coordinate.y){
-                toCoordinate = coordinate;
+                toCoordinate = this.to[i];
                 break;
             }
         }
@@ -86,11 +86,13 @@ export class EventTileDoor extends EventTile{
                 var coordinate = this.to[i];
                 
                 if(coordinate.x == bag.coordinate.x && coordinate.y == bag.coordinate.y){
-                    toCoordinate = coordinate;
+                    toCoordinate = this.from[i];
                     break;
                 }
             }
         }
+
+        if(!toCoordinate) throw `Error with door at map ${bag.party.exploration.map.title} at ${bag.coordinate}, coordinate no defined`;
 
         bag.party.exploration.moveTo(toCoordinate.x,toCoordinate.y);
 
