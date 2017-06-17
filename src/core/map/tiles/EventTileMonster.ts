@@ -16,7 +16,7 @@ export default class EventTileMonster extends EventTile{
 
     onEnter(bag:EventTileHandlerBag):boolean{
         const hasFired:boolean = bag.metadata.getTileData(bag.coordinate,'hasFired');
-
+        
         if(!hasFired){  
             bag.metadata.setTileData(bag.coordinate,'hasFired',true);
 

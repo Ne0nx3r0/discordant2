@@ -1,7 +1,7 @@
 import { Coordinate } from "./EventTile";
 
 export default class MapMetaDataCache {
-    tileData:Map<Coordinate,Map<any,any>>;
+    tileData:Map<string,Map<any,any>>;
     mapData:Map<any,any>;
     
     constructor(){
@@ -10,19 +10,23 @@ export default class MapMetaDataCache {
     }
 
     setTileData(coordinate:Coordinate,key:any,value:any){
-        let tileDatum = this.tileData.get(coordinate);
+        const coordinateStr = coordinate.x +'-'+coordinate.y;
+
+        let tileDatum = this.tileData.get(coordinateStr);
 
         if(!tileDatum){
             tileDatum = new Map();
 
-            this.tileData.set(coordinate,tileDatum);
+            this.tileData.set(coordinateStr,tileDatum);
         }
 
         tileDatum.set(key,value);
     }
 
-    getTileData(coordinate:Coordinate,key:any){
-        let tileDatum = this.tileData.get(coordinate);
+    getTileData(coordinate:Coordinate,key:any){ 
+        const coordinateStr = coordinate.x +'-'+coordinate.y;
+
+        let tileDatum = this.tileData.get(coordinateStr);
 
         if(tileDatum){
             return tileDatum.get(key);
