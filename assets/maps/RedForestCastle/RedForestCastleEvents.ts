@@ -225,5 +225,20 @@ export const RedForestCastleEvents:IMapData = {
                 {x: 13, y: 25},
             ],
         },
+        // boss door
+        {
+            event: new EventTileDoor({
+                from: [{x: 9, y: 8},{x: 10, y: 8}],
+                  to: [{x: 12, y: 25},{x: 13, y: 25}],
+                  chanceTrapped: 0,
+                  enterMessage: 'A set of stairs (`ei` to interact)',
+            }),
+            coords: [
+                {x: 9, y: 8},
+                {x: 10, y: 8},
+                {x: 12, y: 25},
+                {x: 13, y: 25},
+            ],
+        },
     ]
 };

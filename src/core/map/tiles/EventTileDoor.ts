@@ -7,6 +7,10 @@ import { WorldMaps } from "../Maps";
 import { DamageType } from "../../item/WeaponAttackStep";
 import ResistDamage from "../../../util/ResistDamage";
 
+interface IsOpenFunction{
+    (bag:EventTileHandlerBag):boolean;
+}
+
 //from[index] will teleport to to[index]
 interface EventTileDoorBag{
     from: Array<Coordinate>;
@@ -15,6 +19,7 @@ interface EventTileDoorBag{
     trap?: TileTrap;
     enterMessage?: string;
     interactMessage?: string;
+    isOpen?:IsOpenFunction;
 }
 
 export class EventTileDoor extends EventTile{
@@ -24,6 +29,7 @@ export class EventTileDoor extends EventTile{
     trap: TileTrap;
     enterMessage?: string;
     interactMessage?: string;
+    isOpen?: IsOpenFunction;
 
     constructor(bag:EventTileDoorBag){
         super({
@@ -36,6 +42,7 @@ export class EventTileDoor extends EventTile{
         this.trap = bag.trap;
         this.enterMessage = bag.enterMessage;
         this.interactMessage = bag.interactMessage;
+        this.isOpen = bag.isOpen;
     }
 
     onEnter(bag:EventTileHandlerBag):boolean{
@@ -44,17 +51,26 @@ export class EventTileDoor extends EventTile{
         if(this.enterMessage){
             bag.party.sendCurrentMapImageFile(this.enterMessage);
         }
+        else if(this.isOpen && !this.isOpen(bag)){
+            bag.party.sendCurrentMapImageFile(`The door is locked (maybe there is a way to unlock it?)`);
+        }
         else if(!hasInteracted){
-            bag.party.sendCurrentMapImageFile(`A doorway, it could be trapped. (\`ei\` to enter)`);
+            bag.party.sendCurrentMapImageFile(`A door, it could be trapped. (\`ei\` to enter)`);
         }
         else{
-            bag.party.sendCurrentMapImageFile(`A doorway, it looks safe. (\`ei\` to enter)`);
+            bag.party.sendCurrentMapImageFile(`A door, it looks safe. (\`ei\` to enter)`);
         }
 
         return true;
     }
 
     onInteract(bag:EventTileHandlerBag):boolean{
+        if(this.isOpen && !this.isOpen(bag)){
+            bag.party.sendChannelMessage(`The door is locked (maybe there is a way to open it?)`);
+
+            return true;
+        }
+
         const trapResults = [];
         const hasInteracted:boolean = bag.metadata.getTileData(this.from[0],'hasInteracted');
 
