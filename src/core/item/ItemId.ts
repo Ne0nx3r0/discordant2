@@ -62,6 +62,8 @@ enum ItemId {BareHands,HandAxe,
     RedForestCastleMap,
     BirthdayCake,
     PrismBlade,
+    GhostSkin,
+    GhostHoundWeapon,
 }
 
 export default ItemId;
