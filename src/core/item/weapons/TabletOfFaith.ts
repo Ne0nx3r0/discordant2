@@ -11,6 +11,7 @@ import { DefaultDamageFunc } from "../../damage/DefaultDamageFunc";
 import { EffectBless } from '../../effects/types/EffectBless';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
+import { EffectPrayer } from '../../effects/types/EffectPrayer';
 
 export const TabletOfFaith = new Weapon({
     id: ItemId.TabletOfFaith,
@@ -83,17 +84,7 @@ export const TabletOfFaith = new Weapon({
                     damageFunc: function(bag:DamageFuncBag){
                         bag.battle.participants.forEach(function(p){
                             if(p.teamNumber == bag.attacker.teamNumber && !p.defeated){
-                                bag.battle.addTemporaryEffect(p.creature,new BattleTemporaryEffect({
-                                    id: EffectId.Prayer,
-                                    title: 'Prayer',
-                                    onRoundBegin: function(bag){
-                                        let hpHealed = Math.min(15,bag.target.stats.hpTotal-bag.target.hpCurrent);
-
-                                        bag.target.hpCurrent += hpHealed;
-
-                                        bag.sendBattleEmbed([`+ Prayer heals ${bag.target.title} +${hpHealed}HP`]);
-                                    }
-                                }),5);
+                                bag.battle.addTemporaryEffect(p.creature,EffectPrayer,5);
                             }
                         });
 
