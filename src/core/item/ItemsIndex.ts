@@ -53,3 +53,4 @@ export { FireAxe } from './weapons/FireAxe';
 export { FireMace } from './weapons/FireMace';
 export { RedForestCastleMapPiece } from './maps/RedForestCastleMapPiece';
 export { RedForestCastleMap } from './maps/RedForestCastleMap';
+export { PrismBlade } from './weapons/PrismBlade';

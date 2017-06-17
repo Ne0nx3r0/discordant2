@@ -61,6 +61,7 @@ enum ItemId {BareHands,HandAxe,
     RedForestCastleMapPiece,
     RedForestCastleMap,
     BirthdayCake,
+    PrismBlade,
 }
 
 export default ItemId;
