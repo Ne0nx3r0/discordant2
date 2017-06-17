@@ -15,7 +15,7 @@ interface IsOpenFunction{
 interface EventTileDoorBag{
     from: Array<Coordinate>;
     to: Array<Coordinate>;
-    chanceTrapped: number;
+    chanceTrapped?: number;
     trap?: TileTrap;
     enterMessage?: string;
     interactMessage?: string;
@@ -25,8 +25,8 @@ interface EventTileDoorBag{
 export class EventTileDoor extends EventTile{
     from: Array<Coordinate>;
     to: Array<Coordinate>;
-    chanceTrapped: number;
-    trap: TileTrap;
+    chanceTrapped?: number;
+    trap?: TileTrap;
     enterMessage?: string;
     interactMessage?: string;
     isOpen?: IsOpenFunction;
@@ -38,7 +38,7 @@ export class EventTileDoor extends EventTile{
 
         this.from = bag.from;
         this.to = bag.to;
-        this.chanceTrapped = bag.chanceTrapped;
+        this.chanceTrapped = bag.chanceTrapped == undefined ? 0 : bag.chanceTrapped;
         this.trap = bag.trap;
         this.enterMessage = bag.enterMessage;
         this.interactMessage = bag.interactMessage;

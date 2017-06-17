@@ -24,7 +24,7 @@ class EventTileGetRedCastleLever extends EventTile{
         const leverSetOpen = bag.metadata.getMapData(`leverSetOpen`);   
 
         if(!leverSetOpen){
-            bag.party.sendCurrentMapImageFile(`A strange lever...`);
+            bag.party.sendCurrentMapImageFile(`A strange lever... (\`ei\` to use)`);
         }
         else{
             bag.party.sendCurrentMapImageFile(`A strange lever, it appears to be in the ON position`);
@@ -228,16 +228,17 @@ export const RedForestCastleEvents:IMapData = {
         // boss door
         {
             event: new EventTileDoor({
-                from: [{x: 9, y: 8},{x: 10, y: 8}],
-                  to: [{x: 12, y: 25},{x: 13, y: 25}],
-                  chanceTrapped: 0,
-                  enterMessage: 'A set of stairs (`ei` to interact)',
+                from: [{x: 18, y: 16},{x: 19, y: 16}],
+                    to: [{x: 18, y: 19},{x: 19, y: 19}],
+                    isOpen: function(bag){
+                        return bag.metadata.getMapData('leverSetOpen') as boolean;
+                    },
             }),
             coords: [
-                {x: 9, y: 8},
-                {x: 10, y: 8},
-                {x: 12, y: 25},
-                {x: 13, y: 25},
+                {x: 18, y: 16},
+                {x: 19, y: 16},
+                {x: 18, y: 19},
+                {x: 19, y: 19},
             ],
         },
     ]
