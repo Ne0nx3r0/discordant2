@@ -81,9 +81,21 @@ export const RedForestCastleEvents:IMapData = {
     ],
     eventTiles: [
         {
-            event: new EventTileForagable('Acai',ItemId.Acai),
+            event: new EventTileForagable('Blue Mushroom',ItemId.BlueMushroom),
             coords: [
-                {x:20,y:24},
+                {x:10,y:19},
+                {x:11,y:20},
+            ]
+        },
+        {
+            event: new EventTileForagable('Red Mushroom',ItemId.RedMushroom),
+            coords: [
+                {x:7,y:3},
+                {x:10,y:3},
+                {x:7,y:5},
+                {x:6,y:16},
+                {x:23,y:28},
+                {x:28,y:28},
             ]
         },
         {
@@ -91,13 +103,17 @@ export const RedForestCastleEvents:IMapData = {
                 lootGenerator: lootGenerator,
                 lootSettings:{
                     startingNode: 'common',
-                    chanceToGenerate: 0.6,        
+                    chanceToGenerate: 0.8,        
                 },
                 wishesMax: 40,
                 goldMax: 50,
             }),
             coords: [
-                {x:9,y:2},
+                {x:5,y:14},
+                {x:25,y:25},
+                {x:26,y:26},
+                {x:16,y:32},
+                {x:18,y:32},
             ],
         },
         {
