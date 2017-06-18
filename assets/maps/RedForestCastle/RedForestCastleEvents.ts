@@ -51,24 +51,13 @@ class EventTileGetRedCastleLever extends EventTile{
 
 export const lootGenerator = new LootGenerator();
 
-lootGenerator.addLootItem('common',ItemId.HuntingSword,0.1);
-lootGenerator.addLootItem('common',ItemId.WoodShield,0.3);
-lootGenerator.addLootItem('common',ItemId.HandAxe,0.1);
-lootGenerator.addLootItem('common',ItemId.WornLeathers,0.3);
-lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.3);
-lootGenerator.addLootItem('common',ItemId.ClothTunic,0.3);
-lootGenerator.addLootItem('common',ItemId.ClothHood,0.3);
-lootGenerator.addLootItem('common',ItemId.Vial,1);
-lootGenerator.addLootItem('common',ItemId.RedForestMapPiece,0.3);
+lootGenerator.addLootItem('uncommon',ItemId.Revive,0.1);
+lootGenerator.addLootItem('uncommon',ItemId.Tent,0.1);
+lootGenerator.addLootItem('uncommon',ItemId.RedForestCastleMapPiece,0.1);
 
-lootGenerator.addLootItem('rare',ItemId.RingOfAgility,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfHealth,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfStrength,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfLuck,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfSpirit,0.1);
-lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
+lootGenerator.addLootItem('rare',ItemId.RedEyeRing,0.1);
 lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
-lootGenerator.addLootItem('rare',ItemId.RedForestMapPiece,0.4);
+lootGenerator.addLootItem('rare',ItemId.RedForestCastleMapPiece,0.4);
 
 export const RedForestCastleEvents:IMapData = {
     startX: 5,
@@ -102,11 +91,11 @@ export const RedForestCastleEvents:IMapData = {
             event: new EventTileLootable({
                 lootGenerator: lootGenerator,
                 lootSettings:{
-                    startingNode: 'common',
+                    startingNode: 'uncommon',
                     chanceToGenerate: 0.8,        
                 },
-                wishesMax: 40,
-                goldMax: 50,
+                wishesMax: 200,
+                goldMax: 400,
             }),
             coords: [
                 {x:5,y:14},
