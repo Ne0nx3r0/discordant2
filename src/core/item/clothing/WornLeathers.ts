@@ -9,7 +9,7 @@ export const WornLeathers = new ItemEquippable({
     description: `(+2 Physical Resistance) A set of hardened animal hide braces that cover the chest, arms and legs`,
     goldValue: 30,
     useRequirements: {
-        strength: 12
+        strength: 10
     },
     slotType:'armor',
     onAddBonuses:function(stats:ICreatureStatSet){

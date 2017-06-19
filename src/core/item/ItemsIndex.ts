@@ -8,6 +8,8 @@ export { FireAntArmor } from './clothing/FireAntArmor';
 export { ClothHood } from './clothing/ClothHood';
 export { ClothTunic } from './clothing/ClothTunic';
 
+export {MageRobe} from './clothing/MageRobe';
+
 //Shields
 export { WoodShield } from './weapons/WoodShield';
 export { FireAntShield } from './weapons/FireAntShield';
@@ -26,6 +28,7 @@ export { AmuletOfLuck } from './jewelry/AmuletOfLuck';
 export { AmuletOfSpirit } from './jewelry/AmuletOfSpirit';
 export { AmuletOfHealth } from './jewelry/AmuletOfHealth';
 export { RedEyeRing } from './jewelry/RedEyeRing';
+
 
 //Consumables
 export { Vial } from './misc/Vial';

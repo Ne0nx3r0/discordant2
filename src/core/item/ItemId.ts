@@ -66,6 +66,7 @@ enum ItemId {BareHands,HandAxe,
     GhostHoundWeapon,
     RedMushroom,
     BlueMushroom,
+    MageRobe,
 }
 
 export default ItemId;
