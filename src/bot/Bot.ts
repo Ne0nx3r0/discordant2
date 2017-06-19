@@ -221,6 +221,7 @@ export default class Bot{
                         deleteChannel: this.deleteChannel.bind(this),
                         setLockdown: this.setLockdown.bind(this),
                         logout: this.logout.bind(this),
+                        addChatRole: this.addChatRole.bind(this)
                     },
                     permissions: this.permissions
                 });
@@ -245,6 +246,11 @@ export default class Bot{
 
     getChannelById(channelId:string):TextChannel{
         return this.client.channels.get(channelId) as TextChannel;
+    }
+
+    //Grant user the tester role on the Discordant server
+    addChatRole(uid:string,roleId:string){
+        this.client.guilds.get('304060806834683914').members.get(uid).addRole('304064132343136256');
     }
 
     async createPvPChannel(guild:Guild,invite:SocketPvPInvite):Promise<TextChannel>{

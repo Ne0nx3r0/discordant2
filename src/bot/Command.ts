@@ -25,6 +25,7 @@ export interface BotHandlers{
     setLockdown(lockdown:boolean):void;
     logout():void;
     deleteChannel: DeleteChannelFunc;
+    addChatRole(uid:string,roleId:string):void;
 }
 
 export interface CommandRunBag{
