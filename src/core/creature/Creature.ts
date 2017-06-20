@@ -99,7 +99,7 @@ export default class Creature{
         stats.resistances.thunder += Math.floor(stats.luck/5);
 
         //1% per 10 luck points
-        stats.xpBonus += GetLuckXPBonus(stats.luck);
+        stats.wishBonus += GetLuckXPBonus(stats.luck);
 
         stats.resistances.chaos = Math.min(
             stats.resistances.physical,
