@@ -113,6 +113,7 @@ export const RedForestCastleEvents:IMapData = {
                 {x:18,y:32},
             ],
         },
+        //Boss
         {
             event: new EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
             coords: [
