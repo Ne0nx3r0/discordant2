@@ -77,3 +77,6 @@ export { FireMace } from './weapons/FireMace';
 
 //For Testing
 export { PrismBlade } from './weapons/PrismBlade';
+
+//Pouch
+export { WishCatcher } from './misc/WishCatcher';

@@ -8,6 +8,7 @@ import { MessageOptions } from "discord.js";
 import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacter';
 import AllItems from '../../core/item/AllItems';
 import { XPToLevel } from "../../util/XPToLevel";
+import { GetLuckXPBonus } from '../../util/GetLuckXPBonus';
 
 export default class Begin extends Command{
     constructor(bag:CommandBag){
@@ -54,12 +55,18 @@ export default class Begin extends Command{
 }
 
 function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
+    let wishBonusStr = '';
+
+    if(pc.stats.wishBonus > 0){
+        wishBonusStr += ' (+'+(pc.stats.wishBonus*100)+'% Wishes)';
+    }
+
     const pcAttributesStr = ''
          +pc.stats.strength+' Strength,'
     +' '+pc.stats.agility+' Agility,'
     +'\n'+pc.stats.vitality+' Vitality,'
     +' '+pc.stats.spirit+' Spirit,'
-    +' '+pc.stats.luck+' Luck';
+    +' '+pc.stats.luck+' Luck'+wishBonusStr;
 
     const resistancesStr = ''
     +'\n'+Math.floor(pc.stats.resistances.physical)+' Physical'

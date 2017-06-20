@@ -3,6 +3,7 @@ import CreatureEquipment from '../item/CreatureEquipment';
 import ItemEquippable from '../item/ItemEquippable';
 import { EquipmentSlot, SocketCreatureEquipment } from '../item/CreatureEquipment';
 import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
+import { GetLuckXPBonus } from '../../util/GetLuckXPBonus';
 
 interface IResistances{
     physical:number;
@@ -21,6 +22,7 @@ export interface ICreatureStatSet{
     resistances: IResistances;
     magicFind: number;
     redEye: number;
+    wishBonus: number;
 }
 
 export interface CreatureBag{
@@ -71,6 +73,7 @@ export default class Creature{
             },
             hpTotal: 0,
             magicFind: Math.floor(this.attributes.luck / 4),
+            wishBonus: 0,
         };
 
         this.equipment.forEach(function(item:ItemEquippable,slot:EquipmentSlot){
@@ -94,6 +97,9 @@ export default class Creature{
 
         stats.resistances.fire += Math.floor(stats.agility/5);
         stats.resistances.thunder += Math.floor(stats.luck/5);
+
+        //1% per 10 luck points
+        stats.xpBonus += GetLuckXPBonus(stats.luck);
 
         stats.resistances.chaos = Math.min(
             stats.resistances.physical,

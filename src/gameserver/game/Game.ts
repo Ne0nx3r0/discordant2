@@ -816,16 +816,24 @@ export default class Game {
                     let wishesMsg = '';
 
                     battlePostBag.survivors.forEach((pc)=>{
-                        const wishesEarned = GetEarnedWishes({
-                            baseWishes: opponent.wishesDropped,
-                            partySize: partySize,
-                            highestLevel: highestLevel,
-                            playerLevel: pc.level,
-                        });
+                        const wishesEarned = Math.round(
+                            GetEarnedWishes({
+                                baseWishes: opponent.wishesDropped,
+                                partySize: partySize,
+                                highestLevel: highestLevel,
+                                playerLevel: pc.level,
+                            }) * (1 + pc.stats.wishBonus)
+                        );
+
+                        let wishBonus = '';
+                        
+                        if(pc.stats.wishBonus > 0){
+                            `(+${(pc.stats.wishBonus*100)}% Bonus)`;
+                        }
 
                         this.grantPlayerWishes(pc.uid,wishesEarned);
 
-                        wishesMsg += `\n${pc.title} earned ${wishesEarned} wishes`;
+                        wishesMsg += `\n${pc.title} earned ${wishesEarned} wishes${wishBonus}`;
                     });
 
                     new SendMessageClientRequest({
