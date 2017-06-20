@@ -54,11 +54,10 @@ export const lootGenerator = new LootGenerator();
 lootGenerator.addLootItem('uncommon',ItemId.Revive,0.1);
 lootGenerator.addLootItem('uncommon',ItemId.Tent,0.1);
 lootGenerator.addLootItem('uncommon',ItemId.RedForestCastleMapPiece,0.1);
-lootGenerator.addLootItem('uncommon',ItemId.MageRobe,0.1);
 
+lootGenerator.addLootItem('rare',ItemId.MageRobe,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedEyeRing,0.1);
-lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
-lootGenerator.addLootItem('rare',ItemId.RedForestCastleMapPiece,0.4);
+lootGenerator.addLootItem('rare',ItemId.RedForestCastleMapPiece,0.1);
 
 export const RedForestCastleEvents:IMapData = {
     startX: 5,
