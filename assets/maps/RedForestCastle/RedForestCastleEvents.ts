@@ -51,11 +51,18 @@ class EventTileGetRedCastleLever extends EventTile{
 
 export const lootGenerator = new LootGenerator();
 
-lootGenerator.addLootItem('uncommon',ItemId.Revive,0.1);
-lootGenerator.addLootItem('uncommon',ItemId.Tent,0.1);
-lootGenerator.addLootItem('uncommon',ItemId.RedForestCastleMapPiece,0.1);
+lootGenerator.addLootItem('uncommon',ItemId.Revive,1);
+lootGenerator.addLootItem('uncommon',ItemId.Tent,1);
+lootGenerator.addLootItem('uncommon',ItemId.RedForestCastleMapPiece,1);
+lootGenerator.addLootItem('uncommon',ItemId.MageRobe,1);
+lootGenerator.addLootItem('uncommon',ItemId.SonicLongsword,0.1);
+lootGenerator.addLootItem('uncommon',ItemId.StoneAxe,0.1);
+lootGenerator.addLootItem('uncommon',ItemId.RedEyeRing,0.1);
+lootGenerator.addLootItem('uncommon',ItemId.WishCatcher,0.1);
 
-lootGenerator.addLootItem('rare',ItemId.MageRobe,0.1);
+lootGenerator.addLootItem('rare',ItemId.TabletOfFaith,0.1);
+lootGenerator.addLootItem('rare',ItemId.SonicLongsword,0.1);
+lootGenerator.addLootItem('rare',ItemId.StoneAxe,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedEyeRing,0.1);
 lootGenerator.addLootItem('rare',ItemId.WishCatcher,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedForestCastleMapPiece,0.1);
