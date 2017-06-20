@@ -57,6 +57,7 @@ lootGenerator.addLootItem('uncommon',ItemId.RedForestCastleMapPiece,0.1);
 
 lootGenerator.addLootItem('rare',ItemId.MageRobe,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedEyeRing,0.1);
+lootGenerator.addLootItem('rare',ItemId.WishCatcher,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedForestCastleMapPiece,0.1);
 
 export const RedForestCastleEvents:IMapData = {
