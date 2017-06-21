@@ -1228,12 +1228,13 @@ export default class Game {
 
         const hpNeededToFullyHeal = pc.stats.hpTotal - pc.hpCurrent;
 
-
         const vialsNeededToFullyHeal = Math.ceil(hpNeededToFullyHeal / VIAL_HEAL_AMOUNT);
 
         const vialsUsed = Math.min(pcTotalVials,vialsNeededToFullyHeal);
 
         await DBTakePlayerItem(this.db,pc.uid,ItemId.Vial,vialsUsed);
+
+        pc.inventory._removeItem(this.items.get(ItemId.Vial),vialsUsed);
 
         pc.hpCurrent = Math.min(pc.hpCurrent + vialsUsed * VIAL_HEAL_AMOUNT,pc.stats.hpTotal);
 
