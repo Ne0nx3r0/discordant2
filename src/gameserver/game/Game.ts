@@ -1224,6 +1224,8 @@ export default class Game {
 
         const vialsUsed = Math.min(pcTotalVials,vialsNeededToFullyHeal);
 
+        await DBTakePlayerItem(this.db,pc.uid,ItemId.Vial,vialsUsed);
+
         pc.hpCurrent = Math.min(pc.hpCurrent + vialsUsed * VIAL_HEAL_AMOUNT,pc.stats.hpTotal);
 
         return {
