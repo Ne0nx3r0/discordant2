@@ -1218,7 +1218,12 @@ export default class Game {
             throw `You don't have any vials to use`;
         }
 
+        if(pc.hpCurrent >= pc.stats.hpTotal){
+            throw `You are already fully healed`;
+        }
+
         const hpNeededToFullyHeal = pc.stats.hpTotal - pc.hpCurrent;
+
 
         const vialsNeededToFullyHeal = Math.ceil(hpNeededToFullyHeal / VIAL_HEAL_AMOUNT);
 

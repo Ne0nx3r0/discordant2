@@ -6,7 +6,7 @@ export default class Heal extends Command{
     constructor(bag:CommandBag){
         super({
             name: 'Heal',
-            description: 'Uses vials until the player is healed',
+            description: 'Uses vials until you are healed',
             usage: 'heal',
             permissionNode: PermissionId.Heal,
             minParams: 0,
