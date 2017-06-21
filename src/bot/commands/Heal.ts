@@ -16,6 +16,6 @@ export default class Heal extends Command{
     async run(bag:CommandRunBag){
         const result = await bag.socket.autoHeal(bag.message.author.id);
 
-        bag.message.channel.send(`${bag.message.author.username} used ${result.vialsUsed} and healed to ${result.hpCurrent}/${result.hpTotal}! `);
+        bag.message.channel.send(`${bag.message.author.username} used ${result.vialsUsed} vials and healed to ${result.hpCurrent}/${result.hpTotal}! `);
     }
 }
