@@ -1224,7 +1224,7 @@ export default class Game {
 
         const vialsUsed = Math.min(pcTotalVials,vialsNeededToFullyHeal);
 
-        pc.hpCurrent += Math.min(vialsUsed * VIAL_HEAL_AMOUNT,pc.stats.hpTotal);
+        pc.hpCurrent = Math.min(pc.hpCurrent + vialsUsed * VIAL_HEAL_AMOUNT,pc.stats.hpTotal);
 
         return {
             vialsUsed: vialsUsed,
