@@ -68,6 +68,8 @@ import { DBTransferPlayerGold } from '../db/api/DBTransferPlayerGold';
 import DBCraftItem from "../db/api/DBCraftItem";
 import { DBGrantPlayerKarma } from '../db/api/DBGrantPlayerKarma';
 import { DBDailyReward } from '../db/api/DBDailyReward';
+import { AutoHealResults } from '../socket/requests/AutoHealRequest';
+import { VIAL_HEAL_AMOUNT } from '../../core/item/misc/Vial';
 import moment = require("moment");
 
 //how often players can get a daily reward
@@ -1201,6 +1203,34 @@ export default class Game {
         await this.takePlayerItem(pc.uid,item.id,1);//May throw error
 
         return onUseMsg;
+    }
+
+    async autoHeal(playerUid:string):Promise<AutoHealResults>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw `You are not registered`;
+        }
+
+        const pcTotalVials = pc.inventory.getItemAmount(ItemId.Vial);
+
+        if(pcTotalVials < 1){
+            throw `You don't have any vials to use`;
+        }
+
+        const hpNeededToFullyHeal = pc.stats.hpTotal - pc.hpCurrent;
+
+        const vialsNeededToFullyHeal = Math.ceil(hpNeededToFullyHeal / VIAL_HEAL_AMOUNT);
+
+        const vialsUsed = Math.min(pcTotalVials,vialsNeededToFullyHeal);
+
+        pc.hpCurrent += Math.min(vialsUsed * VIAL_HEAL_AMOUNT,pc.stats.hpTotal);
+
+        return {
+            vialsUsed: vialsUsed,
+            hpCurrent: pc.hpCurrent,
+            hpTotal: pc.stats.hpTotal,
+        };
     }
 
     async marketSellItem(bag:MarketSellData):Promise<number>{

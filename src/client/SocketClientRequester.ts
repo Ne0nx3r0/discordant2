@@ -70,6 +70,8 @@ import SendPartyMapImageRequest from '../gameserver/socket/requests/SendPartyMap
 import TransferPlayerGoldRequest from '../gameserver/socket/requests/TransferPlayerGoldRequest';
 import CraftItemRequest from '../gameserver/socket/requests/CraftItemRequest';
 import GetDailyRequest from '../gameserver/socket/requests/GetDailyRequest';
+import { AutoHealResults } from '../gameserver/socket/requests/AutoHealRequest';
+import AutoHealRequest from '../gameserver/socket/requests/AutoHealRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -452,6 +454,15 @@ export default class SocketClientRequester{
             uid: playerUid,
         })
         .send(this.sioc);
+    }
+
+    async autoHeal(playerUid:string):Promise<AutoHealResults>{
+        const response = await new AutoHealRequest({
+            uid: playerUid
+        })
+        .send(this.sioc);
+
+        return response.results;
     }
 
     async sellItem(playerUid:string,item:ItemBase,amount:number):Promise<void>{
