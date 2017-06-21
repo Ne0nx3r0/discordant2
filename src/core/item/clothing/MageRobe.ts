@@ -10,7 +10,7 @@ export const MageRobe = new ItemEquippable({
     goldValue: 150,
     slotType:'armor',
     useRequirements:{
-        strength: 10,
+        strength: 8,
     },
     onAddBonuses:function(stats:ICreatureStatSet){
         stats.resistances.physical += 3;
