@@ -1222,6 +1222,10 @@ export default class Game {
             throw `You are already fully healed`;
         }
 
+        if(pc.battle){
+            throw `You cannot use \`heal\` during a battle`;
+        }
+
         const hpNeededToFullyHeal = pc.stats.hpTotal - pc.hpCurrent;
 
 
