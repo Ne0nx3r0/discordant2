@@ -14,6 +14,7 @@ enum CreatureId{
     GhostHound,
     GiantToad,
     GiantRat,
+    CorruptedWishTwinDarkMagi,
 }
 
 export default CreatureId;
