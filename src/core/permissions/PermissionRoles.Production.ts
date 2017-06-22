@@ -1,4 +1,5 @@
 import PermissionId from './PermissionId';
+import { Dagger } from '../item/weapons/Dagger';
 //Hard coded permissions assigned to each role
 export const BannedPermissions = [
 
@@ -52,6 +53,7 @@ export const PlayerPermissions = [
     PermissionId.Craft,
     PermissionId.Pay,
     PermissionId.DodgeCalc,
+    PermissionId.Daily,
     PermissionId.Heal,
 ].concat(AnonymousPermissions).sort();
 
