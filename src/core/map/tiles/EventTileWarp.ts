@@ -33,8 +33,12 @@ export default class EventTileWarp extends EventTile{
     }
 
     onEnter(bag:EventTileHandlerBag):boolean{
-        const map = WorldMaps[this.mapTitle.toUpperCase()];
+        let map;
 
+        if(this.mapTitle){
+            map = WorldMaps[this.mapTitle.toUpperCase()];
+        }
+    
         if(this.warpOnEnter){
             return this.onInteract(bag);
         }
