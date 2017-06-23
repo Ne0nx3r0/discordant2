@@ -129,9 +129,9 @@ export default class Item extends Command{
                     }
                 }
 
-                const damageStr = attack.damageType == DamageType.healing ? 'healing' : 'damage';
+                const damageStr = attack.damageType == DamageType.healing ? '' : ' damage';
 
-                const msg = `${attack.minBaseDamage} - ${attack.maxBaseDamage} ${DamageType[attack.damageType]} ${damageStr}${yourDamageStr}${special}
+                const msg = `${attack.minBaseDamage} - ${attack.maxBaseDamage} ${DamageType[attack.damageType]}${damageStr}${yourDamageStr}${special}
 ${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttribute]}${chargesRequired}`;
 
                 embed.addField('(Attack) '+attack.title,msg);
