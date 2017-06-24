@@ -17,6 +17,8 @@ export default class DodgeCalc extends Command{
             permissionNode: PermissionId.DodgeCalc,
             minParams: 2,
         });
+
+        this.aliases.set('dc','dodgecalc');
     }
 
     async run(bag:CommandRunBag){
