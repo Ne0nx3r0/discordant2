@@ -19,8 +19,6 @@ export class EventTileForagable extends EventTile{
 
         if(!foragedAlready){
             bag.party.sendCurrentMapImageFile(`There's a small patch of ${this.title} plants. (\`di\` to interact)`);
-        
-            bag.metadata.setTileData(bag.coordinate,'foragedAlready',true);
 
             return true;
         }
