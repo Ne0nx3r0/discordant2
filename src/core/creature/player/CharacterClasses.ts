@@ -11,7 +11,8 @@ import { Dagger } from '../../item/weapons/Dagger';
 enum CharacterClassId{
     Nobody,
     Mercenary,
-    Healer
+    Healer,
+    Magician
 }
 
 export {CharacterClassId};
@@ -71,3 +72,20 @@ addClass(new CharacterClass(
         offhand: TabletOfHealing,
     }),
 ));
+/*
+addClass(new CharacterClass(
+    CharacterClassId.Magician,
+    'Magician',
+    'One of the countless entertainers now forced to use their mastery of wish magic to survive.',
+    new AttributeSet({
+        strength: 10,
+        agility: 6,
+        vitality: 10,
+        spirit: 14,
+        luck: 10,
+    }),
+    new CreatureEquipment({
+        weapon: Dagger,
+        offhand: TabletOfThunder,
+    }),
+));*/

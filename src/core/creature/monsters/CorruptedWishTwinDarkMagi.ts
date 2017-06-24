@@ -6,6 +6,8 @@ import Weapon from '../../item/Weapon';
 import ItemId from '../../item/ItemId';
 import WeaponAttack from '../../item/WeaponAttack';
 import { DamageType } from '../../item/WeaponAttackStep';
+import { ScalingLevel } from '../../item/WeaponAttack';
+import { Attribute } from '../AttributeSet';
 
 class CorruptedWishTwinDarkMagiWeapon extends Weapon{
     constructor(){
@@ -20,16 +22,17 @@ class CorruptedWishTwinDarkMagiWeapon extends Weapon{
             useRequirements:{},
             attacks:[
                 new WeaponAttack({
-                    title: 'attacka',
-                    minBaseDamage: ,
-                    maxBaseDamage: ,
-                    damageType: DamageType,
-                    scalingAttribute: Attribute;
-                    scalingLevel: ScalingLevel;
-                    chargesRequired?: number;
-                    steps:Array<WeaponAttackStep>;
-                    aiUseWeight: 0.1,
-                    aiShouldIUseThisAttack: true,
+                    title: 'black fire',
+                    minBaseDamage: 10,
+                    maxBaseDamage: 30,
+                    damageType: DamageType.acid,
+                    scalingAttribute: Attribute.luck,
+                    scalingLevel: ScalingLevel.No,
+                    steps:[
+
+                    ],
+                    aiUseWeight: 0.5,
+                    aiShouldIUseThisAttack: function(){return true},
                 }),
             ],    
             showInItems: false,
