@@ -12,6 +12,6 @@ export const GhostSkin = new ItemEquippable({
     slotType: 'armor',
     onAddBonuses: function(stats:ICreatureStatSet){
         stats.resistances.physical += 100;
-        stats.resistances.fire -= 10;
+        stats.resistances.fire -= 20;
     }
 });

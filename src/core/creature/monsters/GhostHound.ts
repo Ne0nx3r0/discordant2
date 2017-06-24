@@ -16,7 +16,7 @@ export default class GhostHound extends CreatureAIControlled{
             attributes: new AttributeSet({
                 strength: 20,
                 agility: 20,
-                vitality: 18,
+                vitality: 10,
                 spirit: 30,
                 luck: 0,
             }),
@@ -24,7 +24,7 @@ export default class GhostHound extends CreatureAIControlled{
                 weapon: StoneDagger,
                 armor: GhostSkin,
             }),
-            wishesDropped: 90,
+            wishesDropped: 75,
         });
     }
 }

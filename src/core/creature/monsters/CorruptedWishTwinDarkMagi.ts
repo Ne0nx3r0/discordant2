@@ -37,7 +37,7 @@ class CorruptedWishTwinDarkMagiWeapon extends Weapon{
     }
 }
 
-export default class GoblinSoldier extends CreatureAIControlled{
+export default class CorruptedWishTwinDarkMagi extends CreatureAIControlled{
     constructor(){
         super({
             id: CreatureId.CorruptedWishTwinDarkMagi,
@@ -54,7 +54,7 @@ export default class GoblinSoldier extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: new CorruptedWishTwinDarkMagiWeapon()
             }),
-            wishesDropped: 1000
+            wishesDropped: 5000
         });
     }
 }
