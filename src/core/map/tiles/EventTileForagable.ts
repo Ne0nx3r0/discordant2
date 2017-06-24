@@ -32,7 +32,7 @@ export class EventTileForagable extends EventTile{
         if(!foragedAlready){
             bag.party.sendChannelMessage(`${bag.player.title} found one ${this.title} for each party member`);
 
-            bag.player.party.members.forEach(function(pc){
+            bag.player.party.members.forEach((pc)=>{
                 bag.party.game.grantPlayerItem(pc.uid,this.itemId,1);
             });
 
