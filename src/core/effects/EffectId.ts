@@ -14,6 +14,7 @@ enum EffectId {
     FireAntQueenPheromone,
     Tequila,
     Prayer,
+    Dodge,
 }
 
 export default EffectId;

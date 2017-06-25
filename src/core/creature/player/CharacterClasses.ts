@@ -7,6 +7,9 @@ import Collection from '../../../util/Collection';
 import { WoodShield } from "../../item/weapons/WoodShield";
 import { HuntingSword } from '../../item/weapons/HuntingSword';
 import { Dagger } from '../../item/weapons/Dagger';
+import { ClothHood } from '../../item/clothing/ClothHood';
+import { ClothTunic } from '../../item/clothing/ClothTunic';
+import { TabletOfThunder } from '../../item/weapons/TabletOfThunder';
 
 enum CharacterClassId{
     Nobody,
@@ -72,7 +75,7 @@ addClass(new CharacterClass(
         offhand: TabletOfHealing,
     }),
 ));
-/*
+
 addClass(new CharacterClass(
     CharacterClassId.Magician,
     'Magician',
@@ -80,12 +83,13 @@ addClass(new CharacterClass(
     new AttributeSet({
         strength: 10,
         agility: 6,
-        vitality: 10,
-        spirit: 14,
+        vitality: 8,
+        spirit: 16,
         luck: 10,
     }),
     new CreatureEquipment({
-        weapon: Dagger,
-        offhand: TabletOfThunder,
+        hat: ClothHood,
+        armor: ClothTunic,
+        weapon: TabletOfThunder,
     }),
-));*/
+));

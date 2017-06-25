@@ -23,6 +23,7 @@ export interface ICreatureStatSet{
     magicFind: number;
     redEye: number;
     wishBonus: number;
+    dodge: number;
 }
 
 export interface CreatureBag{
@@ -74,6 +75,7 @@ export default class Creature{
             hpTotal: 0,
             magicFind: Math.floor(this.attributes.luck / 4),
             wishBonus: 0,
+            dodge: 0,
         };
 
         this.equipment.forEach(function(item:ItemEquippable,slot:EquipmentSlot){
