@@ -22,6 +22,7 @@ export const DBGetTopPlayers = async function(db:DatabaseService,type:LeadPlayer
     else if(type == LeadPlayerOption.luck) attributeStr = 'attribute_luck';
     else if(type == LeadPlayerOption.gold) attributeStr = 'gold';
     else if(type == LeadPlayerOption.level) attributeStr = 'level';
+    else if(type == LeadPlayerOption.karma) attributeStr = 'karma';
     else /*if(type == LeadPlayerOption.wishes)*/ attributeStr = 'wishes';
 
     
