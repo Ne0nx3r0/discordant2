@@ -28,7 +28,7 @@ export const TabletOfPoison =  new Weapon({
             chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} reads a legend aloug and poisons {defender}',
+                    attackMessage: '{attacker} reads a legend aloud and poisons {defender}',
                     damageFunc: function(bag:DamageFuncBag){
                         bag.battle.addTemporaryEffect(bag.defender.creature,EffectSpiritSnakePoison,5);
 
