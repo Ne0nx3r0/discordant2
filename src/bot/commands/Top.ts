@@ -5,7 +5,7 @@ import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
 
 export enum LeadPlayerOption{wishes,gold,level,strength,agility,vitality,spirit,luck};
-const LeadPlayerOptions = ['wishes','gold','level','strength','agility','vitality','spirit','luck'];
+const LeadPlayerOptions = ['wishes','gold','level','karma','strength','agility','vitality','spirit','luck'];
 
 export default class Top extends Command{
     constructor(bag:CommandBag){
