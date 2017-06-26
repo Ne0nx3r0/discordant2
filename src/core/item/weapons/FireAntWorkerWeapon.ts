@@ -64,10 +64,12 @@ export const FireAntWorkerWeapon = new Weapon({
                         const maxDamage = bag.step.attack.maxBaseDamage;
                         const healAmount = Math.round(Math.random() * (maxDamage - minDamage) + minDamage);
 
+                        const adjustedHealAmount = Math.min(bag.attacker.creature.stats.hpTotal-bag.attacker.creature.hpCurrent,healAmount);
+
                         return [{
                             type: DamageType.healing,
                             target: bag.attacker,
-                            amount: healAmount
+                            amount: adjustedHealAmount
                         }];
                     },
                 })
