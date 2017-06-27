@@ -42,6 +42,9 @@ export { Tent } from './misc/Tent';
 export { BirthdayCake } from './misc/BirthdayCake';
 export { Revive } from './misc/Revive';
 
+//Crafting
+export { FireAntCarapace } from './misc/FireAntCarapace';
+
 //Maps
 export { MapAfterRedForestPiece } from './maps/MapAfterRedForestPiece';
 export { MapAfterRedForest } from './maps/MapAfterRedForest';
@@ -72,7 +75,6 @@ export { SonicLongsword } from './weapons/SonicLongsword';
 export { Dagger } from './weapons/Dagger';
 export { StoneAxe } from './weapons/StoneAxe';
 export { StoneDagger } from './weapons/StoneDagger';
-export { FireAntCarapace } from './misc/FireAntCarapace';
 export { FireDagger } from './weapons/FireDagger';
 export { FireAxe } from './weapons/FireAxe';
 export { FireMace } from './weapons/FireMace';
