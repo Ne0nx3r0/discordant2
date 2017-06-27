@@ -1,7 +1,9 @@
 import WeaponAttack from '../core/item/WeaponAttack';
 
 export function CalculateDamagePerRoundDirectly(minDamage:number,maxDamage:number,charges:number,criticalMultiplier:number,criticalChance:number):number{
-    return ( (minDamage+maxDamage) / 2 ) / ( charges + 1 + criticalMultiplier * criticalChance);
+    return (minDamage+maxDamage) / 2 * (1 + criticalMultiplier * criticalChance )
+        / 
+        charges;
 }
 
 export default function CalculateDamagePerRound(attack:WeaponAttack){
