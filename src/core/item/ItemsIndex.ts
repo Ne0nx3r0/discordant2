@@ -78,6 +78,7 @@ export { StoneDagger } from './weapons/StoneDagger';
 export { FireDagger } from './weapons/FireDagger';
 export { FireAxe } from './weapons/FireAxe';
 export { FireMace } from './weapons/FireMace';
+export { LuckyDagger } from './weapons/LuckDagger';
 
 //For Testing
 export { PrismBlade } from './weapons/PrismBlade';

@@ -71,6 +71,7 @@ enum ItemId {BareHands,HandAxe,
     CorruptedWishTwinDarkMagi,
     TabletOfThunder,
     TabletOfLuck,
+    LuckyDagger,
 }
 
 export default ItemId;
