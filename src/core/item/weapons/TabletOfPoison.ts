@@ -23,7 +23,7 @@ export const TabletOfPoison =  new Weapon({
             minBaseDamage: 8,
             maxBaseDamage: 12,
             damageType: DamageType.physical,
-            scalingAttribute: Attribute.strength,
+            scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.C,
             chargesRequired: 2,
             steps: [
