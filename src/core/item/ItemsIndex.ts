@@ -57,6 +57,8 @@ export { TabletOfHealing } from './weapons/TabletOfHealing';
 export { TabletOfPoison } from './weapons/TabletOfPoison';
 export { TabletOfFaith } from './weapons/TabletOfFaith';
 export { TabletOfFire } from './weapons/TabletOfFire';
+export { TabletOfThunder } from './weapons/TabletOfThunder';
+export { TabletOfLuck } from './weapons/TabletOfLuck';
 
 //Collectables
 export { ScarabToken } from './misc/ScarabToken';
