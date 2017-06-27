@@ -10,7 +10,7 @@ export default function CalculateDamagePerRound(attack:WeaponAttack){
     return CalculateDamagePerRoundDirectly(
         attack.minBaseDamage,
         attack.maxBaseDamage,
-        attack.chargesRequired,
+        attack.chargesRequired+1,
         attack.weapon.criticalMultiplier,
         attack.weapon.chanceToCritical
     );    
