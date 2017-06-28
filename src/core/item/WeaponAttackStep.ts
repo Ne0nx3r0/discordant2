@@ -8,7 +8,7 @@ export enum DamageType{
     healing,
     physical,
     fire,
-    acid,
+    dark,
     thunder,
     chaos,
     special

@@ -15,6 +15,9 @@ enum EffectId {
     Tequila,
     Prayer,
     Dodge,
+    MagicShieldRed,
+    MagicShieldGrey,
+    MagicShieldGold,
 }
 
 export default EffectId;

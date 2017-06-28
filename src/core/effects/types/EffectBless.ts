@@ -2,13 +2,6 @@ import BattleTemporaryEffect from '../BattleTemporaryEffect';
 import EffectId from '../EffectId';
 import { Attribute } from '../../creature/AttributeSet';
 
-interface AttributeBoostBag{
-    id: EffectId;
-    title: string;
-    attribute: Attribute;
-    amount: number;
-}
-
 export const EffectBless = new BattleTemporaryEffect({
     id: EffectId.Bless,
     title: 'Bless',

@@ -10,7 +10,7 @@ export default class FireAntInfected extends CreatureAIControlled{
         super({
             id: CreatureId.FireAntInfected,
             title: 'Infected Giant Fire Ant',
-            description: 'A common parasite that lives off of giant fire ants',
+            description: 'The result of a strange infection seems to have caused this ant to wander from the nest.',
             allowRun: false,
             attributes: new AttributeSet({
                 strength: 24,
