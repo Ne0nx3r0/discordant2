@@ -9,6 +9,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { EffectShieldGrey } from '../../effects/types/EffectShieldGrey';
 import { EffectShieldGold } from '../../effects/types/EffectShieldGold';
 import { EffectShieldRed } from '../../effects/types/EffectShieldRed';
+import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
 
 const SHIELD_EFFECTS = [
     EffectShieldGrey,
@@ -24,24 +25,44 @@ export class ExiledMagicianWeapon extends Weapon{
             description: 'Hrm.',
             goldValue: 1,
             damageBlocked: 0,
-            chanceToCritical: 0.1,
-            criticalMultiplier: 2,
+            chanceToCritical: 0,
+            criticalMultiplier: 0,
             useRequirements:{},
             attacks:[
                 new WeaponAttack({
                     title: 'black magic',
                     minBaseDamage: 5,
-                    maxBaseDamage: 10,
+                    maxBaseDamage: 20,
                     damageType: DamageType.dark,
                     scalingAttribute: Attribute.luck,
                     scalingLevel: ScalingLevel.No,
                     steps:[
                         new WeaponAttackStep({
-                            attackMessage: '{attacker} assaults {defender} with black magic',
+                            attackMessage: '{attacker} fires a ball of dark magic at {defender}',
                             damageFunc: DefaultDamageFunc,
                         }),
                     ],
-                    aiUseWeight: 0.2,
+                    aiUseWeight: 0.1,
+                    aiShouldIUseThisAttack: function(){return true},
+                }),
+                new WeaponAttack({
+                    title: 'big black magic',
+                    minBaseDamage: 20,
+                    maxBaseDamage: 40,
+                    damageType: DamageType.dark,
+                    scalingAttribute: Attribute.luck,
+                    scalingLevel: ScalingLevel.No,
+                    steps:[
+                        new WeaponAttackStep({
+                            attackMessage: '{attacker} summons a mass of dark energy',
+                            damageFunc: function(bag){return [];},
+                        }),
+                        new WeaponAttackStep({
+                            attackMessage: '{attacker} emits a wave of dark magic',
+                            damageFunc: DefaultDamageAllFunc,
+                        }),
+                    ],
+                    aiUseWeight: 0.3,
                     aiShouldIUseThisAttack: function(){return true},
                 }),
                 new WeaponAttack({
@@ -63,7 +84,7 @@ export class ExiledMagicianWeapon extends Weapon{
                             }
                         }),
                     ],
-                    aiUseWeight: 0.2,
+                    aiUseWeight: 0.1,
                     aiShouldIUseThisAttack: function(){return true}
                 }),
                 
