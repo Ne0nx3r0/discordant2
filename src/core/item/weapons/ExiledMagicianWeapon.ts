@@ -10,7 +10,7 @@ import { EffectShieldGrey } from '../../effects/types/EffectShieldGrey';
 import { EffectShieldGold } from '../../effects/types/EffectShieldGold';
 import { EffectShieldRed } from '../../effects/types/EffectShieldRed';
 
-const shieldEffects = [
+const SHIELD_EFFECTS = [
     EffectShieldGrey,
     EffectShieldGold,
     EffectShieldRed,
@@ -24,14 +24,14 @@ export class ExiledMagicianWeapon extends Weapon{
             description: 'Hrm.',
             goldValue: 1,
             damageBlocked: 0,
-            chanceToCritical: 0,
-            criticalMultiplier: 0,
+            chanceToCritical: 0.1,
+            criticalMultiplier: 2,
             useRequirements:{},
             attacks:[
                 new WeaponAttack({
                     title: 'black magic',
-                    minBaseDamage: 10,
-                    maxBaseDamage: 30,
+                    minBaseDamage: 5,
+                    maxBaseDamage: 10,
                     damageType: DamageType.dark,
                     scalingAttribute: Attribute.luck,
                     scalingLevel: ScalingLevel.No,
@@ -41,29 +41,23 @@ export class ExiledMagicianWeapon extends Weapon{
                             damageFunc: DefaultDamageFunc,
                         }),
                     ],
-                    aiUseWeight: 0.4,
+                    aiUseWeight: 0.2,
                     aiShouldIUseThisAttack: function(){return true},
                 }),
                 new WeaponAttack({
-                    title: 'resistance swap fire',
+                    title: 'hp in half',
                     minBaseDamage: 0,
                     maxBaseDamage: 0,
                     damageType: DamageType.dark,
                     scalingAttribute: Attribute.luck,
                     scalingLevel: ScalingLevel.C,
-                    steps: [
-                        new WeaponAttackStep({
-                            attackMessage: '{attacker} creates a magic shield!',
-                            damageFunc: function(bag){
-
-
-                                return [];
-                            }
-                        }),
+                    steps:[
+                        
                     ],
-                    aiUseWeight: 0.3,
-                    aiShouldIUseThisAttack: function(){return true},
+                    aiUseWeight: 0.2,
+                    aiShouldIUseThisAttack: function(){return true}
                 }),
+                
             ],    
             showInItems: false,
         });

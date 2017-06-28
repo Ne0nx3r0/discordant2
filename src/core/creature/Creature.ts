@@ -9,6 +9,7 @@ interface IResistances{
     physical:number;
     fire:number;
     thunder:number;
+    dark: number;
     chaos:number;
 }
 
@@ -70,6 +71,7 @@ export default class Creature{
                 physical:0,
                 fire:0,
                 thunder:0,
+                dark:0,
                 chaos:0,
             },
             hpTotal: 0,
@@ -99,6 +101,7 @@ export default class Creature{
 
         stats.resistances.fire += Math.floor(stats.agility/5);
         stats.resistances.thunder += Math.floor(stats.luck/5);
+        stats.resistances.dark += Math.floor(stats.vitality/10);
 
         //1% per 10 luck points
         stats.wishBonus += GetLuckXPBonus(stats.luck);
