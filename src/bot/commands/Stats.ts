@@ -71,7 +71,8 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     const resistancesStr = ''
     +'\n'+Math.floor(pc.stats.resistances.physical)+' Physical'
     +'\n'+Math.floor(pc.stats.resistances.fire)+' Fire'
-    +'\n'+Math.floor(pc.stats.resistances.thunder)+' Thunder';
+    +'\n'+Math.floor(pc.stats.resistances.thunder)+' Thunder'
+    +'\n'+Math.floor(pc.stats.resistances.dark)+' Dark';
 
     function getEquipmentInSlot(slot:string){
         if(pc.equipment[slot]){
