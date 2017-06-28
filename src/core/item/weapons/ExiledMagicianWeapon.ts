@@ -52,7 +52,16 @@ export class ExiledMagicianWeapon extends Weapon{
                     scalingAttribute: Attribute.luck,
                     scalingLevel: ScalingLevel.C,
                     steps:[
-                        
+                        new WeaponAttackStep({
+                            attackMessage: '{attacker} performs a dark curse on {defender}',
+                            damageFunc: function(bag){
+                                return [{
+                                    type: DamageType.dark,
+                                    amount: Math.ceil(bag.defender.creature.hpCurrent / 2),
+                                    target: bag.defender,
+                                }];
+                            }
+                        }),
                     ],
                     aiUseWeight: 0.2,
                     aiShouldIUseThisAttack: function(){return true}
