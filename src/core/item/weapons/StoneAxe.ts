@@ -39,12 +39,12 @@ export const StoneAxe = new Weapon({
         }),
         new WeaponAttack({
             title: 'slam',
-            minBaseDamage: 40,
-            maxBaseDamage: 60,
+            minBaseDamage: 50,
+            maxBaseDamage: 70,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            chargesRequired: 3,
+            chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slams their axe down on {defender}',
