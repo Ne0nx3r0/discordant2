@@ -39,15 +39,15 @@ export const BareHands = new Weapon({
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.S,
-            minBaseDamage: 5,
-            maxBaseDamage: 10,
+            minBaseDamage: 4,
+            maxBaseDamage: 8,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} punches {defender}',
                     damageFunc: DefaultDamageFunc
                 })
             ],
-            aiUseWeight: 0.2
+            aiUseWeight: 0.1
         }),
     ]
 });
