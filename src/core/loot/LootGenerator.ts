@@ -17,27 +17,6 @@ export default class LootGenerator{
     constructor(){
         this.lootNodes = new Map();
         this.lootNodes.set( 'root' , new LootNode('root',null) );
-/*
-        this.addLootItem('common.weapons.physical',HandAxe,0.5);
-        this.addLootItem('common.weapons.physical',WoodShield,0.5);
-        this.addLootItem('common.weapons.physical',HuntingSword,0.4);
-        this.addLootItem('common.equipment.armor',WornLeathers,0.4);
-        this.addLootItem('common.consumables',Vial,0.8);
-        this.addLootItem('common.herbs',Sage,0.5);
-        this.addLootItem('common.herbs',Yerba,0.5);
-        this.addLootItem('common.herbs',Bane,0.5);
-        this.addLootItem('common.herbs',Fox,0.5);
-        this.addLootItem('common.herbs',Acai,1);
-
-        this.addLootItem('uncommon.weapons.tablets',TabletOfHealing,0.2);
-        this.addLootItem('uncommon.weapons.tablets',TabletOfPoison,0.2);
-        this.addLootItem('uncommon.weapons.physical',StoneDagger,0.15);
-        this.addLootItem('uncommon.consumables',Tent,0.2);
-        
-        this.addLootItem('rare.equipment.jewelry',RingOfFortune,0.01);
-        this.addLootItem('rare.weapons.thunder',SonicLongsword,0.05);
-        this.addLootItem('rare.weapons.physical',StoneAxe,0.05);
-*/
     }
 
     addLootItem(node:string,itemId:number,rarity:number){
@@ -136,7 +115,7 @@ class LootNode{
         let rollMax = 0;
 
         const tempRarities = this.children.map(function(c){
-            const adjustedRarity = c.rarity + magicFind / 1000;
+            const adjustedRarity = c.rarity + magicFind / 100;
 
             rollMax += adjustedRarity;
 

@@ -1,9 +1,30 @@
 import LootGenerator, { IGenerateLootBag } from "./LootGenerator";
 import ItemId from '../item/ItemId';
 import FractionSimplify from "../../util/FractionSimplify";
-import { lootGenerator } from '../../../assets/maps/WesternGate2/WesternGate2Events';
 
 const Table = require('cli-table');
+
+// BEGIN LOOT
+const lootGenerator = new LootGenerator();
+
+lootGenerator.addLootItem('common',ItemId.HuntingSword,0.1);
+lootGenerator.addLootItem('common',ItemId.WoodShield,0.3);
+lootGenerator.addLootItem('common',ItemId.HandAxe,0.3);
+lootGenerator.addLootItem('common',ItemId.WornLeathers,0.3);
+lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.3);
+lootGenerator.addLootItem('common',ItemId.ClothTunic,0.3);
+lootGenerator.addLootItem('common',ItemId.ClothHood,0.3);
+lootGenerator.addLootItem('common',ItemId.Vial,1);
+lootGenerator.addLootItem('common',ItemId.RedForestMapPiece,0.3);
+
+lootGenerator.addLootItem('rare',ItemId.RingOfAgility,0.1);
+lootGenerator.addLootItem('rare',ItemId.RingOfHealth,0.1);
+lootGenerator.addLootItem('rare',ItemId.RingOfStrength,0.1);
+lootGenerator.addLootItem('rare',ItemId.RingOfLuck,0.1);
+lootGenerator.addLootItem('rare',ItemId.RingOfSpirit,0.1);
+lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
+lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
+lootGenerator.addLootItem('rare',ItemId.RedForestMapPiece,0.4);
 
 //////////////// BEGIN SETTINGS /////////////
 
@@ -31,13 +52,11 @@ const MF_RATES = [
 
 //////////////// END SETTINGS /////////////
 
-const lg = lootGenerator;
-
 function testLootAt(magicFind):Array<{name:string,value:number}>{
     const results = {};
 
     for(var i=0;i<LOOT_TEST_RUNS;i++){
-        const lootItemId = lg.generateLoot({
+        const lootItemId = lootGenerator.generateLoot({
             startingNode: LOOT_TEST_SETTINGS.startingNode,
             chanceToGenerate: LOOT_TEST_SETTINGS.chanceToGenerate,
             chanceToGoUp: LOOT_TEST_SETTINGS.chanceToGoUp,
