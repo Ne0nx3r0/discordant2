@@ -53,7 +53,7 @@ export class ExiledMagicianWeapon extends Weapon{
                     scalingLevel: ScalingLevel.C,
                     steps:[
                         new WeaponAttackStep({
-                            attackMessage: '{attacker} performs a dark curse on {defender}',
+                            attackMessage: '{attacker} places a dark curse on {defender} destroying HALF their HP!',
                             damageFunc: function(bag){
                                 return [{
                                     type: DamageType.dark,

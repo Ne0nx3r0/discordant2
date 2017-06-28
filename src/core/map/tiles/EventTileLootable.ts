@@ -68,14 +68,12 @@ export default class EventTileLootable extends EventTile{
         let lootLines = [];
 
         bag.player.party.members.forEach((member)=>{
-            const mf = member.stats.magicFind;
-
             let lootItemId:number = this.lootGenerator.generateLoot({
                 startingNode: this.lootSettings.startingNode,
                 chanceToGenerate: this.lootSettings.chanceToGenerate,
                 chanceToGoUp: this.lootSettings.chanceToGoUp || 0,
                 maxStepsUp: this.lootSettings.maxStepsUp || 0,
-                magicFind: mf,
+                magicFind: partyMagicFind,
             });
 
             //Either they got an item, or we give them wishes or gold
