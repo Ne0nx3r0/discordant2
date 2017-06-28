@@ -42,7 +42,7 @@ export const FireAxe = new Weapon({
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
-            chargesRequired: 3,
+            chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slams their axe down on {defender}',
