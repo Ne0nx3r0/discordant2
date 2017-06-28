@@ -15,7 +15,6 @@ export { WoodShield } from './weapons/WoodShield';
 export { FireAntShield } from './weapons/FireAntShield';
 
 //Jewelry
-import { AmuletOfHealth } from './jewelry/AmuletOfHealth';
 export { RingOfFortune } from './jewelry/RingOfFortune';
 export { RingOfAgility } from './jewelry/RingOfAgility';
 export { RingOfStrength } from './jewelry/RingOfStrength';

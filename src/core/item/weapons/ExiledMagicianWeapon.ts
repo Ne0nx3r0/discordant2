@@ -11,17 +11,11 @@ import { EffectShieldGold } from '../../effects/types/EffectShieldGold';
 import { EffectShieldRed } from '../../effects/types/EffectShieldRed';
 import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
 
-const SHIELD_EFFECTS = [
-    EffectShieldGrey,
-    EffectShieldGold,
-    EffectShieldRed,
-];
-
 export class ExiledMagicianWeapon extends Weapon{
     constructor(){
         super({
-            id: ItemId.ExiledMagician,
-            title: 'Exiled Magician',
+            id: ItemId.ExiledMagicianWeapon,
+            title: 'Exiled Magician Weapon',
             description: 'Hrm.',
             goldValue: 1,
             damageBlocked: 0,
@@ -31,8 +25,8 @@ export class ExiledMagicianWeapon extends Weapon{
             attacks:[
                 new WeaponAttack({
                     title: 'black magic',
-                    minBaseDamage: 5,
-                    maxBaseDamage: 20,
+                    minBaseDamage: 10,
+                    maxBaseDamage: 30,
                     damageType: DamageType.dark,
                     scalingAttribute: Attribute.luck,
                     scalingLevel: ScalingLevel.No,
@@ -42,12 +36,12 @@ export class ExiledMagicianWeapon extends Weapon{
                             damageFunc: DefaultDamageFunc,
                         }),
                     ],
-                    aiUseWeight: 0.1,
+                    aiUseWeight: 0.3,
                     aiShouldIUseThisAttack: function(){return true},
                 }),
                 new WeaponAttack({
                     title: 'big black magic',
-                    minBaseDamage: 20,
+                    minBaseDamage: 10,
                     maxBaseDamage: 40,
                     damageType: DamageType.dark,
                     scalingAttribute: Attribute.luck,
@@ -62,7 +56,7 @@ export class ExiledMagicianWeapon extends Weapon{
                             damageFunc: DefaultDamageAllFunc,
                         }),
                     ],
-                    aiUseWeight: 0.3,
+                    aiUseWeight: 0.1,
                     aiShouldIUseThisAttack: function(){return true},
                 }),
                 new WeaponAttack({
@@ -87,7 +81,6 @@ export class ExiledMagicianWeapon extends Weapon{
                     aiUseWeight: 0.1,
                     aiShouldIUseThisAttack: function(){return true}
                 }),
-                
             ],    
             showInItems: false,
         });

@@ -18,7 +18,9 @@ export default class AllItems{
         return this.items.get(id);
     }
 
-    findByName(name:string){
+    findByName(name:string):ItemBase{
+        if(!name) return null;
+
         const nameUpper = name.toUpperCase();
 
         for(const [itemId, item] of this.items){
