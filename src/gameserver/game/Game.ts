@@ -461,6 +461,7 @@ export default class Game {
 
             if(!item.canEquip(player)){
                 await this.unequipPlayerItem(player.uid,slot as EquipmentSlot);
+                
                 removedItems.push(item);
             }
         }
@@ -495,6 +496,19 @@ export default class Game {
         player.inventory._addItem(itemUnequipped,1);
 
         player.updateStats();
+        
+        //check if they have any "illegal" equips
+        const removedItems = await this.equipCheck(player);
+
+        //equipCheck is allowed to remove items
+        player.updateStats();
+
+        if(removedItems.length > 0){
+            throw 'The following items were also removed because you no longer meet their requirements: '
+            +removedItems.map(function(item){
+                return item.title;
+            }).join(', ');
+        }
 
         return itemUnequipped.id;
     }
