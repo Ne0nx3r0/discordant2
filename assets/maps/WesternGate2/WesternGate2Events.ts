@@ -9,7 +9,7 @@ import { RedForestMapPiece } from "../../../src/core/item/ItemsIndex";
 import EventTileWarp from "../../../src/core/map/tiles/EventTileWarp";
 import LootGenerator from '../../../src/core/loot/LootGenerator';
 
-export const lootGenerator = new LootGenerator();
+const lootGenerator = new LootGenerator();
 
 lootGenerator.addLootItem('common',ItemId.HuntingSword,0.1);
 lootGenerator.addLootItem('common',ItemId.WoodShield,0.3);
