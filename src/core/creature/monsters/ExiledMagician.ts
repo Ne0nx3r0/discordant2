@@ -24,7 +24,7 @@ export default class ExiledMagician extends CreatureAIControlled{
             attributes: new AttributeSet({
                 strength: 10,
                 agility: 10,
-                vitality: 40,
+                vitality: 50,
                 spirit: 0,
                 luck: 0,
             }),
