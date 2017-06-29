@@ -81,6 +81,7 @@ export { StoneAxe } from './weapons/StoneAxe';
 export { StoneDagger } from './weapons/StoneDagger';
 export { FireDagger } from './weapons/FireDagger';
 export { FireAxe } from './weapons/FireAxe';
+export { FireSpear } from './weapons/FireSpear';
 export { FireMace } from './weapons/FireMace';
 export { LuckyDagger } from './weapons/LuckDagger';
 

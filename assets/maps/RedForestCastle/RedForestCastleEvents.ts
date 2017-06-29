@@ -65,6 +65,7 @@ lootGenerator.addLootItem('rare',ItemId.TabletOfFaith,0.1);
 lootGenerator.addLootItem('rare',ItemId.SonicLongsword,0.1);
 lootGenerator.addLootItem('rare',ItemId.StoneAxe,0.1);
 lootGenerator.addLootItem('rare',ItemId.StoneDagger,0.1);
+lootGenerator.addLootItem('rare',ItemId.FireSpear,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedEyeRing,0.1);
 lootGenerator.addLootItem('rare',ItemId.WishCatcher,0.1);
 lootGenerator.addLootItem('rare',ItemId.FireDagger,0.1);

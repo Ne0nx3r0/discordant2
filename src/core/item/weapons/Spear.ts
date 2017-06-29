@@ -6,9 +6,10 @@ import { Attribute } from '../../creature/AttributeSet';
 import { ScalingLevel } from '../WeaponAttack';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import WeaponAttackStep from '../WeaponAttackStep';
+
 export const Spear = new Weapon({
-    id: ItemId.HandAxe,
-    title: 'Hand Axe',
+    id: ItemId.Spear,
+    title: 'Spear',
     description: 'A simple weapon, but one whose reach and strength have made it a favorite among hunters since prehistoric times.',
     damageBlocked: 0.01,
     goldValue: 40,
