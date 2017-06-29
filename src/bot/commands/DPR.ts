@@ -33,10 +33,10 @@ export default class DPR extends Command{
 
         const weapon = item as Weapon;
 
-        let statRequirementsTotal = [];
+        let statRequirementsTotal = 0;
         
         if(Object.keys(weapon.useRequirements).length > 0){
-            Object
+            statRequirementsTotal += Object
             .keys(weapon.useRequirements)
             .map(function(key){
                 return weapon.useRequirements[key];
@@ -48,7 +48,7 @@ export default class DPR extends Command{
 
         const dprs = weapon.attacks.map(function(attack){
             const dpr = Math.round(CalculateDamagePerRound(attack)*100)/100;
-            const statdpr = Math.round((statRequirementsTotal/dpr)*100)/100;
+            const statdpr = Math.round( ( statRequirementsTotal / dpr ) * 100) / 100;
 
             return attack.title+ ': DPR ' +dpr+ ' \ stats '+statRequirementsTotal + ' = '+statdpr;
         }).join('\n');
