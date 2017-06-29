@@ -25,7 +25,7 @@ class EventTileGetRedCastleLever extends EventTile{
         const leverSetOpen = bag.metadata.getMapData(`leverSetOpen`);   
 
         if(!leverSetOpen){
-            bag.party.sendCurrentMapImageFile(`A strange lever... (\`ei\` to use)`);
+            bag.party.sendCurrentMapImageFile(`A strange lever... (\`di\` to use)`);
         }
         else{
             bag.party.sendCurrentMapImageFile(`A strange lever, it appears to be in the ON position`);
