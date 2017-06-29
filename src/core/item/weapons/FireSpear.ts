@@ -29,7 +29,7 @@ export const FireSpear = new Weapon({
             scalingLevel: ScalingLevel.B,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} swings a hand axe at {defender}',
+                    attackMessage: '{attacker} stabs {defender} with a flaming spear',
                     damageFunc: DefaultDamageFunc,
                 })
             ],

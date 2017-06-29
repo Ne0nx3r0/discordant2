@@ -28,7 +28,7 @@ export const Spear = new Weapon({
             scalingLevel: ScalingLevel.B,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} swings a hand axe at {defender}',
+                    attackMessage: '{attacker} stabs {defender} with their spear',
                     damageFunc: DefaultDamageFunc,
                 })
             ],
