@@ -184,7 +184,7 @@ export const RedForestEvents:IMapData = {
                 {x:33,y:14},
                 {x:34,y:14},
             ]
-        },/*
+        },
         {
             event: new EventTileWarp({
                 mapTitle: 'RED FOREST CASTLE',
@@ -193,7 +193,7 @@ export const RedForestEvents:IMapData = {
             coords:[
                 { x:5, y:2 },
             ],
-        },*/
+        },
         {
             event: new EventTileEnterMessage({
                 message: `The entrance to a foreboding castle`,
