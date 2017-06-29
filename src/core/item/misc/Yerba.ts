@@ -20,7 +20,7 @@ export const Yerba = new ItemUsable({
             id: EffectId.Yerba,
             title: `Yerba`,
             onAddBonuses:function(stats){
-                stats.hpTotal += 50;
+                stats.vitality += 5;
             }
         }),30);
 
