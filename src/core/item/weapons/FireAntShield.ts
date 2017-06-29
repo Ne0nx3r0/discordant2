@@ -25,6 +25,7 @@ export const FireAntShield = new Weapon({
         stats.resistances.physical += 4;
         stats.resistances.fire += 4;
         stats.resistances.thunder += 4;
+        stats.resistances.dark += 4;
     },
     recipe: {
         wishes: 150,

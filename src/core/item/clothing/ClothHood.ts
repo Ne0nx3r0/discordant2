@@ -13,5 +13,6 @@ export const ClothHood = new ItemEquippable({
         stats.resistances.physical += 1;
         stats.resistances.fire += 1;
         stats.resistances.thunder += 1;
+        stats.resistances.dark += 1;
     }
 });

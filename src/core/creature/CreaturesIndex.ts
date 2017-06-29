@@ -1,6 +1,3 @@
-import FireAntInfected from './monsters/FireAntInfected';
-import GhostGuardian from './monsters/GhostGuardian';
-import GhostHound from './monsters/GhostHound';
 export { default as Goblin } from './monsters/Goblin';
 export { default as GoblinSoldier } from './monsters/GoblinSoldier';
 export { default as GoblinRaidingParty } from './monsters/GoblinRaidingParty';
@@ -13,3 +10,4 @@ export { default as FireAntQueen } from './monsters/FireAntQueen';
 export { default as GhostGuardian } from './monsters/GhostGuardian';
 export { default as GhostHound } from './monsters/GhostHound';
 export { default as GiantRat } from './monsters/GiantRat';
+export { default as ExiledMagician } from './monsters/ExiledMagician';

@@ -21,6 +21,7 @@ const QueenHardenEffect = new BattleTemporaryEffect({
         stats.resistances.physical += 20;
         stats.resistances.fire += 20;
         stats.resistances.thunder += 20;
+        stats.resistances.dark += 20;
     }
 });
 

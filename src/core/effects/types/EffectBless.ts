@@ -15,5 +15,6 @@ export const EffectBless = new BattleTemporaryEffect({
         stats.resistances.physical += 10;
         stats.resistances.fire += 10;
         stats.resistances.thunder += 10;
+        stats.resistances.dark += 10;
     }
 });

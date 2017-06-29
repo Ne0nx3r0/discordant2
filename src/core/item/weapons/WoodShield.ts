@@ -25,6 +25,7 @@ export const WoodShield = new Weapon({
         stats.resistances.physical += 2;
         stats.resistances.fire += 2;
         stats.resistances.thunder += 2;
+        stats.resistances.dark += 2;
     },
     attacks: [
         new WeaponAttack({
