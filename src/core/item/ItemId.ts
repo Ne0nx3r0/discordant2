@@ -76,6 +76,7 @@ enum ItemId {BareHands,HandAxe,
     Spear,
     AmuletOfFortune,
     FireSpear,
+    ExiledMagicianRobes,
 }
 
 export default ItemId;
