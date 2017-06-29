@@ -13,6 +13,8 @@ export const Spear = new Weapon({
     description: 'A simple weapon, but one whose reach and strength have made it a favorite among hunters since prehistoric times.',
     damageBlocked: 0.01,
     goldValue: 40,
+    criticalMultiplier: 3,
+    chanceToCritical: 0.1,
     useRequirements:{
         agility: 12
     },
