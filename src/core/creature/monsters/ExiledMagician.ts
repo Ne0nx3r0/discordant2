@@ -31,7 +31,10 @@ export default class ExiledMagician extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: new ExiledMagicianWeapon()
             }),
-            wishesDropped: 800
+            wishesDropped: 800,
+            onDefeated: function(bag){
+                bag.party.sendChannelMessage(`As his body turns to vapor you catch a smile on the magician's face and hear a quiet whisper from someplace just behind your ear...\n\n"Thank you..."`);
+            }
         });
     }
 }
