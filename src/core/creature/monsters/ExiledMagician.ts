@@ -13,6 +13,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
 import { ExiledMagicianWeapon } from '../../item/weapons/ExiledMagicianWeapon';
+import { ExiledMagicianRobes } from '../../item/clothing/ExiledMagicianRobes';
 
 export default class ExiledMagician extends CreatureAIControlled{
     constructor(){
@@ -30,7 +31,7 @@ export default class ExiledMagician extends CreatureAIControlled{
             }),
             equipment: new CreatureEquipment({
                 weapon: new ExiledMagicianWeapon(),
-                armor: ExiledMagcci
+                armor: ExiledMagicianRobes,
             }),
             wishesDropped: 500,
             onDefeated: function(bag){
