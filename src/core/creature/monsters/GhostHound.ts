@@ -16,7 +16,7 @@ export default class GhostHound extends CreatureAIControlled{
             description: 'A strange spirit animal...',
             attributes: new AttributeSet({
                 strength: 20,
-                agility: 20,
+                agility: 50,
                 vitality: 18,
                 spirit: 30,
                 luck: 0,
