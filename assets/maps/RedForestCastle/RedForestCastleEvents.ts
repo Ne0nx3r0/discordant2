@@ -66,12 +66,10 @@ lootGenerator.addLootItem('rare',ItemId.SonicLongsword,0.1);
 lootGenerator.addLootItem('rare',ItemId.StoneAxe,0.1);
 lootGenerator.addLootItem('rare',ItemId.StoneDagger,0.1);
 lootGenerator.addLootItem('rare',ItemId.FireSpear,0.1);
-lootGenerator.addLootItem('rare',ItemId.RedEyeRing,0.1);
 lootGenerator.addLootItem('rare',ItemId.WishCatcher,0.1);
 lootGenerator.addLootItem('rare',ItemId.FireDagger,0.1);
 lootGenerator.addLootItem('rare',ItemId.FireMace,0.1);
-lootGenerator.addLootItem('rare',ItemId.SonicLongsword,0.1);
-lootGenerator.addLootItem('rare',ItemId.RedForestCastleMapPiece,0.1);
+lootGenerator.addLootItem('rare',ItemId.RedForestCastleMap,0.1);
 
 export const RedForestCastleEvents:IMapData = {
     startX: 5,
