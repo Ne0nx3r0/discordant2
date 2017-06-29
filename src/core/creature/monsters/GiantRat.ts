@@ -6,7 +6,7 @@ import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
 import { GiantRatWeapon } from '../../item/weapons/GiantRatWeapon';
 
-export default class Goblin extends CreatureAIControlled{
+export default class GiantRat extends CreatureAIControlled{
     constructor(){
         super({
             id: CreatureId.GiantRat,
