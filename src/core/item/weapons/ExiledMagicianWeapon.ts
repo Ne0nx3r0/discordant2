@@ -26,7 +26,7 @@ export class ExiledMagicianWeapon extends Weapon{
                 new WeaponAttack({
                     title: 'black magic',
                     minBaseDamage: 10,
-                    maxBaseDamage: 30,
+                    maxBaseDamage: 20,
                     damageType: DamageType.dark,
                     scalingAttribute: Attribute.luck,
                     scalingLevel: ScalingLevel.No,
@@ -42,7 +42,7 @@ export class ExiledMagicianWeapon extends Weapon{
                 new WeaponAttack({
                     title: 'big black magic',
                     minBaseDamage: 10,
-                    maxBaseDamage: 40,
+                    maxBaseDamage: 30,
                     damageType: DamageType.dark,
                     scalingAttribute: Attribute.luck,
                     scalingLevel: ScalingLevel.No,
