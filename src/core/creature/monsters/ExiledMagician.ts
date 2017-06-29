@@ -35,7 +35,7 @@ export default class ExiledMagician extends CreatureAIControlled{
             }),
             wishesDropped: 600,
             onDefeated: function(bag){
-                bag.party.sendChannelMessage(`As his body turns to vapor you catch a smile on the magician's face and hear a faint whisper just behind your ear...\n\n"Thank you..."`);
+                bag.party.sendChannelMessage(`As his body turns to vapor you catch a smile on the magician's face and hear a faint whisper just behind your ear\n\n"Thank you..."`);
             }
         });
     }
