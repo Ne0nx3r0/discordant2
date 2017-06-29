@@ -18,6 +18,10 @@ export default class SetDesc extends Command{
     async run(bag:CommandRunBag){
         const description = bag.params.join(' ');
 
+        if(description.length > 255){
+            throw `Description too long`;
+        }
+
         await bag.socket.setPlayerDescription(bag.message.author.id,description);
 
         bag.message.channel.send(`Your description has been updated, ${bag.message.author.username}`);
