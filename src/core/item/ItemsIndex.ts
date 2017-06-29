@@ -1,3 +1,5 @@
+import { BlueMushroom } from './misc/BlueMushroom';
+import { RedMushroom } from './misc/RedMushroom';
 //Armor
 export { WornLeathers } from './clothing/WornLeathers';
 export { WornLeatherHelmet } from './clothing/WornLeatherHelmet';
@@ -40,6 +42,8 @@ export { Fox } from './misc/Fox';
 export { Tent } from './misc/Tent';
 export { BirthdayCake } from './misc/BirthdayCake';
 export { Revive } from './misc/Revive';
+export { BlueMushroom } from './misc/BlueMushroom';
+export { RedMushroom } from './misc/RedMushroom';
 
 //Crafting
 export { FireAntCarapace } from './misc/FireAntCarapace';
@@ -68,6 +72,7 @@ export { AlphaKey } from './misc/AlphaKey';
 
 //Weapons
 export { BareHands } from './weapons/BareHands';
+export { Spear } from './weapons/Spear';
 export { HandAxe } from './weapons/HandAxe';
 export { HuntingSword } from './weapons/HuntingSword';
 export { SonicLongsword } from './weapons/SonicLongsword';

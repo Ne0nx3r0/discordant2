@@ -12,6 +12,7 @@ import { MapRedForest } from "../../../src/core/map/Maps";
 import { EventTileDoor } from "../../../src/core/map/tiles/EventTileDoor";
 import { DamageType } from "../../../src/core/item/WeaponAttackStep";
 import EventTile, { EventTileHandlerBag } from "../../../src/core/map/EventTile";
+import { ExiledMagicianWeapon } from '../../../src/core/item/weapons/ExiledMagicianWeapon';
 
 class EventTileGetRedCastleLever extends EventTile{
     constructor(){
@@ -54,7 +55,7 @@ export const lootGenerator = new LootGenerator();
 lootGenerator.addLootItem('uncommon',ItemId.Revive,1);
 lootGenerator.addLootItem('uncommon',ItemId.Tent,1);
 lootGenerator.addLootItem('uncommon',ItemId.RedForestCastleMapPiece,1);
-lootGenerator.addLootItem('uncommon',ItemId.MageRobe,1);
+lootGenerator.addLootItem('uncommon',ItemId.MageRobe,0.5);
 lootGenerator.addLootItem('uncommon',ItemId.SonicLongsword,0.1);
 lootGenerator.addLootItem('uncommon',ItemId.StoneAxe,0.1);
 lootGenerator.addLootItem('uncommon',ItemId.RedEyeRing,0.1);
@@ -63,6 +64,7 @@ lootGenerator.addLootItem('uncommon',ItemId.WishCatcher,0.1);
 lootGenerator.addLootItem('rare',ItemId.TabletOfFaith,0.1);
 lootGenerator.addLootItem('rare',ItemId.SonicLongsword,0.1);
 lootGenerator.addLootItem('rare',ItemId.StoneAxe,0.1);
+lootGenerator.addLootItem('rare',ItemId.StoneDagger,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedEyeRing,0.1);
 lootGenerator.addLootItem('rare',ItemId.WishCatcher,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedForestCastleMapPiece,0.1);
@@ -70,7 +72,7 @@ lootGenerator.addLootItem('rare',ItemId.RedForestCastleMapPiece,0.1);
 export const RedForestCastleEvents:IMapData = {
     startX: 5,
     startY: 29,
-    encounterChance: 0,
+    encounterChance: 0.25,
     encounters:[
         { id:CreatureId.GhostHound, weight: 0.1 },
         { id:CreatureId.GhostGuardian,  weight: 0.3 },
@@ -102,8 +104,8 @@ export const RedForestCastleEvents:IMapData = {
                     startingNode: 'uncommon',
                     chanceToGenerate: 0.8,        
                 },
-                wishesMax: 200,
-                goldMax: 400,
+                wishesMax: 100,
+                goldMax: 300,
             }),
             coords: [
                 {x:5,y:14},
@@ -113,11 +115,26 @@ export const RedForestCastleEvents:IMapData = {
                 {x:18,y:32},
             ],
         },
+        {
+            event: new EventTileLootable({
+                lootGenerator: lootGenerator,
+                lootSettings:{
+                    startingNode: 'rare',
+                    chanceToGenerate: 1,        
+                },
+                wishesMax: 200,
+                goldMax: 400,
+            }),
+            coords: [
+                {x:17,y:12},
+                {x:20,y:12},
+            ],
+        },
         //Boss
         {
-            event: new EventTileMonster(`You've found the leader of the goblins!`,CreatureId.GoblinChief),
+            event: new EventTileMonster(`You have unlocked the immortal exiled magician!`,CreatureId.ExiledMagician),
             coords: [
-                { x: 3, y: 11 },
+                { x: 18, y: 13 },
             ],
         },
         {
