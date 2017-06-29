@@ -6,6 +6,7 @@ import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
 import { GhostSkin } from '../../item/clothing/GhostSkin';
 import { StoneDagger } from '../../item/weapons/StoneDagger';
+import { GhostHoundWeapon } from '../../item/weapons/GhostHoundWeapon';
 
 export default class GhostHound extends CreatureAIControlled{
     constructor(){
@@ -21,7 +22,7 @@ export default class GhostHound extends CreatureAIControlled{
                 luck: 0,
             }),
             equipment: new CreatureEquipment({
-                weapon: StoneDagger,
+                weapon: GhostHoundWeapon,
                 armor: GhostSkin,
             }),
             wishesDropped: 75,

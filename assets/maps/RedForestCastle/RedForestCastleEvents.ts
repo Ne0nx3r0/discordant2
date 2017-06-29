@@ -97,7 +97,7 @@ export const RedForestCastleEvents:IMapData = {
                 {x:7,y:5},
                 {x:6,y:16},
                 {x:23,y:28},
-                {x:28,y:28},
+                {x:26,y:28},
             ]
         },
         {
@@ -168,7 +168,7 @@ export const RedForestCastleEvents:IMapData = {
                 chanceTrapped: 0.5,
                 trap: {
                     type: DamageType.fire,
-                    amount: Math.round(Math.random() * 50 + 10),
+                    amount: Math.round(Math.random() * 60 + 10),
                 },
             }),
             coords: [
@@ -184,7 +184,7 @@ export const RedForestCastleEvents:IMapData = {
                 chanceTrapped: 0.5,
                 trap: {
                     type: DamageType.fire,
-                    amount: Math.round(Math.random() * 50 + 10),
+                    amount: Math.round(Math.random() * 60 + 10),
                 },
             }),
             coords: [
@@ -200,7 +200,7 @@ export const RedForestCastleEvents:IMapData = {
                 chanceTrapped: 0.5,
                 trap: {
                     type: DamageType.thunder,
-                    amount: Math.round(Math.random() * 50 + 5),
+                    amount: Math.round(Math.random() * 60 + 1),
                 },
             }),
             coords: [
@@ -218,7 +218,7 @@ export const RedForestCastleEvents:IMapData = {
                 chanceTrapped: 0.5,
                 trap: {
                     type: DamageType.fire,
-                    amount: Math.round(Math.random() * 40 + 10),
+                    amount: Math.round(Math.random() * 50 + 10),
                 },
             }),
             coords: [
@@ -236,7 +236,7 @@ export const RedForestCastleEvents:IMapData = {
                 chanceTrapped: 0.5,
                 trap: {
                     type: DamageType.fire,
-                    amount: Math.round(Math.random() * 40 + 10),
+                    amount: Math.round(Math.random() * 50 + 10),
                 },
             }),
             coords: [
