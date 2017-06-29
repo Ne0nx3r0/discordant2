@@ -135,6 +135,11 @@ export default class Bot{
         if(message.author.id == this.client.user.id){
             return;
         }
+
+        //Ignore #general messages
+        if(message.channel.id == '304060806834683914'){
+            return;
+        }
         
         //Ignore non-prefix messages
         if(!message.content.startsWith(this.commandPrefix) && !message.content.toUpperCase().startsWith(this.commandPrefix.toUpperCase())){
