@@ -55,6 +55,7 @@ export const PlayerPermissions = [
     PermissionId.DodgeCalc,
     PermissionId.Daily,
     PermissionId.Heal,
+    PermissionId.SetDescription,
 ].concat(AnonymousPermissions).sort();
 
 export const TesterPermissions = [
