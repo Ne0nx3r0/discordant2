@@ -80,7 +80,12 @@ export class EventTileDoor extends EventTile{
                 trapResults.push(`${bag.party.leader.title} triggered a trap!`);
 
                 bag.party.members.forEach((member)=>{
-                    const damageTaken = ResistDamage(member,this.trap.amount,this.trap.type);
+                    let damageTaken = ResistDamage(member,this.trap.amount,this.trap.type);
+
+                    if(damageTaken >= member.hpCurrent){
+                        damageTaken = member.hpCurrent-1;
+                    }
+
                     const damageResisted = this.trap.amount - damageTaken; 
 
                     let resistedStr;
