@@ -55,7 +55,7 @@ export const lootGenerator = new LootGenerator();
 lootGenerator.addLootItem('uncommon',ItemId.Revive,1);
 lootGenerator.addLootItem('uncommon',ItemId.Tent,1);
 lootGenerator.addLootItem('uncommon',ItemId.RedForestCastleMapPiece,1);
-lootGenerator.addLootItem('uncommon',ItemId.MageRobe,0.5);
+lootGenerator.addLootItem('uncommon',ItemId.MageRobe,0.25);
 lootGenerator.addLootItem('uncommon',ItemId.SonicLongsword,0.1);
 lootGenerator.addLootItem('uncommon',ItemId.StoneAxe,0.1);
 lootGenerator.addLootItem('uncommon',ItemId.RedEyeRing,0.1);
@@ -67,6 +67,9 @@ lootGenerator.addLootItem('rare',ItemId.StoneAxe,0.1);
 lootGenerator.addLootItem('rare',ItemId.StoneDagger,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedEyeRing,0.1);
 lootGenerator.addLootItem('rare',ItemId.WishCatcher,0.1);
+lootGenerator.addLootItem('rare',ItemId.FireDagger,0.1);
+lootGenerator.addLootItem('rare',ItemId.FireMace,0.1);
+lootGenerator.addLootItem('rare',ItemId.SonicLongsword,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedForestCastleMapPiece,0.1);
 
 export const RedForestCastleEvents:IMapData = {
@@ -165,7 +168,7 @@ export const RedForestCastleEvents:IMapData = {
                 chanceTrapped: 0.5,
                 trap: {
                     type: DamageType.fire,
-                    amount: Math.round(Math.random() * 50),
+                    amount: Math.round(Math.random() * 50 + 10),
                 },
             }),
             coords: [
@@ -181,7 +184,7 @@ export const RedForestCastleEvents:IMapData = {
                 chanceTrapped: 0.5,
                 trap: {
                     type: DamageType.fire,
-                    amount: Math.round(Math.random() * 50),
+                    amount: Math.round(Math.random() * 50 + 10),
                 },
             }),
             coords: [
@@ -197,7 +200,7 @@ export const RedForestCastleEvents:IMapData = {
                 chanceTrapped: 0.5,
                 trap: {
                     type: DamageType.thunder,
-                    amount: Math.round(Math.random() * 40),
+                    amount: Math.round(Math.random() * 50 + 5),
                 },
             }),
             coords: [
@@ -215,7 +218,7 @@ export const RedForestCastleEvents:IMapData = {
                 chanceTrapped: 0.5,
                 trap: {
                     type: DamageType.fire,
-                    amount: Math.round(Math.random() * 40),
+                    amount: Math.round(Math.random() * 40 + 10),
                 },
             }),
             coords: [
@@ -233,7 +236,7 @@ export const RedForestCastleEvents:IMapData = {
                 chanceTrapped: 0.5,
                 trap: {
                     type: DamageType.fire,
-                    amount: Math.round(Math.random() * 40),
+                    amount: Math.round(Math.random() * 40 + 10),
                 },
             }),
             coords: [

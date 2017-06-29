@@ -16,7 +16,7 @@ export default class GhostGuardian extends CreatureAIControlled{
             attributes: new AttributeSet({
                 strength: 20,
                 agility: 20,
-                vitality: 14,
+                vitality: 16,
                 spirit: 30,
                 luck: 0,
             }),
