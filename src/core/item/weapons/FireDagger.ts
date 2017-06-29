@@ -15,7 +15,7 @@ export const FireDagger = new Weapon({
     damageBlocked: 0.05,
     goldValue: 200,
     useRequirements:{
-        strength: 16
+        agility: 16
     },
     attacks: [
         new WeaponAttack({
@@ -23,7 +23,7 @@ export const FireDagger = new Weapon({
             minBaseDamage: 8,
             maxBaseDamage: 16,
             damageType: DamageType.fire,
-            scalingAttribute: Attribute.strength,
+            scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.B,
             steps: [
                 new WeaponAttackStep({
