@@ -10,7 +10,7 @@ export const ExiledMagicianRobes = new ItemEquippable({
     goldValue: 1,
     slotType:'armor',
     onAddBonuses:function(stats:ICreatureStatSet){
-        stats.resistances.physical += 5;
+        stats.resistances.physical += 20;
         stats.resistances.thunder += 20;
         stats.resistances.dark += 20;
         stats.resistances.fire += 20;
