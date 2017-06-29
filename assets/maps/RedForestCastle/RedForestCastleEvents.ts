@@ -247,7 +247,7 @@ export const RedForestCastleEvents:IMapData = {
                 from: [{x: 9, y: 8},{x: 10, y: 8}],
                   to: [{x: 12, y: 25},{x: 13, y: 25}],
                   chanceTrapped: 0,
-                  enterMessage: 'A set of stairs (`ei` to interact)',
+                  enterMessage: 'A set of stairs (`di` to interact)',
             }),
             coords: [
                 {x: 9, y: 8},

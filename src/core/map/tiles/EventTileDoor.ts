@@ -55,10 +55,10 @@ export class EventTileDoor extends EventTile{
             bag.party.sendCurrentMapImageFile(`The door is locked (maybe there is a way to unlock it?)`);
         }
         else if(!hasInteracted){
-            bag.party.sendCurrentMapImageFile(`A door, it could be trapped. (\`ei\` to enter)`);
+            bag.party.sendCurrentMapImageFile(`A door, it could be trapped. (\`di\` to enter)`);
         }
         else{
-            bag.party.sendCurrentMapImageFile(`A door, it looks safe. (\`ei\` to enter)`);
+            bag.party.sendCurrentMapImageFile(`A door, it looks safe. (\`di\` to enter)`);
         }
 
         return true;
