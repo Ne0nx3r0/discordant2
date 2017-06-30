@@ -44,13 +44,22 @@ export default class SCalc extends Command{
             const weightedScalingBonus = CalculateScalingBonus(attributeBonus-getHighestStatRequirement(weapon),attack.scalingLevel);
             const minDamage = attack.minBaseDamage;
             const maxDamage = attack.maxBaseDamage;
+
+            const currentBonusPercent = Math.round(
+                DamageScaling.ByAttribute(minDamage+maxDamage,attributeBonus) 
+                / 
+                (minDamage+maxDamage) 
+                * 
+                100
+            ) - 100;
+
             const newScalingBonusPercent = Math.round(scalingBonus * 100);
             const weightedScalingBonusPercent = Math.round(weightedScalingBonus * 100);
 
             return `${attack.title} (${ScalingLevel[attack.scalingLevel]} scaling, ${minDamage} to ${maxDamage} damage)
             
     Current scaling: 
-        ${DamageScaling.ByAttribute(minDamage,attributeBonus)} to ${DamageScaling.ByAttribute(maxDamage,attributeBonus)} damage (+${DamageScaling.ByAttribute(minDamage,attributeBonus)-minDamage}-${DamageScaling.ByAttribute(maxDamage,attributeBonus)-maxDamage} damage)
+        ${DamageScaling.ByAttribute(minDamage,attributeBonus)} to ${DamageScaling.ByAttribute(maxDamage,attributeBonus)} damage (${currentBonusPercent}% bonus)
 
     New option A: 
         ${Math.round(minDamage * scalingBonus)} to ${Math.round(maxDamage * scalingBonus)} damage (${(newScalingBonusPercent-100)}% bonus)
