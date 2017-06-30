@@ -32,26 +32,21 @@ export const DamageScaling = {
     ])  
 };
 
-const SCALING_LEVEL_MODIFIERS = {
+export const SCALING_LEVEL_MODIFIERS = {
      S: 5,
      A: 3,
      B: 2,
      C: 1,
      D: 0.5,
-    No: 0,
+     No: 0,
 };
 
-function getScaledDamage(damage:number,scalingLevel:ScalingLevel){
+export function CalculateScalingBonus(statAmount:number,scalingLevel:ScalingLevel){
+    if(statAmount == 0 || scalingLevel == ScalingLevel.No){
+        return 1;
+    }
 
-}
+    const scalingModifier = SCALING_LEVEL_MODIFIERS[ ScalingLevel[scalingLevel] ];
 
-export const GetScaledDamage = function(user:Creature,attack:WeaponAttack){
-    const attribute = attack.scalingAttribute;
-    
-    const requiredAttributePoints = attack.weapon.useRequirements[attribute] || 0;
-
-    const attributePoints = user.stats[attribute] - requiredAttributePoints;
-
-    const scalingModifier = SCALING_LEVEL_MODIFIERS[attack.ScalingLevel];
-    
+    return 1 + scalingModifier * statAmount / 100;
 }
