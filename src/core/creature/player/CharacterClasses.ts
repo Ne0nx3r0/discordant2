@@ -46,8 +46,8 @@ addClass(new CharacterClass(
     'Mercenary',
     'Having lived a life of service you\'re ready to carve out a piece for yourself.',
     new AttributeSet({
-        strength: 12,
-        agility: 12,
+        strength: 16,
+        agility: 8,
         vitality: 14,
         spirit: 4,
         luck: 8,
