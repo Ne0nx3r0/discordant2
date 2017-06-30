@@ -82,7 +82,7 @@ export class EventTileDoor extends EventTile{
                 bag.party.members.forEach((member)=>{
                     let damageTaken = ResistDamage(member,this.trap.amount,this.trap.type);
 
-                    if(damageTaken >= member.hpCurrent){
+                    if(damageTaken <= member.hpCurrent){
                         damageTaken = member.hpCurrent-1;
                     }
 
