@@ -53,7 +53,7 @@ export default class SCalc extends Command{
         ${DamageScaling.ByAttribute(minDamage,attributeBonus)} to ${DamageScaling.ByAttribute(maxDamage,attributeBonus)} damage (+${DamageScaling.ByAttribute(minDamage,attributeBonus)-minDamage}-${DamageScaling.ByAttribute(maxDamage,attributeBonus)-maxDamage} damage)
 
     New option A: 
-        ${Math.round(minDamage * scalingBonus)} to ${Math.round(maxDamage * scalingBonus)} damage (+${(newScalingBonusPercent-100)}%)
+        ${Math.round(minDamage * scalingBonus)} to ${Math.round(maxDamage * scalingBonus)} damage (${(newScalingBonusPercent-100)}% bonus)
 
     New option B: 
         ${Math.round(minDamage * weightedScalingBonus)} to ${Math.round(maxDamage * weightedScalingBonus)} damage (${(weightedScalingBonusPercent-100)}% bonus)`;
