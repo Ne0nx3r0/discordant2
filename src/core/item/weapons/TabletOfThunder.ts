@@ -3,7 +3,6 @@ import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 
 import Creature from '../../creature/Creature';
-import {DamageScaling} from '../../damage/DamageScaling';
 import ItemId from '../ItemId';
 import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from "../../creature/AttributeSet";
@@ -20,15 +19,16 @@ export const TabletOfThunder = new Weapon({
     useRequirements:{
         spirit: 16
     },
-    chanceToCritical: 0.05,
+    chanceToCritical: 0.2,
+    criticalMultiplier: 2,
     attacks: [
         new WeaponAttack({
             title: 'strike',
             minBaseDamage: 1,
-            maxBaseDamage: 20,
+            maxBaseDamage: 30,
             damageType: DamageType.thunder,
             scalingAttribute: Attribute.spirit,
-            scalingLevel: ScalingLevel.S,
+            scalingLevel: ScalingLevel.C,
             chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
