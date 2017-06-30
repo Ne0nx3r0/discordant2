@@ -33,10 +33,10 @@ export const DamageScaling = {
 };
 
 export const SCALING_LEVEL_MODIFIERS = {
-     S: 5,
-     A: 3,
-     B: 2,
-     C: 1,
+     S: 7,
+     A: 4,
+     B: 3,
+     C: 1.5,
      D: 0.5,
      No: 0,
 };
