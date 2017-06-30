@@ -1,6 +1,6 @@
-import LootGenerator, { IGenerateLootBag } from "./LootGenerator";
-import ItemId from '../item/ItemId';
-import FractionSimplify from "../../util/FractionSimplify";
+import LootGenerator from '../src/core/loot/LootGenerator';
+import ItemId from '../src/core/item/ItemId';
+import { IGenerateLootBag } from '../src/core/loot/LootGenerator';
 
 const Table = require('cli-table');
 
