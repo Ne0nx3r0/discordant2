@@ -61,6 +61,7 @@ enum PermissionId{
     DodgeCalc,
     Daily,
     Heal,
+    SCalc,
 }
 
 export default PermissionId;
