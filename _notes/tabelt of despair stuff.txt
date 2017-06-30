@@ -1,0 +1,8 @@
+curse - lower opponent's VIT stat by 5
+demon - summon mob whose attack is based on your missing hp
+lash - 10% of your HP in damage to opponent for two turns
+
+^- description of exiled magician and being immortal
+
+
+desert - if party leader killed exiled magician exiled disciples spawn here and tell players of the return of the exiled one.
