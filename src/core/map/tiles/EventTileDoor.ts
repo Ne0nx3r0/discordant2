@@ -88,7 +88,7 @@ export class EventTileDoor extends EventTile{
 
                     const damageResisted = this.trap.amount - damageTaken; 
 
-                    let resistedStr;
+                    let resistedStr = '';
 
                     if(damageResisted > 0){
                         resistedStr = ` resisted ${damageResisted}`;
