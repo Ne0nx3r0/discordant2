@@ -19,12 +19,12 @@ export const TabletOfThunder = new Weapon({
     useRequirements:{
         spirit: 16
     },
-    chanceToCritical: 0.2,
+    chanceToCritical: 0.1,
     criticalMultiplier: 2,
     attacks: [
         new WeaponAttack({
             title: 'strike',
-            minBaseDamage: 1,
+            minBaseDamage: 4,
             maxBaseDamage: 30,
             damageType: DamageType.thunder,
             scalingAttribute: Attribute.spirit,
