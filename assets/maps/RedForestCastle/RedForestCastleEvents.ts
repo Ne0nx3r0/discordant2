@@ -58,6 +58,7 @@ lootGenerator.addLootItem('uncommon',ItemId.RedForestCastleMapPiece,1);
 lootGenerator.addLootItem('uncommon',ItemId.MageRobe,0.25);
 lootGenerator.addLootItem('uncommon',ItemId.SonicLongsword,0.1);
 lootGenerator.addLootItem('uncommon',ItemId.StoneDagger,0.1);
+lootGenerator.addLootItem('uncommon',ItemId.FireAxe,0.25);
 lootGenerator.addLootItem('uncommon',ItemId.RedEyeRing,0.1);
 lootGenerator.addLootItem('uncommon',ItemId.WishCatcher,0.1);
 

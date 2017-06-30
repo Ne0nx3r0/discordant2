@@ -30,7 +30,7 @@ export default class ExiledMagician extends CreatureAIControlled{
                 luck: 0,
             }),
             equipment: new CreatureEquipment({
-                weapon: new ExiledMagicianWeapon(),
+                weapon: ExiledMagicianWeapon,
                 armor: ExiledMagicianRobes,
             }),
             wishesDropped: 600,

@@ -11,78 +11,74 @@ import { EffectShieldGold } from '../../effects/types/EffectShieldGold';
 import { EffectShieldRed } from '../../effects/types/EffectShieldRed';
 import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
 
-export class ExiledMagicianWeapon extends Weapon{
-    constructor(){
-        super({
-            id: ItemId.ExiledMagicianWeapon,
-            title: 'Exiled Magician Weapon',
-            description: 'Hrm.',
-            goldValue: 1,
-            damageBlocked: 0,
-            chanceToCritical: 0,
-            criticalMultiplier: 0,
-            useRequirements:{},
-            attacks:[
-                new WeaponAttack({
-                    title: 'black magic',
-                    minBaseDamage: 10,
-                    maxBaseDamage: 20,
-                    damageType: DamageType.dark,
-                    scalingAttribute: Attribute.luck,
-                    scalingLevel: ScalingLevel.No,
-                    steps:[
-                        new WeaponAttackStep({
-                            attackMessage: '{attacker} fires a ball of dark magic at {defender}',
-                            damageFunc: DefaultDamageFunc,
-                        }),
-                    ],
-                    aiUseWeight: 0.3,
-                    aiShouldIUseThisAttack: function(){return true},
+export const ExiledMagicianWeapon  = new Weapon({
+    id: ItemId.ExiledMagicianWeapon,
+    title: 'Exiled Magician Weapon',
+    description: 'Hrm.',
+    goldValue: 1,
+    damageBlocked: 0,
+    chanceToCritical: 0,
+    criticalMultiplier: 0,
+    useRequirements:{},
+    attacks:[
+        new WeaponAttack({
+            title: 'black magic',
+            minBaseDamage: 10,
+            maxBaseDamage: 20,
+            damageType: DamageType.dark,
+            scalingAttribute: Attribute.luck,
+            scalingLevel: ScalingLevel.No,
+            steps:[
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} fires a ball of dark magic at {defender}',
+                    damageFunc: DefaultDamageFunc,
                 }),
-                new WeaponAttack({
-                    title: 'big black magic',
-                    minBaseDamage: 10,
-                    maxBaseDamage: 40,
-                    damageType: DamageType.dark,
-                    scalingAttribute: Attribute.luck,
-                    scalingLevel: ScalingLevel.No,
-                    steps:[
-                        new WeaponAttackStep({
-                            attackMessage: '{attacker} summons a mass of dark energy',
-                            damageFunc: function(bag){return [];},
-                        }),
-                        new WeaponAttackStep({
-                            attackMessage: '{attacker} emits a wave of dark magic',
-                            damageFunc: DefaultDamageAllFunc,
-                        }),
-                    ],
-                    aiUseWeight: 0.1,
-                    aiShouldIUseThisAttack: function(){return true},
+            ],
+            aiUseWeight: 0.2,
+            aiShouldIUseThisAttack: function(){return true},
+        }),
+        new WeaponAttack({
+            title: 'big black magic',
+            minBaseDamage: 30,
+            maxBaseDamage: 50,
+            damageType: DamageType.dark,
+            scalingAttribute: Attribute.luck,
+            scalingLevel: ScalingLevel.No,
+            steps:[
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} summons a mass of dark energy',
+                    damageFunc: function(bag){return [];},
                 }),
-                new WeaponAttack({
-                    title: 'hp in half',
-                    minBaseDamage: 0,
-                    maxBaseDamage: 0,
-                    damageType: DamageType.dark,
-                    scalingAttribute: Attribute.luck,
-                    scalingLevel: ScalingLevel.C,
-                    steps:[
-                        new WeaponAttackStep({
-                            attackMessage: '{attacker} places a dark curse on {defender} destroying HALF their HP!',
-                            damageFunc: function(bag){
-                                return [{
-                                    type: DamageType.dark,
-                                    amount: Math.ceil(bag.defender.creature.hpCurrent / 2),
-                                    target: bag.defender,
-                                }];
-                            }
-                        }),
-                    ],
-                    aiUseWeight: 0.1,
-                    aiShouldIUseThisAttack: function(){return true}
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} emits a wave of dark magic',
+                    damageFunc: DefaultDamageAllFunc,
                 }),
-            ],    
-            showInItems: false,
-        });
-    }
-}
+            ],
+            aiUseWeight: 0.1,
+            aiShouldIUseThisAttack: function(){return true},
+        }),
+        new WeaponAttack({
+            title: 'hp in half',
+            minBaseDamage: 0,
+            maxBaseDamage: 0,
+            damageType: DamageType.dark,
+            scalingAttribute: Attribute.luck,
+            scalingLevel: ScalingLevel.C,
+            steps:[
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} places a dark curse on {defender} destroying HALF their HP!',
+                    damageFunc: function(bag){
+                        return [{
+                            type: DamageType.dark,
+                            amount: Math.ceil(bag.defender.creature.hpCurrent / 2),
+                            target: bag.defender,
+                        }];
+                    }
+                }),
+            ],
+            aiUseWeight: 0.1,
+            aiShouldIUseThisAttack: function(){return true}
+        }),
+    ],    
+    showInItems: false,
+});
