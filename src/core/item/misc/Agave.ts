@@ -6,6 +6,7 @@ import BattleTemporaryEffectAttributeBoost from '../../effects/BattleTemporaryEf
 import EffectId from '../../effects/EffectId';
 import { Attribute } from "../../creature/AttributeSet";
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
+import { EffectAgave } from '../../effects/types/EffectAgave';
 
 export const Agave = new ItemUsable({
     id: ItemId.Agave,
@@ -16,14 +17,7 @@ export const Agave = new ItemUsable({
     canUseInParty: false,
     battleExhaustion: 1,
     onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
-        target.battle.addTemporaryEffect(target,new BattleTemporaryEffect({
-            id: EffectId.Agave,
-            title: `Agave`,
-            onAddBonuses:function(stats){
-                stats.resistances.physical += 5;
-                stats.resistances.fire += 5;
-            }
-        }),30);
+        target.battle.addTemporaryEffect(target,EffectAgave,30);
 
         return null;
     }

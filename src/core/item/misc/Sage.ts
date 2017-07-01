@@ -5,6 +5,7 @@ import PlayerCharacter from '../../creature/player/PlayerCharacter';
 import BattleTemporaryEffectAttributeBoost from '../../effects/BattleTemporaryEffectAttributeBoost';
 import EffectId from '../../effects/EffectId';
 import { Attribute } from "../../creature/AttributeSet";
+import { EffectSage } from '../../effects/types/EffectSage';
 
 export const Sage = new ItemUsable({
     id: ItemId.Sage,
@@ -15,12 +16,7 @@ export const Sage = new ItemUsable({
     canUseInParty: false,
     battleExhaustion: 1,
     onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
-        target.battle.addTemporaryEffect(target,new BattleTemporaryEffectAttributeBoost({
-            id: EffectId.Sage,
-            title: `Sage`,
-            attribute: Attribute.spirit,
-            amount: 10,
-        }),30);
+        target.battle.addTemporaryEffect(target,EffectSage,30);
 
         return null;
     }

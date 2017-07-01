@@ -5,6 +5,7 @@ import PlayerCharacter from '../../creature/player/PlayerCharacter';
 import BattleTemporaryEffectAttributeBoost from '../../effects/BattleTemporaryEffectAttributeBoost';
 import EffectId from '../../effects/EffectId';
 import { Attribute } from "../../creature/AttributeSet";
+import { EffectFox } from '../../effects/types/EffectFox';
 
 export const Fox = new ItemUsable({
     id: ItemId.Fox,
@@ -15,12 +16,7 @@ export const Fox = new ItemUsable({
     canUseInParty: false,
     battleExhaustion: 1,
     onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
-        target.battle.addTemporaryEffect(target,new BattleTemporaryEffectAttributeBoost({
-            id: EffectId.Fox,
-            title: `Fox`,
-            attribute: Attribute.agility,
-            amount: 10,
-        }),30);
+        target.battle.addTemporaryEffect(target,EffectFox,30);
 
         return null;
     }

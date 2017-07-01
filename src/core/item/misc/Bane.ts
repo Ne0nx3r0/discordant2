@@ -5,6 +5,7 @@ import PlayerCharacter from '../../creature/player/PlayerCharacter';
 import BattleTemporaryEffectAttributeBoost from '../../effects/BattleTemporaryEffectAttributeBoost';
 import EffectId from '../../effects/EffectId';
 import { Attribute } from "../../creature/AttributeSet";
+import { EffectBane } from '../../effects/types/EffectBane';
 
 export const Bane = new ItemUsable({
     id: ItemId.Bane,
@@ -15,12 +16,7 @@ export const Bane = new ItemUsable({
     canUseInParty: false,
     battleExhaustion: 1,
     onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
-        target.battle.addTemporaryEffect(target,new BattleTemporaryEffectAttributeBoost({
-            id: EffectId.WolfsBane,
-            title: `Wolf's Bane`,
-            attribute: Attribute.strength,
-            amount: 10,
-        }),30);
+        target.battle.addTemporaryEffect(target,EffectBane,30);
 
         return `${target.title}'s strength is boosted!`;
     }

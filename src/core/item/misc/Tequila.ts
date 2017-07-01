@@ -6,6 +6,7 @@ import BattleTemporaryEffectAttributeBoost from '../../effects/BattleTemporaryEf
 import EffectId from '../../effects/EffectId';
 import { Attribute } from "../../creature/AttributeSet";
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
+import { EffectTequila } from '../../effects/types/EffectTequila';
 
 export const Tequila = new ItemUsable({
     id: ItemId.Tequila,
@@ -26,13 +27,7 @@ export const Tequila = new ItemUsable({
         ],
     },
     onUse: function(user:PlayerCharacter,target:PlayerCharacter):string{
-        target.battle.addTemporaryEffect(target,new BattleTemporaryEffect({
-            id: EffectId.Tequila,
-            title: `Tequila`,
-            onAddBonuses:function(stats){
-                
-            }
-        }),30);
+        target.battle.addTemporaryEffect(target,EffectTequila,30);
 
         return null;
     }
