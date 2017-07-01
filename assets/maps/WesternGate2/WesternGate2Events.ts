@@ -100,7 +100,7 @@ export const WesternGate2Events:IMapData = {
                 lootGenerator: lootGenerator,
                 lootSettings:{
                     startingNode: 'common',
-                    chanceToGenerate: 0.6,        
+                    chanceToGenerate: 0.7,        
                 },
                 wishesMax: 40,
                 goldMax: 50,
