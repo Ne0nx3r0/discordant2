@@ -22,6 +22,6 @@ export const Bane = new ItemUsable({
             amount: 10,
         }),30);
 
-        return null;
+        return `${target.title}'s strength is boosted!`;
     }
 });
