@@ -8,6 +8,7 @@ export interface ItemEquippableBag extends ItemBaseBag{
     slotType:EquipmentSlot;
     onAddBonuses?:OnAddBonusesHandler;
     useRequirements?:UseRequirements;
+    lostOnDeath?:boolean;
 }
 
 export interface UseRequirements{
@@ -38,6 +39,7 @@ export default class ItemEquippable extends ItemBase{
     slotType:EquipmentSlot;
     onAddBonuses?:OnAddBonusesHandler;
     useRequirements:UseRequirements;
+    lostOnDeath:boolean;
 
     constructor(bag:ItemEquippableBag){
         super(bag);
@@ -47,6 +49,7 @@ export default class ItemEquippable extends ItemBase{
         if(bag.onAddBonuses) this.onAddBonuses = bag.onAddBonuses;
 
         this.useRequirements = bag.useRequirements || {};
+        this.lostOnDeath = bag.lostOnDeath;
     }
 
     canEquip(creature:Creature){

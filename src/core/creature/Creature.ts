@@ -25,6 +25,7 @@ export interface ICreatureStatSet{
     redEye: number;
     wishBonus: number;
     dodge: number;
+    wishProtect: number;
 }
 
 export interface CreatureBag{
@@ -77,6 +78,7 @@ export default class Creature{
             hpTotal: 0,
             magicFind: Math.floor(this.attributes.luck / 4),
             wishBonus: 0,
+            wishProtect: 0,
             dodge: 0,
         };
 

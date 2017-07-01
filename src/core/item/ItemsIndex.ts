@@ -91,3 +91,4 @@ export { PrismBlade } from './weapons/PrismBlade';
 
 //Pouch
 export { WishCatcher } from './misc/WishCatcher';
+export { WishTrapper } from './misc/WishTrapper';

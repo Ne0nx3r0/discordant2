@@ -261,9 +261,25 @@ export default class PlayerParty{
             this.members.forEach((member)=>{
                 const wishesLost = Math.round( Math.random() * (member.wishes*0.25) + (member.wishes*0.25) );
 
-                this.game.grantPlayerWishes(member.uid,0-wishesLost);
+                const adjustedWishesLost = Math.max( 
+                    Math.round( wishesLost * (1 - member.stats.wishProtect) ),
+                    0
+                ); 
 
-                wishesLostStr += '\n'+member.title+' lost '+wishesLost+' wishes';
+                this.game.grantPlayerWishes(member.uid,0-adjustedWishesLost);
+
+                wishesLostStr += '\n'+member.title+' lost '+adjustedWishesLost+' wishes';
+
+                member.equipment.forEach((item,slot)=>{
+                    if(item.lostOnDeath){
+                        wishesLostStr += '\n'+member.title+'\'s '+item.title+' broke!';
+
+                        this.game.unequipPlayerItem(member.uid,slot)
+                        .then(()=>{
+                            this.game.takePlayerItem(member.uid,item.id,1);
+                        });
+                    }
+                });
             });
 
             this.sendChannelMessage('Your party was defeated!\n\nYou wake up back in town...\n'+wishesLostStr);
