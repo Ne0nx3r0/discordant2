@@ -32,7 +32,7 @@ export const TabletOfThunder = new Weapon({
             chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} reads a healing legend outloud and heals {defender}',
+                    attackMessage: '{attacker} reads a legend aloud and strikes {defender} with a bolt of thunder',
                     damageFunc: DefaultDamageFunc
                 }),
             ],
