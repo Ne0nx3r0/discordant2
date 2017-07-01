@@ -55,7 +55,7 @@ export default class EventTileWarp extends EventTile{
         if(!this.mapTitle){
             bag.party.returnToTown();
 
-            return;
+            return true;
         }
 
         const map = WorldMaps[this.mapTitle.toUpperCase()];
