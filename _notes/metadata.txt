@@ -1,0 +1,5 @@
+player_metadata
+---------------------
+player_uid (bigint)
+key (string)
+value (string)

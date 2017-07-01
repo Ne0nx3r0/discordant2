@@ -112,6 +112,7 @@ export default class Creature{
             stats.resistances.physical,
             stats.resistances.fire,
             stats.resistances.thunder,
+            stats.resistances.dark,
         );
 
         this.stats = stats;
