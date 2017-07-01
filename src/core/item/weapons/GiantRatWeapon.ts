@@ -19,7 +19,7 @@ export const GiantRatWeapon = new Weapon({
     damageBlocked: 0,
     useRequirements: {},
     criticalMultiplier: 2,
-    chanceToCritical: 0.2,
+    chanceToCritical: 0.1,
     goldValue: 1,
     attacks: [
         new WeaponAttack({
