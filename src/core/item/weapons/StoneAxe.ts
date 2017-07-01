@@ -11,6 +11,7 @@ import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
+import { EffectRage } from '../../effects/types/EffectRage';
 
 export const StoneAxe = new Weapon({
     id: ItemId.StoneAxe,
@@ -67,14 +68,7 @@ export const StoneAxe = new Weapon({
                     damageFunc: function(bag: DamageFuncBag){
                         bag.battle.addTemporaryEffect(
                             bag.attacker.creature,
-                            new BattleTemporaryEffect({
-                                id: EffectId.Rage,
-                                title: 'Rage',
-                                onAddBonuses: function(stats){
-                                    stats.vitality -= 4;
-                                    stats.strength += 10;
-                                }
-                            }),
+                            EffectRage,
                             12
                         );
 

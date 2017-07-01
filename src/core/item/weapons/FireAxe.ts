@@ -9,6 +9,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { Attribute } from "../../creature/AttributeSet";
 import BattleTemporaryEffect from "../../effects/BattleTemporaryEffect";
 import EffectId from '../../effects/EffectId';
+import { EffectRage } from '../../effects/types/EffectRage';
 
 export const FireAxe = new Weapon({
     id: ItemId.FireAxe,
@@ -65,14 +66,7 @@ export const FireAxe = new Weapon({
                     damageFunc: function(bag: DamageFuncBag){
                         bag.battle.addTemporaryEffect(
                             bag.attacker.creature,
-                            new BattleTemporaryEffect({
-                                id: EffectId.Rage,
-                                title: 'Rage',
-                                onAddBonuses: function(stats){
-                                    stats.vitality -= 4;
-                                    stats.strength += 10;
-                                }
-                            }),
+                            EffectRage,
                             12
                         );
 
