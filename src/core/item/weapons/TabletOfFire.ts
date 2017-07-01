@@ -32,7 +32,7 @@ export const TabletOfFire = new Weapon({
             chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} reads a healing legend outloud and launches a blaze of fire at {defender}',
+                    attackMessage: '{attacker} reads a legend outloud and launches a blaze of fire at {defender}',
                     damageFunc: function(bag:DamageFuncBag){
                         let fireAmount = (Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage;
 
