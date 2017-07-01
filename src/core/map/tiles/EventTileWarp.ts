@@ -51,14 +51,17 @@ export default class EventTileWarp extends EventTile{
     }
 
     onInteract(bag:EventTileHandlerBag):boolean{
+        //portal to town
+        if(!this.mapTitle){
+            bag.party.returnToTown();
+
+            return;
+        }
+
         const map = WorldMaps[this.mapTitle.toUpperCase()];
 
-        //portal to town
-        if(!map){
-            bag.party.returnToTown();
-        }
         //portal to the same map
-        else if(map.fileName == bag.party.exploration.map.fileName){
+        if(map.fileName == bag.party.exploration.map.fileName){
             if(this.toCoordinate){
                 bag.party.exploration.moveTo(this.toCoordinate.x,this.toCoordinate.y);
             }
