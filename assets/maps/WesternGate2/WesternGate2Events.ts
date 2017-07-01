@@ -39,7 +39,6 @@ export const WesternGate2Events:IMapData = {
     encounters:[
         { id:CreatureId.Goblin,        weight:0.4 },
         { id:CreatureId.GoblinSoldier, weight:0.1 },
-        { id:CreatureId.GoblinSneak,   weight:0.1 },
     ],
     eventTiles: [
         {
