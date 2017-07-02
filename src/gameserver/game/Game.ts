@@ -70,6 +70,7 @@ import { DBGrantPlayerKarma } from '../db/api/DBGrantPlayerKarma';
 import { DBDailyReward } from '../db/api/DBDailyReward';
 import { AutoHealResults } from '../socket/requests/AutoHealRequest';
 import { VIAL_HEAL_AMOUNT } from '../../core/item/misc/Vial';
+import { DBSetPlayerMetaData } from '../db/api/DBSetPlayerMetaData';
 import moment = require("moment");
 
 //how often players can get a daily reward
@@ -160,7 +161,8 @@ export default class Game {
                 wishes: dbPlayer.wishes,
                 role: this.permissions.getRole(dbPlayer.role),
                 karma: dbPlayer.karma,
-                lastDaily: dbPlayer.last_daily*1
+                lastDaily: dbPlayer.last_daily*1,
+                metadata: dbPlayer.metadata,
             });
 
             this.cachedPCs.set(player.uid,player);
@@ -208,7 +210,8 @@ export default class Game {
             level: 0,
             role: this.permissions.getRole('player'),
             karma: 0,
-            lastDaily: new Date().getTime()
+            lastDaily: new Date().getTime(),
+            metadata: {},
         });
 
         return player;
@@ -1573,6 +1576,30 @@ export default class Game {
         pc.lastDaily = new Date().getTime();
 
         return `You got 1 karma and ${wishesEarned} wishes!`;
+    }
+
+    async setPlayerMetaDataValue(playerUid:string,key:string,value:any):Promise<void>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'You are not registered (metadata)';
+        }
+
+        const oldValue = pc.metadata[key];
+
+        try{
+            pc.metadata[key] = value;
+
+            await DBSetPlayerMetaData(this.db,playerUid,pc.metadata);
+        }
+        catch(ex){
+            if(oldValue == undefined){
+                delete pc.metadata[key];
+            }
+            else{
+                pc.metadata[key] = oldValue;
+            }
+        }
     }
 }
 

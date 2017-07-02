@@ -22,6 +22,7 @@ CREATE TABLE public.player
     last_daily bigint NOT NULL DEFAULT 0,
     role character varying COLLATE pg_catalog."default" NOT NULL DEFAULT 'player'::character varying,
     created time without time zone DEFAULT now(),
+    metadata2 json NOT NULL DEFAULT "{}",
     CONSTRAINT player_uid PRIMARY KEY (uid)
 )
 WITH (

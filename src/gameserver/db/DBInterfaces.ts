@@ -19,6 +19,7 @@ export interface DBPlayer{
     inventory:Array<DBInventoryItem>;
     equipment:Array<DBEquipmentItem>;
     last_daily: number;
+    metadata: any;
 }
 
 export interface DBEquipmentItem{

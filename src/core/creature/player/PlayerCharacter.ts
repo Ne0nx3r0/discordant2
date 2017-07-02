@@ -34,6 +34,7 @@ interface PCConfig{
     role:PermissionRole;
     karma:number;
     lastDaily:number;
+    metadata:any;
 }
 
 export default class PlayerCharacter extends Creature{
@@ -49,6 +50,7 @@ export default class PlayerCharacter extends Creature{
     role:PermissionRole;
     karma:number;
     lastDaily:number;
+    metadata:any;
 
     constructor(o:PCConfig){
         super({
@@ -72,6 +74,7 @@ export default class PlayerCharacter extends Creature{
         this.party = null;
         this.battle = null;
         this.lastDaily = o.lastDaily;
+        this.metadata = o.metadata;
     }
 
     get isPartyLeader():boolean{

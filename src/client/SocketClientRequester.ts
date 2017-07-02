@@ -72,6 +72,7 @@ import CraftItemRequest from '../gameserver/socket/requests/CraftItemRequest';
 import GetDailyRequest from '../gameserver/socket/requests/GetDailyRequest';
 import { AutoHealResults } from '../gameserver/socket/requests/AutoHealRequest';
 import AutoHealRequest from '../gameserver/socket/requests/AutoHealRequest';
+import SetMetaDataValueRequest from '../gameserver/socket/requests/SetMetaDataValueRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -512,6 +513,16 @@ export default class SocketClientRequester{
             uid: playerUid,
             item: itemId,
             amount: amount
+        })
+        .send(this.sioc);
+    }
+
+
+    setPlayerMetaDataValue(playerUid:string,key:string,value:string):Promise<void>{
+        return new SetMetaDataValueRequest({
+            uid: playerUid,
+            key: key,
+            value: value
         })
         .send(this.sioc);
     }
