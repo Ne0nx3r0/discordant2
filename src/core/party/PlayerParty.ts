@@ -407,6 +407,12 @@ export default class PlayerParty{
             kickUid: toKick.uid,
             message: toKick.title+' was kicked from the party',
         }).send(this.getClient());
+
+        new SendPMClientRequest({
+            channelId: this.channelId,
+            playerUid: toKick.uid,
+            message: 'You were kicked from party '+this.title,
+        }).send(this.getClient());
     }
 
     playerActionLeave(pc:PlayerCharacter){
