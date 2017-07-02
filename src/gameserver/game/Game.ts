@@ -1033,6 +1033,36 @@ export default class Game {
         party.playerActionDisband();
     }
 
+    async kickPlayerFromParty(playerUid:string,toKickUid:string):Promise<void>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw `You are not registered`;
+        }
+
+        if(!pc.party){
+            throw `You are not in a party`;
+        }
+
+        const party = pc.party;
+
+        if(party.leader != pc){
+            throw `Only the party leader can kick players`;
+        }
+
+        const pcToKick = await this.getPlayerCharacter(toKickUid);
+
+        if(!pcToKick){
+            throw `That person is not registered`;
+        }
+
+        if(!party.members.has(pcToKick.uid)){
+            throw `That player is not in your party`;
+        }
+
+        party.playerActionKick(pc,pcToKick);
+    }
+
     //Warning: PlayerParty is responsible for calling this
     _deleteParty(partyChannelId:string){
         this.playerParties.delete(partyChannelId);

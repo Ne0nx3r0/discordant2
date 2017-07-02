@@ -15,6 +15,7 @@ import CreatureBattleTurnBased from '../battle/CreatureBattleTurnBased';
 import { BattleResult } from '../battle/CreatureBattleTurnBased';
 import LootGenerator from "../loot/LootGenerator";
 import CreatureAIControlled from "../creature/CreatureAIControlled";
+import RevokeChannelPermissionsClientRequest from '../../client/requests/RevokeChannelPermissionsRequest';
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -387,6 +388,27 @@ export default class PlayerParty{
         }).send(this.getClient());
     }
 
+    playerActionKick(kicker:PlayerCharacter,toKick:PlayerCharacter){
+        if(this.leader.uid == toKick.uid){
+            throw 'Party leaders cannot be kicked, they must disband the party or transfer leadership';
+        }
+
+        if(this.partyStatus == PartyStatus.Battling){
+            throw 'You can\'t kick players during a battle!';
+        }
+
+        this.members.delete(toKick.uid);
+
+        toKick.party = null;
+        toKick.status = 'inCity';
+
+        new RevokeChannelPermissionsClientRequest({
+            channelId: this.channelId,
+            kickUid: toKick.uid,
+            message: toKick.title+' was kicked from the party',
+        }).send(this.getClient());
+    }
+
     playerActionLeave(pc:PlayerCharacter){
         if(this.leader.uid == pc.uid){
             throw 'Party leaders cannot leave, they must disband the party';
@@ -401,9 +423,10 @@ export default class PlayerParty{
         pc.party = null;
         pc.status = 'inCity';
 
-        new SendMessageClientRequest({
+        new RevokeChannelPermissionsClientRequest({
             channelId: this.channelId,
-            message: `${pc.title} left the party`,
+            kickUid: pc.uid,
+            message: pc.title+' left the party',
         }).send(this.getClient());
     }
 

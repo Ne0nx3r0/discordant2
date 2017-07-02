@@ -62,6 +62,7 @@ enum PermissionId{
     Daily,
     Heal,
     SCalc,
+    PartyKick,
 }
 
 export default PermissionId;

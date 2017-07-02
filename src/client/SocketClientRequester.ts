@@ -72,7 +72,7 @@ import CraftItemRequest from '../gameserver/socket/requests/CraftItemRequest';
 import GetDailyRequest from '../gameserver/socket/requests/GetDailyRequest';
 import { AutoHealResults } from '../gameserver/socket/requests/AutoHealRequest';
 import AutoHealRequest from '../gameserver/socket/requests/AutoHealRequest';
-import SetMetaDataValueRequest from '../gameserver/socket/requests/SetMetaDataValueRequest';
+import PartyKickPlayerRequest from '../gameserver/socket/requests/PartyKickPlayerRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -517,16 +517,6 @@ export default class SocketClientRequester{
         .send(this.sioc);
     }
 
-
-    setPlayerMetaDataValue(playerUid:string,key:string,value:string):Promise<void>{
-        return new SetMetaDataValueRequest({
-            uid: playerUid,
-            key: key,
-            value: value
-        })
-        .send(this.sioc);
-    }
-
     async getDaily(playerUid:string):Promise<string>{
         const response = await new GetDailyRequest({
             uid: playerUid
@@ -534,5 +524,13 @@ export default class SocketClientRequester{
         .send(this.sioc);
         
         return response.message;
+    }
+
+    kickPartyMember(playerUid:string,playerToKickUid:string):Promise<void>{
+        return new PartyKickPlayerRequest({
+            uid: playerUid,
+            kickUid: playerToKickUid
+        })
+        .send(this.sioc);
     }
 }

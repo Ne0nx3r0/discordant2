@@ -19,6 +19,7 @@ export const PlayerPermissions = [
     PermissionId.PartyJoin,
     PermissionId.PartyExplore,
     PermissionId.PartyMove,
+    PermissionId.PartyKick,
     PermissionId.Battle,
     PermissionId.BattleAttack,
     PermissionId.BattleOffhand,
