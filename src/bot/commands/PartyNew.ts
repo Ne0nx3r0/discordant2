@@ -19,6 +19,10 @@ export default class PartyNew extends Command{
     }
 
     async run(bag:CommandRunBag){
+        if(bag.message.channel.id == null){
+            throw 'You cannot use PMs to create a party';
+        }
+
         const player = await bag.socket.getPlayer(bag.message.author.id);
 
         if(player.status == 'inParty'){
