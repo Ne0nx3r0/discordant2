@@ -31,7 +31,7 @@ export default class PartyNew extends Command{
 
         const partyName = bag.params.join(' ').replace(/ /g,'-');
 
-        const partyChannel = await bag.handlers.createPartyChannel(bag.message.guild,partyName,bag.message.author.id);
+        const partyChannel = await bag.bot.createPartyChannel(bag.message.guild,partyName,bag.message.author.id);
 
         try{
             await bag.socket.createParty(partyName,bag.message.author.id,partyChannel.id);
