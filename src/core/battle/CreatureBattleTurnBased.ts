@@ -179,14 +179,26 @@ export default class CreatureBattleTurnBased{
                 const charges = bc.charges>0?' | Charges: '+bc.charges:'';
                 let exhausted = '';
                 let defeated = '';
-                const prefix = bc.defeated ? '- ' : '+ ';
+                
+                let prefix;
+                
+                if(bc.creature.hpCurrent < bc.creature.stats.hpTotal * 0.4){
+                    prefix = '-';
+                }
+                else if(bc.defeated){
+                    prefix = 'x.x';
+                }
+                else{
+                   prefix = '+';
+                }
+
                 const creatureTitle = bc.creature.title+' '+bc.creature.hpCurrent+'/'+bc.creature.stats.hpTotal;
 
                 if(bc.creature.id == -1){
                     exhausted = bc.exhausted ? ' | Exhausted' : '';
                 }
 
-                return prefix+creatureTitle+charges+blocking+exhausted;
+                return prefix+' '+creatureTitle+charges+blocking+exhausted;
             }
 
             const team1Msg = this.participants
@@ -521,7 +533,7 @@ export default class CreatureBattleTurnBased{
             else if(wad.type == DamageType.healing){
                 if(wad.target.defeated){  
                     damagesMsgs.push(
-                        `- ${wadc.title}(${wadc.hpCurrent}/${wadc.stats.hpTotal}) is defeated and cannot heal`
+                        `- ${wadc.title}(${wadc.hpCurrent}/${wadc.stats.hpTotal}) is defeated and cannot be healed`
                     );      
                 }
                 else{
