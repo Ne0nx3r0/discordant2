@@ -519,11 +519,18 @@ export default class CreatureBattleTurnBased{
                 //nothing to do here but we don't want to exit yet because we need to run a defeated check
             }
             else if(wad.type == DamageType.healing){
-                wad.target.creature.hpCurrent += Math.round(wad.amount);
-    
-                damagesMsgs.push(
-                    `+ ${wadc.title}(${wadc.hpCurrent}/${wadc.stats.hpTotal}) gained ${wad.amount}HP`
-                );
+                if(wad.target.defeated){  
+                    damagesMsgs.push(
+                        `- ${wadc.title}(${wadc.hpCurrent}/${wadc.stats.hpTotal}) is defeated and cannot heal`
+                    );      
+                }
+                else{
+                    wad.target.creature.hpCurrent += Math.round(wad.amount);
+
+                    damagesMsgs.push(
+                        `+ ${wadc.title}(${wadc.hpCurrent}/${wadc.stats.hpTotal}) gained ${wad.amount}HP`
+                    );      
+                }
             }
             else{
                 let dodged = false;
