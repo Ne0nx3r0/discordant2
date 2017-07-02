@@ -8,7 +8,7 @@ export default class PartyDecline extends Command{
     constructor(bag:CommandBag){
         super({
             name: 'partytransfer',
-            description: 'transfer a player from the party',
+            description: 'Transfer leadership of the party',
             usage: 'partytransfer',
             permissionNode: PermissionId.PartyTransfer,
             minParams: 1,
