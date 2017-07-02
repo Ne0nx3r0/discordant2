@@ -415,6 +415,27 @@ export default class PlayerParty{
         }).send(this.getClient());
     }
 
+    playerTransferLeadership(oldLeader:PlayerCharacter,newLeader:PlayerCharacter){
+        if(this.leader.uid != oldLeader.uid){
+            throw 'Only the party leader can transfer leadership of the party';
+        }
+
+        if(oldLeader.uid == newLeader.uid){
+            throw `${oldLeader.title} gives control of the party to one of the voices in their head`;
+        }
+
+        if(this.partyStatus == PartyStatus.Battling){
+            throw 'You can\'t give up leading in the middle of a battle!';
+        }
+
+        this.leader = newLeader;
+
+        new SendMessageClientRequest({
+            channelId: this.channelId,
+            message: `${oldLeader.title} transferred party leadership to ${newLeader.title}`,
+        }).send(this.getClient());
+    }
+
     playerActionLeave(pc:PlayerCharacter){
         if(this.leader.uid == pc.uid){
             throw 'Party leaders cannot leave, they must disband the party';

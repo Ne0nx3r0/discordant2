@@ -63,6 +63,7 @@ enum PermissionId{
     Heal,
     SCalc,
     PartyKick,
+    PartyTransfer,
 }
 
 export default PermissionId;

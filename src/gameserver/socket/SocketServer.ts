@@ -61,6 +61,7 @@ import CraftItemRequest from './requests/CraftItemRequest';
 import GetDailyRequest from './requests/GetDailyRequest';
 import AutoHealRequest from './requests/AutoHealRequest';
 import PartyKickPlayerRequest from './requests/PartyKickPlayerRequest';
+import PartyTransferLeadershipRequest from './requests/PartyTransferLeadershipRequest';
 
 interface SocketServerBag{
     port:number;
@@ -149,6 +150,8 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new GetDailyRequest(null));
             this.registerHandler(registeredEvents,client,new AutoHealRequest(null));
             this.registerHandler(registeredEvents,client,new PartyKickPlayerRequest(null));
+            this.registerHandler(registeredEvents,client,new PartyTransferLeadershipRequest(null));
+            
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

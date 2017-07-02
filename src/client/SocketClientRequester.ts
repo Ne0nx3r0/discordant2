@@ -73,6 +73,7 @@ import GetDailyRequest from '../gameserver/socket/requests/GetDailyRequest';
 import { AutoHealResults } from '../gameserver/socket/requests/AutoHealRequest';
 import AutoHealRequest from '../gameserver/socket/requests/AutoHealRequest';
 import PartyKickPlayerRequest from '../gameserver/socket/requests/PartyKickPlayerRequest';
+import PartyTransferLeadershipRequest from '../gameserver/socket/requests/PartyTransferLeadershipRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -533,4 +534,14 @@ export default class SocketClientRequester{
         })
         .send(this.sioc);
     }
+
+    transferPartyLeadership(playerUid:string,newLeaderUid:string):Promise<void>{
+        return new PartyTransferLeadershipRequest({
+            uid: playerUid,
+            newLeaderUid: newLeaderUid
+        })
+        .send(this.sioc);
+    }
+
+    
 }

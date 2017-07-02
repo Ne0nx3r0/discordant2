@@ -1063,6 +1063,36 @@ export default class Game {
         party.playerActionKick(pc,pcToKick);
     }
 
+    async transferPartyLeadership(playerUid:string,newLeaderUid:string):Promise<void>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw `You are not registered`;
+        }
+
+        if(!pc.party){
+            throw `You are not in a party`;
+        }
+
+        const party = pc.party;
+
+        if(party.leader != pc){
+            throw `Only the party leader can transfer leadership`;
+        }
+
+        const pcNewLeader = await this.getPlayerCharacter(newLeaderUid);
+
+        if(!pcNewLeader){
+            throw `That person is not registered`;
+        }
+
+        if(!party.members.has(pcNewLeader.uid)){
+            throw `That player is not in your party`;
+        }
+
+        party.playerTransferLeadership(pc,pcNewLeader);
+    }
+
     //Warning: PlayerParty is responsible for calling this
     _deleteParty(partyChannelId:string){
         this.playerParties.delete(partyChannelId);
