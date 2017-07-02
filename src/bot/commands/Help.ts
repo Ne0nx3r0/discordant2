@@ -122,10 +122,10 @@ true
 
         embed.addField(
 `Party`,
-`${p}party, ${p}pnew,
+`${p}party, ${p}pnew, ${p}pdisband, 
 ${p}pinvite, ${p}pyes, ${p}pno,
-${p}pdisband, ${p}pleave, ${p}pmap,
-${p}pexplore, ${p}pmove `, 
+${p}pleave, ${p}pkick, ${p}ptransfer, 
+${p}pmap, ${p}pexplore, ${p}pmove `, 
 true
         );
 
