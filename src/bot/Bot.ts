@@ -219,15 +219,7 @@ export default class Bot{
                     items: this.items,
                     commandPrefix: this.commandPrefix,
                     commands: this.commands,
-                    handlers:{
-                        setPlayingGame: this.setPlayingGame.bind(this),
-                        createPvPChannel: this.createPvPChannel.bind(this),
-                        createPartyChannel: this.createPartyChannel.bind(this),
-                        deleteChannel: this.deleteChannel.bind(this),
-                        setLockdown: this.setLockdown.bind(this),
-                        logout: this.logout.bind(this),
-                        addChatRole: this.addChatRole.bind(this)
-                    },
+                    bot: this,
                     permissions: this.permissions
                 });
             }
@@ -297,6 +289,14 @@ export default class Bot{
             SEND_MESSAGES: true,
             READ_MESSAGES: true,
             ADD_REACTIONS: true,
+        };
+
+        channel.overwritePermissions(playerUid,overwrites);
+    }
+
+    revokePlayerAccessToChannel(channel:TextChannel,playerUid:string){
+        const overwrites = {
+            READ_MESSAGES: false,
         };
 
         channel.overwritePermissions(playerUid,overwrites);

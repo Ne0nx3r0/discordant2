@@ -37,13 +37,13 @@ export default class Challenge extends Command{
             }
 
             //It's time to D-D-D-D-D-D-D-D-duuuuel
-            const channel:TextChannel = await bag.handlers.createPvPChannel(bag.message.guild,invite);
+            const channel:TextChannel = await bag.bot.createPvPChannel(bag.message.guild,invite);
 
             try{
                 await bag.socket.createPvPBattle(invite,channel.id);
             }
             catch(ex){
-                bag.handlers.deleteChannel(channel.id);
+                bag.bot.deleteChannel(channel.id);
 
                 throw ex;
             }

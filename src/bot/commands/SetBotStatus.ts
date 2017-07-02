@@ -18,7 +18,7 @@ export default class Inventory extends Command{
     async run(bag:CommandRunBag){
         const status = bag.params.join(' ');
 
-        bag.handlers.setPlayingGame(status);
+        bag.bot.setPlayingGame(status);
 
         bag.message.channel.send(`Set current game to "${status}", ${bag.message.author.username}`);
     }

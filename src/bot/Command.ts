@@ -6,6 +6,7 @@ import AllItems from '../core/item/AllItems';
 import PermissionsService from '../core/permissions/PermissionService';
 import SocketClientRequester from '../client/SocketClientRequester';
 import { SocketPvPInvite } from '../core/battle/PvPInvite';
+import Bot from './Bot';
 
 const UserTagRegex = new RegExp(/<@([0-9]{18})>/);
 const UserUidRegex = new RegExp(/([0-9]{18})/);
@@ -18,16 +19,6 @@ export interface DeleteChannelFunc{
     (channelId:string):void;
 }
 
-export interface BotHandlers{
-    setPlayingGame: SetPlayingFunc;
-    createPvPChannel(guild:Guild,invite:SocketPvPInvite):TextChannel;
-    createPartyChannel(guild:Guild,partyName:string,leaderUid:string):TextChannel;
-    setLockdown(lockdown:boolean):void;
-    logout():void;
-    deleteChannel: DeleteChannelFunc;
-    addChatRole(uid:string,roleId:string):void;
-}
-
 export interface CommandRunBag{
     message: Message;
     params: Array<string>;
@@ -36,7 +27,7 @@ export interface CommandRunBag{
     commandPrefix:string;
     commands:Map<String,Command>;
     socket: SocketClientRequester;
-    handlers: BotHandlers;
+    bot: Bot;
     permissions: PermissionsService;
 }
 
