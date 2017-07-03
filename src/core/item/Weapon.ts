@@ -41,7 +41,7 @@ export default class Weapon extends ItemEquippable{
         });
 
         this.damageBlocked = bag.damageBlocked;
-        this.chanceToCritical = bag.chanceToCritical || 0.1;
+        this.chanceToCritical = bag.chanceToCritical || 0.05;
         this.criticalMultiplier = bag.criticalMultiplier || 2;
         this.attacks = bag.attacks;
         this.attacks.forEach((attack)=>{
