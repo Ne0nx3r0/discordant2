@@ -22,7 +22,7 @@ export const BareHands = new Weapon({
         new WeaponAttack({
             title: 'jab',
             minBaseDamage: 2,
-            maxBaseDamage: 6,
+            maxBaseDamage: 8,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.S,
@@ -40,7 +40,7 @@ export const BareHands = new Weapon({
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.S,
             minBaseDamage: 4,
-            maxBaseDamage: 8,
+            maxBaseDamage: 6,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} punches {defender}',
