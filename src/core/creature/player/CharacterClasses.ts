@@ -10,6 +10,7 @@ import { Dagger } from '../../item/weapons/Dagger';
 import { ClothHood } from '../../item/clothing/ClothHood';
 import { ClothTunic } from '../../item/clothing/ClothTunic';
 import { TabletOfThunder } from '../../item/weapons/TabletOfThunder';
+import { Kukri } from '../../item/weapons/Kukri';
 
 enum CharacterClassId{
     Nobody,
@@ -114,21 +115,20 @@ addClass(new CharacterClass(
 ));
 
 addClass(new CharacterClass(
-    CharacterClassId.Magician,
+    CharacterClassId.Rogue,
     'Rogue',
-    'One of the countless entertainers now forced to use their mastery of wish magic to survive.',
+    'As the world gave way to chaos and great beasts took back the wild, thieves, hunters and skilled treasure seekers such as yourself found a new world of opportunities to use their unique skills',
     new AttributeSet({
-        strength: 10,
-        agility: 6,
-        vitality: 8,
-        spirit: 16,
-        luck: 10,
+        strength: 6,
+        agility: 14,
+        vitality: 10,
+        spirit: 8,
+        luck: 12,
     }),
     new CreatureEquipment({
         hat: ClothHood,
         armor: ClothTunic,
-        weapon: TabletOfThunder,
+        weapon: Dagger,
     }),
 ));
 
-As the world gave way to chaos and great beasts took back the wild, thieves, hunters and skilled treasure seekers such as yourself found a new world of opportunities to use their unique skills
