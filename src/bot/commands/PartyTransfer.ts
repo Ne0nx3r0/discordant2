@@ -9,7 +9,7 @@ export default class PartyDecline extends Command{
         super({
             name: 'partytransfer',
             description: 'Transfer leadership of the party',
-            usage: 'partytransfer',
+            usage: 'partytransfer <@newPartyLeader>',
             permissionNode: PermissionId.PartyTransfer,
             minParams: 1,
         });
