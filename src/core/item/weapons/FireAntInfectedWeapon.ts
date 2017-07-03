@@ -9,7 +9,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
-import { DefeaultNoDamageFunc } from '../../damage/DefeaultNoDamageFunc';
+import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 
 const INFECTION_STEPS = 6;
 
@@ -74,7 +74,7 @@ export const FireAntInfectedWeapon = new Weapon({
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} recovers from their attack',
-                    damageFunc: DefeaultNoDamageFunc,
+                    damageFunc: DefaultNoDamageFunc,
                 })
             ],
             aiUseWeight: 0.4

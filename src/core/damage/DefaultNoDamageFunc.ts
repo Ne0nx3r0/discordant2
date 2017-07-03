@@ -1,5 +1,5 @@
 import { DamageFuncBag, IWeaponAttackDamages } from '../item/WeaponAttackStep';
 
-export function DefeaultNoDamageFunc(bag: DamageFuncBag): Array<IWeaponAttackDamages> {
+export function DefaultNoDamageFunc(bag: DamageFuncBag): Array<IWeaponAttackDamages> {
     return [];
 }

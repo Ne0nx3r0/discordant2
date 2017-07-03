@@ -8,7 +8,7 @@ import ItemId from '../ItemId';
 import EffectGoblinSneakPoison from '../../effects/types/EffectGoblinSneakPoison';
 import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
-import { DefeaultNoDamageFunc } from '../../damage/DefeaultNoDamageFunc';
+import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 
 export default new Weapon({
     id: ItemId.GoblinSneakPoisonWeapon,
@@ -28,7 +28,7 @@ export default new Weapon({
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} takes in a deep breath',
-                    damageFunc: DefeaultNoDamageFunc
+                    damageFunc: DefaultNoDamageFunc
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} sprays the battlefield with a powerful toxin poisoning everyone!',

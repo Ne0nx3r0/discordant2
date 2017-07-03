@@ -6,7 +6,7 @@ import { Attribute } from '../../creature/AttributeSet';
 import { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
-import { DefeaultNoDamageFunc } from '../../damage/DefeaultNoDamageFunc';
+import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 
 export const FireAntSoldierWeapon = new Weapon({
     id: ItemId.FireAntSoldierWeapon,
@@ -45,7 +45,7 @@ export const FireAntSoldierWeapon = new Weapon({
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} recovers from their attack',
-                    damageFunc: DefeaultNoDamageFunc,
+                    damageFunc: DefaultNoDamageFunc,
                 })
             ],
             aiUseWeight: 0.6

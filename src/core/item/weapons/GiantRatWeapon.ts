@@ -11,7 +11,7 @@ import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
-import { DefeaultNoDamageFunc } from '../../damage/DefeaultNoDamageFunc';
+import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 
 export const GiantRatWeapon = new Weapon({
     id: ItemId.GiantRatWeapon,
@@ -48,7 +48,7 @@ export const GiantRatWeapon = new Weapon({
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} pulls back and shows its teeth',
-                    damageFunc: DefeaultNoDamageFunc,
+                    damageFunc: DefaultNoDamageFunc,
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} leaps forward and bites {defender}',
