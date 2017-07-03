@@ -85,6 +85,7 @@ export { FireAxe } from './weapons/FireAxe';
 export { FireSpear } from './weapons/FireSpear';
 export { FireMace } from './weapons/FireMace';
 export { LuckyDagger } from './weapons/LuckDagger';
+export { Kukri } from './weapons/Kukri';
 
 //For Testing
 export { PrismBlade } from './weapons/PrismBlade';
