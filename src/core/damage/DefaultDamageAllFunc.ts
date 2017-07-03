@@ -27,7 +27,7 @@ export function DefaultDamageAllFunc(bag: DamageFuncBag): Array<IWeaponAttackDam
         damages.push({
             target: p,
             type: attack.damageType,
-            amount: damageAmount
+            amount: Math.round(damageAmount)
         });
     });
 

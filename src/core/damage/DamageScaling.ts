@@ -14,7 +14,7 @@ export const SCALING_LEVEL_MODIFIERS = {
 
 export function GetScalingBonusFor(creature:Creature,attack:WeaponAttack){
     const weapon = attack.weapon;
-    let highestStat = 10;//minimum
+    let highestStat = 0;//minimum
     let highestStatKey = '_none';//dummy value
 
     for(var key in weapon.useRequirements){
@@ -26,8 +26,8 @@ export function GetScalingBonusFor(creature:Creature,attack:WeaponAttack){
         }
     }
 
-    const adjustedStatValue = creature.stats[highestStatKey] - highestStat;
-
+    const adjustedStatValue = (creature.stats[highestStatKey] || 10) - highestStat;
+console.log(adjustedStatValue,attack.scalingLevel,GetScalingBonus(adjustedStatValue,attack.scalingLevel));
     return GetScalingBonus(adjustedStatValue,attack.scalingLevel);
 }
 

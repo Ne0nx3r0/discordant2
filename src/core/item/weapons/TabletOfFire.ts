@@ -39,7 +39,7 @@ export const TabletOfFire = new Weapon({
 
                         const scalingAttribute = Attribute[bag.step.attack.scalingAttribute];
 
-                        fireAmount = fireAmount * GetScalingBonusFor(bag.attacker.creature,this);
+                        fireAmount = fireAmount * GetScalingBonusFor(bag.attacker.creature,bag.step.attack);
                         
                         if(bag.isCritical){
                             fireAmount = fireAmount * 2;

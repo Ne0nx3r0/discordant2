@@ -144,7 +144,7 @@ ${ScalingLevel[attack.scalingLevel]} scaling with ${Attribute[attack.scalingAttr
 
            // embed.addField('Attacks',attacksStr);
 
-            bag.message.channel.sendEmbed(embed);
+            bag.message.channel.send('',{embed:embed});
         }
         else{
             const itemBuyCost = item.buyCost ? `\nBuyable for ${item.buyCost}GP` : '';

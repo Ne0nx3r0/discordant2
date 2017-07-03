@@ -20,6 +20,6 @@ export function DefaultDamageFunc(bag: DamageFuncBag): Array<IWeaponAttackDamage
     return [{
         target: bag.defender,
         type: attack.damageType,
-        amount: damageAmount
+        amount: Math.round(damageAmount)
     }];
 }

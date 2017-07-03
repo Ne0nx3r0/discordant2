@@ -34,12 +34,12 @@ export const TabletOfHealing = new Weapon({
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a healing legend outloud and heals {defender}',
-                    damageFunc: function(bag:DamageFuncBag){
+                    damageFunc: (bag:DamageFuncBag)=>{
                         let healAmount = Math.round((Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage);
 
                         const scalingAttribute = Attribute[bag.step.attack.scalingAttribute];
                          
-                        healAmount = healAmount * GetScalingBonusFor(bag.attacker.creature,this);
+                        healAmount = healAmount * GetScalingBonusFor(bag.attacker.creature,bag.step.attack);
 
                         if(bag.isCritical){
                             healAmount = healAmount * 2;

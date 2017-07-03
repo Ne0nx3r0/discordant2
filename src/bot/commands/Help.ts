@@ -129,6 +129,6 @@ ${p}pmap, ${p}pexplore, ${p}pmove `,
 true
         );
 
-        bag.message.channel.sendEmbed(embed);
+        bag.message.channel.send('',{embed:embed});
     }
 }
