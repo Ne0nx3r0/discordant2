@@ -27,7 +27,7 @@ export function GetScalingBonusFor(creature:Creature,attack:WeaponAttack){
     }
 
     const adjustedStatValue = (creature.stats[highestStatKey] || 10) - highestStat;
-console.log(adjustedStatValue,attack.scalingLevel,GetScalingBonus(adjustedStatValue,attack.scalingLevel));
+
     return GetScalingBonus(adjustedStatValue,attack.scalingLevel);
 }
 
