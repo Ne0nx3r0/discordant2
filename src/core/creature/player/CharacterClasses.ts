@@ -11,6 +11,7 @@ import { ClothHood } from '../../item/clothing/ClothHood';
 import { ClothTunic } from '../../item/clothing/ClothTunic';
 import { TabletOfThunder } from '../../item/weapons/TabletOfThunder';
 import { Kukri } from '../../item/weapons/Kukri';
+import { Mace } from '../../item/weapons/Mace';
 
 enum CharacterClassId{
     Nobody,
@@ -73,7 +74,7 @@ addClass(new CharacterClass(
         luck: 10,
     }),
     new CreatureEquipment({
-        weapon: Dagger,
+        weapon: Mace,
         offhand: TabletOfHealing,
     }),
 ));
