@@ -15,7 +15,8 @@ enum CharacterClassId{
     Nobody,
     Mercenary,
     Healer,
-    Magician
+    Magician,
+    Rogue,
 }
 
 export {CharacterClassId};
@@ -31,13 +32,13 @@ function addClass(c){
 addClass(new CharacterClass(
     CharacterClassId.Nobody,
     'Nobody',
-    'Your path is your own, but you will receive no help along the way.',
+    'Your path has always been your own, but for the cost of receiving no help along the way.',
     new AttributeSet({
-        strength: 10,
-        agility: 10,
-        vitality: 10,
-        spirit: 10,
-        luck: 10,
+        strength: 8,
+        agility: 8,
+        vitality: 8,
+        spirit: 8,
+        luck: 8,
     })
 ));
 
@@ -93,3 +94,41 @@ addClass(new CharacterClass(
         weapon: TabletOfThunder,
     }),
 ));
+
+addClass(new CharacterClass(
+    CharacterClassId.Magician,
+    'Magician',
+    'One of the countless entertainers now forced to use their mastery of wish magic to survive.',
+    new AttributeSet({
+        strength: 10,
+        agility: 6,
+        vitality: 8,
+        spirit: 16,
+        luck: 10,
+    }),
+    new CreatureEquipment({
+        hat: ClothHood,
+        armor: ClothTunic,
+        weapon: TabletOfThunder,
+    }),
+));
+
+addClass(new CharacterClass(
+    CharacterClassId.Magician,
+    'Rogue',
+    'One of the countless entertainers now forced to use their mastery of wish magic to survive.',
+    new AttributeSet({
+        strength: 10,
+        agility: 6,
+        vitality: 8,
+        spirit: 16,
+        luck: 10,
+    }),
+    new CreatureEquipment({
+        hat: ClothHood,
+        armor: ClothTunic,
+        weapon: TabletOfThunder,
+    }),
+));
+
+As the world gave way to chaos and great beasts took back the wild, thieves, hunters and skilled treasure seekers such as yourself found a new world of opportunities to use their unique skills
