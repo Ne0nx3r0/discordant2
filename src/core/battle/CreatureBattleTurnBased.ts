@@ -537,10 +537,11 @@ export default class CreatureBattleTurnBased{
                     );      
                 }
                 else{
-                    wad.target.creature.hpCurrent += Math.round(wad.amount);
+                    const roundedAmount = Math.round(wad.amount)
+                    wad.target.creature.hpCurrent += roundedAmount;
 
                     damagesMsgs.push(
-                        `+ ${wadc.title}(${wadc.hpCurrent}/${wadc.stats.hpTotal}) gained ${wad.amount}HP`
+                        `+ ${wadc.title}(${wadc.hpCurrent}/${wadc.stats.hpTotal}) gained ${roundedAmount}HP`
                     );      
                 }
             }
