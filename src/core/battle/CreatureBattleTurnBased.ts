@@ -549,17 +549,17 @@ export default class CreatureBattleTurnBased{
                 let dodged = false;
 
                 //check if they dodged the attack
+                //only players can dodge
                 if(wad.target.creature instanceof PlayerCharacter){
                     const scalingAttribute = Attribute[queuedAttackStep.step.attack.scalingAttribute];
 
                     const attackerStat = attacker.creature.stats[scalingAttribute];
                     const defenderAgility = wad.target.creature.stats.agility;
+                    const charges = queuedAttackStep.step.attack.chargesRequired;
+                    
+                    const dodgePercent = GetDodgePercent(attackerStat,charges,defenderAgility);
 
-                    const dodge = GetDodgePercent(attackerStat,defenderAgility);
-                    const chargeBonusToHit = queuedAttackStep.step.attack.chargesRequired / 2;
-                    const roll = Math.random() * ( 1 + chargeBonusToHit);
-
-                    if(roll < dodge){
+                    if(Math.random() < dodgePercent){
                         damagesMsgs.push(
                             `+ ${wadc.title} DODGED the attack!`
                         );

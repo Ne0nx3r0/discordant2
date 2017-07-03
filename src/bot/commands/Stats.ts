@@ -58,12 +58,18 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     let wishBonusStr = '';
 
     if(pc.stats.wishBonus > 0){
-        wishBonusStr += ' (+'+(pc.stats.wishBonus*100)+'% Wishes)';
+        wishBonusStr = ' (+'+(pc.stats.wishBonus*100)+'% Wishes)';
+    }
+
+    let dodgeStr = '';
+
+    if(pc.stats.dodge > 0){
+        dodgeStr = ' ('+pc.stats.dodge+' Dodge)';
     }
 
     const pcAttributesStr = ''
          +pc.stats.strength+' Strength,'
-    +' '+pc.stats.agility+' Agility,'
+    +' '+pc.stats.agility+' Agility'+dodgeStr+','
     +'\n'+pc.stats.vitality+' Vitality,'
     +' '+pc.stats.spirit+' Spirit,'
     +' '+pc.stats.luck+' Luck'+wishBonusStr;
@@ -133,11 +139,6 @@ ${items.get(pc.equipment.offhand || 0).title} (Offhand)`,
                     inline: true,
                 },
                 {
-                    name: 'Equipment',
-                    value: equipmentStr,
-                    inline: true,
-                },
-                {
                     name: 'Attributes',
                     value: pcAttributesStr,
                     inline: true,
@@ -145,6 +146,11 @@ ${items.get(pc.equipment.offhand || 0).title} (Offhand)`,
                 {
                     name: 'Resistances',
                     value: resistancesStr,
+                    inline: true,
+                },
+                {
+                    name: 'Equipment',
+                    value: equipmentStr,
                     inline: true,
                 },
             ]
