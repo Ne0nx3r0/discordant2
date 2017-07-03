@@ -23,7 +23,6 @@ import BattleAttackRequest from './requests/BattleAttackRequest';
 import BattleBlockRequest from './requests/BattleBlockRequest';
 import CreatePartyRequest from './requests/CreatePartyRequest';
 import SetPartyExploringRequest from './requests/SetPartyExploringRequest';
-import SetSliceRemoteUrlRequest from './requests/SetSliceRemoteUrlRequest';
 import AcceptPartyInvitationRequest from './requests/AcceptPartyInvitationRequest';
 import DeclinePartyInvitationRequest from "./requests/DeclinePartyInvitationRequest";
 import InvitePlayerToPartyRequest from './requests/InvitePlayerToPartyRequest';
@@ -112,7 +111,6 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new RegisterPlayerRequest(null));
             this.registerHandler(registeredEvents,client,new SetPartyExploringRequest(null));
             this.registerHandler(registeredEvents,client,new SetPlayerRoleRequest(null));
-            this.registerHandler(registeredEvents,client,new SetSliceRemoteUrlRequest(null));
             this.registerHandler(registeredEvents,client,new TransferPlayerItemRequest(null));
             this.registerHandler(registeredEvents,client,new UnequipPlayerItemRequest(null));
             this.registerHandler(registeredEvents,client,new AcceptPartyInvitationRequest(null));

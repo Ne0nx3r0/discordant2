@@ -25,7 +25,6 @@ import { PvPInvite, PVP_INVITE_TIMEOUT, SocketPvPInvite } from '../../core/battl
 import { IGetRandomClientFunc } from '../socket/SocketServer';
 import PlayerParty, { PartyStatus } from "../../core/party/PlayerParty";
 import AllCreaturesAIControlled from "../../core/creature/AllCreaturesAIControlled";
-import MapUrlCache from '../../core/map/MapUrlCache';
 import { MapWesternGate, WorldMaps } from "../../core/map/Maps";
 import { PartyMoveDirection } from "../../core/party/PartyExploringMap";
 import { WishType } from '../socket/requests/LevelUpRequest';
@@ -92,7 +91,6 @@ export default class Game {
     getClient: IGetRandomClientFunc;
     playerParties:Map<string,PlayerParty>;
     activeBattles:Map<string,CreatureBattleTurnBased>;
-    mapUrlCache: MapUrlCache;
 
     constructor(bag:GameServerBag){
         this.db = bag.db;
@@ -105,7 +103,6 @@ export default class Game {
         this.playerParties = new Map();
         this.activeBattles = new Map();
         this.items = new AllItems();
-        this.mapUrlCache = new MapUrlCache();
         this.creatures = new AllCreaturesAIControlled();
         this.getClient = bag.getRandomClient;
     }
@@ -867,14 +864,6 @@ export default class Game {
         });
 
         return battle;
-    }
-
-    setSliceRemoteUrl(imageSrc:string,remoteUrl:string):void{
-        this.mapUrlCache.setSliceRemoteUrl(imageSrc,remoteUrl);
-    }
-
-    getSliceRemoteUrl(imageSrc:string):string{
-        return this.mapUrlCache.getSliceRemoteUrl(imageSrc);
     }
 
     //returns the item id of an item that was consumed to access the map

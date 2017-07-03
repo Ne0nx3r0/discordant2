@@ -315,23 +315,16 @@ export default class PlayerParty{
         }
 
         const localUrl = this.exploration.getCurrentLocationImage();
-        const cachedCDNUrl = this.game.getSliceRemoteUrl(localUrl);
+        
+        const localPath = localUrl.substr(2);
 
-        if(cachedCDNUrl){
-            new SendImageClientRequest({
-                channelId: this.channelId,
-                imageUrl: cachedCDNUrl,
-                message: msg,
-            }).send(this.getClient());
-        }
-        else{
-            new SendLocalImageClientRequest({
-                channelId: this.channelId,
-                locationName: this.exploration.map.title,
-                imageSrc: localUrl,
-                message: msg,
-            }).send(this.getClient());
-        }
+        const cachedCDNUrl = `https://github.com/Ne0nx3r0/discordant2/blob/master/${localPath}?raw=true`;
+
+        new SendImageClientRequest({
+            channelId: this.channelId,
+            imageUrl: cachedCDNUrl,
+            message: msg,
+        }).send(this.getClient());
     }
 
     playerActionInvite(pc:PlayerCharacter){

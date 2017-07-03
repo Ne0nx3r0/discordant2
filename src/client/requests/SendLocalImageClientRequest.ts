@@ -2,7 +2,6 @@ import ClientRequest from '../ClientRequest';
 import { TextChannel, Message } from 'discord.js';
 import { ClientRequestData, ClientRequestReceiveBag } from '../ClientRequest';
 import { SocketClientBag } from '../SocketClientRequester';
-import SetSliceRemoteUrlRequest from '../../gameserver/socket/requests/SetSliceRemoteUrlRequest';
 
 export interface ClientRequestSendLocalImageData extends ClientRequestData{
     imageSrc: string;
@@ -22,15 +21,7 @@ export default class SendLocalImageClientRequest extends ClientRequest{
                     attachment: data.imageSrc,
                     name: data.locationName+'.png',
                 }
-            }) as Message;
-
-            const cacheUrl = resultMessage.attachments.first().url;      
-
-            new SetSliceRemoteUrlRequest({
-                imageSrc: data.imageSrc,
-                remoteUrl: cacheUrl,
-            })
-            .send(bag.sioc);          
+            }) as Message;         
         }
         catch(ex){
             const did = bag.logger.error(ex);
