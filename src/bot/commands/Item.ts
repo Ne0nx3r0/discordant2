@@ -125,8 +125,8 @@ export default class Item extends Command{
                     //Dirty hack
                     const scalingBonus = GetScalingBonusFor(pc as any as Creature,attack);
                     
-                    const yourMinDamage = attack.minBaseDamage * scalingBonus;
-                    const yourMaxDamage = attack.maxBaseDamage * scalingBonus;
+                    const yourMinDamage = Math.round(attack.minBaseDamage * scalingBonus);
+                    const yourMaxDamage = Math.round(attack.maxBaseDamage * scalingBonus);
                     
                     if(attack.scalingLevel != ScalingLevel.No){
                         yourDamageStr = `\n(${yourMinDamage} - ${yourMaxDamage} with your stats)`;
