@@ -329,7 +329,6 @@ export default class Bot{
         await channel.overwritePermissions(leaderUid,{
             READ_MESSAGES: true,
             SEND_MESSAGES: true,
-            MANAGE_ROLES_OR_PERMISSIONS: true,
         });
 
         return channel;
