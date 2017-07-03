@@ -70,6 +70,7 @@ import { DBDailyReward } from '../db/api/DBDailyReward';
 import { AutoHealResults } from '../socket/requests/AutoHealRequest';
 import { VIAL_HEAL_AMOUNT } from '../../core/item/misc/Vial';
 import { DBSetPlayerMetaData } from '../db/api/DBSetPlayerMetaData';
+import { BareHands } from '../../core/item/weapons/BareHands';
 import moment = require("moment");
 
 //how often players can get a daily reward
@@ -724,10 +725,10 @@ export default class Game {
             throw 'You are not currently in a battle';
         }
 
-        const weapon = offhand ? attacker.equipment.offhand : attacker.equipment.weapon;
+        let weapon = offhand ? attacker.equipment.offhand : attacker.equipment.weapon;
 
-        if(!weapon){
-            throw 'Weapon not found whaaa';
+        if(weapon == undefined){
+            weapon = BareHands;
         }
 
         const weaponAttack = weapon.findAttack(attackTitle);

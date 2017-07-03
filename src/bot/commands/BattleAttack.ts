@@ -5,6 +5,7 @@ import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import Weapon from "../../core/item/Weapon";
 import WeaponAttack from '../../core/item/WeaponAttack';
+import { BareHands } from '../../core/item/weapons/BareHands';
 
 export default class BattleAttack extends Command{
     constructor(bag:CommandBag){
@@ -38,7 +39,16 @@ export async function BotAttackCommand(bag:CommandRunBag,offhand:boolean){
     }
 
     const weaponId = offhand ? player.equipment.offhand : player.equipment.weapon;
-    const weapon = bag.items.get(weaponId) as Weapon;
+
+    let weapon;
+
+    if(!weaponId){
+        weapon = BareHands;
+    }
+    else{
+        weapon = bag.items.get(weaponId) as Weapon;
+    }
+
     let attack:WeaponAttack;
     let wantedAttackStr;
     
