@@ -10,6 +10,7 @@ import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
 import { DefaultDamageFunc } from "../../damage/DefaultDamageFunc";
 import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
+import { DefeaultNoDamageFunc } from '../../damage/DefeaultNoDamageFunc';
 
 const QueenHardenEffect = new BattleTemporaryEffect({
     id: EffectId.FireAntQueenHarden,
@@ -116,7 +117,7 @@ export const FireAntQueenWeapon = new Weapon({
                 }),
                 new WeaponAttackStep({
                     attackMessage: '{attacker} recovers from their attack',
-                    damageFunc: function(){return [];},
+                    damageFunc: DefeaultNoDamageFunc,
                 })
             ],
             aiUseWeight: 0.4
