@@ -15,7 +15,7 @@ export default class DodgeCalc extends Command{
             description: 'Calculate the DodgeCalc of a given attacker stat and agility',
             usage: 'DodgeCalc <attackerStat> <attackCharges> <defenderAgility>',
             permissionNode: PermissionId.DodgeCalc,
-            minParams: 2,
+            minParams: 3,
         });
 
         this.aliases.set('dc','dodgecalc');
