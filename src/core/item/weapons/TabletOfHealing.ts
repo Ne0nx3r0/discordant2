@@ -3,12 +3,13 @@ import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 
 import Creature from '../../creature/Creature';
-import {DamageScaling} from '../../damage/DamageScaling';
+
 import ItemId from '../ItemId';
 import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from "../../damage/DefaultDamageFunc";
 import { EffectBless } from '../../effects/types/EffectBless';
+import { GetScalingBonusFor } from '../../damage/DamageScaling';
 
 export const TabletOfHealing = new Weapon({
     id: ItemId.TabletOfHealing,
@@ -37,8 +38,8 @@ export const TabletOfHealing = new Weapon({
                         let healAmount = Math.round((Math.random() * (bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage))+bag.step.attack.minBaseDamage);
 
                         const scalingAttribute = Attribute[bag.step.attack.scalingAttribute];
-                        
-                        healAmount = DamageScaling.ByAttribute(healAmount,bag.attacker.creature.stats[scalingAttribute]);
+                         
+                        healAmount = healAmount * GetScalingBonusFor(bag.attacker.creature,this);
 
                         if(bag.isCritical){
                             healAmount = healAmount * 2;

@@ -9,12 +9,13 @@ import {RichEmbed} from 'discord.js';
 import { EMBED_COLORS } from '../util/ChatHelpers';
 import { ScalingLevel } from "../../core/item/WeaponAttack";
 import { Attribute } from "../../core/creature/AttributeSet";
-import { DamageScaling } from "../../core/damage/DamageScaling";
 import { DamageType } from "../../core/item/WeaponAttackStep";
 import { ItemRecipe } from '../../core/item/ItemRecipe';
 import AllItems from '../../core/item/AllItems';
 import ItemEquippable from '../../core/item/ItemEquippable';
 import ItemUsable from '../../core/item/ItemUsable';
+import { GetScalingBonusFor } from '../../core/damage/DamageScaling';
+import Creature from '../../core/creature/Creature';
 
 export default class Item extends Command{
     constructor(bag:CommandBag){
@@ -121,9 +122,12 @@ export default class Item extends Command{
                 let yourDamageStr = '';
 
                 if(pc){
-                    const yourMinDamage = DamageScaling.ByAttribute(attack.minBaseDamage,pc.stats[scalingStat]);
-                    const yourMaxDamage = DamageScaling.ByAttribute(attack.maxBaseDamage,pc.stats[scalingStat]);
-
+                    //Dirty hack
+                    const scalingBonus = GetScalingBonusFor(pc as any as Creature,attack);
+                    
+                    const yourMinDamage = attack.minBaseDamage * scalingBonus;
+                    const yourMaxDamage = attack.maxBaseDamage * scalingBonus;
+                    
                     if(attack.scalingLevel != ScalingLevel.No){
                         yourDamageStr = `\n(${yourMinDamage} - ${yourMaxDamage} with your stats)`;
                     }

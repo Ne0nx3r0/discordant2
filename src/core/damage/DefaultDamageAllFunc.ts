@@ -1,7 +1,7 @@
 import { DamageFuncBag, IWeaponAttackDamages } from '../item/WeaponAttackStep';
 import { Attribute } from "../creature/AttributeSet";
 import { WeaponDamageType } from "../item/WeaponAttack";
-import { DamageScaling } from './DamageScaling';
+import { GetScalingBonusFor } from './DamageScaling';
 
 export function DefaultDamageAllFunc(bag: DamageFuncBag): Array<IWeaponAttackDamages> {
     const attack = bag.step.attack;
@@ -22,7 +22,7 @@ export function DefaultDamageAllFunc(bag: DamageFuncBag): Array<IWeaponAttackDam
 
         const scalingAttribute = Attribute[attack.scalingAttribute];
 
-        damageAmount = DamageScaling.ByAttribute(damageAmount,bag.attacker.creature.stats[scalingAttribute]);
+        damageAmount = damageAmount * GetScalingBonusFor(bag.attacker.creature,attack);
         
         damages.push({
             target: p,

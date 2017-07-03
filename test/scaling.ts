@@ -1,4 +1,4 @@
-import { CalculateScalingBonus, SCALING_LEVEL_MODIFIERS } from '../src/core/damage/DamageScaling';
+import { GetScalingBonus, SCALING_LEVEL_MODIFIERS } from '../src/core/damage/DamageScaling';
 import { ScalingLevel } from '../src/core/item/WeaponAttack';
 const Table = require('cli-table');
 
@@ -37,7 +37,7 @@ for(var item in ScalingLevel){
             ([ScalingLevel[scalingLevel]] as Array<any>)
             .concat(
                 ATTRIBUTE_BONUSES.map(function(attribute){
-                    return Math.round(damage * CalculateScalingBonus(attribute,scalingLevel));
+                    return Math.round(damage * GetScalingBonus(attribute,scalingLevel));
                 })
             )
         );

@@ -4,7 +4,7 @@ import WeaponAttackStep from '../WeaponAttackStep';
 import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 
 import Creature from '../../creature/Creature';
-import {DamageScaling} from '../../damage/DamageScaling';
+
 import ItemId from '../ItemId';
 import EffectGoblinSneakPoison from '../../effects/types/EffectGoblinSneakPoison';
 import { Attribute } from "../../creature/AttributeSet";

@@ -1,9 +1,8 @@
 import Weapon from '../Weapon';
 import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-
 import Creature from '../../creature/Creature';
-import {DamageScaling} from '../../damage/DamageScaling';
+
 import ItemId from '../ItemId';
 import { DamageFuncBag, DamageType, IWeaponAttackDamages } from '../WeaponAttackStep';
 import { Attribute } from "../../creature/AttributeSet";
@@ -12,6 +11,7 @@ import { EffectBless } from '../../effects/types/EffectBless';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
 import { EffectPrayer } from '../../effects/types/EffectPrayer';
+import { GetScalingBonusFor } from '../../damage/DamageScaling';
 
 export const TabletOfFaith = new Weapon({
     id: ItemId.TabletOfFaith,
@@ -44,7 +44,7 @@ export const TabletOfFaith = new Weapon({
 
                         const scalingAttribute = Attribute[bag.step.attack.scalingAttribute];
                         
-                        healAmount = DamageScaling.ByAttribute(healAmount,bag.attacker.creature.stats[scalingAttribute]);
+                        healAmount = healAmount * GetScalingBonusFor(bag.attacker.creature,this);
 
                         if(bag.isCritical){
                             healAmount = healAmount * 2;

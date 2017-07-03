@@ -55,6 +55,5 @@ export { default as Craft } from './commands/Craft';
 export { default as DodgeCalc } from './commands/DodgeCalc';
 export { default as Daily } from './commands/Daily';
 export { default as Heal } from './commands/Heal';
-export { default as SCalc } from './commands/SCalc';
 export { default as PartyKick } from './commands/PartyKick';
 export { default as PartyTransfer } from './commands/PartyTransfer';

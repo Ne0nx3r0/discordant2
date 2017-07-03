@@ -3,12 +3,13 @@ import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
 
 import Creature from '../../creature/Creature';
-import {DamageScaling} from '../../damage/DamageScaling';
+
 import ItemId from '../ItemId';
 import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from "../../damage/DefaultDamageFunc";
 import { EffectBless } from '../../effects/types/EffectBless';
+import { GetScalingBonusFor } from '../../damage/DamageScaling';
 
 export const TabletOfFire = new Weapon({
     id: ItemId.TabletOfFire,
@@ -38,7 +39,7 @@ export const TabletOfFire = new Weapon({
 
                         const scalingAttribute = Attribute[bag.step.attack.scalingAttribute];
 
-                        fireAmount = DamageScaling.ByAttribute(fireAmount,bag.attacker.creature.stats[scalingAttribute]);
+                        fireAmount = fireAmount * GetScalingBonusFor(bag.attacker.creature,this);
                         
                         if(bag.isCritical){
                             fireAmount = fireAmount * 2;

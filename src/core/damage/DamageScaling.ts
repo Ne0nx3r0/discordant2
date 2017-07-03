@@ -1,36 +1,7 @@
 import { ScalingLevel } from '../item/WeaponAttack';
 import Creature from '../creature/Creature';
 import WeaponAttack from '../item/WeaponAttack';
-//Weapon helper functions
-function scalingGen(arr){
-    let i = 0;
-
-    const scaling = arr.map(function(v){
-        i+= v;
-
-        return i;
-    });
-
-    return function(baseDamage,statValue){
-        return Math.floor(baseDamage * (1 + scaling[statValue] / 100));
-    };
-}
-
-export const DamageScaling = {
-    ByAttribute: scalingGen([
-        0,//0
-        0,0,0,0,0,0,0,0,0,0,//1-10
-        1,1,1,1,2,1,1,1,1,2,//11-20
-        2,2,2,1,2,2,2,2,1,2,//21-30
-        3,3,2,3,3,2,3,3,2,3,//31-40
-        3,2,3,2,3,2,3,2,3,2,//41-50
-        3,3,4,3,4,3,4,3,3,4,//51-60
-        2,2,2,3,2,2,2,3,2,3,//61-70
-        2,1,1,2,2,2,2,1,2,1,//71-80
-        1,1,0,1,1,1,0,1,1,0, //81-90
-        0,1,0,1,0,1,0,1,1,6 //91-100
-    ])  
-};
+import Weapon from '../item/Weapon';
 
 export const SCALING_LEVEL_MODIFIERS = {
      S: 5,
@@ -41,7 +12,26 @@ export const SCALING_LEVEL_MODIFIERS = {
      No: 0,
 };
 
-export function CalculateScalingBonus(statAmount:number,scalingLevel:ScalingLevel){
+export function GetScalingBonusFor(creature:Creature,attack:WeaponAttack){
+    const weapon = attack.weapon;
+    let highestStat = 10;//minimum
+    let highestStatKey = '_none';//dummy value
+
+    for(var key in weapon.useRequirements){
+        const stat = weapon.useRequirements[key];
+
+        if(stat > highestStat){
+            highestStat = stat;
+            highestStatKey = key;
+        }
+    }
+
+    const adjustedStatValue = creature.stats[highestStatKey] - highestStat;
+
+    return GetScalingBonus(adjustedStatValue,attack.scalingLevel);
+}
+
+export function GetScalingBonus(statAmount:number,scalingLevel:ScalingLevel){
     if(statAmount == 0 || scalingLevel == ScalingLevel.No){
         return 1;
     }
