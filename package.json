@@ -6,8 +6,8 @@
   "scripts": {
     "devwin": "start npm run gameserver && start npm run bot",
     "dev": "concurrently --kill-others \"npm run gameserver\" \"npm run bot\"",
-    "gameserver": "node --prof src/gameserver/Index.js",
-    "bot": "node --prof src/bot/Index.js"
+    "gameserver": "node src/gameserver/Index.js",
+    "bot": "node src/bot/Index.js"
   },
   "author": "Ne0nx3r0",
   "dependencies": {
