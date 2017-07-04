@@ -49,7 +49,7 @@ export const Dagger = new Weapon({
             specialDescription: '+10 agility for 5 turns',
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} channels his inner focus',
+                    attackMessage: '{attacker} channels their inner focus',
                     damageFunc: function(bag){
                         bag.battle.addTemporaryEffect(bag.attacker.creature,EffectRush,5);
 
