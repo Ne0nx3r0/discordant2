@@ -2,6 +2,7 @@ import { ScalingLevel } from '../item/WeaponAttack';
 import Creature from '../creature/Creature';
 import WeaponAttack from '../item/WeaponAttack';
 import Weapon from '../item/Weapon';
+import { Attribute } from '../creature/AttributeSet';
 
 export const SCALING_LEVEL_MODIFIERS = {
      S: 5,
@@ -26,7 +27,7 @@ export function GetScalingBonusFor(creature:Creature,attack:WeaponAttack){
         }
     }
 
-    const adjustedStatValue = (creature.stats[highestStatKey] || 10) - highestStat;
+    const adjustedStatValue = (creature.stats[Attribute[attack.scalingAttribute]] || 10) - highestStat;
 
     return GetScalingBonus(adjustedStatValue,attack.scalingLevel);
 }
