@@ -49,7 +49,5 @@ console.log(ex);
         }
 
         bag.message.channel.send(`Your party is ready at <#${partyChannel.id}>, ${bag.message.author.username}`);
-
-        bag.bot.addChatRole(bag.message.author.id,BotConstants.ROLE_PARTYING_ID);
     }
 }

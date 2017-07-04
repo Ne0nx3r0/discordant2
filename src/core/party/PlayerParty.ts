@@ -16,7 +16,6 @@ import { BattleResult } from '../battle/CreatureBattleTurnBased';
 import LootGenerator from "../loot/LootGenerator";
 import CreatureAIControlled from "../creature/CreatureAIControlled";
 import RevokeChannelPermissionsClientRequest from '../../client/requests/RevokeChannelPermissionsRequest';
-import RevokePartyingRoleClientRequest from '../../client/requests/RevokePartyingRoleClientRequest';
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -474,11 +473,6 @@ export default class PlayerParty{
         new SendMessageClientRequest({
             channelId: this.channelId,
             message: `<@${this.leader.uid}> The party has been disbanded!\n\n(Channel will be deleted in one minute)`,
-        }).send(this.getClient());
-
-        new RevokePartyingRoleClientRequest({
-            channelId: this.channelId,
-            uids: members.map( (member) => member.uid ),
         }).send(this.getClient());
 
         setTimeout(()=>{

@@ -17,7 +17,6 @@ import SendLocalImageClientRequest from './requests/SendLocalImageClientRequest'
 import Bot from '../bot/Bot';
 import SendAddPartyMemberClientRequest from './requests/SendAddPartyMemberClientRequest';
 import RevokeChannelPermissionsClientRequest from './requests/RevokeChannelPermissionsRequest';
-import RevokePartyingRoleClientRequest from './requests/RevokePartyingRoleClientRequest';
 
 interface ChannelLookupFunc{
     (channelId:string):TextChannel;
@@ -46,8 +45,7 @@ export default class SocketClientListener{
         this.registerHandler(bag,new SendLocalImageClientRequest(null));
         this.registerHandler(bag,new SendAddPartyMemberClientRequest(null));     
         this.registerHandler(bag,new RevokeChannelPermissionsClientRequest(null));   
-        this.registerHandler(bag,new RevokePartyingRoleClientRequest(null));        
-
+    
         var socket = bag.sioc;//using this syntax to avoid pissing off typescript
         var onevent = socket['onevent'];
         var eventNames = Object.keys(socket['_callbacks']).map(function(callback){
