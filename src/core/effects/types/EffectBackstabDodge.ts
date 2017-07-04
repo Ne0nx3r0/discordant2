@@ -6,6 +6,6 @@ export const EffectBackstabDodge = new BattleTemporaryEffect({
     id: EffectId.BackstabDodge,
     title: 'Dodge',
     onAddBonuses:function(stats){
-        stats.dodge += 100;
+        stats.dodgeAlways = true;
     }
 });

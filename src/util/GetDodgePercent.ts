@@ -5,6 +5,12 @@ export function GetDodgePercentRaw(attackerAccuracy:number,chargesUsed:number,de
 }
 
 export function GetDodgePercent(attackerAccuracy:number,chargesUsed:number,defenderDodge:number){
-    console.log(attackerAccuracy+' - '+chargesUsed + ' - '+defenderDodge, defenderDodge / ( attackerAccuracy * 8 * ((chargesUsed+1)/4) ) );
-    return Math.min( defenderDodge / ( attackerAccuracy * 8 * (chargesUsed/4) ), MAX_DODGE);
+    if(defenderDodge <= 0){
+        return 0;
+    }
+
+    return Math.min( 
+        defenderDodge / ( attackerAccuracy * 8 * (chargesUsed/4) ), 
+        MAX_DODGE
+    );
 }

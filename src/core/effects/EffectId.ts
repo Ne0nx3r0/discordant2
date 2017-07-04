@@ -19,6 +19,7 @@ enum EffectId {
     MagicShieldGrey,
     MagicShieldGold,
     BackstabDodge,
+    Rush,
 }
 
 export default EffectId;

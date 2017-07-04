@@ -173,7 +173,7 @@ export default class CreatureBattleTurnBased{
 
         this.flushBattleMessagesCheck();
 
-        if(this.activeTeam == 1){
+        if(this.activeTeam == 1){     
             function formatbc(bc:IBattleCreature){
                 const blocking = bc.blocking ? ' | Blocking' : '';
                 const charges = bc.charges>0?' | Charges: '+bc.charges:'';
@@ -221,6 +221,20 @@ export default class CreatureBattleTurnBased{
                 '',
                 team2Msg
             ]);
+
+            for(const participant of this.participants){
+                if(participant.teamNumber == 1){
+                    if(participant.queuedAttackSteps.length > 0){
+                        this._sendNextAttackStep(participant);
+
+                        this.exhaustParticipant(participant);
+
+                        if(this.battleHasEnded){
+                            return;
+                        }
+                    }
+                }
+            }                    
         }
 
         this.runAIActions();
@@ -546,7 +560,7 @@ export default class CreatureBattleTurnBased{
                 }
             }
             else{
-                let dodged = false;
+                let dodged = wad.target.creature.stats.dodgeAlways;
 
                 //check if they dodged the attack
                 //only players can dodge
@@ -554,11 +568,11 @@ export default class CreatureBattleTurnBased{
                     const scalingAttribute = Attribute[queuedAttackStep.step.attack.scalingAttribute];
 
                     const attackerStat = attacker.creature.stats[scalingAttribute];
-                    const defenderAgility = wad.target.creature.stats.agility;
+                    const defenderDodge = wad.target.creature.stats.dodge;
                     const charges = queuedAttackStep.step.attack.chargesRequired;
                     
-                    const dodgePercent = GetDodgePercent(attackerStat,charges,defenderAgility);
-
+                    const dodgePercent = GetDodgePercent(attackerStat,charges,defenderDodge);
+    
                     if(Math.random() < dodgePercent){
                         damagesMsgs.push(
                             `+ ${wadc.title} DODGED the attack!`
