@@ -52,6 +52,6 @@ export default class Begin extends Command{
         bag.message.channel.send(`You were successfully registered, ${player.title}!`);
 
         // Grant them tester role
-        bag.bot.addChatRole(bag.message.author.id,BotConstants.ROLE_TESTER_ID);
+        //bag.bot.addChatRole(bag.message.author.id,BotConstants.ROLE_TESTER_ID);
     }
 }
