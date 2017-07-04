@@ -77,7 +77,7 @@ export default class Creature{
                 chaos:0,
             },
             hpTotal: 0,
-            magicFind: Math.floor(this.attributes.luck / 4),
+            magicFind: Math.floor(this.attributes.luck / 2),
             wishBonus: 0,
             wishProtect: 0,
             dodge: Math.max(0,this.attributes.agility-10),
