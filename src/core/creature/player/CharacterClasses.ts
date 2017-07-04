@@ -98,24 +98,6 @@ addClass(new CharacterClass(
 ));
 
 addClass(new CharacterClass(
-    CharacterClassId.Magician,
-    'Magician',
-    'One of the countless entertainers now forced to use their mastery of wish magic to survive.',
-    new AttributeSet({
-        strength: 10,
-        agility: 6,
-        vitality: 8,
-        spirit: 16,
-        luck: 10,
-    }),
-    new CreatureEquipment({
-        hat: ClothHood,
-        armor: ClothTunic,
-        weapon: TabletOfThunder,
-    }),
-));
-
-addClass(new CharacterClass(
     CharacterClassId.Rogue,
     'Rogue',
     'As the world gave way to chaos and great beasts took back the wild, thieves, hunters and skilled treasure seekers such as yourself found a new world of opportunities to use their unique skills',
