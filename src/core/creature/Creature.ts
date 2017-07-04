@@ -25,6 +25,7 @@ export interface ICreatureStatSet{
     redEye: number;
     wishBonus: number;
     dodge: number;
+    dodgeAlways: boolean;
     wishProtect: number;
 }
 
@@ -80,6 +81,7 @@ export default class Creature{
             wishBonus: 0,
             wishProtect: 0,
             dodge: Math.max(0,this.attributes.agility-10),
+            dodgeAlways: false,
         };
 
         this.equipment.forEach(function(item:ItemEquippable,slot:EquipmentSlot){
