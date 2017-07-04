@@ -10,6 +10,7 @@ import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 import { EffectBackstabDodge } from '../../effects/types/EffectBackstabDodge';
+import { EffectRush } from '../../effects/types/EffectRush';
 
 export const Dagger = new Weapon({
     id: ItemId.Dagger,
@@ -29,7 +30,7 @@ export const Dagger = new Weapon({
             maxBaseDamage: 8,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.agility,
-            scalingLevel: ScalingLevel.D,
+            scalingLevel: ScalingLevel.C,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slashes at {defender} with a small dagger',
@@ -39,25 +40,21 @@ export const Dagger = new Weapon({
             aiUseWeight: 0.6
         }),
         new WeaponAttack({
-            title: 'backstab',
+            title: 'rush',
             minBaseDamage: 10,
-            maxBaseDamage: 25,
-            damageType: DamageType.physical,
-            scalingAttribute: Attribute.luck,
-            scalingLevel: ScalingLevel.A,
-            specialDescription: 'Jump behind an opponent and stab at them on the following turn. (+100 dodge during 1st step)',
+            maxBaseDamage: 10,
+            damageType: DamageType.special,
+            scalingAttribute: Attribute.agility,
+            scalingLevel: ScalingLevel.No,
+            specialDescription: 'Boosts agility for 5 turns',
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} jumps behind {defender}',
+                    attackMessage: '{attacker} channels his inner focus (+10 agility)',
                     damageFunc: function(bag){
-                        bag.battle.addTemporaryEffect(bag.attacker.creature,EffectBackstabDodge,1);
+                        bag.battle.addTemporaryEffect(bag.attacker.creature,EffectRush,5);
 
                         return DefaultNoDamageFunc(bag);
                     }
-                }),
-                new WeaponAttackStep({
-                    attackMessage: '{attacker} stabs {defender} at a weak spot from behind!',
-                    damageFunc: DefaultDamageFunc
                 })
             ],
             aiUseWeight: 0.6
