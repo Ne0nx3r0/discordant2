@@ -572,8 +572,9 @@ export default class CreatureBattleTurnBased{
                     const charges = queuedAttackStep.step.attack.chargesRequired;
                     
                     const dodgePercent = GetDodgePercent(attackerStat,charges,defenderDodge);
-    
-                    if(Math.random() < dodgePercent){
+                    const roll = Math.random();
+
+                    if(dodgePercent > 0 && roll < dodgePercent){
                         damagesMsgs.push(
                             `+ ${wadc.title} DODGED the attack!`
                         );
