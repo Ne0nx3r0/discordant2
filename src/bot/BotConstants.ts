@@ -1,0 +1,4 @@
+export const BotConstants = {
+    ROLE_TESTER_ID: '331619695956590592',
+    SERVER_ID: '304060806834683914',
+}

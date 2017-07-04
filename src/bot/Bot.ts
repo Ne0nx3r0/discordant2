@@ -16,6 +16,7 @@ import{
 } from 'discord.js';
 import Logger from "../gameserver/log/Logger";
 import SendMessageClientRequest from '../client/requests/SendMessageClientRequest';
+import { BotConstants } from './BotConstants';
 
 export interface BotConfigBase{
     authToken:string;
@@ -245,9 +246,14 @@ export default class Bot{
         return this.client.channels.get(channelId) as TextChannel;
     }
 
-    //Grant user the tester role on the Discordant server
+    //Grant user role on the Discordant server
     addChatRole(uid:string,roleId:string){
-        this.client.guilds.get('304060806834683914').members.get(uid).addRole('304064132343136256');
+        this.client.guilds.get(BotConstants.SERVER_ID).members.get(uid).addRole(roleId);
+    }
+
+    //Revoke user role on Discordant server
+    revokeChatRole(uid:string,roleId:string){
+        this.client.guilds.get(BotConstants.SERVER_ID).members.get(uid).removeRole(roleId);
     }
 
     async createPvPChannel(guild:Guild,invite:SocketPvPInvite):Promise<TextChannel>{
