@@ -22,7 +22,7 @@ export default class DPR extends Command{
         const dpr = CalculateDamagePerRoundDirectly(
             Number(bag.params[0]),
             Number(bag.params[1]),
-            Number(bag.params[2]),
+            Number(bag.params[2])+1,
             Number(bag.params[3]),
             Number(bag.params[4])
         );
