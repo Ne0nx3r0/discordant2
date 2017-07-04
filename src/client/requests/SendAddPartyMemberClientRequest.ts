@@ -13,6 +13,8 @@ export default class SendAddPartyMemberClientRequest extends ClientRequest{
     
     async receive(bag:ClientRequestReceiveBag,data:ClientRequestSendAddPartyMemberData):Promise<void>{
         bag.bot.grantPlayerWriteAccessToChannel(bag.channel,data.playerUid);
+
+        bag.bot.addChatRole(data.playerUid,'331616887958142981');
         
         bag.channel.send(`<@${data.playerUid}> joined the party!`);
     }

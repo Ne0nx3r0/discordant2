@@ -3,6 +3,7 @@ import { CommandBag, CommandRunBag } from '../Command';
 import PermissionId from '../../core/permissions/PermissionId';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
+import { BotConstants } from '../BotConstants';
 
 export default class PartyNew extends Command{
     constructor(bag:CommandBag){
@@ -19,7 +20,6 @@ export default class PartyNew extends Command{
     }
 
     async run(bag:CommandRunBag){
-        console.log();
         if(bag.message.channel.type == 'dm'){
             throw 'You cannot use DMs to create a party';
         }
@@ -49,5 +49,7 @@ console.log(ex);
         }
 
         bag.message.channel.send(`Your party is ready at <#${partyChannel.id}>, ${bag.message.author.username}`);
+
+        bag.bot.addChatRole(bag.message.author.id,BotConstants.ROLE_PARTYING_ID);
     }
 }

@@ -3,6 +3,7 @@ import { CommandBag, CommandRunBag } from '../Command';
 import PermissionId from '../../core/permissions/PermissionId';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
+import { BotConstants } from '../BotConstants';
 
 export default class Begin extends Command{
     constructor(bag:CommandBag){
@@ -51,6 +52,6 @@ export default class Begin extends Command{
         bag.message.channel.send(`You were successfully registered, ${player.title}!`);
 
         // Grant them tester role
-        bag.bot.addChatRole(bag.message.author.id,'304064132343136256');
+        bag.bot.addChatRole(bag.message.author.id,BotConstants.ROLE_TESTER_ID);
     }
 }
