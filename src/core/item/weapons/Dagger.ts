@@ -46,12 +46,12 @@ export const Dagger = new Weapon({
             damageType: DamageType.special,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
-            specialDescription: '+5 agility for 10 turns',
+            specialDescription: '+10 agility for 5 turns',
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} channels his inner focus (+5 agility)',
+                    attackMessage: '{attacker} channels his inner focus',
                     damageFunc: function(bag){
-                        bag.battle.addTemporaryEffect(bag.attacker.creature,EffectRush,10);
+                        bag.battle.addTemporaryEffect(bag.attacker.creature,EffectRush,5);
 
                         return DefaultNoDamageFunc(bag);
                     }
