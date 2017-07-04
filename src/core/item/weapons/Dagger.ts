@@ -26,8 +26,8 @@ export const Dagger = new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'slash',
-            minBaseDamage: 4,
-            maxBaseDamage: 8,
+            minBaseDamage: 6,
+            maxBaseDamage: 12,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.C,
