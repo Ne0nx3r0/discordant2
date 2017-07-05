@@ -7,6 +7,8 @@ import Creature from '../../creature/Creature';
 import ItemId from '../ItemId';
 import EffectSpiritSnakePoison from '../../effects/types/EffectSpiritSnakePoison';
 import { Attribute } from "../../creature/AttributeSet";
+import EffectId from '../../effects/EffectId';
+import BattleTemporaryEffectPoison from '../../effects/BattleTemporaryEffectPoison';
 
 export const TabletOfPoison =  new Weapon({
     id: ItemId.TableOfPoison,
@@ -20,17 +22,25 @@ export const TabletOfPoison =  new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'poison',
-            minBaseDamage: 8,
-            maxBaseDamage: 12,
+            minBaseDamage: 5,
+            maxBaseDamage: 5,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.spirit,
-            scalingLevel: ScalingLevel.C,
-            chargesRequired: 2,
+            scalingLevel: ScalingLevel.No,
+            specialDescription: 'poison lasts 5 rounds, stackable effect',
+            chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a legend aloud and poisons {defender}',
                     damageFunc: function(bag:DamageFuncBag){
-                        bag.battle.addTemporaryEffect(bag.defender.creature,EffectSpiritSnakePoison,5);
+                        bag.battle.addTemporaryEffect(
+                            bag.defender.creature,
+                            new BattleTemporaryEffectPoison(
+                                EffectId.PoisonSpiritSnake,
+                                'Spirit snake poison',
+                                5
+                                ),
+                            5);
 
                         return [];
                     }
