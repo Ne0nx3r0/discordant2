@@ -5,7 +5,6 @@ import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import GetEarnedWishes from '../../util/GetEarnedWishes';
 import Weapon from '../../core/item/Weapon';
-import CalculateDamagePerRound from '../../util/CalculateDamagePerRound';
 import { GetDodgePercent } from '../../util/GetDodgePercent';
 
 export default class DodgeCalc extends Command{
