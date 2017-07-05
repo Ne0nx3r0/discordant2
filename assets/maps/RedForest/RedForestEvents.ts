@@ -174,6 +174,7 @@ export const RedForestEvents:IMapData = {
                 {x:24,y:13},
                 {x:25,y:13},
                 {x:26,y:13},
+                {x:27,y:13},
                 {x:35,y:13},
                 {x:27,y:14},
                 {x:28,y:14},
