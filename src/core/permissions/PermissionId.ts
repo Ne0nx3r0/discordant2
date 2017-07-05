@@ -64,6 +64,7 @@ enum PermissionId{
     SCalc,
     PartyKick,
     PartyTransfer,
+    Tester,
 }
 
 export default PermissionId;

@@ -60,6 +60,7 @@ export const PlayerPermissions = [
     PermissionId.SCalc,
     PermissionId.PartyKick,
     PermissionId.PartyTransfer,
+    PermissionId.Tester,
 ].concat(AnonymousPermissions).sort();
 
 export const TesterPermissions = [
