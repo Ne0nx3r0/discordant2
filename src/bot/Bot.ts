@@ -198,7 +198,7 @@ export default class Bot{
 
                 if(!playerRole.has(command.permissionNode) && this.ownerUIDs.indexOf(playerUID) == -1){
                     if(playerRole.title == 'anonymous'){
-                        message.channel.send(`You can register with \`dbegin\``);
+                        message.channel.send(`You can register with \`${this.commandPrefix}begin\``);
                     }
                     else{
                         message.channel.send(`You are not allowed to use this command, ${message.author.username}`);
