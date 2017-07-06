@@ -80,6 +80,7 @@ enum ItemId {BareHands,HandAxe,//keeping these two up here allows you to identif
     WishTrapper,
     Kukri,
     Mace,
+    RedEyeAmulet,
 }
 
 export default ItemId;
