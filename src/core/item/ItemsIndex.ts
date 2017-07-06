@@ -30,6 +30,7 @@ export { AmuletOfSpirit } from './jewelry/AmuletOfSpirit';
 export { AmuletOfHealth } from './jewelry/AmuletOfHealth';
 export { AmuletOfFortune } from './jewelry/AmuletOfFortune';
 export { RedEyeRing } from './jewelry/RedEyeRing';
+export { RedEyeAmulet } from './jewelry/RedEyeAmulet';
 
 
 //Consumables
