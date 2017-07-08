@@ -78,7 +78,7 @@ export const TabletOfSpirit = new Weapon({
             chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} channels his inner spirit and fires a ball of energy at {defender}',
+                    attackMessage: '{attacker} channels their inner spirit and fires a ball of energy at {defender}',
                     damageFunc: DefaultDamageFunc
                 })
             ],
@@ -95,7 +95,7 @@ export const TabletOfSpirit = new Weapon({
             chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} channels his collected energy into a storm at {defender}',
+                    attackMessage: '{attacker} channels the energy of all living things around them into a storm at {defender}',
                     damageFunc: function(bag:DamageFuncBag){
                         const chargesUsed = bag.attacker.charges;
                         
