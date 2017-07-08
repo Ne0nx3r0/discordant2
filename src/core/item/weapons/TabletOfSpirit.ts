@@ -102,7 +102,7 @@ export const TabletOfSpirit = new Weapon({
                         //This one will be consumed by TurnBasedBattles
                         bag.attacker.charges = 1;
 
-                        const maxDamage = BOMB_MAX_DAMAGES[chargesUsed+1];
+                        const maxDamage = BOMB_MAX_DAMAGES[chargesUsed];
                         const minDamage = maxDamage * 0.8;
 
                         const damageRoll = ( Math.random() * (maxDamage-minDamage) ) + minDamage;
@@ -112,7 +112,7 @@ export const TabletOfSpirit = new Weapon({
                         return [
                             {
                                 target: bag.defender,
-                                amount: damageAmount,
+                                amount: Math.round(damageAmount),
                                 type: DamageType.thunder,
                             }
                         ];
