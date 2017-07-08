@@ -17,7 +17,7 @@ export const FireSpear = new Weapon({
     criticalMultiplier: 3,
     chanceToCritical: 0.1,
     useRequirements:{
-        agility: 26
+        agility: 34
     },
     attacks: [
         new WeaponAttack({
