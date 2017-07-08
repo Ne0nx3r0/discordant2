@@ -70,11 +70,11 @@ export const TabletOfSpirit = new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'blast',
-            minBaseDamage: 30,
-            maxBaseDamage: 50,
+            minBaseDamage: 35,
+            maxBaseDamage: 55,
             damageType: DamageType.thunder,
             scalingAttribute: Attribute.spirit,
-            scalingLevel: ScalingLevel.C,
+            scalingLevel: ScalingLevel.B,
             chargesRequired: 2,
             steps: [
                 new WeaponAttackStep({
