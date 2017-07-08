@@ -39,7 +39,7 @@ export default class Inventory extends Command{
         });
 
         if(!characterClass){
-            bag.message.channel.send(`${className} is not a valid class, ${author.username}`);
+            bag.message.channel.send(`${className} is not a valid class, ${bag.message.author.username}`);
 
             return;
         }
