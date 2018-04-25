@@ -235,7 +235,7 @@ export default class Bot{
     }
 
     setPlayingGame(msg:string){
-        this.client.user.setGame(msg);
+        this.client.user.setActivity(msg);
     }
 
     logout(){
