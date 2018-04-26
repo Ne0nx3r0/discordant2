@@ -12,7 +12,7 @@ export const ExiledMagicianRobes = new ItemEquippable({
     onAddBonuses:function(stats:ICreatureStatSet){
         stats.resistances.physical += 20;
         stats.resistances.thunder += 20;
-        stats.resistances.dark += 20;
+        stats.resistances.dark += 40;
         stats.resistances.fire += 20;
     }
 });
