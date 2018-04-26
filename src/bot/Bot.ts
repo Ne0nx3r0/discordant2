@@ -27,7 +27,6 @@ export interface BotConfigBase{
 export interface BotConfig extends BotConfigBase{
     gameserver:string;
     production:boolean;
-    partiesChannelCategoryId:string;
 }
 
 export interface BotBag extends BotConfigBase{
@@ -257,7 +256,7 @@ export default class Bot{
         this.client.guilds.get(BotConstants.SERVER_ID).members.get(uid).removeRole(roleId);
     }
 
-    async createPvPChannel(guild:Guild,invite:SocketPvPInvite):Promise<TextChannel>{
+    createPvPChannel = async (guild:Guild,invite:SocketPvPInvite):Promise<TextChannel> => {
         const channelname = (this.commandPrefix+'pvp-'+invite.sender.title.substr(0,invite.sender.title.length/2)+invite.receiver.title.substr(invite.receiver.title.length/2))
             .replace(/[^A-Za-z0-9-]+/g,'')
             .substr(0,20);
@@ -309,7 +308,7 @@ export default class Bot{
         channel.overwritePermissions(playerUid,overwrites);
     }
 
-    async createPartyChannel(guild:Guild,partyName:string,leaderUid:string):Promise<TextChannel>{
+    createPartyChannel = async(guild:Guild,partyName:string,leaderUid:string):Promise<TextChannel> => {
         const channelname = (this.commandPrefix+'party-'+partyName)
             .replace(/[^A-Za-z0-9-]+/g,'')
             .substr(0,20);
@@ -327,6 +326,8 @@ export default class Bot{
         ];
 
         const channel:TextChannel = await guild.createChannel(channelname,'text',overwrites) as TextChannel;
+
+        channel.setParent(BotConstants.PARTIES_CATEGORY_ID);
 
         await channel.overwritePermissions(this.client.user.id,{
             READ_MESSAGES: true,
