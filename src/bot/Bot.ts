@@ -27,6 +27,7 @@ export interface BotConfigBase{
 export interface BotConfig extends BotConfigBase{
     gameserver:string;
     production:boolean;
+    partiesChannelCategoryId:string;
 }
 
 export interface BotBag extends BotConfigBase{
