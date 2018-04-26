@@ -529,7 +529,7 @@ export default class CreatureBattleTurnBased{
             isCritical: isCritical,
         });
 
-        const criticalMsg = (isCritical && damages.length > 0) ? '**CRITICAL HIT** ' : '';
+        const criticalMsg = (isCritical && damages.length > 0) ? '**CRITICAL** ' : '';
 
         const damagesMsgs = [];
         const defeatedParticipants = [];
