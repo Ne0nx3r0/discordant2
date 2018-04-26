@@ -46,11 +46,11 @@ export const ExiledMagicianWeapon  = new Weapon({
             scalingLevel: ScalingLevel.No,
             steps:[
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} summons a mass of dark energy',
+                    attackMessage: '{attacker} summons a mass of **dark magic**',
                     damageFunc: function(bag){return [];},
                 }),
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} emits a wave of dark magic',
+                    attackMessage: '{attacker} emits a wave of **dark magic**!',
                     damageFunc: DefaultDamageAllFunc,
                 }),
             ],
