@@ -1,7 +1,7 @@
 import ItemId from '../ItemId';
 import Weapon from '../Weapon';
 import WeaponAttack from '../WeaponAttack';
-import { DamageType } from '../WeaponAttackStep';
+import { DamageType, IWeaponAttackDamages } from '../WeaponAttackStep';
 import { Attribute } from '../../creature/AttributeSet';
 import { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
@@ -23,8 +23,8 @@ export const ExiledMagicianWeapon  = new Weapon({
     attacks:[
         new WeaponAttack({
             title: 'black magic',
-            minBaseDamage: 10,
-            maxBaseDamage: 20,
+            minBaseDamage: 20,
+            maxBaseDamage: 40,
             damageType: DamageType.dark,
             scalingAttribute: Attribute.luck,
             scalingLevel: ScalingLevel.No,
@@ -34,7 +34,7 @@ export const ExiledMagicianWeapon  = new Weapon({
                     damageFunc: DefaultDamageFunc,
                 }),
             ],
-            aiUseWeight: 0.2,
+            aiUseWeight: 0.3,
             aiShouldIUseThisAttack: function(){return true},
         }),
         new WeaponAttack({
@@ -54,7 +54,7 @@ export const ExiledMagicianWeapon  = new Weapon({
                     damageFunc: DefaultDamageAllFunc,
                 }),
             ],
-            aiUseWeight: 0.1,
+            aiUseWeight: 0.2,
             aiShouldIUseThisAttack: function(){return true},
         }),
         new WeaponAttack({
@@ -66,13 +66,23 @@ export const ExiledMagicianWeapon  = new Weapon({
             scalingLevel: ScalingLevel.C,
             steps:[
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} places a dark curse on {defender} destroying HALF their HP!',
+                    attackMessage: '{attacker} prepares a **dark curse**!',
+                    damageFunc: function(bag){return [];},
+                }),
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} places a **dark curse** on {defender} draining their health!',
                     damageFunc: function(bag){
-                        return [{
+                        const damage:IWeaponAttackDamages = {
                             type: DamageType.dark,
                             amount: Math.ceil(bag.defender.creature.hpCurrent / 2),
                             target: bag.defender,
-                        }];
+                        };
+
+                        if(bag.defender.blocking){
+                            damage.amount = Math.round(damage.amount / 2);
+                        }
+
+                        return [damage];
                     }
                 }),
             ],
