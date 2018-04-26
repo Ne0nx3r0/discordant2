@@ -70,7 +70,7 @@ export const ExiledMagicianWeapon  = new Weapon({
                     damageFunc: function(bag){
                         return [{
                             type: DamageType.dark,
-                            amount: Math.ceil(bag.defender.creature.hpCurrent / 2) + bag.defender.creature.stats.resistances.dark,
+                            amount: Math.ceil(bag.defender.creature.hpCurrent / 2),
                             target: bag.defender,
                         }];
                     }
