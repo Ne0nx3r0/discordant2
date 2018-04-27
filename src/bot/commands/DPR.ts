@@ -10,9 +10,9 @@ import CalculateDamagePerRound from '../../util/CalculateDamagePerRound';
 export default class DPR extends Command{
     constructor(bag:CommandBag){
         super({
-            name: 'dpr',
+            name: 'pr',
             description: 'Calculate the DPR of a given weapon',
-            usage: 'dpr <item name>',
+            usage: 'pr <item name>',
             permissionNode: PermissionId.DPR,
             minParams: 1,
         });
