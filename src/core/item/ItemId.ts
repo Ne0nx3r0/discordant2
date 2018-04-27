@@ -84,6 +84,7 @@ enum ItemId {BareHands,HandAxe,//keeping these two up here allows you to identif
     TabletOfSpirit,
     PaddedArmor,
     PaddedHood,
+    BlueEyeRing,
+    BlueEyeAmulet,
 }
-
 export default ItemId;
