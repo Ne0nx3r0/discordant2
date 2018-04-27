@@ -24,10 +24,10 @@ class DiscordantBotNode {
         const bot:Bot = new Bot({
             permissions: permissions,
             authToken: Config.authToken,
-            ownerUIDs: Config.ownerUIDs,
             commandPrefix: Config.commandPrefix,
             socket:socket,
             logger: logger,
+            uids: Config.uids,
         });
 
         const listener:SocketClientListener = new SocketClientListener({
