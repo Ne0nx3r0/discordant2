@@ -20,13 +20,13 @@ import { BotConstants } from './BotConstants';
 
 export interface BotConfigBase{
     authToken:string;
-    ownerUIDs:Array<string>;
     commandPrefix:string;
     uids: UIDs;
 }
 
 export interface UIDs{
     canSeePartyChannels: string[];
+    owners: string[];
 }
 
 export interface BotConfig extends BotConfigBase{
@@ -45,7 +45,6 @@ const COOLDOWN_MS = 1000;
 export default class Bot{
     client:DiscordClient;
     commandPrefix:string;
-    ownerUIDs:Array<string>;
     commands:Map<String,Command>;
     lockdown:boolean;
     socket:SocketClientRequester;
@@ -59,7 +58,6 @@ export default class Bot{
     constructor(bag:BotBag){
         this.lockdown = false;
         this.commandPrefix = bag.commandPrefix;
-        this.ownerUIDs = bag.ownerUIDs;
         this.permissions = bag.permissions;
         this.items = new AllItems();
         this.aliases = {};
@@ -198,13 +196,13 @@ export default class Bot{
                 const playerRoleStr = await this.socket.getPlayerRole(playerUID);
                 const playerRole:PermissionRole = this.permissions.getRole(playerRoleStr);
 
-                if(this.lockdown && this.ownerUIDs.indexOf(playerUID) == -1){
+                if(this.lockdown && this.uids.owners.indexOf(playerUID) == -1){
                     message.channel.send(`Bot on lockdown, only owners may use commands.`);
 
                     return;
                 }
 
-                if(!playerRole.has(command.permissionNode) && this.ownerUIDs.indexOf(playerUID) == -1){
+                if(!playerRole.has(command.permissionNode) && this.uids.owners.indexOf(playerUID) == -1){
                     if(playerRole.title == 'anonymous'){
                         message.channel.send(`You can register with \`${this.commandPrefix}begin\``);
                     }
