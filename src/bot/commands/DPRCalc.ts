@@ -12,7 +12,7 @@ export default class DPR extends Command{
         super({
             name: 'dprcalc',
             description: 'Calculate the DPR of a given set of criteria',
-            usage: 'dpr <min> <max> <charges 0 = no charges> <critMultiplier> <critChance 1 = 100%>',
+            usage: 'dpr <min> <max> <charges 0 = no charges> <critMultiplier> <critChance 0.5 = 50%>',
             permissionNode: PermissionId.DPR,
             minParams: 5,
         });
