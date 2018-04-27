@@ -138,7 +138,7 @@ export default class Bot{
         }
 
         //Ignore #general messages
-        if(message.channel.id == '304060806834683914'){
+        if(message.channel.id == '332388308564967426'){
             return;
         }
         
