@@ -30,7 +30,7 @@ export const TabletOfFire = new Weapon({
             damageType: DamageType.fire,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.C,
-            chargesRequired: 2,
+            chargesRequired: 1,
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} reads a legend outloud and launches a blaze of fire at {defender}',
