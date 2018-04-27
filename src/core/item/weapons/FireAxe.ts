@@ -40,7 +40,7 @@ export const FireAxe = new Weapon({
             title: 'slam',
             minBaseDamage: 70,
             maxBaseDamage: 80,
-            damageType: DamageType.physical,
+            damageType: DamageType.fire,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.C,
             chargesRequired: 2,
