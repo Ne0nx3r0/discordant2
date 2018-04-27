@@ -31,6 +31,8 @@ lootGenerator.addLootItem('rare',ItemId.RingOfSpirit,0.1);
 lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
 lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
 lootGenerator.addLootItem('rare',ItemId.RedForestMapPiece,0.4);
+lootGenerator.addLootItem('rare',ItemId.PaddedHood,0.1);
+lootGenerator.addLootItem('rare',ItemId.PaddedArmor,0.1);
 
 export const WesternGate2Events:IMapData = {
     startX: 25,

@@ -19,6 +19,8 @@ lootGenerator.addLootItem('common',ItemId.HuntingSword,0.25);
 lootGenerator.addLootItem('common',ItemId.WoodShield,0.25);
 lootGenerator.addLootItem('common',ItemId.WornLeathers,0.25);
 lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.25);
+lootGenerator.addLootItem('common',ItemId.PaddedHood,0.25);
+lootGenerator.addLootItem('common',ItemId.PaddedArmor,0.25);
 lootGenerator.addLootItem('common',ItemId.AmuletOfAgility,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfSpirit,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfLuck,0.05);

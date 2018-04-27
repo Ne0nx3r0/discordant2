@@ -82,6 +82,8 @@ enum ItemId {BareHands,HandAxe,//keeping these two up here allows you to identif
     Mace,
     RedEyeAmulet,
     TabletOfSpirit,
+    PaddedArmor,
+    PaddedHood,
 }
 
 export default ItemId;
