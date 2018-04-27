@@ -50,7 +50,7 @@ export default class DPR extends Command{
             const dpr = Math.round(CalculateDamagePerRound(attack)*100)/100;
             const statdpr = Math.round( ( statRequirementsTotal / dpr ) * 100) / 100;
 
-            return attack.title+ ': DPR ' +dpr+ ' \ stats '+statRequirementsTotal + ' = '+statdpr;
+            return `${attack.title}: DPR ${dpr} / Stats ${statRequirementsTotal} = ${statdpr} StatDPR'`;
         }).join('\n');
 
         bag.message.channel.send(`The DPRs for ${weapon.title}'s attacks are:\n${dprs}`);
