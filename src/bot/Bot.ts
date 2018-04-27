@@ -22,6 +22,11 @@ export interface BotConfigBase{
     authToken:string;
     ownerUIDs:Array<string>;
     commandPrefix:string;
+    uids: UIDs;
+}
+
+export interface UIDs{
+    canSeePartyChannels: string[];
 }
 
 export interface BotConfig extends BotConfigBase{
@@ -48,6 +53,7 @@ export default class Bot{
     permissions:PermissionsService;
     items: AllItems;
     cooldowns:Map<String,number>;
+    uids: UIDs;
     aliases: {};
 
     constructor(bag:BotBag){
@@ -58,6 +64,8 @@ export default class Bot{
         this.items = new AllItems();
         this.aliases = {};
         this.cooldowns = new Map();
+
+        this.uids = bag.uids;
 
         this.logger = bag.logger;
 
@@ -329,14 +337,15 @@ export default class Bot{
 
         channel.setParent(BotConstants.PARTIES_CATEGORY_ID);
 
-        await channel.overwritePermissions(this.client.user.id,{
+        const readSendPerms = {
             READ_MESSAGES: true,
             SEND_MESSAGES: true,
-        });
+        };
 
-        await channel.overwritePermissions(leaderUid,{
-            READ_MESSAGES: true,
-            SEND_MESSAGES: true,
+        await channel.overwritePermissions(leaderUid,readSendPerms);
+
+        this.uids.canSeePartyChannels.forEach((uid:string) => {
+            channel.overwritePermissions(uid,readSendPerms);
         });
 
         return channel;
