@@ -65,6 +65,10 @@ export default class Command{
         }
     }
 
+    getUsage(){
+        return 'Usage: '+ this.usage;
+    }
+
     getUserTagId(bagParam:string):string{
         if(UserTagRegex.test(bagParam)){
             return UserTagRegex.exec(bagParam)[1];
