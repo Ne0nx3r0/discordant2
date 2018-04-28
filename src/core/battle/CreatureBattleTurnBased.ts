@@ -351,10 +351,6 @@ export default class CreatureBattleTurnBased{
             this.exhaustParticipant(bc);
         }
         else{
-            if(!requester.isPartyLeader){
-                throw 'Only the party leader can skip other players';
-            }
-
             const requesterBc = this.participantsLookup.get(requester);
 
             if(!requesterBc){
