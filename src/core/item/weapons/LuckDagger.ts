@@ -21,7 +21,7 @@ export const LuckyDagger = new Weapon({
         agility: 20,
         luck: 20,
     },
-    criticalMultiplier: 5,
+    criticalMultiplier: 4,
     chanceToCritical: 0.3,
     goldValue: 100,
     attacks: [
