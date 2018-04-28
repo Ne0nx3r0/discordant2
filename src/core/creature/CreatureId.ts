@@ -15,6 +15,12 @@ enum CreatureId{
     GiantToad,
     GiantRat,
     ExiledMagician,
+    WillOWisp,
+    Treant,
+    Faun,
+    ElderFaun,
+    CorruptedOldWillow,
+    CorruptedFairies,
 }
 
 export default CreatureId;
