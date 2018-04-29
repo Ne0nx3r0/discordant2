@@ -6,6 +6,9 @@ import { RedForestMapPiece } from '../item/maps/RedForestMapPiece';
 import { RedForestMap } from '../item/maps/RedForestMap';
 import { RedForestCastleEvents } from "../../../assets/maps/RedForestCastle/RedForestCastleEvents";
 import { RedForestCastleMapPiece, RedForestCastleMap } from "../item/ItemsIndex";
+import { LivingWoodsEvents } from '../../../assets/maps/LivingWoods/LivingWoods';
+import { LivingWoodsMapPiece } from '../item/maps/LivingWoodsMapPiece';
+import { LivingWoodsMap } from '../item/maps/LivingWoodsMap';
 
 export const MapWesternGate = new ExplorableMap({
     fileName: 'WesternGate2',
@@ -32,8 +35,18 @@ export const MapRedForestCastle = new ExplorableMap({
     mapItem: RedForestCastleMap,
 });
 
+export const MapLivingWoods = new ExplorableMap({
+    fileName: "LivingWoods",
+    title: "Living Woods",
+    mapJson: require('../../../assets/maps/RedForestCastle/RedForestCastleLayout.json'),
+    mapData: LivingWoodsEvents,
+    pieceItem: LivingWoodsMapPiece,
+    mapItem: LivingWoodsMap,
+});
+
 export const WorldMaps = {
     'RED FOREST': MapRedForest,
     'RED FOREST CASTLE': MapRedForestCastle,
     'WESTERN GATE': MapWesternGate, 
+    'LIVING WOODS': MapLivingWoods,
 };
