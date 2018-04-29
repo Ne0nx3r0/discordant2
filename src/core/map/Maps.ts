@@ -51,5 +51,3 @@ export const WorldMaps = {
     'WESTERN GATE': MapWesternGate, 
     'LIVING WOODS': MapLivingWoods,
 };
-
-// test to prod
