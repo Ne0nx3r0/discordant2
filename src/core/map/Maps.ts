@@ -5,19 +5,20 @@ import ItemId from '../item/ItemId';
 import { RedForestMapPiece } from '../item/maps/RedForestMapPiece';
 import { RedForestMap } from '../item/maps/RedForestMap';
 import { RedForestCastleEvents } from "../../../assets/maps/RedForestCastle/RedForestCastleEvents";
-import { RedForestCastleMapPiece, RedForestCastleMap } from "../item/ItemsIndex";
-import { LivingWoodsEvents } from '../../../assets/maps/LivingWoods/LivingWoods';
+import { LivingWoodsEvents } from '../../../assets/maps/LivingWoods/LivingWoodsEvents';
 import { LivingWoodsMapPiece } from '../item/maps/LivingWoodsMapPiece';
 import { LivingWoodsMap } from '../item/maps/LivingWoodsMap';
+import { RedForestCastleMapPiece } from '../item/maps/RedForestCastleMapPiece';
+import { RedForestCastleMap } from '../item/maps/RedForestCastleMap';
 
-export const MapWesternGate = new ExplorableMap({
+const MapWesternGate = new ExplorableMap({
     fileName: 'WesternGate2',
     title: 'Western Gate',
     mapJson: require('../../../assets/maps/WesternGate2/WesternGate2Layout.json'),
     mapData: WesternGate2Events,
 });
 
-export const MapRedForest = new ExplorableMap({
+const MapRedForest = new ExplorableMap({
     fileName: 'RedForest',
     title: 'Red Forest',
     mapJson: require('../../../assets/maps/RedForest/RedForestLayout.json'),
@@ -26,7 +27,7 @@ export const MapRedForest = new ExplorableMap({
     mapItem: RedForestMap,
 });
 
-export const MapRedForestCastle = new ExplorableMap({
+const MapRedForestCastle = new ExplorableMap({
     fileName: 'RedForestCastle',
     title: 'Red Forest Castle',
     mapJson: require('../../../assets/maps/RedForestCastle/RedForestCastleLayout.json'),
@@ -35,10 +36,10 @@ export const MapRedForestCastle = new ExplorableMap({
     mapItem: RedForestCastleMap,
 });
 
-export const MapLivingWoods = new ExplorableMap({
+const MapLivingWoods = new ExplorableMap({
     fileName: "LivingWoods",
     title: "Living Woods",
-    mapJson: require('../../../assets/maps/RedForestCastle/RedForestCastleLayout.json'),
+    mapJson: require('../../../assets/maps/LivingWoods/LivingWoodsLayout.json'),
     mapData: LivingWoodsEvents,
     pieceItem: LivingWoodsMapPiece,
     mapItem: LivingWoodsMap,

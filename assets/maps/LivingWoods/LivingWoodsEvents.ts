@@ -19,8 +19,8 @@ lootGenerator.addLootItem('common',ItemId.Vial,1);
 //lootGenerator.addLootItem('rare',ItemId.MapAfterRedForestPiece,0.2);
 
 export const LivingWoodsEvents:IMapData = {
-    startX: 29,
-    startY: 36,
+    startX: 30,
+    startY: 37,
     encounterChance: 0,
     encounters:[
         { id:CreatureId.Goblin,    weight: 0.3 },
