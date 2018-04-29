@@ -56,10 +56,6 @@ export default class Command{
         this.aliases = new Map();
     }
 
-    getUsage(){
-        return 'Usage: '+ this.usage;
-    }
-
     getEmbed(msg:string,color?:number){
         return {
             embed: {
@@ -67,6 +63,10 @@ export default class Command{
                 description: msg,           
             }
         }
+    }
+
+    getUsage(){
+        return 'Usage: '+ this.usage;
     }
 
     getUserTagId(bagParam:string):string{

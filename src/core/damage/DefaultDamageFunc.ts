@@ -7,7 +7,7 @@ export function DefaultDamageFunc(bag: DamageFuncBag): Array<IWeaponAttackDamage
     const attack = bag.step.attack;
     const weapon = attack.weapon;
 
-    let damageAmount = Math.random() * (attack.maxBaseDamage - attack.minBaseDamage) + attack.minBaseDamage;
+    let damageAmount = Math.round( Math.random() * (attack.maxBaseDamage - attack.minBaseDamage) + attack.minBaseDamage );
 
     if(bag.isCritical){
         damageAmount = damageAmount * weapon.criticalMultiplier; 

@@ -10,6 +10,6 @@ export const RedEyeAmulet = new ItemEquippable({
     goldValue: 300,
     slotType: 'amulet',
     onAddBonuses:function(stats:ICreatureStatSet){
-        stats.redEye += 2;
+        stats.redEye += 3;
     }
 });

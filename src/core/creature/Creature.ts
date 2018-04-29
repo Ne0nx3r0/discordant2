@@ -63,7 +63,7 @@ export default class Creature{
 
     updateStats(){
         const stats:ICreatureStatSet = {
-            redEye: 1,
+            redEye: 3,
             strength: this.attributes.strength,
             agility: this.attributes.agility,
             vitality: this.attributes.vitality,

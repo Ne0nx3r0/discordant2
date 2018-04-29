@@ -26,6 +26,7 @@ lootGenerator.addLootItem('common',ItemId.AmuletOfSpirit,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfLuck,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfStrength,0.05);
 lootGenerator.addLootItem('common',ItemId.AmuletOfHealth,0.05);
+lootGenerator.addLootItem('common',ItemId.TableOfPoison,0.25);
 //lootGenerator.addLootItem('common',ItemId.MapAfterRedForestPiece,1);
 
 lootGenerator.addLootItem('rare',ItemId.AmuletOfAgility,0.1);

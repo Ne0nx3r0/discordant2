@@ -10,6 +10,6 @@ export const RedEyeRing = new ItemEquippable({
     goldValue: 250,
     slotType:'ring',
     onAddBonuses:function(stats:ICreatureStatSet){
-        stats.redEye += 2;
+        stats.redEye += 3;
     }
 });
