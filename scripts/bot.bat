@@ -1,4 +1,5 @@
 :start
+call git checkout prod
 call git pull
 call npm run bot
 echo "Restarting in ten seconds..."
