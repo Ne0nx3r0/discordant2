@@ -51,8 +51,8 @@ export { RedMushroom } from './misc/RedMushroom';
 export { FireAntCarapace } from './misc/FireAntCarapace';
 
 //Maps
-export { MapAfterRedForestPiece } from './maps/MapAfterRedForestPiece';
-export { MapAfterRedForest } from './maps/MapAfterRedForest';
+export { LivingWoodsMapPiece } from './maps/LivingWoodsMapPiece';
+export { LivingWoodsMap } from './maps/LivingWoodsMap';
 
 export { RedForestMapPiece } from './maps/RedForestMapPiece';
 export { RedForestMap } from './maps/RedForestMap';
