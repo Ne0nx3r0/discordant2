@@ -11,14 +11,14 @@ import { LivingWoodsMap } from '../item/maps/LivingWoodsMap';
 import { RedForestCastleMapPiece } from '../item/maps/RedForestCastleMapPiece';
 import { RedForestCastleMap } from '../item/maps/RedForestCastleMap';
 
-const MapWesternGate = new ExplorableMap({
+export const MapWesternGate = new ExplorableMap({
     fileName: 'WesternGate2',
     title: 'Western Gate',
     mapJson: require('../../../assets/maps/WesternGate2/WesternGate2Layout.json'),
     mapData: WesternGate2Events,
 });
 
-const MapRedForest = new ExplorableMap({
+export const MapRedForest = new ExplorableMap({
     fileName: 'RedForest',
     title: 'Red Forest',
     mapJson: require('../../../assets/maps/RedForest/RedForestLayout.json'),
@@ -27,7 +27,7 @@ const MapRedForest = new ExplorableMap({
     mapItem: RedForestMap,
 });
 
-const MapRedForestCastle = new ExplorableMap({
+export const MapRedForestCastle = new ExplorableMap({
     fileName: 'RedForestCastle',
     title: 'Red Forest Castle',
     mapJson: require('../../../assets/maps/RedForestCastle/RedForestCastleLayout.json'),
@@ -36,7 +36,7 @@ const MapRedForestCastle = new ExplorableMap({
     mapItem: RedForestCastleMap,
 });
 
-const MapLivingWoods = new ExplorableMap({
+export const MapLivingWoods = new ExplorableMap({
     fileName: "LivingWoods",
     title: "Living Woods",
     mapJson: require('../../../assets/maps/LivingWoods/LivingWoodsLayout.json'),
