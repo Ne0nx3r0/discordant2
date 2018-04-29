@@ -88,34 +88,12 @@ export default class CreatureBattleTurnBased{
         this.participants = [];
         this.participantsLookup = new Map();
 
-        const addParticipant = (creature:Creature,teamNumber:number)=>{
-            if(creature instanceof PlayerCharacter){
-                const pc:PlayerCharacter = creature;
-
-                pc.status = 'inBattle';
-                pc.battle = this;
-            }
-
-            const participant = {
-                creature:creature,
-                blocking:false,
-                defeated:false,
-                exhausted:true,//can't attack until first round
-                charges:0,
-                teamNumber:teamNumber,
-                queuedAttackSteps:[],
-            };
-
-            this.participants.push(participant);
-            this.participantsLookup.set(creature,participant);
-        }
-
         bag.team1.forEach((c)=>{
-            addParticipant(c,1);
+            this.addParticipant(c,1);
         });
 
         bag.team2.forEach((c)=>{
-            addParticipant(c,2);
+            this.addParticipant(c,2);
         });
 
         this.activeTeam = 2;
@@ -125,6 +103,28 @@ export default class CreatureBattleTurnBased{
         },bag.startDelay);
     }
     
+    addParticipant = (creature:Creature,teamNumber:number)=>{
+        if(creature instanceof PlayerCharacter){
+            const pc:PlayerCharacter = creature;
+
+            pc.status = 'inBattle';
+            pc.battle = this;
+        }
+
+        const participant = {
+            creature:creature,
+            blocking:false,
+            defeated:false,
+            exhausted:true,//can't attack until first round
+            charges:0,
+            teamNumber:teamNumber,
+            queuedAttackSteps:[],
+        };
+
+        this.participants.push(participant);
+        this.participantsLookup.set(creature,participant);
+    }
+
     turnBegin(){
 // Run any onRoundBegin effects
         for(var i=0;i<this.participants.length;i++){
