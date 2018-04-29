@@ -133,7 +133,7 @@ export default class PlayerParty{
         if(x && y){
             this.exploration.moveTo(x,y);
         }
-        
+
         this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + ` at ${map.title}...`);
     }
 
