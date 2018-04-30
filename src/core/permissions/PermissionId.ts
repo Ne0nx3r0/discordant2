@@ -65,6 +65,7 @@ enum PermissionId{
     PartyKick,
     PartyTransfer,
     Tester,
+    PartyReturn,
 }
 
 export default PermissionId;

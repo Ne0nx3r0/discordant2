@@ -1024,6 +1024,30 @@ export default class Game {
         party.playerActionDisband();
     }
 
+    async returnParty(leaderUid:string):Promise<void>{
+        const player = await this.getPlayerCharacter(leaderUid);
+
+        if(!player){
+            throw 'You are not registered';
+        }
+
+        if(player.status == 'inBattle'){
+            throw 'You cannot return in the middle of a battle!';
+        }
+
+        if(player.status != 'inParty'){
+            throw 'You are not currently in a party';
+        }
+
+        const party = player.party;
+
+        if(!party || party.leader != player){
+            throw 'Only the party leader can return the party';
+        }
+
+        party.playerActionReturn();
+    }
+
     async kickPlayerFromParty(playerUid:string,toKickUid:string):Promise<void>{
         const pc = await this.getPlayerCharacter(playerUid);
 
