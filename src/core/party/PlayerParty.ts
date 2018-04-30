@@ -358,6 +358,14 @@ export default class PlayerParty{
         },INVITE_EXPIRES_MS);
     }
 
+    playerActionReturn(){
+        if(this.partyStatus == PartyStatus.Battling){
+            throw 'You can\'t return to town during a battle!';
+        }
+
+        this.returnToTown();
+    }
+
     playerActionDecline(pc:PlayerCharacter){
         this.invited.delete(pc.uid);
 

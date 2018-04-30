@@ -57,4 +57,5 @@ export { default as Daily } from './commands/Daily';
 export { default as Heal } from './commands/Heal';
 export { default as PartyKick } from './commands/PartyKick';
 export { default as PartyTransfer } from './commands/PartyTransfer';
+export { default as PartyReturn } from './commands/PartyReturn';
 export { default as Tester } from './commands/Tester';

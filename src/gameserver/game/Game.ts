@@ -72,6 +72,7 @@ import { VIAL_HEAL_AMOUNT } from '../../core/item/misc/Vial';
 import { DBSetPlayerMetaData } from '../db/api/DBSetPlayerMetaData';
 import { BareHands } from '../../core/item/weapons/BareHands';
 import moment = require("moment");
+import { getFilteredDescription } from '../socket/requests/SetPlayerDescriptionRequest';
 
 //how often players can get a daily reward
 // Sssh 23 hours
@@ -1023,6 +1024,30 @@ export default class Game {
         party.playerActionDisband();
     }
 
+    async returnParty(leaderUid:string):Promise<void>{
+        const player = await this.getPlayerCharacter(leaderUid);
+
+        if(!player){
+            throw 'You are not registered';
+        }
+
+        if(player.status == 'inBattle'){
+            throw 'You cannot return in the middle of a battle!';
+        }
+
+        if(player.status != 'inParty'){
+            throw 'You are not currently in a party';
+        }
+
+        const party = player.party;
+
+        if(!party || party.leader != player){
+            throw 'Only the party leader can return the party';
+        }
+
+        party.playerActionReturn();
+    }
+
     async kickPlayerFromParty(playerUid:string,toKickUid:string):Promise<void>{
         const pc = await this.getPlayerCharacter(playerUid);
 
@@ -1364,8 +1389,9 @@ export default class Game {
             throw `You are not registered`;
         }
 
-        const descriptionFiltered = description.replace(/[^a-zA-Z0-9 \,'\.\-_]/g,'');
+        const descriptionFiltered = getFilteredDescription(description);
 
+console.log(description,descriptionFiltered);
         await DBSetPlayerDescription(this.db,playerUid,descriptionFiltered);
 
         pc.description = descriptionFiltered;

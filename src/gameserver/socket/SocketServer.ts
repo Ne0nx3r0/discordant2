@@ -61,6 +61,7 @@ import GetDailyRequest from './requests/GetDailyRequest';
 import AutoHealRequest from './requests/AutoHealRequest';
 import PartyKickPlayerRequest from './requests/PartyKickPlayerRequest';
 import PartyTransferLeadershipRequest from './requests/PartyTransferLeadershipRequest';
+import ReturnPartyRequest from './requests/ReturnPartyRequest';
 
 interface SocketServerBag{
     port:number;
@@ -149,6 +150,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new AutoHealRequest(null));
             this.registerHandler(registeredEvents,client,new PartyKickPlayerRequest(null));
             this.registerHandler(registeredEvents,client,new PartyTransferLeadershipRequest(null));
+            this.registerHandler(registeredEvents,client,new ReturnPartyRequest(null));
             
 
             var socket = client;

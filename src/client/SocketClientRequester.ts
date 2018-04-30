@@ -74,6 +74,7 @@ import { AutoHealResults } from '../gameserver/socket/requests/AutoHealRequest';
 import AutoHealRequest from '../gameserver/socket/requests/AutoHealRequest';
 import PartyKickPlayerRequest from '../gameserver/socket/requests/PartyKickPlayerRequest';
 import PartyTransferLeadershipRequest from '../gameserver/socket/requests/PartyTransferLeadershipRequest';
+import ReturnPartyRequest from '../gameserver/socket/requests/ReturnPartyRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -288,6 +289,13 @@ export default class SocketClientRequester{
 
     disbandParty(playerUid:string):Promise<void>{
         return new DisbandPartyRequest({
+            uid: playerUid
+        })
+        .send(this.sioc);
+    }
+
+    returnParty(playerUid:string):Promise<void>{
+        return new ReturnPartyRequest({
             uid: playerUid
         })
         .send(this.sioc);
