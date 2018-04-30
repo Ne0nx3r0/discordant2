@@ -72,6 +72,7 @@ import { VIAL_HEAL_AMOUNT } from '../../core/item/misc/Vial';
 import { DBSetPlayerMetaData } from '../db/api/DBSetPlayerMetaData';
 import { BareHands } from '../../core/item/weapons/BareHands';
 import moment = require("moment");
+import { getFilteredDescription } from '../socket/requests/SetPlayerDescriptionRequest';
 
 //how often players can get a daily reward
 // Sssh 23 hours
@@ -1364,8 +1365,9 @@ export default class Game {
             throw `You are not registered`;
         }
 
-        const descriptionFiltered = description.replace(/[^a-zA-Z0-9 \,'\.\-_]/g,'');
+        const descriptionFiltered = getFilteredDescription(description);
 
+console.log(description,descriptionFiltered);
         await DBSetPlayerDescription(this.db,playerUid,descriptionFiltered);
 
         pc.description = descriptionFiltered;
