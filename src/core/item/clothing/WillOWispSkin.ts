@@ -9,7 +9,9 @@ export const WillOWispSkin = new ItemEquippable({
     description: `A creature item`,
     goldValue: 1,
     slotType:'armor',
-    onAddBonuses:function(stats:ICreatureStatSet){
-        stats.dodge += 100;
-    }
+    onAddBonuses: function(stats:ICreatureStatSet){
+        stats.resistances.dark -= 20;
+        stats.resistances.thunder += 20;
+        stats.dodge += 1000;
+    },
 });
