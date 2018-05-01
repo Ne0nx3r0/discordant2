@@ -88,5 +88,7 @@ enum ItemId {BareHands,HandAxe,//keeping these two up here allows you to identif
     BlueEyeAmulet,
     WillOWispWeapon,
     WillOWispSkin,
+    TreantSkin,
+    TreantWeapon,
 }
 export default ItemId;
