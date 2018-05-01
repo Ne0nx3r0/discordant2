@@ -1,7 +1,7 @@
 enum ItemId {BareHands,HandAxe,//keeping these two up here allows you to identify the ID by line number
-    WoodShield,
-    HuntingSword,
-    WornLeathers,
+    WoodShield, // Note Never ever EVER remove or change an existing ID in this file
+    HuntingSword, // If you do you'll break a lot of stuff
+    WornLeathers, // Add new items at the end of the file
     TabletOfHealing,
     SonicLongsword,
     Vial,
@@ -90,5 +90,6 @@ enum ItemId {BareHands,HandAxe,//keeping these two up here allows you to identif
     WillOWispSkin,
     TreantSkin,
     TreantWeapon,
+
 }
 export default ItemId;
