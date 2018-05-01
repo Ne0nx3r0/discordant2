@@ -599,7 +599,11 @@ export default class CreatureBattleTurnBased{
             if(wad.target.creature.hpCurrent < 1 && defeatedParticipants.indexOf(wad.target) == -1){
                 wad.target.creature.equipment.forEach((item: ItemEquippable, slot:EquipmentSlot)=>{
                     if(item.onDefeat){
-                        item.onDefeat(this,wad.target,attacker);
+                        item.onDefeat({
+                            battle: this,
+                            wearer: wad.target,
+                            attacker: attacker,
+                        });
                     }
                 });
 

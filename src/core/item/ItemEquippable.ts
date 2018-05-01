@@ -26,12 +26,25 @@ export interface OnAddBonusesHandler{
     (stats:ICreatureStatSet):void;//Modifies the statset if bonuses/penalties apply
 }
 
-export interface OnDefendHandler{
-    (battle:CreatureBattleTurnBased,wearer:IBattleCreature,defender:IBattleCreature):void;
+interface BattleBag{
+    battle:CreatureBattleTurnBased;
+    wearer:IBattleCreature;
+}
+
+export interface OnDefendHandlerBag extends BattleBag{
+    defender: IBattleCreature;
+}
+
+export interface OnDefendHandler extends OnDefendHandlerBag{
+    (bag: OnDefendHandlerBag):void;
+}
+
+export interface OnDefeatHandlerBag extends BattleBag{
+    attacker:IBattleCreature;
 }
 
 export interface OnDefeatHandler{
-    (battle:CreatureBattleTurnBased,wearer:IBattleCreature,attacker:IBattleCreature):void;
+    (bag: OnDefeatHandlerBag):void;
 }
 
 export default class ItemEquippable extends ItemBase{
