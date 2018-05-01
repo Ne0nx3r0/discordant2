@@ -63,7 +63,7 @@ export { RedForestMap } from './maps/RedForestMap';
 export { RedForestCastleMapPiece } from './maps/RedForestCastleMapPiece';
 export { RedForestCastleMap } from './maps/RedForestCastleMap';
 
-//Tablets
+// Tablets
 export { TabletOfHealing } from './weapons/TabletOfHealing';
 export { TabletOfPoison } from './weapons/TabletOfPoison';
 export { TabletOfFaith } from './weapons/TabletOfFaith';
