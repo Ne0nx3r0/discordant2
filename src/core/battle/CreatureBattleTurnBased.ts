@@ -15,6 +15,7 @@ import { Attribute } from '../creature/AttributeSet';
 import ResistDamage from "../../util/ResistDamage";
 import ItemEquippable from '../item/ItemEquippable';
 import { EquipmentSlot } from '../creature/EquipmentSlot';
+import Game from '../../gameserver/game/Game';
 
 export enum BattleResult{
     Team1Won,
@@ -27,7 +28,7 @@ export interface CreatureBattleTurnBasedBag{
     channelId:string;
     team1:Array<Creature>;
     team2:Array<Creature>;
-    getClient:IGetRandomClientFunc;
+    game:Game;
     battleCleanup:BattleCleanupFunc;
     startDelay:number;
     runChance:number;
@@ -68,7 +69,7 @@ export interface ISocketBattleCreature{
 
 export default class CreatureBattleTurnBased{
     channelId:string;
-    getClient:IGetRandomClientFunc;
+    game:Game;
     battleHasEnded: boolean;
     battleCleanup: BattleCleanupFunc;
     participants: Array<IBattleCreature>;
@@ -81,7 +82,7 @@ export default class CreatureBattleTurnBased{
         this.queueBattleMessage = this.queueBattleMessage.bind(this);
         this.queuedBattleMessages = [];
         this.channelId = bag.channelId;
-        this.getClient = bag.getClient;
+        this.game = bag.game;
         this.battleCleanup = bag.battleCleanup;
         this.runChance = bag.runChance;
         
@@ -773,7 +774,7 @@ export default class CreatureBattleTurnBased{
         new SendMessageClientRequest({
             channelId: this.channelId,
             message: msgToSend,
-        }).send(this.getClient());
+        }).send(this.game.getClient());
 
         this.queuedBattleMessages = [];
     }
