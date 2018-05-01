@@ -1,6 +1,6 @@
 import Weapon from '../Weapon';
 import WeaponAttack, { WeaponDamageType, ScalingLevel } from '../WeaponAttack';
-import WeaponAttackStep from '../WeaponAttackStep';
+import WeaponAttackStep, { WeaponAttackStepBag } from '../WeaponAttackStep';
 
 import Creature from '../../creature/Creature';
 
@@ -29,7 +29,17 @@ export const Kukri = new Weapon({
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} slashes {defender} their kukri',
-                    damageFunc: DefaultDamageFunc,
+                    damageFunc: function(bag: DamageFuncBag){
+                        const damages = DefaultDamageFunc(bag);
+                        const equipment = bag.attacker.creature.equipment;
+
+                        if(equipment.weapon.id === ItemId.Kukri
+                        && equipment.offhand.id === ItemId.Kukri){
+                            damages[0].amount *= 2;
+                        }
+
+                        return damages;
+                    },
                 })
             ],
             aiUseWeight: 0.6
