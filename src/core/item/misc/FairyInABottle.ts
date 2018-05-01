@@ -3,6 +3,7 @@ import ItemId from '../ItemId';
 import { EquipmentSlot } from '../CreatureEquipment';
 import { ICreatureStatSet } from '../../creature/Creature';
 import { IBattleCreature } from '../../battle/CreatureBattleTurnBased';
+import PlayerCharacter from '../../creature/player/PlayerCharacter';
 
 export const FairyInABottle = new ItemEquippable({
     id: ItemId.FairyInABottle,
@@ -12,10 +13,20 @@ export const FairyInABottle = new ItemEquippable({
     showInItems: true,
     slotType:'pouch',
     onDefeat: function(bag: OnDefeatHandlerBag){
-        bag.wearer.creature.hpCurrent = bag.wearer.creature.stats.hpTotal;
+        if(bag.wearer.creature instanceof PlayerCharacter){
+            const pc = bag.wearer.creature;
 
-        bag.battle.queueBattleMessage([
-            `+ 💓💓💓 ${bag.wearer.creature.title}'s bottled fairy fully healed them and then flew away!`
-        ]);
+            pc.hpCurrent = pc.stats.hpTotal;
+
+            bag.battle.queueBattleMessage([
+                `+ 💓💓💓 ${pc.title}'s bottled fairy fully healed them and then flew away!`
+            ]);
+  
+            bag.battle.game.unequipPlayerItem(pc.uid,'pouch')
+            .then(()=>{
+                this.game.takePlayerItem(pc.uid,ItemId.FairyInABottle,1);
+            });
+
+        }
     },
 });
