@@ -6,7 +6,7 @@ import CreatureAIControlled from '../CreatureAIControlled';
 import WillOWispWeapon from '../../item/weapons/WillOWispWeapon';
 import { WillOWispSkin } from '../../item/clothing/WillOWispSkin';
 
-export default class Goblin extends CreatureAIControlled{
+export default class WillOWisp extends CreatureAIControlled{
     constructor(){
         super({
             id: CreatureId.WillOWisp,
@@ -15,7 +15,7 @@ export default class Goblin extends CreatureAIControlled{
             attributes: new AttributeSet({
                 strength: 2,
                 agility: 10,
-                vitality: 25,
+                vitality: 20,
                 spirit: 0,
                 luck: 0,
             }),
