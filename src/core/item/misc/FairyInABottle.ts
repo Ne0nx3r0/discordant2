@@ -14,6 +14,8 @@ export const FairyInABottle = new ItemEquippable({
     onDefeat: function(bag: OnDefeatHandlerBag){
         bag.wearer.creature.hpCurrent = bag.wearer.creature.stats.hpTotal;
 
-        bag.battle.queueBattleMessage([`A helpful fairy healed ${bag.wearer.creature.title}!`]);
+        bag.battle.queueBattleMessage([
+            `+ 💓💓💓 ${bag.wearer.creature.title}'s bottled fairy fully healed them and then flew away!`
+        ]);
     },
 });
