@@ -5,7 +5,7 @@ enum ItemId {BareHands,HandAxe,//keeping these two up here allows you to identif
     TabletOfHealing,
     SonicLongsword,
     Vial,
-    TableOfPoison,
+    TabletOfPoison,
     GoblinRaidingPartyWeapon,
     GoblinSneakPoisonWeapon,
     ScarabToken,

@@ -1,8 +1,11 @@
 import { BlueMushroom } from './misc/BlueMushroom';
 import { RedMushroom } from './misc/RedMushroom';
+
 //Armor
 export { WornLeathers } from './clothing/WornLeathers';
 export { WornLeatherHelmet } from './clothing/WornLeatherHelmet';
+export { PaddedArmor } from './clothing/PaddedArmor';
+export { PaddedHood } from './clothing/PaddedHood';
 
 export { FireAntHelmet } from './clothing/FireAntHelmet';
 export { FireAntArmor } from './clothing/FireAntArmor';

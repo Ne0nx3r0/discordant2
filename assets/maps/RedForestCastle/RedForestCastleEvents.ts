@@ -2,7 +2,7 @@ import CreatureId from '../../../src/core/creature/CreatureId';
 import Creature from '../../../src/core/creature/Creature';
 import { IMapData } from '../../../src/core/map/IMapData';
 import { EventTileForagable } from '../../../src/core/map/tiles/EventTileForagable';
-import ItemId from '../../../src/core/item/ItemId';
+import * as ItemsIndex from '../../../src/core/item/ItemsIndex';
 import EventTileLootable from "../../../src/core/map/tiles/EventTileLootable";
 import EventTileMonster from "../../../src/core/map/tiles/EventTileMonster";
 import { RedForestMapPiece } from "../../../src/core/item/ItemsIndex";
@@ -52,23 +52,23 @@ class EventTileGetRedCastleLever extends EventTile{
 
 export const lootGenerator = new LootGenerator();
 
-lootGenerator.addLootItem('uncommon',ItemId.Revive,1);
-lootGenerator.addLootItem('uncommon',ItemId.Tent,1);
-lootGenerator.addLootItem('uncommon',ItemId.RedForestCastleMapPiece,1);
-lootGenerator.addLootItem('uncommon',ItemId.MageRobe,0.25);
-lootGenerator.addLootItem('uncommon',ItemId.SonicLongsword,0.1);
-lootGenerator.addLootItem('uncommon',ItemId.StoneDagger,0.1);
-lootGenerator.addLootItem('uncommon',ItemId.FireAxe,0.25);
-lootGenerator.addLootItem('uncommon',ItemId.RedEyeRing,0.1);
-lootGenerator.addLootItem('uncommon',ItemId.WishCatcher,0.1);
+lootGenerator.addLootItem('uncommon',ItemsIndex.Revive,1);
+lootGenerator.addLootItem('uncommon',ItemsIndex.Tent,1);
+lootGenerator.addLootItem('uncommon',ItemsIndex.RedForestCastleMapPiece,1);
+lootGenerator.addLootItem('uncommon',ItemsIndex.MageRobe,0.25);
+lootGenerator.addLootItem('uncommon',ItemsIndex.SonicLongsword,0.1);
+lootGenerator.addLootItem('uncommon',ItemsIndex.StoneDagger,0.1);
+lootGenerator.addLootItem('uncommon',ItemsIndex.FireAxe,0.25);
+lootGenerator.addLootItem('uncommon',ItemsIndex.RedEyeRing,0.1);
+lootGenerator.addLootItem('uncommon',ItemsIndex.WishCatcher,0.1);
 
-lootGenerator.addLootItem('rare',ItemId.TabletOfFaith,0.1);
-lootGenerator.addLootItem('rare',ItemId.StoneAxe,0.1);
-lootGenerator.addLootItem('rare',ItemId.FireSpear,0.1);
-lootGenerator.addLootItem('rare',ItemId.WishCatcher,0.05);
-lootGenerator.addLootItem('rare',ItemId.FireDagger,0.1);
-lootGenerator.addLootItem('rare',ItemId.FireMace,0.1);
-lootGenerator.addLootItem('rare',ItemId.RedForestCastleMapPiece,0.5);
+lootGenerator.addLootItem('rare',ItemsIndex.TabletOfFaith,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.StoneAxe,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.FireSpear,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.WishCatcher,0.05);
+lootGenerator.addLootItem('rare',ItemsIndex.FireDagger,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.FireMace,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RedForestCastleMapPiece,0.5);
 
 export const RedForestCastleEvents:IMapData = {
     startX: 5,
@@ -81,14 +81,14 @@ export const RedForestCastleEvents:IMapData = {
     ],
     eventTiles: [
         {
-            event: new EventTileForagable('Blue Mushroom',ItemId.BlueMushroom),
+            event: new EventTileForagable('Blue Mushroom',ItemsIndex.BlueMushroom.id),
             coords: [
                 {x:10,y:19},
                 {x:11,y:20},
             ]
         },
         {
-            event: new EventTileForagable('Red Mushroom',ItemId.RedMushroom),
+            event: new EventTileForagable('Red Mushroom',ItemsIndex.RedMushroom.id),
             coords: [
                 {x:7,y:3},
                 {x:10,y:3},
