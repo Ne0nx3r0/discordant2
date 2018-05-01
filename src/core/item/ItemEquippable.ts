@@ -12,11 +12,11 @@ export interface ItemEquippableBag extends ItemBaseBag{
 }
 
 export interface UseRequirements{
-    strength?:number,
-    agility?:number,
-    vitality?:number,
-    spirit?:number,
-    luck?:number,
+    strength?:number;
+    agility?:number;
+    vitality?:number;
+    spirit?:number;
+    luck?:number;
 }
 
 export interface OnAddBonusesHandler{
