@@ -13,6 +13,8 @@ import { IWeaponAttackDamages, DamageType } from '../item/WeaponAttackStep';
 import { GetDodgePercent } from '../../util/GetDodgePercent';
 import { Attribute } from '../creature/AttributeSet';
 import ResistDamage from "../../util/ResistDamage";
+import ItemEquippable from '../item/ItemEquippable';
+import { EquipmentSlot } from '../creature/EquipmentSlot';
 
 export enum BattleResult{
     Team1Won,
@@ -595,7 +597,15 @@ export default class CreatureBattleTurnBased{
             }
  
             if(wad.target.creature.hpCurrent < 1 && defeatedParticipants.indexOf(wad.target) == -1){
-                defeatedParticipants.push(wad.target);
+                wad.target.creature.equipment.forEach((item: ItemEquippable, slot:EquipmentSlot)=>{
+                    if(item.onDefeat){
+                        item.onDefeat(this,wad.target,attacker);
+                    }
+                });
+
+                if(wad.target.creature.hpCurrent < 1){
+                    defeatedParticipants.push(wad.target);
+                }    
             }
         });
         

@@ -3,10 +3,13 @@ import {ItemBaseBag} from './ItemBase';
 import Creature from '../creature/Creature';
 import {ICreatureStatSet} from '../creature/Creature';
 import { EquipmentSlot } from './CreatureEquipment';
+import CreatureBattleTurnBased, { IBattleCreature } from '../battle/CreatureBattleTurnBased';
 
 export interface ItemEquippableBag extends ItemBaseBag{
     slotType:EquipmentSlot;
     onAddBonuses?:OnAddBonusesHandler;
+    onDefeat?:OnDefeatHandler;
+    onDefend?:OnDefendHandler;
     useRequirements?:UseRequirements;
     lostOnDeath?:boolean;
 }
@@ -23,21 +26,19 @@ export interface OnAddBonusesHandler{
     (stats:ICreatureStatSet):void;//Modifies the statset if bonuses/penalties apply
 }
 
-//Modifies the damageset if bonuses/penalties apply
-/*onAttack(currentDamages:DamageSet,wearer:Creature,wearerWeapon:Weapon,defender:Creature):DamageSet{
-    return;
-}not implemented yet
-*/
+export interface OnDefendHandler{
+    (battle:CreatureBattleTurnBased,wearer:IBattleCreature,defender:IBattleCreature):void;
+}
 
-//Modifies the damageset if bonuses/penalties apply
-/*onDefend(currentDamages:DamageSet,wearer:Creature,attacker:Creature):DamageSet{
-    return;
-}not implemented yet
-*/
+export interface OnDefeatHandler{
+    (battle:CreatureBattleTurnBased,wearer:IBattleCreature,attacker:IBattleCreature):void;
+}
 
 export default class ItemEquippable extends ItemBase{
     slotType:EquipmentSlot;
     onAddBonuses?:OnAddBonusesHandler;
+    onDefeat?:OnDefeatHandler;
+    onDefend?:OnDefendHandler;
     useRequirements:UseRequirements;
     lostOnDeath:boolean;
 
@@ -47,6 +48,8 @@ export default class ItemEquippable extends ItemBase{
         this.slotType = bag.slotType;
 
         if(bag.onAddBonuses) this.onAddBonuses = bag.onAddBonuses;
+        if(bag.onDefeat) this.onDefeat = bag.onDefeat;
+        if(bag.onDefend) this.onDefend = bag.onDefend;
 
         this.useRequirements = bag.useRequirements || {};
         this.lostOnDeath = bag.lostOnDeath;
