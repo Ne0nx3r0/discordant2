@@ -736,7 +736,7 @@ export default class CreatureBattleTurnBased{
         bc.creature.hpCurrent = Math.min(hpAmount,bc.creature.stats.hpTotal);
     }
 
-    queueBattleMessage(msg:Array<string>){
+    queueBattleMessage(msg:string[]){
         this.queuedBattleMessages.push(msg);
     }
 
