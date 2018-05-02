@@ -15,13 +15,14 @@ import EffectId from '../../effects/EffectId';
 export const GreedyDagger = new Weapon({
     id: ItemId.GreedyDagger,
     title: 'Greedy Dagger',
-    description: `While it's not known if anyone ever succeeded in discovering the Exiled Magician's secret of immortality, these soul devouring blades are a testiment to the vile attempts.`,
+    description: `(Special: 10% of damage recovered as HP) While it's not known if anyone ever succeeded in discovering the Exiled Magician's secret of immortality, these soul devouring blades are a testiment to the vile attempts.`,
     damageBlocked: 0.01,
     useRequirements:{
-        agility: 32,
+        agility: 24,
+        spirit: 24,
     },
     criticalMultiplier: 2,
-    chanceToCritical: 0.2,
+    chanceToCritical: 0.1,
     goldValue: 250,
     attacks: [
         new WeaponAttack({
@@ -29,7 +30,7 @@ export const GreedyDagger = new Weapon({
             minBaseDamage: 10,
             maxBaseDamage: 20,
             damageType: DamageType.dark,
-            scalingAttribute: Attribute.vitality,
+            scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.C,
             steps: [
                 new WeaponAttackStep({
