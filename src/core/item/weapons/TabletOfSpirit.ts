@@ -99,8 +99,7 @@ export const TabletOfSpirit = new Weapon({
                     damageFunc: function(bag:DamageFuncBag){
                         const chargesUsed = bag.attacker.charges;
                         
-                        //This one will be consumed by TurnBasedBattles
-                        bag.attacker.charges = 1;
+                        bag.attacker.charges = 0;
 
                         const maxDamage = BOMB_MAX_DAMAGES[chargesUsed];
                         const minDamage = maxDamage * 0.8;
