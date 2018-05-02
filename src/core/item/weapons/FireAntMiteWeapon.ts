@@ -5,6 +5,7 @@ import { DamageType } from '../WeaponAttackStep';
 import { Attribute } from '../../creature/AttributeSet';
 import { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
+import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 
 export const FireAntMiteWeapon = new Weapon({
     id: ItemId.FireAntMiteWeapon,
@@ -14,6 +15,21 @@ export const FireAntMiteWeapon = new Weapon({
     useRequirements:{},
     goldValue:0,
     attacks: [
+        new WeaponAttack({
+            title: 'bite',
+            minBaseDamage: 15,
+            maxBaseDamage: 30,
+            damageType: DamageType.fire,
+            scalingAttribute: Attribute.agility,
+            scalingLevel: ScalingLevel.No,
+            steps: [
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} bites {defender}',
+                    damageFunc: DefaultDamageFunc,
+                }),
+            ],
+            aiUseWeight: 1
+        }),
         new WeaponAttack({
             title: 'steallife',
             minBaseDamage: 5,
