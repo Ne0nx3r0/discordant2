@@ -2,7 +2,7 @@ import CreatureId from '../../../src/core/creature/CreatureId';
 import Creature from '../../../src/core/creature/Creature';
 import { IMapData } from '../../../src/core/map/IMapData';
 import { EventTileForagable } from '../../../src/core/map/tiles/EventTileForagable';
-import ItemId from '../../../src/core/item/ItemId';
+import * as ItemsIndex from '../../../src/core/item/ItemsIndex';
 import EventTileLootable from "../../../src/core/map/tiles/EventTileLootable";
 import EventTileMonster from "../../../src/core/map/tiles/EventTileMonster";
 import EventTileWarp from "../../../src/core/map/tiles/EventTileWarp";
@@ -14,28 +14,28 @@ import EventTileEnterMessage from "../../../src/core/map/tiles/EventTileEnterMes
 
 export const lootGenerator = new LootGenerator();
 
-lootGenerator.addLootItem('common',ItemId.Vial,1);
-lootGenerator.addLootItem('common',ItemId.HuntingSword,0.25);
-lootGenerator.addLootItem('common',ItemId.WoodShield,0.25);
-lootGenerator.addLootItem('common',ItemId.WornLeathers,0.25);
-lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.25);
-lootGenerator.addLootItem('common',ItemId.PaddedHood,0.25);
-lootGenerator.addLootItem('common',ItemId.PaddedArmor,0.25);
-lootGenerator.addLootItem('common',ItemId.AmuletOfAgility,0.05);
-lootGenerator.addLootItem('common',ItemId.AmuletOfSpirit,0.05);
-lootGenerator.addLootItem('common',ItemId.AmuletOfLuck,0.05);
-lootGenerator.addLootItem('common',ItemId.AmuletOfStrength,0.05);
-lootGenerator.addLootItem('common',ItemId.AmuletOfHealth,0.05);
-lootGenerator.addLootItem('common',ItemId.TableOfPoison,0.25);
+lootGenerator.addLootItem('common',ItemsIndex.Vial,1);
+lootGenerator.addLootItem('common',ItemsIndex.HuntingSword,0.25);
+lootGenerator.addLootItem('common',ItemsIndex.WoodShield,0.25);
+lootGenerator.addLootItem('common',ItemsIndex.WornLeathers,0.25);
+lootGenerator.addLootItem('common',ItemsIndex.WornLeatherHelmet,0.25);
+lootGenerator.addLootItem('common',ItemsIndex.PaddedHood,0.25);
+lootGenerator.addLootItem('common',ItemsIndex.PaddedArmor,0.25);
+lootGenerator.addLootItem('common',ItemsIndex.AmuletOfAgility,0.05);
+lootGenerator.addLootItem('common',ItemsIndex.AmuletOfSpirit,0.05);
+lootGenerator.addLootItem('common',ItemsIndex.AmuletOfLuck,0.05);
+lootGenerator.addLootItem('common',ItemsIndex.AmuletOfStrength,0.05);
+lootGenerator.addLootItem('common',ItemsIndex.AmuletOfHealth,0.05);
+lootGenerator.addLootItem('common',ItemsIndex.TabletOfPoison,0.25);
 //lootGenerator.addLootItem('common',ItemId.MapAfterRedForestPiece,1);
 
-lootGenerator.addLootItem('rare',ItemId.AmuletOfAgility,0.1);
-lootGenerator.addLootItem('rare',ItemId.AmuletOfSpirit,0.1);
-lootGenerator.addLootItem('rare',ItemId.AmuletOfLuck,0.1);
-lootGenerator.addLootItem('rare',ItemId.TabletOfFire,0.1);
-lootGenerator.addLootItem('rare',ItemId.AmuletOfStrength,0.1);
-lootGenerator.addLootItem('rare',ItemId.AmuletOfHealth,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfFortune,0.02);
+lootGenerator.addLootItem('rare',ItemsIndex.AmuletOfAgility,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.AmuletOfSpirit,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.AmuletOfLuck,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.TabletOfFire,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.AmuletOfStrength,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.AmuletOfHealth,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfFortune,0.02);
 //lootGenerator.addLootItem('rare',ItemId.MapAfterRedForestPiece,0.2);
 
 export const RedForestEvents:IMapData = {
@@ -49,7 +49,7 @@ export const RedForestEvents:IMapData = {
     ],
     eventTiles: [
         {
-            event: new EventTileForagable('Acai',ItemId.Acai),
+            event: new EventTileForagable('Acai',ItemsIndex.Acai.id),
             coords: [
                 {x:3,y:3},
                 {x:3,y:4},
@@ -59,7 +59,7 @@ export const RedForestEvents:IMapData = {
             ]
         },
         {
-            event: new EventTileForagable('Bane',ItemId.Bane),
+            event: new EventTileForagable('Bane',ItemsIndex.Bane.id),
             coords: [
                 {x:15,y:11},
                 {x:15,y:12},
@@ -68,7 +68,7 @@ export const RedForestEvents:IMapData = {
             ]
         },
         {
-            event: new EventTileForagable('Agave',ItemId.Agave),
+            event: new EventTileForagable('Agave',ItemsIndex.Agave.id),
             coords: [
                 {x:4,y:15},
                 {x:4,y:16},
@@ -77,21 +77,21 @@ export const RedForestEvents:IMapData = {
             ]
         },
         {
-            event: new EventTileForagable('Fox',ItemId.Fox),
+            event: new EventTileForagable('Fox',ItemsIndex.Fox.id),
             coords: [
                 {x:4,y:12},
                 {x:5,y:12},
             ]
         },
         {
-            event: new EventTileForagable('Sage',ItemId.Sage),
+            event: new EventTileForagable('Sage',ItemsIndex.Sage.id),
             coords: [
                 {x:17,y:7},
                 {x:18,y:7},
             ]
         },
         {
-            event: new EventTileForagable('Yerba',ItemId.Yerba),
+            event: new EventTileForagable('Yerba',ItemsIndex.Yerba.id),
             coords: [
                 {x:37,y:19},
                 {x:38,y:19},

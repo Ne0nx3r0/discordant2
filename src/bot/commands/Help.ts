@@ -72,7 +72,7 @@ export default class Inventory extends Command{
 
 ${command.description}
 
-Usage: ${bag.commandPrefix}${command}
+Usage: ${bag.commandPrefix}${command.usage}
 
 ${aliasesStr}
             `));

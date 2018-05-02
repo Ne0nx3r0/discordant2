@@ -1,8 +1,11 @@
 import { BlueMushroom } from './misc/BlueMushroom';
 import { RedMushroom } from './misc/RedMushroom';
+
 //Armor
 export { WornLeathers } from './clothing/WornLeathers';
 export { WornLeatherHelmet } from './clothing/WornLeatherHelmet';
+export { PaddedArmor } from './clothing/PaddedArmor';
+export { PaddedHood } from './clothing/PaddedHood';
 
 export { FireAntHelmet } from './clothing/FireAntHelmet';
 export { FireAntArmor } from './clothing/FireAntArmor';
@@ -60,7 +63,7 @@ export { RedForestMap } from './maps/RedForestMap';
 export { RedForestCastleMapPiece } from './maps/RedForestCastleMapPiece';
 export { RedForestCastleMap } from './maps/RedForestCastleMap';
 
-//Tablets
+// Tablets
 export { TabletOfHealing } from './weapons/TabletOfHealing';
 export { TabletOfPoison } from './weapons/TabletOfPoison';
 export { TabletOfFaith } from './weapons/TabletOfFaith';
@@ -96,3 +99,4 @@ export { PrismBlade } from './weapons/PrismBlade';
 //Pouch
 export { WishCatcher } from './misc/WishCatcher';
 export { WishTrapper } from './misc/WishTrapper';
+export { FairyInABottle } from './misc/FairyInABottle';

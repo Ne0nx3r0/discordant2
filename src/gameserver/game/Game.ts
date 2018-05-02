@@ -828,7 +828,7 @@ export default class Game {
             team1: bag.partyMembers,
             team2: [opponent],
             runChance: bag.runChance,
-            getClient: this.getClient.bind(this),
+            game: this,
             battleCleanup: (battlePostBag:IPostBattleBag)=>{
                 if(battlePostBag.result == BattleResult.Team1Won){
                     let wishesMsg = '';

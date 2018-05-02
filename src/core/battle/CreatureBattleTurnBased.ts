@@ -13,6 +13,9 @@ import { IWeaponAttackDamages, DamageType } from '../item/WeaponAttackStep';
 import { GetDodgePercent } from '../../util/GetDodgePercent';
 import { Attribute } from '../creature/AttributeSet';
 import ResistDamage from "../../util/ResistDamage";
+import ItemEquippable from '../item/ItemEquippable';
+import { EquipmentSlot } from '../creature/EquipmentSlot';
+import Game from '../../gameserver/game/Game';
 
 export enum BattleResult{
     Team1Won,
@@ -25,7 +28,7 @@ export interface CreatureBattleTurnBasedBag{
     channelId:string;
     team1:Array<Creature>;
     team2:Array<Creature>;
-    getClient:IGetRandomClientFunc;
+    game:Game;
     battleCleanup:BattleCleanupFunc;
     startDelay:number;
     runChance:number;
@@ -66,7 +69,7 @@ export interface ISocketBattleCreature{
 
 export default class CreatureBattleTurnBased{
     channelId:string;
-    getClient:IGetRandomClientFunc;
+    game:Game;
     battleHasEnded: boolean;
     battleCleanup: BattleCleanupFunc;
     participants: Array<IBattleCreature>;
@@ -79,7 +82,7 @@ export default class CreatureBattleTurnBased{
         this.queueBattleMessage = this.queueBattleMessage.bind(this);
         this.queuedBattleMessages = [];
         this.channelId = bag.channelId;
-        this.getClient = bag.getClient;
+        this.game = bag.game;
         this.battleCleanup = bag.battleCleanup;
         this.runChance = bag.runChance;
         
@@ -595,7 +598,19 @@ export default class CreatureBattleTurnBased{
             }
  
             if(wad.target.creature.hpCurrent < 1 && defeatedParticipants.indexOf(wad.target) == -1){
-                defeatedParticipants.push(wad.target);
+                wad.target.creature.equipment.forEach((item: ItemEquippable, slot:EquipmentSlot)=>{
+                    if(item.onDefeat){
+                        item.onDefeat({
+                            battle: this,
+                            wearer: wad.target,
+                            attacker: attacker,
+                        });
+                    }
+                });
+
+                if(wad.target.creature.hpCurrent < 1){
+                    defeatedParticipants.push(wad.target);
+                }    
             }
         });
         
@@ -726,7 +741,7 @@ export default class CreatureBattleTurnBased{
         bc.creature.hpCurrent = Math.min(hpAmount,bc.creature.stats.hpTotal);
     }
 
-    queueBattleMessage(msg:Array<string>){
+    queueBattleMessage(msg:string[]){
         this.queuedBattleMessages.push(msg);
     }
 
@@ -759,7 +774,7 @@ export default class CreatureBattleTurnBased{
         new SendMessageClientRequest({
             channelId: this.channelId,
             message: msgToSend,
-        }).send(this.getClient());
+        }).send(this.game.getClient());
 
         this.queuedBattleMessages = [];
     }

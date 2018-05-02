@@ -1,5 +1,5 @@
 import LootGenerator from '../src/core/loot/LootGenerator';
-import ItemId from '../src/core/item/ItemId';
+import * as ItemsIndex from '../src/core/item/ItemsIndex';
 import { IGenerateLootBag } from '../src/core/loot/LootGenerator';
 
 const Table = require('cli-table');
@@ -7,24 +7,24 @@ const Table = require('cli-table');
 // BEGIN LOOT
 const lootGenerator = new LootGenerator();
 
-lootGenerator.addLootItem('common',ItemId.HuntingSword,0.1);
-lootGenerator.addLootItem('common',ItemId.WoodShield,0.3);
-lootGenerator.addLootItem('common',ItemId.HandAxe,0.3);
-lootGenerator.addLootItem('common',ItemId.WornLeathers,0.3);
-lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.3);
-lootGenerator.addLootItem('common',ItemId.ClothTunic,0.3);
-lootGenerator.addLootItem('common',ItemId.ClothHood,0.3);
-lootGenerator.addLootItem('common',ItemId.Vial,1);
-lootGenerator.addLootItem('common',ItemId.RedForestMapPiece,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.HuntingSword,0.1);
+lootGenerator.addLootItem('common',ItemsIndex.WoodShield,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.HandAxe,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.WornLeathers,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.WornLeatherHelmet,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.ClothTunic,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.ClothHood,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.Vial,1);
+lootGenerator.addLootItem('common',ItemsIndex.RedForestMapPiece,0.3);
 
-lootGenerator.addLootItem('rare',ItemId.RingOfAgility,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfHealth,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfStrength,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfLuck,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfSpirit,0.1);
-lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
-lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
-lootGenerator.addLootItem('rare',ItemId.RedForestMapPiece,0.4);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfAgility,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfHealth,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfStrength,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfLuck,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfSpirit,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.TabletOfPoison,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.Tent,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RedForestMapPiece,0.4);
 
 //////////////// BEGIN SETTINGS /////////////
 
@@ -74,7 +74,7 @@ function testLootAt(magicFind):Array<{name:string,value:number}>{
         const dropPercent = Math.round(dropped/LOOT_TEST_RUNS*10000)/100;;
 
         resultsArr.push({
-            name: ItemId[itemId],
+            name: ItemsIndex[itemId],
             value: dropPercent
         });
     }
@@ -112,7 +112,7 @@ Object.keys(itemNames)
     let itemRarity = '?';
 
     lootGenerator.lootNodes.forEach(function(ln){
-        if(ln.itemId == ItemId[itemName]){
+        if(ln.itemId == ItemsIndex[itemName]){
             itemRarity = ''+ln.rarity;
         }
     });

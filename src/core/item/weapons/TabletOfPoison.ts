@@ -11,7 +11,7 @@ import EffectId from '../../effects/EffectId';
 import BattleTemporaryEffectPoison from '../../effects/BattleTemporaryEffectPoison';
 
 export const TabletOfPoison =  new Weapon({
-    id: ItemId.TableOfPoison,
+    id: ItemId.TabletOfPoison,
     title: 'Tablet of Poison',
     description: 'A stone tablet engraved with strange characters which read aloud can poison enemies',
     damageBlocked: 0.05,

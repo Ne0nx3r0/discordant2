@@ -19,7 +19,7 @@ export default class LootGenerator{
         this.lootNodes.set( 'root' , new LootNode('root',null) );
     }
 
-    addLootItem(node:string,itemId:number,rarity:number){
+    addLootItem(node:string,item:ItemBase,rarity:number){
         const nodeSegments = node.split('.');
 
         let lootNode:LootNode;
@@ -42,9 +42,9 @@ export default class LootGenerator{
             parentNode = lootNode;
         }
 
-        const itemLootNode = new LootNode('root.'+node,parentNode,rarity,itemId);
+        const itemLootNode = new LootNode('root.'+node,parentNode,rarity,item.id);
         
-        this.lootNodes.set('root.'+node+'.'+ItemId[itemId],itemLootNode);
+        this.lootNodes.set('root.'+node+'.'+ItemId[item.id],itemLootNode);
         
         lootNode.addChild(itemLootNode);
     }

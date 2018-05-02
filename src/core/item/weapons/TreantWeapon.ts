@@ -12,8 +12,8 @@ import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 import { EffectParalyze } from '../../effects/types/EffectParalyze';
 
 export default new Weapon({
-    id: ItemId.WillOWispWeapon,
-    title: 'Will-O-Wisp Weapon',
+    id: ItemId.TreantWeapon,
+    title: 'Treant Weapon',
     description: 'A creature item',
     damageBlocked: 0.05,
     chanceToCritical: 0.2,

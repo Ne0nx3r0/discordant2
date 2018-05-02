@@ -2,7 +2,7 @@ import CreatureId from '../../../src/core/creature/CreatureId';
 import Creature from '../../../src/core/creature/Creature';
 import { IMapData } from '../../../src/core/map/IMapData';
 import { EventTileForagable } from '../../../src/core/map/tiles/EventTileForagable';
-import ItemId from '../../../src/core/item/ItemId';
+import * as ItemsIndex from '../../../src/core/item/ItemsIndex';
 import EventTileLootable from "../../../src/core/map/tiles/EventTileLootable";
 import EventTileMonster from "../../../src/core/map/tiles/EventTileMonster";
 import { RedForestMapPiece } from "../../../src/core/item/ItemsIndex";
@@ -12,28 +12,28 @@ import { Spear } from '../../../src/core/item/weapons/Spear';
 
 const lootGenerator = new LootGenerator();
 
-lootGenerator.addLootItem('common',ItemId.HuntingSword,0.1);
-lootGenerator.addLootItem('common',ItemId.WoodShield,0.3);
-lootGenerator.addLootItem('common',ItemId.HandAxe,0.3);
-lootGenerator.addLootItem('common',ItemId.Spear,0.3);
-lootGenerator.addLootItem('common',ItemId.WornLeathers,0.3);
-lootGenerator.addLootItem('common',ItemId.WornLeatherHelmet,0.3);
-lootGenerator.addLootItem('common',ItemId.ClothTunic,0.3);
-lootGenerator.addLootItem('common',ItemId.ClothHood,0.3);
-lootGenerator.addLootItem('common',ItemId.Dagger,0.3);
-lootGenerator.addLootItem('common',ItemId.Vial,1);
-lootGenerator.addLootItem('common',ItemId.RedForestMapPiece,0.6);
+lootGenerator.addLootItem('common',ItemsIndex.HuntingSword,0.1);
+lootGenerator.addLootItem('common',ItemsIndex.WoodShield,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.HandAxe,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.Spear,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.WornLeathers,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.WornLeatherHelmet,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.ClothTunic,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.ClothHood,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.Dagger,0.3);
+lootGenerator.addLootItem('common',ItemsIndex.Vial,1);
+lootGenerator.addLootItem('common',ItemsIndex.RedForestMapPiece,0.6);
 
-lootGenerator.addLootItem('rare',ItemId.RingOfAgility,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfHealth,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfStrength,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfLuck,0.1);
-lootGenerator.addLootItem('rare',ItemId.RingOfSpirit,0.1);
-lootGenerator.addLootItem('rare',ItemId.TableOfPoison,0.1);
-lootGenerator.addLootItem('rare',ItemId.Tent,0.1);
-lootGenerator.addLootItem('rare',ItemId.RedForestMapPiece,0.4);
-lootGenerator.addLootItem('rare',ItemId.PaddedHood,0.1);
-lootGenerator.addLootItem('rare',ItemId.PaddedArmor,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfAgility,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfHealth,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfStrength,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfLuck,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RingOfSpirit,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.TabletOfPoison,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.Tent,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.RedForestMapPiece,0.4);
+lootGenerator.addLootItem('rare',ItemsIndex.PaddedHood,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.PaddedArmor,0.1);
 
 export const WesternGate2Events:IMapData = {
     startX: 25,
@@ -45,7 +45,7 @@ export const WesternGate2Events:IMapData = {
     ],
     eventTiles: [
         {
-            event: new EventTileForagable('Acai',ItemId.Acai),
+            event: new EventTileForagable('Acai',ItemsIndex.Acai.id),
             coords: [
                 {x:20,y:24},
                 {x:19,y:24},
@@ -59,7 +59,7 @@ export const WesternGate2Events:IMapData = {
             ]
         },
         {
-            event: new EventTileForagable('Bane',ItemId.Bane),
+            event: new EventTileForagable('Bane',ItemsIndex.Bane.id),
             coords: [
                 {x:12,y:4},
                 {x:12,y:5},
@@ -72,7 +72,7 @@ export const WesternGate2Events:IMapData = {
             ]
         },
         {
-            event: new EventTileForagable('Fox',ItemId.Fox),
+            event: new EventTileForagable('Fox',ItemsIndex.Fox.id),
             coords: [
                 {x:8,y:17},
                 {x:9,y:17},
@@ -81,7 +81,7 @@ export const WesternGate2Events:IMapData = {
             ]
         },
         {
-            event: new EventTileForagable('Sage',ItemId.Sage),
+            event: new EventTileForagable('Sage',ItemsIndex.Sage.id),
             coords: [
                 {x:10,y:21},
                 {x:11,y:21},
@@ -90,7 +90,7 @@ export const WesternGate2Events:IMapData = {
             ]
         },
         {
-            event: new EventTileForagable('Yerba',ItemId.Yerba),
+            event: new EventTileForagable('Yerba',ItemsIndex.Yerba.id),
             coords: [
                 {x:7,y:9},
                 {x:8,y:9},
