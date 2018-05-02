@@ -92,6 +92,7 @@ export { FireMace } from './weapons/FireMace';
 export { LuckyDagger } from './weapons/LuckDagger';
 export { Mace } from './weapons/Mace';
 export { Kukri } from './weapons/Kukri';
+export { GreedyDagger } from './weapons/GreedyDagger';
 
 //For Testing
 export { PrismBlade } from './weapons/PrismBlade';

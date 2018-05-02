@@ -5,6 +5,7 @@ import { DamageType } from '../WeaponAttackStep';
 import { Attribute } from '../../creature/AttributeSet';
 import { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
+import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 
 export const FireAntMiteWeapon = new Weapon({
     id: ItemId.FireAntMiteWeapon,
@@ -14,6 +15,21 @@ export const FireAntMiteWeapon = new Weapon({
     useRequirements:{},
     goldValue:0,
     attacks: [
+        new WeaponAttack({
+            title: 'bite',
+            minBaseDamage: 15,
+            maxBaseDamage: 30,
+            damageType: DamageType.physical,
+            scalingAttribute: Attribute.agility,
+            scalingLevel: ScalingLevel.No,
+            steps: [
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} bites {defender}',
+                    damageFunc: DefaultDamageFunc,
+                }),
+            ],
+            aiUseWeight: 1
+        }),
         new WeaponAttack({
             title: 'steallife',
             minBaseDamage: 5,
@@ -25,20 +41,11 @@ export const FireAntMiteWeapon = new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} sucks the life of {defender}',
                     damageFunc: function(bag){
-                        const damage = Math.round(Math.random()*(bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage)+bag.step.attack.minBaseDamage);
+                        const damages = DefaultDamageFunc(bag);
 
-                        return [
-                            {
-                                target: bag.defender,
-                                type: DamageType.physical,
-                                amount: damage
-                            },
-                            {
-                                target: bag.attacker,
-                                type: DamageType.healing,
-                                amount: Math.min(5,bag.attacker.creature.stats.hpTotal-bag.attacker.creature.hpCurrent)
-                            }
-                        ];
+                        damages[0].hpSteal = 5;
+
+                        return damages;
                     }
                 }),
             ],
