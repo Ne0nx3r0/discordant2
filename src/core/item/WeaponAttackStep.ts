@@ -26,6 +26,7 @@ export interface IWeaponAttackDamages{
     target: IBattleCreature;
     type: DamageType;
     amount: number;
+    hpSteal?: number;
 }
 
 interface DamageFunc{
