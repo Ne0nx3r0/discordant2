@@ -24,7 +24,7 @@ export const FairyInABottle = new ItemEquippable({
   
             bag.battle.game.unequipPlayerItem(pc.uid,'pouch',true)
             .then(()=>{
-                this.game.takePlayerItem(pc.uid,ItemId.FairyInABottle,1);
+                bag.battle.game.takePlayerItem(pc.uid,ItemId.FairyInABottle,1);
             });
 
         }
