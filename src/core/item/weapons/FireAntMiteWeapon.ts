@@ -41,16 +41,11 @@ export const FireAntMiteWeapon = new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} sucks the life of {defender}',
                     damageFunc: function(bag){
-                        const damage = Math.round(Math.random()*(bag.step.attack.maxBaseDamage-bag.step.attack.minBaseDamage)+bag.step.attack.minBaseDamage);
+                        const damages = DefaultDamageFunc(bag);
 
-                        return [
-                            {
-                                target: bag.defender,
-                                type: DamageType.physical,
-                                amount: damage,
-                                hpSteal: Math.min(5,bag.attacker.creature.stats.hpTotal-bag.attacker.creature.hpCurrent),
-                            }
-                        ];
+                        damages[0].hpSteal = 5;
+
+                        return damages;
                     }
                 }),
             ],

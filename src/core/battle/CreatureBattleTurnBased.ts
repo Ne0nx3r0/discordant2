@@ -602,7 +602,7 @@ export default class CreatureBattleTurnBased{
                         );
 
                         damagesMsgs.push(
-                            `+ ${attacker.creature.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) healed ${wad.hpSteal}HP`
+                            `+ ${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal}) stole ${wad.hpSteal}HP`
                         );
                     }
                 }
