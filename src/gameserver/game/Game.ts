@@ -471,14 +471,14 @@ export default class Game {
         return removedItems;
     }
 
-    async unequipPlayerItem(uid:string,slot:EquipmentSlot):Promise<number>{
+    async unequipPlayerItem(uid:string,slot:EquipmentSlot,ignoreCombat?:boolean):Promise<number>{
         const player = await this.getPlayerCharacter(uid);
 
         if(!player){
             throw 'You are not registered yet';
         }
 
-        if(player.battle){
+        if(player.battle && !ignoreCombat){
             throw 'You cannot change weapons in combat!';
         }
 
