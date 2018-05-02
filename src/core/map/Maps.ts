@@ -10,6 +10,7 @@ import { LivingWoodsMapPiece } from '../item/maps/LivingWoodsMapPiece';
 import { LivingWoodsMap } from '../item/maps/LivingWoodsMap';
 import { RedForestCastleMapPiece } from '../item/maps/RedForestCastleMapPiece';
 import { RedForestCastleMap } from '../item/maps/RedForestCastleMap';
+import GoblinSneakWeapon from '../item/weapons/GoblinSneakWeapon';
 
 export const MapWesternGate = new ExplorableMap({
     fileName: 'WesternGate2',
@@ -42,7 +43,7 @@ export const MapLivingWoods = new ExplorableMap({
     mapJson: require('../../../assets/maps/LivingWoods/LivingWoodsLayout.json'),
     mapData: LivingWoodsEvents,
     pieceItem: LivingWoodsMapPiece,
-    mapItem: LivingWoodsMap,
+    mapItem: GoblinSneakWeapon,
 });
 
 export const WorldMaps = {
