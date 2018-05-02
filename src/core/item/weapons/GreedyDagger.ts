@@ -15,7 +15,7 @@ import EffectId from '../../effects/EffectId';
 export const GreedyDagger = new Weapon({
     id: ItemId.GreedyDagger,
     title: 'Greedy Dagger',
-    description: `While it's not known if any ever succeeded in discovering the Exiled Magician's secret of immortality, these soul devouring blades are a testiment to all the attempts.`,
+    description: `While it's not known if anyone ever succeeded in discovering the Exiled Magician's secret of immortality, these soul devouring blades are a testiment to all the attempts.`,
     damageBlocked: 0.01,
     useRequirements:{
         agility: 32,
