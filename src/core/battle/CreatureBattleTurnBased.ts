@@ -594,6 +594,17 @@ export default class CreatureBattleTurnBased{
                     damagesMsgs.push(
                         `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}`
                     );
+
+                    if(wad.hpSteal){
+                        attacker.creature.hpCurrent = Math.min(
+                            attacker.creature.hpCurrent+wad.hpSteal,
+                            attacker.creature.stats.hpTotal
+                        );
+
+                        damagesMsgs.push(
+                            `+ ${attacker.creature.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) healed ${wad.hpSteal}HP`
+                        );
+                    }
                 }
             }
  
