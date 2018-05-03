@@ -22,8 +22,8 @@ export const TabletOfPoison =  new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'poison',
-            minBaseDamage: 5,
-            maxBaseDamage: 5,
+            minBaseDamage: 10,
+            maxBaseDamage: 10,
             damageType: DamageType.special,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.No,
@@ -38,7 +38,7 @@ export const TabletOfPoison =  new Weapon({
                             new BattleTemporaryEffectPoison(
                                 EffectId.PoisonSpiritSnake,
                                 'Spirit snake poison',
-                                5
+                                bag.step.attack.minBaseDamage
                                 ),
                             5);
 
