@@ -58,7 +58,7 @@ export const FireAntInfectedWeapon = new Weapon({
                     damageFunc: DefaultDamageFunc,
                 })
             ],
-            aiUseWeight: 1.2
+            aiUseWeight: 0.8
         }),
         new WeaponAttack({
             title: 'flamespray',
@@ -103,7 +103,7 @@ export const FireAntInfectedWeapon = new Weapon({
                     damageFunc: function(){return [];},
                 })
             ],
-            aiUseWeight: 0.1
+            aiUseWeight: 0.2
         }),
     ]
 });
