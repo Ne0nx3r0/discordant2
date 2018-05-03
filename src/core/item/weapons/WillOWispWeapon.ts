@@ -9,7 +9,7 @@ import EffectGoblinSneakPoison from '../../effects/types/EffectGoblinSneakPoison
 import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
-import { EffectParalyze } from '../../effects/types/EffectParalyze';
+import { EffectShieldRed } from '../../effects/types/EffectShieldRed';
 
 export default new Weapon({
     id: ItemId.WillOWispWeapon,
@@ -22,8 +22,8 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'shock',
-            minBaseDamage: 1,
-            maxBaseDamage: 5,
+            minBaseDamage: 5,
+            maxBaseDamage: 40,
             damageType: DamageType.thunder,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.No,
@@ -33,25 +33,28 @@ export default new Weapon({
                     damageFunc: DefaultDamageFunc
                 }),
             ],
-            aiUseWeight: 0.5
+            aiUseWeight: 0.8
         }),
         new WeaponAttack({
-            title: 'paralyze',
+            title: 'red shield',
             minBaseDamage: 0,
             maxBaseDamage: 0,
             damageType: DamageType.special,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.No,
+            aiShouldIUseThisAttack: function(bag){
+                return !bag.tempEffects.has(EffectShieldRed);  
+            },
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} flies through {defender} PARALYZING them!',
+                    attackMessage: `{attacker} turns bright red!`,
                     damageFunc: function DefaultDamageFunc(bag: DamageFuncBag): Array<IWeaponAttackDamages> {
-                        bag.battle.addTemporaryEffect(bag.defender.creature,EffectParalyze,2);
+                        bag.battle.addTemporaryEffect(bag.defender.creature,EffectShieldRed,3);
                         return [];
                     },
                 }),
             ],
-            aiUseWeight: 0.5
+            aiUseWeight: 0.2
         })
     ]
 });
