@@ -24,7 +24,7 @@ export const TabletOfPoison =  new Weapon({
             title: 'poison',
             minBaseDamage: 5,
             maxBaseDamage: 5,
-            damageType: DamageType.physical,
+            damageType: DamageType.special,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.No,
             specialDescription: 'poison lasts 5 rounds, stackable effect',
