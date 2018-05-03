@@ -32,7 +32,7 @@ interface BattleBag{
 }
 
 export interface OnDefendHandlerBag extends BattleBag{
-    defender: IBattleCreature;
+    attacker: IBattleCreature;
 }
 
 export interface OnDefendHandler{
