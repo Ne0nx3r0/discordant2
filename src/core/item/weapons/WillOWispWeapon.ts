@@ -22,15 +22,15 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'shock',
-            minBaseDamage: 5,
-            maxBaseDamage: 50,
+            minBaseDamage: 1,
+            maxBaseDamage: 5,
             damageType: DamageType.thunder,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} zaps with a bolt of electricity {defender}',
-                    damageFunc: DefaultNoDamageFunc
+                    attackMessage: '{attacker} zaps {defender} with a bolt of electricity',
+                    damageFunc: DefaultDamageFunc
                 }),
             ],
             aiUseWeight: 0.5

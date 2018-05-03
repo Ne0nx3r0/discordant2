@@ -12,3 +12,4 @@ export { default as GhostGuardian } from './monsters/GhostGuardian';
 export { default as GhostHound } from './monsters/GhostHound';
 export { default as GiantRat } from './monsters/GiantRat';
 export { default as ExiledMagician } from './monsters/ExiledMagician';
+export { default as WillOWisp } from './monsters/WillOWisp';

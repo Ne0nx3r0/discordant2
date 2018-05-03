@@ -582,28 +582,46 @@ export default class CreatureBattleTurnBased{
                     }
                 }
 
-                if(!dodged){
-                    const damageTaken = ResistDamage(wad.target.creature,wad.amount,wad.type);
+                if(!dodged){ 
+                    let attackWasAllowed:boolean = true;
 
-                    const damageResisted = wad.amount - damageTaken;
+                    wad.target.creature.equipment.forEach((item: ItemEquippable, slot:EquipmentSlot)=>{
+                        if(item.onDefend){
+                            let itemAllowedAttack = item.onDefend({
+                                battle: this,
+                                wearer: wad.target,
+                                attacker: wad.target,
+                            });
 
-                    const resistedStr = damageResisted == 0 ? '' : `, resisted ${damageResisted}`;
+                            if(!itemAllowedAttack){
+                                attackWasAllowed = false;
+                            }
+                        }
+                    });
 
-                    wad.target.creature.hpCurrent -= damageTaken;
+                    if(attackWasAllowed){
+                        const damageTaken = ResistDamage(wad.target.creature,wad.amount,wad.type);
 
-                    damagesMsgs.push(
-                        `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}`
-                    );
-
-                    if(wad.hpSteal){
-                        attacker.creature.hpCurrent = Math.min(
-                            attacker.creature.hpCurrent+wad.hpSteal,
-                            attacker.creature.stats.hpTotal
-                        );
-
+                        const damageResisted = wad.amount - damageTaken;
+    
+                        const resistedStr = damageResisted == 0 ? '' : `, resisted ${damageResisted}`;
+    
+                        wad.target.creature.hpCurrent -= damageTaken;
+    
                         damagesMsgs.push(
-                            `+ ${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal}) stole ${wad.hpSteal}HP`
+                            `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}`
                         );
+    
+                        if(wad.hpSteal){
+                            attacker.creature.hpCurrent = Math.min(
+                                attacker.creature.hpCurrent+wad.hpSteal,
+                                attacker.creature.stats.hpTotal
+                            );
+    
+                            damagesMsgs.push(
+                                `+ ${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal}) stole ${wad.hpSteal}HP`
+                            );
+                        }
                     }
                 }
             }

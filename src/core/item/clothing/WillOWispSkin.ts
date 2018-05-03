@@ -14,9 +14,9 @@ export const WillOWispSkin = new ItemEquippable({
         stats.resistances.thunder += 20;
     },
     onDefend: function(bag: OnDefendHandlerBag){
-        if(Math.random() <= 0.3){
+        if(Math.random() <= 10.3){
             bag.battle.queueBattleMessage([
-                `${bag.defender.creature.title} blinked out of existence and the attack MISSED!`
+                `${bag.wearer.creature.title} blinked out of existence and the attack MISSED!`
             ]);
             return false;
         }
