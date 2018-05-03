@@ -23,7 +23,7 @@ export interface UseRequirements{
 }
 
 export interface OnAddBonusesHandler{
-    (stats:ICreatureStatSet):void;//Modifies the statset if bonuses/penalties apply
+    (stats:ICreatureStatSet);//Modifies the statset if bonuses/penalties apply
 }
 
 interface BattleBag{
@@ -35,8 +35,8 @@ export interface OnDefendHandlerBag extends BattleBag{
     defender: IBattleCreature;
 }
 
-export interface OnDefendHandler extends OnDefendHandlerBag{
-    (bag: OnDefendHandlerBag):void;
+export interface OnDefendHandler{
+    (bag: OnDefendHandlerBag): boolean;
 }
 
 export interface OnDefeatHandlerBag extends BattleBag{
