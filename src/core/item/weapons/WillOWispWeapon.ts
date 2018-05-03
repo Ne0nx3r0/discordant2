@@ -10,6 +10,7 @@ import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 import { EffectShieldRed } from '../../effects/types/EffectShieldRed';
+import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
 
 export default new Weapon({
     id: ItemId.WillOWispWeapon,
@@ -34,6 +35,21 @@ export default new Weapon({
                 }),
             ],
             aiUseWeight: 0.8
+        }),
+        new WeaponAttack({
+            title: 'shock all',
+            minBaseDamage: 5,
+            maxBaseDamage: 20,
+            damageType: DamageType.thunder,
+            scalingAttribute: Attribute.spirit,
+            scalingLevel: ScalingLevel.No,
+            steps: [
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} emits a wave of electricity',
+                    damageFunc: DefaultDamageAllFunc
+                }),
+            ],
+            aiUseWeight: 0.4
         }),
         new WeaponAttack({
             title: 'red shield',
