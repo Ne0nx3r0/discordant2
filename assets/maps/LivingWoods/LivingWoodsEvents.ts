@@ -21,7 +21,8 @@ export const LivingWoodsEvents:IMapData = {
     startY: 37,
     encounterChance: 0.1,
     encounters:[
-        { id:CreatureId.WillOWisp,    weight: 1 },
+        { id:CreatureId.WillOWisp, weight: 1 },
+        { id:CreatureId.Faun, weight: 1 },
     ],
     eventTiles: [
         {
