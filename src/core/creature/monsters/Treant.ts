@@ -4,7 +4,6 @@ import CreatureEquipment from '../../item/CreatureEquipment';
 import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
 import TreantWeapon from '../../item/weapons/TreantWeapon';
-import { TreantSkin } from '../../item/clothing/TreantSkin';
 
 export default class Treant extends CreatureAIControlled{
     constructor(){
@@ -20,10 +19,9 @@ export default class Treant extends CreatureAIControlled{
                 luck: 0,
             }),
             equipment: new CreatureEquipment({
-                armor: TreantSkin,
                 weapon: TreantWeapon,
             }),
-            wishesDropped: 100,
+            wishesDropped: 120,
         });
     }
 }
