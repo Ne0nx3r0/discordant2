@@ -23,10 +23,8 @@ interface RoundEffectAttackFunc{
 }
 
 interface RoundEffectStatsFunc{
-    (stats:ICreatureStatSet,roundsLeft:number):void;/* modify the stats object and let it fall back to the caller */
+    (stats:ICreatureStatSet,roundsLeft:number):void;
 }
-
-export type EffectEventHandler = 'onAdded' | 'onRoundBegin' | 'onAttack' | 'onAttacked' | 'onRemoved';
 
 interface BattleTemporaryEffectBag{
     id:EffectId;
@@ -35,7 +33,7 @@ interface BattleTemporaryEffectBag{
     onAdded?:RoundEffectFunc;
     onRoundBegin?:RoundEffectFunc;
     onAttack?:RoundEffectAttackFunc;
-    onAttacked?:RoundEffectAttackFunc;
+    onDefend?:RoundEffectAttackFunc;
     onRemoved?:RoundEffectFunc;
 }
 
@@ -45,23 +43,18 @@ export default class BattleTemporaryEffect{
     onAdded?:RoundEffectFunc;
     onAddBonuses?:RoundEffectStatsFunc;
     onRoundBegin?:RoundEffectFunc;
-    //onAttack?:RoundEffectAttackFunc;
-    //onAttacked?:RoundEffectAttackFunc;
+    onAttack?:RoundEffectAttackFunc;
+    onDefend?:RoundEffectAttackFunc;
     onRemoved?:RoundEffectFunc;
 
     constructor(bag:BattleTemporaryEffectBag){
+        this.id = bag.id;
         this.title = bag.title;
-        this.onAdded = bag.onAdded;
-        this.onAddBonuses = bag.onAddBonuses;
-        this.onRoundBegin = bag.onRoundBegin;
-        //this.onAttack = bag.onAttack;
-        //this.onAttacked = bag.onAttacked;
-        this.onRemoved = bag.onRemoved;
+        if(bag.onAdded) this.onAdded = bag.onAdded;
+        if(bag.onAddBonuses) this.onAddBonuses = bag.onAddBonuses;
+        if(bag.onRoundBegin) this.onRoundBegin = bag.onRoundBegin;
+        if(bag.onAttack) this.onAttack = bag.onAttack;
+        if(bag.onDefend) this.onDefend = bag.onDefend;
+        if(bag.onRemoved) this.onRemoved = bag.onRemoved;
     }
 }
-
-/*
-Poison
-Recovery
-Stun
-Dodge*/
