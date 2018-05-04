@@ -58,7 +58,7 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
     let wishBonusStr = '';
 
     if(pc.stats.wishBonus > 0){
-        wishBonusStr = ' (+'+(pc.stats.wishBonus*100)+'% Wishes)';
+        wishBonusStr = ' (+'+Math.round(pc.stats.wishBonus*100)+'% Wishes)';
     }
 
     let dodgeStr = '';
