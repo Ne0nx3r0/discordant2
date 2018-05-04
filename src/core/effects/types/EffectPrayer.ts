@@ -12,4 +12,4 @@ export const EffectPrayer = new BattleTemporaryEffect({
 
         bag.sendBattleEmbed([`+ Prayer heals ${bag.target.title} +${hpHealed}HP`]);
     }
-})
+});
