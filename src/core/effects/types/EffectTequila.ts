@@ -7,6 +7,6 @@ export const EffectTequila = new BattleTemporaryEffect({
     id: EffectId.Tequila,
     title: `Tequila`,
     onAddBonuses: function(stats){
-        stats.wishBonus += 5;
+        stats.magicFind += 20;
     }
 })

@@ -11,7 +11,7 @@ import { EffectTequila } from '../../effects/types/EffectTequila';
 export const Tequila = new ItemUsable({
     id: ItemId.Tequila,
     title: 'Tequila',
-    description: '(+5% wishes) The result of burying an agave plant and leaving it for several days to ferment, this spirit has kept many a traveler warm on cold nights and led to a number of deeds which imbibers wish they could forget but are never allowed to.',
+    description: 'The result of burying an agave plant and leaving it for several days to ferment, this spirit has kept many a traveler warm on cold nights and led to a number of deeds which imbibers wish they could forget but are never allowed to.',
     goldValue: 80,
     canUseInbattle: true,
     canUseInParty: false,
