@@ -10,14 +10,6 @@ export interface EffectEvent{
     roundsLeft:number
 }
 
-interface EffectEventFunc{
-    (event:EffectEvent): void;
-}
-
-interface EffectAddBonusesFunc{
-    (stats:ICreatureStatSet): void;
-}
-
 interface AttackEffectEvent extends EffectEvent{
     attacker: IBattleCreature;
     defender: IBattleCreature;
@@ -25,30 +17,26 @@ interface AttackEffectEvent extends EffectEvent{
     preventAttack: ()=>void;
 }
 
-interface AttackEffectEventFunc{
-    (event:EffectEvent):void;
-}
-
 interface BattleTemporaryEffectBag{
     id:EffectId;
     title:string;
-    onAdded?:EffectEventFunc;
-    onRoundBegin?:EffectEventFunc;
-    onRemoved?:EffectEventFunc;
-    onAddBonuses?:EffectAddBonusesFunc;
-    onAttack?:AttackEffectEventFunc;
-    onDefend?:AttackEffectEventFunc;
+    onAdded?: (event:EffectEvent)=>void;
+    onRoundBegin?: (event:EffectEvent)=>void;
+    onRemoved?: (event:EffectEvent)=>void;
+    onAddBonuses?: (stats:ICreatureStatSet)=>void;
+    onAttack?: (event:AttackEffectEvent)=>void;
+    onDefend?: (event:AttackEffectEvent)=>void;
 }
 
 export default class BattleTemporaryEffect implements BattleTemporaryEffectBag{
     id:EffectId;
     title:string;
-    onAdded?:EffectEventFunc;
-    onRoundBegin?:EffectEventFunc;
-    onRemoved?:EffectEventFunc;
-    onAddBonuses?:EffectAddBonusesFunc;
-    onAttack?:AttackEffectEventFunc;
-    onDefend?:AttackEffectEventFunc;
+    onAdded?: (event:EffectEvent)=>void;
+    onRoundBegin?: (event:EffectEvent)=>void;
+    onRemoved?: (event:EffectEvent)=>void;
+    onAddBonuses?: (stats:ICreatureStatSet)=>void;
+    onAttack?: (event:AttackEffectEvent)=>void;
+    onDefend?: (event:AttackEffectEvent)=>void;
 
     constructor(bag:BattleTemporaryEffectBag){
         this.id = bag.id;
