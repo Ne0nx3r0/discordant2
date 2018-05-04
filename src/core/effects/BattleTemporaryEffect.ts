@@ -2,50 +2,54 @@ import Creature from '../creature/Creature';
 import EffectId from './EffectId';
 import { ICreatureStatSet } from '../creature/Creature';
 import { IWeaponAttackDamages } from '../item/WeaponAttackStep';
-import CreatureBattleTurnBased from '../battle/CreatureBattleTurnBased';
-
-interface BattleEmbedFunc{
-    (msg:Array<string>):void;
-}
+import CreatureBattleTurnBased, { IBattleCreature } from '../battle/CreatureBattleTurnBased';
 
 export interface EffectEventBag{
-    target:Creature;
-    sendBattleEmbed:BattleEmbedFunc;
+    target:IBattleCreature;
     battle:CreatureBattleTurnBased;
+    roundsLeft:number
 }
 
-interface RoundEffectFunc{
+interface EffectEventFunc{
+    (bag:EffectEventBag): void;
+}
+
+interface EffectAddBonusesFunc{
+    (stats:ICreatureStatSet): void;
+}
+
+interface AttackEffectEventBag extends EffectEventBag{
+    attacker: IBattleCreature;
+    defender: IBattleCreature;
+    wad: IWeaponAttackDamages;
+    preventAttack: ()=>void;
+}
+
+interface AttackEffectEventFunc{
     (bag:EffectEventBag):void;
 }
 
-interface RoundEffectAttackFunc{
-    (bag:EffectEventBag,damages:IWeaponAttackDamages):boolean;
-}
-
-interface RoundEffectStatsFunc{
-    (stats:ICreatureStatSet,roundsLeft:number):void;
-}
 
 interface BattleTemporaryEffectBag{
     id:EffectId;
     title:string;
-    onAddBonuses?:RoundEffectStatsFunc;
-    onAdded?:RoundEffectFunc;
-    onRoundBegin?:RoundEffectFunc;
-    onAttack?:RoundEffectAttackFunc;
-    onDefend?:RoundEffectAttackFunc;
-    onRemoved?:RoundEffectFunc;
+    onAdded?:EffectEventFunc;
+    onRoundBegin?:EffectEventFunc;
+    onRemoved?:EffectEventFunc;
+    onAddBonuses?:EffectAddBonusesFunc;
+    onAttack?:AttackEffectEventFunc;
+    onDefend?:AttackEffectEventFunc;
 }
 
-export default class BattleTemporaryEffect{
+export default class BattleTemporaryEffect implements BattleTemporaryEffectBag{
     id:EffectId;
     title:string;
-    onAdded?:RoundEffectFunc;
-    onAddBonuses?:RoundEffectStatsFunc;
-    onRoundBegin?:RoundEffectFunc;
-    onAttack?:RoundEffectAttackFunc;
-    onDefend?:RoundEffectAttackFunc;
-    onRemoved?:RoundEffectFunc;
+    onAdded?:EffectEventFunc;
+    onRoundBegin?:EffectEventFunc;
+    onRemoved?:EffectEventFunc;
+    onAddBonuses?:EffectAddBonusesFunc;
+    onAttack?:AttackEffectEventFunc;
+    onDefend?:AttackEffectEventFunc;
 
     constructor(bag:BattleTemporaryEffectBag){
         this.id = bag.id;
