@@ -589,8 +589,8 @@ export default class CreatureBattleTurnBased{
                         if(item.onDefend){
                             let itemAllowedAttack = item.onDefend({
                                 battle: this,
-                                wearer: wad.target,
-                                attacker: wad.target,
+                                attacker: attacker,
+                                wad,
                             });
 
                             if(!itemAllowedAttack){
@@ -631,7 +631,7 @@ export default class CreatureBattleTurnBased{
                     if(item.onDefeat){
                         item.onDefeat({
                             battle: this,
-                            wearer: wad.target,
+                            wad,
                             attacker: attacker,
                         });
                     }

@@ -4,6 +4,7 @@ import Creature from '../creature/Creature';
 import {ICreatureStatSet} from '../creature/Creature';
 import { EquipmentSlot } from './CreatureEquipment';
 import CreatureBattleTurnBased, { IBattleCreature } from '../battle/CreatureBattleTurnBased';
+import { IWeaponAttackDamages } from './WeaponAttackStep';
 
 export interface ItemEquippableBag extends ItemBaseBag{
     slotType:EquipmentSlot;
@@ -28,23 +29,19 @@ export interface OnAddBonusesHandler{
 
 interface BattleBag{
     battle:CreatureBattleTurnBased;
-    wearer:IBattleCreature;
 }
 
-export interface OnDefendHandlerBag extends BattleBag{
+export interface OnBattlEventHandlerBag extends BattleBag{
     attacker: IBattleCreature;
+    wad: IWeaponAttackDamages;
 }
 
 export interface OnDefendHandler{
-    (bag: OnDefendHandlerBag): boolean;
-}
-
-export interface OnDefeatHandlerBag extends BattleBag{
-    attacker:IBattleCreature;
+    (bag: OnBattlEventHandlerBag): boolean;
 }
 
 export interface OnDefeatHandler{
-    (bag: OnDefeatHandlerBag):void;
+    (bag: OnBattlEventHandlerBag):void;
 }
 
 export default class ItemEquippable extends ItemBase{
