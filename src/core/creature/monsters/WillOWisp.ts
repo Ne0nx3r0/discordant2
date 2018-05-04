@@ -4,7 +4,6 @@ import CreatureEquipment from '../../item/CreatureEquipment';
 import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
 import WillOWispWeapon from '../../item/weapons/WillOWispWeapon';
-import { WillOWispSkin } from '../../item/clothing/WillOWispSkin';
 
 export default class WillOWisp extends CreatureAIControlled{
     constructor(){
@@ -20,7 +19,6 @@ export default class WillOWisp extends CreatureAIControlled{
                 luck: 0,
             }),
             equipment: new CreatureEquipment({
-                armor: WillOWispSkin,
                 weapon: WillOWispWeapon,
             }),
             wishesDropped: 75,

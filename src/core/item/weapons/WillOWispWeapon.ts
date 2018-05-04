@@ -2,7 +2,7 @@ import Weapon from '../Weapon';
 import WeaponAttack, { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep, { IWeaponAttackDamages } from '../WeaponAttackStep';
 import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
-import Creature from '../../creature/Creature';
+import Creature, { ICreatureStatSet } from '../../creature/Creature';
 
 import ItemId from '../ItemId';
 import EffectGoblinSneakPoison from '../../effects/types/EffectGoblinSneakPoison';
@@ -11,6 +11,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 import { EffectShieldRed } from '../../effects/types/EffectShieldRed';
 import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
+import { OnBattlEventHandlerBag } from '../ItemEquippable';
 
 export default new Weapon({
     id: ItemId.WillOWispWeapon,
@@ -20,6 +21,19 @@ export default new Weapon({
     chanceToCritical: 0.2,
     useRequirements:{},
     goldValue:0,
+    onAddBonuses: function(stats: ICreatureStatSet){
+        stats.resistances.dark -= 20;
+        stats.resistances.thunder += 20;
+    },
+    onDefend: function(bag: OnBattlEventHandlerBag){
+        if(Math.random() <= 10.3){
+            bag.battle.queueBattleMessage([
+                `${bag.wad.target.creature.title} blinked out of existence and the attack MISSED!`
+            ]);
+            return false;
+        }
+        return true;
+    },
     attacks: [
         new WeaponAttack({
             title: 'shock',
