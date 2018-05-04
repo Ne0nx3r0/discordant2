@@ -64,6 +64,9 @@ export const FaunWeapon = new Weapon({
             scalingLevel: ScalingLevel.No,
             minBaseDamage: 5,
             maxBaseDamage: 50,
+            aiShouldIUseThisAttack: function(bag){
+                return bag.hpCurrent < bag.stats.hpTotal * 0.2;
+            },
             steps: [
                 new WeaponAttackStep({
                     attackMessage: '{attacker} calls on the forest to heal it',
