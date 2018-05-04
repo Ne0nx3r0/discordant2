@@ -6,10 +6,10 @@ export const EffectShieldRed = new BattleTemporaryEffect({
     id: EffectId.MagicShieldRed,
     title: 'Red Shield',
     onAdded:function(effectBag){
-        effectBag.sendBattleEmbed([`+${effectBag.target.title} gains +100 fire resistance!`]);
+        effectbag.battle.queueBattleMessage([`+${effectBag.target.title} gains +100 fire resistance!`]);
     },
     onRemoved:function(effectBag){
-        effectBag.sendBattleEmbed([`-${effectBag.target.title}'s fire shield broke`]);
+        effectbag.battle.queueBattleMessage([`-${effectBag.target.title}'s fire shield broke`]);
     },
     onAddBonuses:function(stats){
         stats.resistances.fire += 100;

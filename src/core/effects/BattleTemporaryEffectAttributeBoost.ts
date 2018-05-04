@@ -19,10 +19,10 @@ export default class BattleTemporaryEffectAttributeBoost extends BattleTemporary
             id: bag.id,
             title: bag.title,
             onAdded:function(e){
-                e.battle.queueBattleMessage([`+${e.target.creature.title}'s ${Attribute[bag.attribute]} is boosted by ${bag.title}!`]);
+                e.battle.queueBattleMessage([`+${e.target.title}'s ${Attribute[bag.attribute]} is boosted by ${bag.title}!`]);
             },
             onRemoved:function(e){
-                e.battle.queueBattleMessage([`-${e.target.creature.title}'s ${bag.title} wore off`]);
+                e.battle.queueBattleMessage([`-${e.target.title}'s ${bag.title} wore off`]);
             },
             onAddBonuses:function(stats){
                 stats[Attribute[attribute]] += statBonusAmount;

@@ -5,14 +5,14 @@ import { IWeaponAttackDamages } from '../item/WeaponAttackStep';
 import CreatureBattleTurnBased, { IBattleCreature } from '../battle/CreatureBattleTurnBased';
 
 export interface EffectEvent{
-    target:IBattleCreature;
+    target:Creature;
     battle:CreatureBattleTurnBased;
     roundsLeft:number
 }
 
 interface AttackEffectEvent extends EffectEvent{
-    attacker: IBattleCreature;
-    defender: IBattleCreature;
+    attacker: Creature;
+    defender: Creature;
     wad: IWeaponAttackDamages;
     preventAttack: ()=>void;
 }
@@ -23,7 +23,7 @@ interface BattleTemporaryEffectBag{
     onAdded?: (event:EffectEvent)=>void;
     onRoundBegin?: (event:EffectEvent)=>void;
     onRemoved?: (event:EffectEvent)=>void;
-    onAddBonuses?: (stats:ICreatureStatSet)=>void;
+    onAddBonuses?: (stats:ICreatureStatSet,roundsLeft:number)=>void;
     onAttack?: (event:AttackEffectEvent)=>void;
     onDefend?: (event:AttackEffectEvent)=>void;
 }
@@ -34,7 +34,7 @@ export default class BattleTemporaryEffect implements BattleTemporaryEffectBag{
     onAdded?: (event:EffectEvent)=>void;
     onRoundBegin?: (event:EffectEvent)=>void;
     onRemoved?: (event:EffectEvent)=>void;
-    onAddBonuses?: (stats:ICreatureStatSet)=>void;
+    onAddBonuses?: (stats:ICreatureStatSet,roundsLeft:number)=>void;
     onAttack?: (event:AttackEffectEvent)=>void;
     onDefend?: (event:AttackEffectEvent)=>void;
 

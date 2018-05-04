@@ -13,10 +13,10 @@ export const EffectDodge = new BattleTemporaryEffect({
     id: EffectId.Dodge,
     title: 'Dodge',
     onAdded:function(effectBag){
-        effectBag.sendBattleEmbed([`+${effectBag.target.title} is blessed with +10 dodge!`]);
+        effectbag.battle.queueBattleMessage([`+${effectBag.target.title} is blessed with +10 dodge!`]);
     },
     onRemoved:function(effectBag){
-        effectBag.sendBattleEmbed([`-${effectBag.target.title}'s blessing wore off`]);
+        effectbag.battle.queueBattleMessage([`-${effectBag.target.title}'s blessing wore off`]);
     },
     onAddBonuses:function(stats){
         stats.dodge += 10;
