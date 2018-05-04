@@ -49,6 +49,7 @@ export { BirthdayCake } from './misc/BirthdayCake';
 export { Revive } from './misc/Revive';
 export { BlueMushroom } from './misc/BlueMushroom';
 export { RedMushroom } from './misc/RedMushroom';
+export { Tequila } from './misc/Tequila';
 
 //Crafting
 export { FireAntCarapace } from './misc/FireAntCarapace';
@@ -89,7 +90,7 @@ export { FireDagger } from './weapons/FireDagger';
 export { FireAxe } from './weapons/FireAxe';
 export { FireSpear } from './weapons/FireSpear';
 export { FireMace } from './weapons/FireMace';
-export { LuckyDagger } from './weapons/LuckDagger';
+export { LuckyDagger } from './weapons/LuckDagger';\
 export { Mace } from './weapons/Mace';
 export { Kukri } from './weapons/Kukri';
 export { GreedyDagger } from './weapons/GreedyDagger';
