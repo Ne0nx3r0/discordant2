@@ -10,6 +10,7 @@ export interface ItemEquippableBag extends ItemBaseBag{
     slotType:EquipmentSlot;
     onAddBonuses?:OnAddBonusesHandler;
     onDefeat?:OnDefeatHandler;
+    onAttack?:OnAttackHandler;
     onDefend?:OnDefendHandler;
     useRequirements?:UseRequirements;
     lostOnDeath?:boolean;
@@ -40,6 +41,10 @@ export interface OnDefendHandler{
     (bag: OnBattlEventHandlerBag): boolean;
 }
 
+export interface OnAttackHandler{
+    (bag: OnBattlEventHandlerBag): boolean;
+}
+
 export interface OnDefeatHandler{
     (bag: OnBattlEventHandlerBag):void;
 }
@@ -49,6 +54,7 @@ export default class ItemEquippable extends ItemBase{
     onAddBonuses?:OnAddBonusesHandler;
     onDefeat?:OnDefeatHandler;
     onDefend?:OnDefendHandler;
+    onAttack?:OnAttackHandler;
     useRequirements:UseRequirements;
     lostOnDeath:boolean;
 
@@ -60,6 +66,7 @@ export default class ItemEquippable extends ItemBase{
         if(bag.onAddBonuses) this.onAddBonuses = bag.onAddBonuses;
         if(bag.onDefeat) this.onDefeat = bag.onDefeat;
         if(bag.onDefend) this.onDefend = bag.onDefend;
+        if(bag.onAttack) this.onDefend = bag.onAttack;
 
         this.useRequirements = bag.useRequirements || {};
         this.lostOnDeath = bag.lostOnDeath;

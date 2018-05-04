@@ -1,6 +1,6 @@
 import WeaponAttack from './WeaponAttack';
 import Creature from '../creature/Creature';
-import ItemEquippable, { OnDefeatHandler, OnDefendHandler } from './ItemEquippable';
+import ItemEquippable, { OnDefeatHandler, OnDefendHandler, OnAttackHandler } from './ItemEquippable';
 import { ItemEquippableBag, UseRequirements, OnAddBonusesHandler } from './ItemEquippable';
 import {EquipmentSlot} from './CreatureEquipment';
 import Use from '../../bot/commands/Use';
@@ -21,6 +21,7 @@ interface ItemWeaponBag{
     recipe?:ItemRecipe;
     onDefeat?:OnDefeatHandler;
     onDefend?:OnDefendHandler;
+    onAttack?:OnAttackHandler;
 }
 
 export default class Weapon extends ItemEquippable{
@@ -40,6 +41,7 @@ export default class Weapon extends ItemEquippable{
             showInItems: bag.showInItems,
             onDefend: bag.onDefend,
             onDefeat: bag.onDefeat,
+            onAttack: bag.onAttack,
             recipe: bag.recipe,
             slotType:'weapon'//also offhand, but for slot type they are all primary
         });
