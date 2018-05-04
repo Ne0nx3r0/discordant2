@@ -90,7 +90,7 @@ export { FireDagger } from './weapons/FireDagger';
 export { FireAxe } from './weapons/FireAxe';
 export { FireSpear } from './weapons/FireSpear';
 export { FireMace } from './weapons/FireMace';
-export { LuckyDagger } from './weapons/LuckDagger';\
+export { LuckyDagger } from './weapons/LuckDagger';
 export { Mace } from './weapons/Mace';
 export { Kukri } from './weapons/Kukri';
 export { GreedyDagger } from './weapons/GreedyDagger';
