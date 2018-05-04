@@ -14,8 +14,7 @@ import EventTileEnterMessage from "../../../src/core/map/tiles/EventTileEnterMes
 export const lootGenerator = new LootGenerator();
 
 lootGenerator.addLootItem('common',ItemsIndex.Vial,1);
-//lootGenerator.addLootItem('common',ItemId.MapAfterRedForestPiece,1);
-//lootGenerator.addLootItem('rare',ItemId.MapAfterRedForestPiece,0.2);
+lootGenerator.addLootItem('rare',ItemsIndex.Tent,1);
 
 export const LivingWoodsEvents:IMapData = {
     startX: 30,
@@ -92,6 +91,40 @@ export const LivingWoodsEvents:IMapData = {
                 {x:21,y:18},
                 {x:22,y:17},
                 {x:22,y:18},
+            ],
+        },
+        {
+            event: new EventTileLootable({
+                lootGenerator: lootGenerator,
+                lootSettings:{
+                    startingNode: 'common',
+                    chanceToGenerate: 0.8,        
+                },
+                wishesMax: 120,
+                goldMax: 200,
+            }),
+            coords: [
+                {x:11,y:34},
+                {x:29,y:27},
+                {x:29,y:28},
+                {x:8,y:10},
+                {x:8,y:11},
+                {x:28,y:6},
+            ],
+        },
+        {
+            event: new EventTileLootable({
+                lootGenerator: lootGenerator,
+                lootSettings:{
+                    startingNode: 'rare',
+                    chanceToGenerate: 0.8,        
+                },
+                wishesMax: 160,
+                goldMax: 250,
+            }),
+            coords: [
+                {x:15,y:19},
+                {x:26,y:13},
             ],
         },
     ]
