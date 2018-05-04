@@ -4,21 +4,21 @@ import { ICreatureStatSet } from '../creature/Creature';
 import { IWeaponAttackDamages } from '../item/WeaponAttackStep';
 import CreatureBattleTurnBased, { IBattleCreature } from '../battle/CreatureBattleTurnBased';
 
-export interface EffectEventBag{
+export interface EffectEvent{
     target:IBattleCreature;
     battle:CreatureBattleTurnBased;
     roundsLeft:number
 }
 
 interface EffectEventFunc{
-    (bag:EffectEventBag): void;
+    (event:EffectEvent): void;
 }
 
 interface EffectAddBonusesFunc{
     (stats:ICreatureStatSet): void;
 }
 
-interface AttackEffectEventBag extends EffectEventBag{
+interface AttackEffectEvent extends EffectEvent{
     attacker: IBattleCreature;
     defender: IBattleCreature;
     wad: IWeaponAttackDamages;
@@ -26,9 +26,8 @@ interface AttackEffectEventBag extends EffectEventBag{
 }
 
 interface AttackEffectEventFunc{
-    (bag:EffectEventBag):void;
+    (event:EffectEvent):void;
 }
-
 
 interface BattleTemporaryEffectBag{
     id:EffectId;
