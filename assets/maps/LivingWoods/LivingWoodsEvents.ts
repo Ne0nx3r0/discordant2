@@ -127,5 +127,13 @@ export const LivingWoodsEvents:IMapData = {
                 {x:26,y:13},
             ],
         },
+        {
+            event: new EventTileEnterMessage({
+                message: `A stranger hiding behind a grey robe looks you over... "Bah, come back later when you have something worth trading for!"`,
+            }),
+            coords: [
+                {x:19,y:9},
+            ],
+        },
     ]
 };
