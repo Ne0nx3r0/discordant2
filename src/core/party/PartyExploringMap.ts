@@ -133,7 +133,7 @@ export default class PartyExploringMap{
         const forageableEvent = this.map.getForagableTile(this.currentX,this.currentY);
 
         if(forageableEvent){
-            forageableEvent.onEnter({
+            forageableEvent.onInteract({
                 party: this.party,
                 player: this.party.leader,
                 coordinate: {
