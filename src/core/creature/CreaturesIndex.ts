@@ -14,3 +14,4 @@ export { default as GiantRat } from './monsters/GiantRat';
 export { default as ExiledMagician } from './monsters/ExiledMagician';
 export { default as WillOWisp } from './monsters/WillOWisp';
 export { default as Treant } from './monsters/Treant';
+export { default as Faun } from './monsters/Faun';
