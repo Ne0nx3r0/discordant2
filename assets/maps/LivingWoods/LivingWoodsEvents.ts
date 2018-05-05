@@ -17,8 +17,8 @@ lootGenerator.addLootItem('common',ItemsIndex.Vial,1);
 lootGenerator.addLootItem('rare',ItemsIndex.Tent,1);
 
 export const LivingWoodsEvents:IMapData = {
-    startX: 30,
-    startY: 37,
+    startX: 27,
+    startY: 27,
     encounterChance: 0.1,
     encounters:[
         { id:CreatureId.WillOWisp, weight: 1 },
