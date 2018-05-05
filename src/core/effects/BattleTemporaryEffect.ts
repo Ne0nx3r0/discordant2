@@ -24,7 +24,7 @@ interface AttackEffectEvent extends DefeatEffectEvent{
 interface BattleTemporaryEffectBag{
     id:EffectId;
     title:string;
-    dispellable: boolean;
+    dispellable?: boolean;
     onAdded?: (event:EffectEvent)=>void;
     onRoundBegin?: (event:EffectEvent)=>void;
     onRemoved?: (event:EffectEvent)=>void;
@@ -37,7 +37,7 @@ interface BattleTemporaryEffectBag{
 export default class BattleTemporaryEffect implements BattleTemporaryEffectBag{
     id:EffectId;
     title:string;
-    dispellable: boolean;
+    dispellable?: boolean;
     onAdded?: (event:EffectEvent)=>void;
     onRoundBegin?: (event:EffectEvent)=>void;
     onRemoved?: (event:EffectEvent)=>void;
@@ -49,7 +49,7 @@ export default class BattleTemporaryEffect implements BattleTemporaryEffectBag{
     constructor(bag:BattleTemporaryEffectBag){
         this.id = bag.id;
         this.title = bag.title;
-        this.dispellable = bag.dispellable;
+        this.dispellable = bag.dispellable || true;
         if(bag.onAdded) this.onAdded = bag.onAdded;
         if(bag.onAddBonuses) this.onAddBonuses = bag.onAddBonuses;
         if(bag.onRoundBegin) this.onRoundBegin = bag.onRoundBegin;
