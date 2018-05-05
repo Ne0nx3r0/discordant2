@@ -21,7 +21,7 @@ export default class Faun extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: BareHands
             }),
-            wishesDropped: 80,
+            wishesDropped: 120,
         });
     }
 }

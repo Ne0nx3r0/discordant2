@@ -21,8 +21,9 @@ export const LivingWoodsEvents:IMapData = {
     startY: 27,
     encounterChance: 0.1,
     encounters:[
-        { id:CreatureId.WillOWisp, weight: 1 },
-        { id:CreatureId.Faun, weight: 1 },
+        { id:CreatureId.WillOWisp, weight: 2 },
+        { id:CreatureId.Faun, weight: 4 },
+        { id:CreatureId.Treant, weight: 1 },
     ],
     eventTiles: [
         {
@@ -36,12 +37,6 @@ export const LivingWoodsEvents:IMapData = {
                 goldMax: 200,
             }),
             coords: [
-                {x:11,y:34},
-                {x:29,y:27},
-                {x:29,y:28},
-                {x:8,y:10},
-                {x:8,y:11},
-                {x:28,y:6},
             ],
         },
         {
@@ -55,8 +50,6 @@ export const LivingWoodsEvents:IMapData = {
                 goldMax: 250,
             }),
             coords: [
-                {x:15,y:19},
-                {x:26,y:13},
             ],
         },
         {

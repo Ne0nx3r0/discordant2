@@ -21,7 +21,7 @@ export default class WillOWisp extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: WillOWispWeapon,
             }),
-            wishesDropped: 75,
+            wishesDropped: 130,
         });
     }
 }

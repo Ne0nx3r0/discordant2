@@ -21,7 +21,7 @@ export default class Treant extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: TreantWeapon,
             }),
-            wishesDropped: 120,
+            wishesDropped: 180,
         });
     }
 }
