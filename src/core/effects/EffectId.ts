@@ -21,6 +21,8 @@ enum EffectId {
     BackstabDodge,
     Rush,
     TreantRage,
+    TreantRageTrigger,
+    BottleFairy,
 }
 
 export default EffectId;
