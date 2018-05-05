@@ -18,13 +18,14 @@ export default class BattleTemporaryEffectAttributeBoost extends BattleTemporary
         super({
             id: bag.id,
             title: bag.title,
-            onAdded:function(e){
+            dispellable: true,
+            onAdded:(e)=>{
                 e.battle.queueBattleMessage([`+${e.target.title}'s ${Attribute[bag.attribute]} is boosted by ${bag.title}!`]);
             },
-            onRemoved:function(e){
+            onRemoved:(e)=>{
                 e.battle.queueBattleMessage([`-${e.target.title}'s ${bag.title} wore off`]);
             },
-            onAddBonuses:function(stats){
+            onAddBonuses:(stats)=>{
                 stats[Attribute[attribute]] += statBonusAmount;
             }
         });
