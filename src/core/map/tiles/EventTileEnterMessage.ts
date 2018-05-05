@@ -1,5 +1,5 @@
 import { EventTileHandlerBag } from "../EventTile";
-import EventTile from "../EventTile";
+import {EventTile} from "../EventTile";
 
 interface EventTileEnterMessageBag{
     message:string;

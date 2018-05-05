@@ -11,7 +11,7 @@ import LootGenerator from '../../../src/core/loot/LootGenerator';
 import { MapRedForest } from "../../../src/core/map/Maps";
 import { EventTileDoor } from "../../../src/core/map/tiles/EventTileDoor";
 import { DamageType } from "../../../src/core/item/WeaponAttackStep";
-import EventTile, { EventTileHandlerBag } from "../../../src/core/map/EventTile";
+import { EventTile,EventTileHandlerBag } from "../../../src/core/map/EventTile";
 import { ExiledMagicianWeapon } from '../../../src/core/item/weapons/ExiledMagicianWeapon';
 
 class EventTileGetRedCastleLever extends EventTile{

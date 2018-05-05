@@ -1,4 +1,4 @@
-import EventTile, { EventTileHandlerBag } from '../EventTile';
+import { EventTile, EventTileHandlerBag } from '../EventTile';
 import ItemId from '../../item/ItemId';
 import ItemBase from "../../item/ItemBase";
 import PlayerCharacter from "../../creature/player/PlayerCharacter";

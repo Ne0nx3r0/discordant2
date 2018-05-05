@@ -1,4 +1,4 @@
-import EventTile, { EventTileHandlerBag } from '../EventTile';
+import  { EventTile,EventTileHandlerBag } from '../EventTile';
 import CreatureId from '../../creature/CreatureId';
 
 export default class EventTileMonster extends EventTile{

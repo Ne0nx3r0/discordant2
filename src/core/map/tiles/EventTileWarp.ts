@@ -1,4 +1,4 @@
-import EventTile, { EventTileHandlerBag, Coordinate } from '../EventTile';
+import  { EventTile,EventTileHandlerBag, Coordinate } from '../EventTile';
 import ItemId from '../../item/ItemId';
 import { IGenerateLootBag } from "../../loot/LootGenerator";
 import ItemBase from "../../item/ItemBase";

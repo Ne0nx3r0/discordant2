@@ -1,7 +1,9 @@
-import EventTile from "./EventTile";
+import {EventTile} from "./EventTile";
 import { IMapData } from './IMapData';
 import ItemId from '../item/ItemId';
 import ItemBase from '../item/ItemBase';
+import { EventTileForagable } from "./tiles/EventTileForagable";
+import { Acai } from "../item/ItemsIndex";
 
 interface StartingPoint {
     x:number;
@@ -53,6 +55,7 @@ export default class ExplorableMap{
     fileName:string;
     title:string;
     pathLayer:number;
+    foragablesLayer:number;
     mapJson:MapJson;
     mapData:IMapData;
     eventTiles:Map<string,EventTile>;
@@ -71,8 +74,10 @@ export default class ExplorableMap{
             const layer = this.mapJson.layers[i];
 
             if(layer.name == 'path'){
-                this.pathLayer = i;
-                break; 
+                this.pathLayer = i; 
+            }
+            else if(layer.name == 'foragables'){
+                this.foragablesLayer = i;
             }
         }
 
@@ -94,7 +99,54 @@ export default class ExplorableMap{
     }
 
     isWalkable(x:number,y:number):boolean{
-        return this.mapJson.layers[this.pathLayer].data[(y-1)*this.mapJson.width+x-1] == 1;
+        return this.mapJson.layers[this.pathLayer].data[this._fromXY(x,y)] == 1;
+    }
+
+    getForagable(x:number,y:number):EventTile | null{
+        const tileType:number = this.mapJson.layers[this.foragablesLayer].data[this._fromXY(x,y)];
+
+        switch(tileType){
+            case 0:
+                return null;
+            
+            case 91: //Acai
+                return new EventTileForagable('Acai',ItemId.Acai);
+
+            case 121: //Sage
+                return new EventTileForagable('Sage',ItemId.Sage);
+
+            case 151: //Fox
+                return new EventTileForagable('Fox',ItemId.Fox);
+
+            case 181: //Yerba
+                return new EventTileForagable('Yerba',ItemId.Yerba);
+
+            case 211: //Agave
+                return new EventTileForagable('Agave',ItemId.Agave);
+
+            case 241: //Bane 1
+            case 242: //Bane 2
+            case 271: //Bane 3
+            case 272: //Bane 4
+                return new EventTileForagable('Bane',ItemId.Bane);
+
+            case 301: //Red Mushroom        
+                return new EventTileForagable('Red Mushroom',ItemId.RedMushroom);
+
+            case 331: //Blue Mushroom
+                return new EventTileForagable('Blud Mushroom',ItemId.BlueMushroom);
+
+            case 32: // Loot Common
+            
+
+            case 34: // Loot Rare
+
+
+        }
+    }
+
+    _fromXY(x:number,y:number):number{
+        return ( y - 1 ) * this.mapJson.width + x - 1;
     }
 
     getEncounterChance(){

@@ -8,7 +8,7 @@ import EventTileMonster from "../../../src/core/map/tiles/EventTileMonster";
 import EventTileWarp from "../../../src/core/map/tiles/EventTileWarp";
 import LootGenerator from '../../../src/core/loot/LootGenerator';
 import { EventTileDrinkableWater } from '../../../src/core/map/tiles/EventTileDrinkableWater';
-import EventTile from '../../../src/core/map/EventTile';
+import {EventTile} from '../../../src/core/map/EventTile';
 import EventTileEnterMessage from "../../../src/core/map/tiles/EventTileEnterMessage";
 
 export const lootGenerator = new LootGenerator();

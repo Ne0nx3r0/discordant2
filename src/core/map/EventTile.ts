@@ -34,7 +34,7 @@ export interface EventTileBag{
     stopsPlayer?: boolean;
 }
 
-export default class EventTile{
+export class EventTile{
     stopsPlayer: boolean;
     
     constructor(bag:EventTileBag){
