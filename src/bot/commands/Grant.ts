@@ -35,7 +35,7 @@ export default class Inventory extends Command{
 
         //The last param may be part of the request or it might be a number
         const amountWantedStr = bag.params[bag.params.length-1];
-        let amountWanted:number = ParseNumber(amountWantedStr);
+        let amountWanted:number = Math.min(ParseNumber(amountWantedStr),2000000000);
         let itemWantedStr;
 
         //assume everything after the first element is the item name
