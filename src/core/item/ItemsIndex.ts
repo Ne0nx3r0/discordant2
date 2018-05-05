@@ -14,6 +14,7 @@ export { ClothHood } from './clothing/ClothHood';
 export { ClothTunic } from './clothing/ClothTunic';
 
 export {MageRobe} from './clothing/MageRobe';
+export {PointyMageHat} from './clothing/PointyMageHat';
 
 //Shields
 export { WoodShield } from './weapons/WoodShield';
