@@ -10,6 +10,7 @@ import { Attribute } from "../../creature/AttributeSet";
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
+import { EffectRegeneration } from '../../effects/types/EffectRegeneration';
 
 export default new Weapon({
     id: ItemId.WerewolfWeapon,
@@ -20,41 +21,46 @@ export default new Weapon({
     useRequirements:{},
     goldValue:0,
     onAddBonuses: (e)=>{
-        e.target.stats.resistances.dark += 20;
-        e.target.stats.resistances.thunder += 20;
+        e.target.stats.resistances.dark += 30;
+        e.target.stats.resistances.thunder += 14;
         e.target.stats.resistances.physical += 20;
-        e.target.stats.resistances.fire -= 20;
+    },
+    onBattleBegin: (e)=>{
+        e.battle.addTemporaryEffect(e.target,EffectRegeneration,-1);
     },
     attacks: [
         new WeaponAttack({
-            title: 'swipe',
-            minBaseDamage: 20,
-            maxBaseDamage: 40,
+            title: 'slash',
+            minBaseDamage: 30,
+            maxBaseDamage: 50,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} swipes at {defender} with its branches',
+                    attackMessage: '{attacker} slashes {defender} with huge claws',
                     damageFunc: DefaultDamageFunc
                 }),
             ],
-            aiUseWeight: 0.5
+            aiUseWeight: 1
         }),
         new WeaponAttack({
-            title: 'animate',
-            minBaseDamage: 30,
-            maxBaseDamage: 50,
-            damageType: DamageType.physical,
-            scalingAttribute: Attribute.spirit,
+            title: 'howl',
+            minBaseDamage: 0,
+            maxBaseDamage: 0,
+            damageType: DamageType.special,
+            scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: `{attacker} causes nearby trees to assault the party!`,
-                    damageFunc: DefaultDamageAllFunc,
+                    attackMessage: '{attacker} howls loudly sapping the courage of the party!',
+                    damageFunc: (e)=>{
+                        return [];
+                    }
                 }),
             ],
-            aiUseWeight: 0.5
+            aiUseWeight: 1
         }),
+
     ]
 });
