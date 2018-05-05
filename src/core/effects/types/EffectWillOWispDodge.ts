@@ -7,12 +7,11 @@ export const EffectWillOWispDodge = new BattleTemporaryEffect({
     id: EffectId.WillOWispDodge,
     title: 'WillOWispDodge',
     onDefend: (e)=>{
-        if(Math.random() <= 10.3){
+        if(Math.random() <= 0.3){
             e.battle.queueBattleMessage([
                 `${e.wad.target.creature.title} blinked out of existence and the attack MISSED!`
             ]);
-            return false;
+            e.preventAttack();
         }
-        return true;
     },
 });
