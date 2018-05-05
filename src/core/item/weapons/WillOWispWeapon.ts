@@ -73,7 +73,7 @@ export default new Weapon({
                 new WeaponAttackStep({
                     attackMessage: `{attacker} turns bright red!`,
                     damageFunc: function DefaultDamageFunc(bag: DamageFuncBag): Array<IWeaponAttackDamages> {
-                        bag.battle.addTemporaryEffect(bag.defender.creature,EffectShieldRed,3);
+                        bag.battle.addTemporaryEffect(bag.attacker.creature,EffectShieldRed,3);
                         return [];
                     },
                 }),
