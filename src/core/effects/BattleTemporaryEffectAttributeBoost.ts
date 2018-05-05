@@ -12,17 +12,21 @@ interface AttributeBoostBag{
 
 export default class BattleTemporaryEffectAttributeBoost extends BattleTemporaryEffect{
     constructor(bag:AttributeBoostBag){
+        const statBonusAmount = bag.amount;
+        const attribute = bag.attribute;
+
         super({
             id: bag.id,
             title: bag.title,
-            onAdded:function(effectBag){
-                effectBag.sendBattleEmbed([`+${effectBag.target.title}'s ${Attribute[bag.attribute]} is boosted by ${bag.title}!`]);
+            dispellable: true,
+            onAdded:(e)=>{
+                e.battle.queueBattleMessage([`+${e.target.title}'s ${Attribute[bag.attribute]} is boosted by ${bag.title}!`]);
             },
-            onRemoved:function(effectBag){
-                effectBag.sendBattleEmbed([`-${effectBag.target.title}'s ${bag.title} wore off`]);
+            onRemoved:(e)=>{
+                e.battle.queueBattleMessage([`-${e.target.title}'s ${bag.title} wore off`]);
             },
-            onAddBonuses:function(stats){
-                stats[Attribute[bag.attribute]] += bag.amount;
+            onAddBonuses:(stats)=>{
+                stats[Attribute[attribute]] += statBonusAmount;
             }
         });
     }

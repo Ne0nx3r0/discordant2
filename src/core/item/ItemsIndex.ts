@@ -14,6 +14,7 @@ export { ClothHood } from './clothing/ClothHood';
 export { ClothTunic } from './clothing/ClothTunic';
 
 export {MageRobe} from './clothing/MageRobe';
+export {PointyMageHat} from './clothing/PointyMageHat';
 
 //Shields
 export { WoodShield } from './weapons/WoodShield';
@@ -49,6 +50,7 @@ export { BirthdayCake } from './misc/BirthdayCake';
 export { Revive } from './misc/Revive';
 export { BlueMushroom } from './misc/BlueMushroom';
 export { RedMushroom } from './misc/RedMushroom';
+export { Tequila } from './misc/Tequila';
 
 //Crafting
 export { FireAntCarapace } from './misc/FireAntCarapace';

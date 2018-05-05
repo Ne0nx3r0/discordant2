@@ -15,7 +15,7 @@ export const PrismBlade = new Weapon({
     damageBlocked: 1,
     goldValue: 1,
     useRequirements:{
-        agility: 100
+//        agility: 100
     },
     attacks: [
         new WeaponAttack({

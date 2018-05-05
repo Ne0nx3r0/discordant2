@@ -10,6 +10,6 @@ export const EffectPrayer = new BattleTemporaryEffect({
 
         bag.target.hpCurrent += hpHealed;
 
-        bag.sendBattleEmbed([`+ Prayer heals ${bag.target.title} +${hpHealed}HP`]);
+        bag.battle.queueBattleMessage([`+ Prayer heals ${bag.target.title} +${hpHealed}HP`]);
     }
-})
+});

@@ -1,7 +1,5 @@
 import ItemEquippable from '../ItemEquippable';
 import ItemId from '../ItemId';
-import { EquipmentSlot } from '../CreatureEquipment';
-import { ICreatureStatSet } from '../../creature/Creature';
 
 export const FireAntArmor = new ItemEquippable({
     id: ItemId.FireAntArmor,
@@ -21,8 +19,8 @@ export const FireAntArmor = new ItemEquippable({
             },
         ],
     },
-    onAddBonuses:function(stats:ICreatureStatSet){
-        stats.resistances.physical += 6;
-        stats.resistances.fire += 10;
+    onAddBonuses:(e)=>{
+        e.target.stats.resistances.physical += 6;
+        e.target.stats.resistances.fire += 10;
     }
 });

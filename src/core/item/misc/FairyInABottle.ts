@@ -1,9 +1,10 @@
-import ItemEquippable, { OnDefeatHandlerBag } from '../ItemEquippable';
+import ItemEquippable from '../ItemEquippable';
 import ItemId from '../ItemId';
-import { EquipmentSlot } from '../CreatureEquipment';
-import { ICreatureStatSet } from '../../creature/Creature';
 import { IBattleCreature } from '../../battle/CreatureBattleTurnBased';
 import PlayerCharacter from '../../creature/player/PlayerCharacter';
+import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
+import EffectId from '../../effects/EffectId';
+import { EffectFairyBottle } from '../../effects/types/EffectFairyBottle';
 
 export const FairyInABottle = new ItemEquippable({
     id: ItemId.FairyInABottle,
@@ -12,21 +13,7 @@ export const FairyInABottle = new ItemEquippable({
     goldValue: 1000,
     showInItems: true,
     slotType:'pouch',
-    onDefeat: function(bag: OnDefeatHandlerBag){
-        if(bag.wearer.creature instanceof PlayerCharacter){
-            const pc = bag.wearer.creature;
-
-            pc.hpCurrent = pc.stats.hpTotal;
-
-            bag.battle.queueBattleMessage([
-                `+ 💓💓💓 ${pc.title}'s bottled fairy fully healed them and then flew away!`
-            ]);
-  
-            bag.battle.game.unequipPlayerItem(pc.uid,'pouch',true)
-            .then(()=>{
-                bag.battle.game.takePlayerItem(pc.uid,ItemId.FairyInABottle,1);
-            });
-
-        }
-    },
+    onBattleBegin:(e)=>{
+        e.battle.addTemporaryEffect(e.target,EffectFairyBottle,-1);
+    }
 });

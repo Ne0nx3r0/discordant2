@@ -17,7 +17,9 @@ export const Kukri = new Weapon({
     criticalMultiplier: 2,
     chanceToCritical: 0.1,
     goldValue: 10,
-    useRequirements: {},
+    useRequirements: {
+        agility: 28,
+    },
     attacks: [
         new WeaponAttack({
             title: 'slash',
@@ -28,7 +30,7 @@ export const Kukri = new Weapon({
             scalingLevel: ScalingLevel.A,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} slashes {defender} their kukri',
+                    attackMessage: '{attacker} slashes {defender} with their kukri',
                     damageFunc: function(bag: DamageFuncBag){
                         const damages = DefaultDamageFunc(bag);
                         const equipment = bag.attacker.creature.equipment;

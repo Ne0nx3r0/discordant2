@@ -7,10 +7,11 @@ export default class BattleTemporaryEffectPoison extends BattleTemporaryEffect{
         super({
             id: id,
             title: title,
-            onRoundBegin:function(bag){
-                bag.target.hpCurrent -= damagePerRound;
+            dispellable: true,
+            onRoundBegin:(e)=>{
+                e.target.hpCurrent -= damagePerRound;
 
-                bag.sendBattleEmbed([`-${bag.target.title} ${bag.target.hpCurrent}/${bag.target.stats.hpTotal} lost ${damagePerRound}HP from ${this.title}`]);
+                e.battle.queueBattleMessage([`-${e.target.title} ${e.target.hpCurrent}/${e.target.stats.hpTotal} lost ${damagePerRound}HP from ${this.title}`]);
             }
         });
     }

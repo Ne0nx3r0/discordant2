@@ -1,7 +1,5 @@
 import ItemEquippable from '../ItemEquippable';
 import ItemId from '../ItemId';
-import { EquipmentSlot } from '../CreatureEquipment';
-import { ICreatureStatSet } from '../../creature/Creature';
 
 export const WornLeathers = new ItemEquippable({
     id: ItemId.WornLeathers,
@@ -12,7 +10,7 @@ export const WornLeathers = new ItemEquippable({
         strength: 10
     },
     slotType:'armor',
-    onAddBonuses:function(stats:ICreatureStatSet){
-        stats.resistances.physical += 2;
+    onAddBonuses:(e)=>{
+        e.target.stats.resistances.physical += 2;
     }
 });

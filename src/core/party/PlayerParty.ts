@@ -152,9 +152,9 @@ export default class PlayerParty{
                     this.sendChannelMessage('The way is blocked');
                 }
                 else{
-                    this.sendCurrentMapImageFile(`Walked ${i} steps but could not go further`);
-
-                    this.exploration.onEnterCurrentTile();
+                    if(!this.exploration.onEnterCurrentTile()){
+                        this.sendCurrentMapImageFile(`Walked ${i} steps but could not go further`);
+                    }
                 }
 
                 return;

@@ -1,7 +1,5 @@
 import ItemEquippable from '../ItemEquippable';
 import ItemId from '../ItemId';
-import { EquipmentSlot } from '../CreatureEquipment';
-import { ICreatureStatSet } from '../../creature/Creature';
 
 export const GhostSkin = new ItemEquippable({
     id: ItemId.GhostSkin,
@@ -10,9 +8,9 @@ export const GhostSkin = new ItemEquippable({
     goldValue: 1,
     showInItems: false,
     slotType: 'armor',
-    onAddBonuses: function(stats:ICreatureStatSet){
-        stats.resistances.physical += 100;
-        stats.resistances.dark += 40;
-        stats.resistances.fire -= 10;
+    onAddBonuses: function(e){
+        e.target.stats.resistances.physical += 100;
+        e.target.stats.resistances.dark += 40;
+        e.target.stats.resistances.fire -= 10;
     }
 });

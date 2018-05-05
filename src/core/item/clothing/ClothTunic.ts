@@ -1,7 +1,5 @@
 import ItemEquippable from '../ItemEquippable';
 import ItemId from '../ItemId';
-import { EquipmentSlot } from '../CreatureEquipment';
-import { ICreatureStatSet } from '../../creature/Creature';
 
 export const ClothTunic = new ItemEquippable({
     id: ItemId.ClothTunic,
@@ -9,7 +7,7 @@ export const ClothTunic = new ItemEquippable({
     description: `(+1 Physical Resistance) A very basic robe worn by commoners and adventurers alike.`,
     goldValue: 15,
     slotType:'armor',
-    onAddBonuses:function(stats:ICreatureStatSet){
-        stats.resistances.physical += 1;
+    onAddBonuses:(e)=>{
+        e.target.stats.resistances.physical += 1;
     }
 });

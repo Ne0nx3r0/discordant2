@@ -126,6 +126,15 @@ export default class CreatureBattleTurnBased{
 
         this.participants.push(participant);
         this.participantsLookup.set(creature,participant);
+
+        participant.creature.equipment.forEach((item)=>{
+            if(item.onBattleBegin){
+                item.onBattleBegin({
+                    target: participant.creature,
+                    battle: this,
+                });
+            }
+        });
     }
 
     turnBegin(){
@@ -151,8 +160,8 @@ export default class CreatureBattleTurnBased{
                 if(effect.onRoundBegin && !this.battleHasEnded){
                     effect.onRoundBegin({
                         target: p.creature,
-                        sendBattleEmbed: this.queueBattleMessage,
                         battle: this,
+                        roundsLeft: roundsLeft,
                     });
 
                     if(p.creature.hpCurrent<1){
@@ -391,10 +400,12 @@ export default class CreatureBattleTurnBased{
 
         const onUseMsg = item.onUse(pc,target);
 
-        this.queueBattleMessage([
-            `${pc.title} used ${item.title}`,
-            '+ '+onUseMsg
-        ]);
+        if(onUseMsg){
+            this.queueBattleMessage([
+                `${pc.title} used ${item.title}`,
+                '+ '+onUseMsg
+            ]);
+        }
 
         this.exhaustParticipant(bc);
     }
@@ -582,39 +593,66 @@ export default class CreatureBattleTurnBased{
                     }
                 }
 
-                if(!dodged){
-                    const damageTaken = ResistDamage(wad.target.creature,wad.amount,wad.type);
+                if(!dodged){ 
+                    let attackWasAllowed:boolean = true;
 
-                    const damageResisted = wad.amount - damageTaken;
+                    const attackEvent = {
+                        battle: this,
+                        defender: wad.target.creature,
+                        attacker: attacker.creature,
+                        wad,
+                        preventAttack:()=>{
+                            attackWasAllowed = false;
+                        }
+                    };
 
-                    const resistedStr = damageResisted == 0 ? '' : `, resisted ${damageResisted}`;
+                    attacker.creature.tempEffects.forEach((roundsLeft,effect)=>{
+                        if(effect.onAttack){
+                            effect.onAttack(attackEvent);
+                        }
+                    });
 
-                    wad.target.creature.hpCurrent -= damageTaken;
+                    wad.target.creature.tempEffects.forEach((roundsLeft,effect)=>{
+                        if(effect.onDefend){
+                            effect.onDefend(attackEvent);
+                        }
+                    });
 
-                    damagesMsgs.push(
-                        `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}`
-                    );
+                    if(attackWasAllowed){
+                        const damageTaken = ResistDamage(wad.target.creature,wad.amount,wad.type);
 
-                    if(wad.hpSteal){
-                        attacker.creature.hpCurrent = Math.min(
-                            attacker.creature.hpCurrent+wad.hpSteal,
-                            attacker.creature.stats.hpTotal
-                        );
-
+                        const damageResisted = wad.amount - damageTaken;
+    
+                        const resistedStr = damageResisted == 0 ? '' : `, resisted ${damageResisted}`;
+    
+                        wad.target.creature.hpCurrent -= damageTaken;
+    
                         damagesMsgs.push(
-                            `+ ${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal}) stole ${wad.hpSteal}HP`
+                            `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}`
                         );
+    
+                        if(wad.hpSteal){
+                            attacker.creature.hpCurrent = Math.min(
+                                attacker.creature.hpCurrent+wad.hpSteal,
+                                attacker.creature.stats.hpTotal
+                            );
+    
+                            damagesMsgs.push(
+                                `+ ${attacker.creature.title} (${attacker.creature.hpCurrent}/${attacker.creature.stats.hpTotal}) stole ${wad.hpSteal}HP`
+                            );
+                        }
                     }
                 }
             }
  
             if(wad.target.creature.hpCurrent < 1 && defeatedParticipants.indexOf(wad.target) == -1){
-                wad.target.creature.equipment.forEach((item: ItemEquippable, slot:EquipmentSlot)=>{
+                wad.target.creature.tempEffects.forEach((roundsLeft, item)=>{
                     if(item.onDefeat){
                         item.onDefeat({
                             battle: this,
-                            wearer: wad.target,
-                            attacker: attacker,
+                            wad,
+                            attacker: attacker.creature,
+                            defender: wad.target.creature,
                         });
                     }
                 });
@@ -705,18 +743,18 @@ export default class CreatureBattleTurnBased{
         if(effect.onAdded){
             effect.onAdded({
                 target: target,
-                sendBattleEmbed: this.queueBattleMessage,
                 battle: this,
+                roundsLeft: rounds,
             });
         }
     }
-
+    
     removeTemporaryEffect(target:Creature,effect:BattleTemporaryEffect){
         if(effect.onRemoved){
             effect.onRemoved({
                 target:target,
-                sendBattleEmbed: this.queueBattleMessage,
                 battle: this,
+                roundsLeft: 0,
             });
         }
 

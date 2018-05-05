@@ -1,7 +1,5 @@
 import ItemEquippable from '../ItemEquippable';
 import ItemId from '../ItemId';
-import { EquipmentSlot } from '../CreatureEquipment';
-import { ICreatureStatSet } from '../../creature/Creature';
 
 export const WornLeatherHelmet = new ItemEquippable({
     id: ItemId.WornLeatherHelmet,
@@ -12,7 +10,7 @@ export const WornLeatherHelmet = new ItemEquippable({
     useRequirements: {
         strength: 12
     },
-    onAddBonuses:function(stats:ICreatureStatSet){
-        stats.resistances.physical += 1;
+    onAddBonuses:(e)=>{
+        e.target.stats.resistances.physical += 1;
     }
 });

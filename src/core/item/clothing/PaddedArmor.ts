@@ -1,7 +1,5 @@
 import ItemEquippable from '../ItemEquippable';
 import ItemId from '../ItemId';
-import { EquipmentSlot } from '../CreatureEquipment';
-import { ICreatureStatSet } from '../../creature/Creature';
 
 export const PaddedArmor = new ItemEquippable({
     id: ItemId.PaddedArmor,
@@ -12,8 +10,8 @@ export const PaddedArmor = new ItemEquippable({
     useRequirements:{
         strength: 8,
     },
-    onAddBonuses:function(stats:ICreatureStatSet){
-        stats.resistances.physical += 2;
-        stats.agility += 2;
+    onAddBonuses:(e)=>{
+        e.target.stats.resistances.physical += 2;
+        e.target.stats.agility += 2;
     },
 });

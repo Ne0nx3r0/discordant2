@@ -20,7 +20,10 @@ enum EffectId {
     MagicShieldGold,
     BackstabDodge,
     Rush,
-    Paralyze,
+    TreantRage,
+    TreantRageTrigger,
+    BottleFairy,
+    WillOWispDodge,
 }
 
 export default EffectId;

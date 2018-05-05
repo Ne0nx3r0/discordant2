@@ -4,68 +4,51 @@ import Creature from '../creature/Creature';
 import {ICreatureStatSet} from '../creature/Creature';
 import { EquipmentSlot } from './CreatureEquipment';
 import CreatureBattleTurnBased, { IBattleCreature } from '../battle/CreatureBattleTurnBased';
+import { IWeaponAttackDamages } from './WeaponAttackStep';
 
-export interface ItemEquippableBag extends ItemBaseBag{
-    slotType:EquipmentSlot;
-    onAddBonuses?:OnAddBonusesHandler;
-    onDefeat?:OnDefeatHandler;
-    onDefend?:OnDefendHandler;
-    useRequirements?:UseRequirements;
-    lostOnDeath?:boolean;
-}
 
 export interface UseRequirements{
-    strength?:number;
-    agility?:number;
-    vitality?:number;
-    spirit?:number;
-    luck?:number;
+    strength?: number;
+    agility?: number;
+    vitality?: number;
+    spirit?: number;
+    luck?: number;
 }
 
-export interface OnAddBonusesHandler{
-    (stats:ICreatureStatSet):void;//Modifies the statset if bonuses/penalties apply
+export interface BattleBeginEvent{
+    battle: CreatureBattleTurnBased;
+    target: Creature;
 }
 
-interface BattleBag{
-    battle:CreatureBattleTurnBased;
-    wearer:IBattleCreature;
+export interface AddBonusesEvent{
+    target: Creature;
 }
 
-export interface OnDefendHandlerBag extends BattleBag{
-    defender: IBattleCreature;
+export interface ItemEquippableBag extends ItemBaseBag{
+    slotType: EquipmentSlot;
+    useRequirements?: UseRequirements;
+    lostOnDeath?: boolean;
+    onAddBonuses?: (e:AddBonusesEvent)=>void;
+    onBattleBegin?: (e:BattleBeginEvent)=>void;
 }
 
-export interface OnDefendHandler extends OnDefendHandlerBag{
-    (bag: OnDefendHandlerBag):void;
-}
+export default class ItemEquippable extends ItemBase implements ItemEquippableBag{
+    slotType: EquipmentSlot;
+    useRequirements?: UseRequirements;
+    lostOnDeath?: boolean;
+    onAddBonuses?: (e: AddBonusesEvent)=>void;
+    onBattleBegin?: (e: BattleBeginEvent)=>void;
 
-export interface OnDefeatHandlerBag extends BattleBag{
-    attacker:IBattleCreature;
-}
-
-export interface OnDefeatHandler{
-    (bag: OnDefeatHandlerBag):void;
-}
-
-export default class ItemEquippable extends ItemBase{
-    slotType:EquipmentSlot;
-    onAddBonuses?:OnAddBonusesHandler;
-    onDefeat?:OnDefeatHandler;
-    onDefend?:OnDefendHandler;
-    useRequirements:UseRequirements;
-    lostOnDeath:boolean;
-
-    constructor(bag:ItemEquippableBag){
+    constructor(bag: ItemEquippableBag){
         super(bag);
 
         this.slotType = bag.slotType;
 
         if(bag.onAddBonuses) this.onAddBonuses = bag.onAddBonuses;
-        if(bag.onDefeat) this.onDefeat = bag.onDefeat;
-        if(bag.onDefend) this.onDefend = bag.onDefend;
+        if(bag.onBattleBegin) this.onBattleBegin = bag.onBattleBegin;
 
         this.useRequirements = bag.useRequirements || {};
-        this.lostOnDeath = bag.lostOnDeath;
+        this.lostOnDeath = bag.lostOnDeath || false;
     }
 
     canEquip(creature:Creature){

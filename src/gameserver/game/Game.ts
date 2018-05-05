@@ -1391,7 +1391,6 @@ export default class Game {
 
         const descriptionFiltered = getFilteredDescription(description);
 
-console.log(description,descriptionFiltered);
         await DBSetPlayerDescription(this.db,playerUid,descriptionFiltered);
 
         pc.description = descriptionFiltered;

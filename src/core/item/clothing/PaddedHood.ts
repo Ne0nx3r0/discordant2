@@ -12,8 +12,8 @@ export const PaddedHood = new ItemEquippable({
     useRequirements:{
         strength: 8,
     },
-    onAddBonuses:function(stats:ICreatureStatSet){
-        stats.resistances.physical += 1;
-        stats.agility += 2;
+    onAddBonuses:(e)=>{
+        e.target.stats.resistances.physical += 1;
+        e.target.stats.agility += 2;
     },
 });

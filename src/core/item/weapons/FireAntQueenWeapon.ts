@@ -5,7 +5,6 @@ import { DamageType } from '../WeaponAttackStep';
 import { Attribute } from '../../creature/AttributeSet';
 import { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import { OnAddBonusesHandler } from '../ItemEquippable';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
 import { DefaultDamageFunc } from "../../damage/DefaultDamageFunc";
@@ -16,7 +15,7 @@ const QueenHardenEffect = new BattleTemporaryEffect({
     id: EffectId.FireAntQueenHarden,
     title: 'Fire Ant Queen Harden',
     onRemoved: function(bag){
-        bag.sendBattleEmbed([`${bag.target.title}'s coccoon breaks open`]);
+        bag.battle.queueBattleMessage([`${bag.target.title}'s coccoon breaks open`]);
     },
     onAddBonuses: function(stats){
         stats.resistances.physical += 20;
@@ -41,14 +40,14 @@ const QueenPheromoneEffect = new BattleTemporaryEffect({
 
                 bag.target.hpCurrent -= damage;
 
-                bag.sendBattleEmbed([`- A fire ant worker is drawn to attack ${bag.target.title} (${bag.target.hpCurrent}/${bag.target.stats.hpTotal}HP) by the queen's scent! (-${damage}HP)`]);
+                bag.battle.queueBattleMessage([`- A fire ant worker is drawn to attack ${bag.target.title} (${bag.target.hpCurrent}/${bag.target.stats.hpTotal}HP) by the queen's scent! (-${damage}HP)`]);
             break;
             case 2: 
                 damage = Math.round(Math.random() * 20 + 10);
 
                 bag.target.hpCurrent -= damage;
 
-                bag.sendBattleEmbed([`- A fire ant soldier is drawn to attack ${bag.target.title} (${bag.target.hpCurrent}/${bag.target.stats.hpTotal}HP) by the queen's scent! (-${damage}HP)`]);
+                bag.battle.queueBattleMessage([`- A fire ant soldier is drawn to attack ${bag.target.title} (${bag.target.hpCurrent}/${bag.target.stats.hpTotal}HP) by the queen's scent! (-${damage}HP)`]);
             break;
         }
     }

@@ -1,7 +1,5 @@
 import ItemEquippable from '../ItemEquippable';
 import ItemId from '../ItemId';
-import { EquipmentSlot } from '../CreatureEquipment';
-import { ICreatureStatSet } from '../../creature/Creature';
 
 export const MageRobe = new ItemEquippable({
     id: ItemId.MageRobe,
@@ -12,8 +10,8 @@ export const MageRobe = new ItemEquippable({
     useRequirements:{
         strength: 8,
     },
-    onAddBonuses:function(stats:ICreatureStatSet){
-        stats.resistances.physical += 3;
-        stats.spirit += 2;
+    onAddBonuses:(e)=>{
+        e.target.stats.resistances.physical += 3;
+        e.target.stats.spirit += 2;
     },
 });

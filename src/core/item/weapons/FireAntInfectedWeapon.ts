@@ -10,32 +10,7 @@ import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
 import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
-
-const INFECTION_STEPS = 6;
-
-const FireAntInfectionEffect = new BattleTemporaryEffect({
-    id: EffectId.FireAntInfectionStep,
-    title: 'Fire Ant Infection Step',
-    onAddBonuses: function(stats,roundsLeft){
-        stats.vitality -= INFECTION_STEPS - roundsLeft;
-    },
-    onRoundBegin: function(bag){
-        const roundsLeft = bag.target.tempEffects.get(FireAntInfectionEffect);
-        const vitMinus = INFECTION_STEPS - roundsLeft;
-
-        if(vitMinus == 0){
-            bag.sendBattleEmbed([`${bag.target.title} is infected with a strange infection!`]);
-        }
-        else if(vitMinus != 1-INFECTION_STEPS){
-            bag.sendBattleEmbed([`${bag.target.title}'s infection worsens! (-${vitMinus} VIT)`]);
-            bag.target.updateStats();
-        }
-
-    },
-    onRemoved: function(bag){
-        bag.sendBattleEmbed([`${bag.target.title} recovers from fire ant infection!`]);
-    }
-});
+import { EffectFireAntInfection, FIRE_ANT_INFECTION_STEPS } from '../../effects/types/EffectFireAntInfection';
 
 export const FireAntInfectedWeapon = new Weapon({
     id: ItemId.FireAntInfectedWeapon,
@@ -58,7 +33,7 @@ export const FireAntInfectedWeapon = new Weapon({
                     damageFunc: DefaultDamageFunc,
                 })
             ],
-            aiUseWeight: 1.2
+            aiUseWeight: 0.8
         }),
         new WeaponAttack({
             title: 'flamespray',
@@ -90,9 +65,9 @@ export const FireAntInfectedWeapon = new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} tramples over {defender}',
                     damageFunc: function(bag){
-                        if(!bag.defender.creature.tempEffects.has(FireAntInfectionEffect)){
+                        if(!bag.defender.creature.tempEffects.has(EffectFireAntInfection)){
                             //add infection
-                            bag.battle.addTemporaryEffect(bag.defender.creature,FireAntInfectionEffect,INFECTION_STEPS);
+                            bag.battle.addTemporaryEffect(bag.defender.creature,EffectFireAntInfection,FIRE_ANT_INFECTION_STEPS);
                         }
                             
                         return [];
@@ -103,7 +78,7 @@ export const FireAntInfectedWeapon = new Weapon({
                     damageFunc: function(){return [];},
                 })
             ],
-            aiUseWeight: 0.1
+            aiUseWeight: 0.2
         }),
     ]
 });

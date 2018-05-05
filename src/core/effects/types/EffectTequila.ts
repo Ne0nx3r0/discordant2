@@ -6,7 +6,7 @@ import BattleTemporaryEffectAttributeBoost from '../BattleTemporaryEffectStatsBo
 export const EffectTequila = new BattleTemporaryEffect({
     id: EffectId.Tequila,
     title: `Tequila`,
-    onAddBonuses:function(stats){
-        
+    onAddBonuses: function(stats){
+        stats.magicFind += 20;
     }
 })
