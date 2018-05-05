@@ -102,7 +102,7 @@ export default class ExplorableMap{
         return this.mapJson.layers[this.pathLayer].data[this._fromXY(x,y)] == 1;
     }
 
-    getForagable(x:number,y:number):EventTile | null{
+    getForagableTile(x:number,y:number):EventTile | null{
         const tileType:number = this.mapJson.layers[this.foragablesLayer].data[this._fromXY(x,y)];
 
         switch(tileType){
@@ -136,12 +136,8 @@ export default class ExplorableMap{
             case 331: //Blue Mushroom
                 return new EventTileForagable('Blud Mushroom',ItemId.BlueMushroom);
 
-            case 32: // Loot Common
-            
-
-            case 34: // Loot Rare
-
-
+            //case 32: // Loot Common
+            //case 34: // Loot Rare
         }
     }
 

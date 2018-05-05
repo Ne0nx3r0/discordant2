@@ -90,6 +90,20 @@ export default class PartyExploringMap{
             });
         }
 
+        const forageableEvent = this.map.getForagableTile(this.currentX,this.currentY);
+
+        if(forageableEvent){
+            return forageableEvent.onEnter({
+                party: this.party,
+                player: this.party.leader,
+                coordinate: {
+                    x: this.currentX,
+                    y: this.currentY,
+                },
+                metadata: this.metadata,
+            });
+        }
+
         return false;
     }
 
@@ -112,10 +126,27 @@ export default class PartyExploringMap{
             if(!eventRan){
                 this.sendPartyMessage('Nothing of interest here...');
             }
+
+            return;
         }
-        else{
-            this.sendPartyMessage(`There doesn't seem to be anything of interest here`);
+
+        const forageableEvent = this.map.getForagableTile(this.currentX,this.currentY);
+
+        if(forageableEvent){
+            forageableEvent.onEnter({
+                party: this.party,
+                player: this.party.leader,
+                coordinate: {
+                    x: this.currentX,
+                    y: this.currentY,
+                },
+                metadata: this.metadata,
+            });
+
+            return;
         }
+
+        this.sendPartyMessage(`There doesn't seem to be anything of interest here`);
     }
 
     get currentTileStopsPlayer():boolean{
