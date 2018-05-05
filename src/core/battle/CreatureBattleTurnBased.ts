@@ -400,10 +400,12 @@ export default class CreatureBattleTurnBased{
 
         const onUseMsg = item.onUse(pc,target);
 
-        this.queueBattleMessage([
-            `${pc.title} used ${item.title}`,
-            '+ '+onUseMsg
-        ]);
+        if(onUseMsg){
+            this.queueBattleMessage([
+                `${pc.title} used ${item.title}`,
+                '+ '+onUseMsg
+            ]);
+        }
 
         this.exhaustParticipant(bc);
     }
