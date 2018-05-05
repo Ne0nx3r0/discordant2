@@ -6,15 +6,6 @@ import { EquipmentSlot } from './CreatureEquipment';
 import CreatureBattleTurnBased, { IBattleCreature } from '../battle/CreatureBattleTurnBased';
 import { IWeaponAttackDamages } from './WeaponAttackStep';
 
-export interface ItemEquippableBag extends ItemBaseBag{
-    slotType:EquipmentSlot;
-    onAddBonuses?:OnAddBonusesHandler;
-    onDefeat?:OnDefeatHandler;
-    onAttack?:OnAttackHandler;
-    onDefend?:OnDefendHandler;
-    useRequirements?:UseRequirements;
-    lostOnDeath?:boolean;
-}
 
 export interface UseRequirements{
     strength?:number;
@@ -24,39 +15,29 @@ export interface UseRequirements{
     luck?:number;
 }
 
-export interface OnAddBonusesHandler{
-    (stats:ICreatureStatSet);//Modifies the statset if bonuses/penalties apply
+interface BattleBeginEvent{
+    battle: CreatureBattleTurnBased;
+    target: Creature;
 }
 
-interface BattleBag{
-    battle:CreatureBattleTurnBased;
+interface AddBonusesEvent{
+    target: Creature;
 }
 
-export interface OnBattlEventHandlerBag extends BattleBag{
-    attacker: IBattleCreature;
-    wad: IWeaponAttackDamages;
-}
-
-export interface OnDefendHandler{
-    (bag: OnBattlEventHandlerBag): boolean;
-}
-
-export interface OnAttackHandler{
-    (bag: OnBattlEventHandlerBag): boolean;
-}
-
-export interface OnDefeatHandler{
-    (bag: OnBattlEventHandlerBag):void;
-}
-
-export default class ItemEquippable extends ItemBase{
+export interface ItemEquippableBag extends ItemBaseBag{
     slotType:EquipmentSlot;
-    onAddBonuses?:OnAddBonusesHandler;
-    onDefeat?:OnDefeatHandler;
-    onDefend?:OnDefendHandler;
-    onAttack?:OnAttackHandler;
+    useRequirements?:UseRequirements;
+    lostOnDeath?:boolean;
+    onAddBonuses?:(creature:Creature)=>void;
+    onBattleBegin?:(e:BattleBeginEvent)=>void;
+}
+
+export default class ItemEquippable extends ItemBase implements ItemEquippableBag{
+    slotType:EquipmentSlot;
     useRequirements:UseRequirements;
     lostOnDeath:boolean;
+    onAddBonuses?:(creature:Creature)=>void;
+    onBattleBegin?:(e:BattleBeginEvent)=>void;
 
     constructor(bag:ItemEquippableBag){
         super(bag);
@@ -64,9 +45,7 @@ export default class ItemEquippable extends ItemBase{
         this.slotType = bag.slotType;
 
         if(bag.onAddBonuses) this.onAddBonuses = bag.onAddBonuses;
-        if(bag.onDefeat) this.onDefeat = bag.onDefeat;
-        if(bag.onDefend) this.onDefend = bag.onDefend;
-        if(bag.onAttack) this.onDefend = bag.onAttack;
+        if(bag.onBattleBegin) this.onBattleBegin = bag.onBattleBegin;
 
         this.useRequirements = bag.useRequirements || {};
         this.lostOnDeath = bag.lostOnDeath;
