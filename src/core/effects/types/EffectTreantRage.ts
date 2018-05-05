@@ -7,9 +7,13 @@ import { DamageType } from "../../item/WeaponAttackStep";
 export const EffectTreantRage = new BattleTemporaryEffect({
     id: EffectId.TreantRage,
     title: 'Treant Rage',
-    onAddBonuses: function(stats){
-        stats.resistances.dark += 20;
-        stats.resistances.physical += 20;
-        stats.resistances.fire -= 10;
+    onAddBonuses: function(e){
+        e.resistances.dark += 20;
+        e.resistances.physical += 20;
+        e.resistances.fire -= 10;
     },
+    onAttack: (e)=>{
+        e.wad.type = DamageType.fire;
+        e.wad.amount = Math.round(e.wad.amount * 1.2);
+    }
 });
