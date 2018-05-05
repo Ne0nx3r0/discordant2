@@ -126,6 +126,15 @@ export default class CreatureBattleTurnBased{
 
         this.participants.push(participant);
         this.participantsLookup.set(creature,participant);
+
+        participant.creature.equipment.forEach((item)=>{
+            if(item.onBattleBegin){
+                item.onBattleBegin({
+                    target: participant.creature,
+                    battle: this,
+                });
+            }
+        });
     }
 
     turnBegin(){
@@ -151,8 +160,8 @@ export default class CreatureBattleTurnBased{
                 if(effect.onRoundBegin && !this.battleHasEnded){
                     effect.onRoundBegin({
                         target: p.creature,
-                        sendBattleEmbed: this.queueBattleMessage,
                         battle: this,
+                        roundsLeft: roundsLeft,
                     });
 
                     if(p.creature.hpCurrent<1){
@@ -585,17 +594,25 @@ export default class CreatureBattleTurnBased{
                 if(!dodged){ 
                     let attackWasAllowed:boolean = true;
 
-                    wad.target.creature.equipment.forEach((item: ItemEquippable, slot:EquipmentSlot)=>{
-                        if(item.onDefend){
-                            let itemAllowedAttack = item.onDefend({
-                                battle: this,
-                                attacker: attacker,
-                                wad,
-                            });
+                    const attackEvent = {
+                        battle: this,
+                        defender: wad.target.creature,
+                        attacker: attacker.creature,
+                        wad,
+                        preventAttack:()=>{
+                            attackWasAllowed = false;
+                        }
+                    };
 
-                            if(!itemAllowedAttack){
-                                attackWasAllowed = false;
-                            }
+                    attacker.creature.tempEffects.forEach((roundsLeft,effect)=>{
+                        if(effect.onAttack){
+                            effect.onAttack(attackEvent);
+                        }
+                    });
+
+                    wad.target.creature.tempEffects.forEach((roundsLeft,effect)=>{
+                        if(effect.onDefend){
+                            effect.onDefend(attackEvent);
                         }
                     });
 
@@ -627,12 +644,13 @@ export default class CreatureBattleTurnBased{
             }
  
             if(wad.target.creature.hpCurrent < 1 && defeatedParticipants.indexOf(wad.target) == -1){
-                wad.target.creature.equipment.forEach((item: ItemEquippable, slot:EquipmentSlot)=>{
+                wad.target.creature.tempEffects.forEach((roundsLeft, item)=>{
                     if(item.onDefeat){
                         item.onDefeat({
                             battle: this,
                             wad,
-                            attacker: attacker,
+                            attacker: attacker.creature,
+                            defender: wad.target.creature,
                         });
                     }
                 });
@@ -723,18 +741,18 @@ export default class CreatureBattleTurnBased{
         if(effect.onAdded){
             effect.onAdded({
                 target: target,
-                sendBattleEmbed: this.queueBattleMessage,
                 battle: this,
+                roundsLeft: rounds,
             });
         }
     }
-
+    
     removeTemporaryEffect(target:Creature,effect:BattleTemporaryEffect){
         if(effect.onRemoved){
             effect.onRemoved({
                 target:target,
-                sendBattleEmbed: this.queueBattleMessage,
                 battle: this,
+                roundsLeft: 0,
             });
         }
 

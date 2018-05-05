@@ -8,38 +8,38 @@ import { IWeaponAttackDamages } from './WeaponAttackStep';
 
 
 export interface UseRequirements{
-    strength?:number;
-    agility?:number;
-    vitality?:number;
-    spirit?:number;
-    luck?:number;
+    strength?: number;
+    agility?: number;
+    vitality?: number;
+    spirit?: number;
+    luck?: number;
 }
 
-interface BattleBeginEvent{
+export interface BattleBeginEvent{
     battle: CreatureBattleTurnBased;
     target: Creature;
 }
 
-interface AddBonusesEvent{
+export interface AddBonusesEvent{
     target: Creature;
 }
 
 export interface ItemEquippableBag extends ItemBaseBag{
-    slotType:EquipmentSlot;
-    useRequirements?:UseRequirements;
-    lostOnDeath?:boolean;
-    onAddBonuses?:(creature:Creature)=>void;
-    onBattleBegin?:(e:BattleBeginEvent)=>void;
+    slotType: EquipmentSlot;
+    useRequirements?: UseRequirements;
+    lostOnDeath?: boolean;
+    onAddBonuses?: (e:AddBonusesEvent)=>void;
+    onBattleBegin?: (e:BattleBeginEvent)=>void;
 }
 
 export default class ItemEquippable extends ItemBase implements ItemEquippableBag{
-    slotType:EquipmentSlot;
-    useRequirements:UseRequirements;
-    lostOnDeath:boolean;
-    onAddBonuses?:(creature:Creature)=>void;
-    onBattleBegin?:(e:BattleBeginEvent)=>void;
+    slotType: EquipmentSlot;
+    useRequirements?: UseRequirements;
+    lostOnDeath?: boolean;
+    onAddBonuses?: (e: AddBonusesEvent)=>void;
+    onBattleBegin?: (e: BattleBeginEvent)=>void;
 
-    constructor(bag:ItemEquippableBag){
+    constructor(bag: ItemEquippableBag){
         super(bag);
 
         this.slotType = bag.slotType;
@@ -48,7 +48,7 @@ export default class ItemEquippable extends ItemBase implements ItemEquippableBa
         if(bag.onBattleBegin) this.onBattleBegin = bag.onBattleBegin;
 
         this.useRequirements = bag.useRequirements || {};
-        this.lostOnDeath = bag.lostOnDeath;
+        this.lostOnDeath = bag.lostOnDeath || false;
     }
 
     canEquip(creature:Creature){

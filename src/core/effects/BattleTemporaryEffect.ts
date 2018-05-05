@@ -7,13 +7,17 @@ import CreatureBattleTurnBased, { IBattleCreature } from '../battle/CreatureBatt
 export interface EffectEvent{
     target:Creature;
     battle:CreatureBattleTurnBased;
-    roundsLeft:number
+    roundsLeft:number;
 }
 
-interface AttackEffectEvent extends EffectEvent{
+interface DefeatEffectEvent{
+    battle:CreatureBattleTurnBased;
     attacker: Creature;
     defender: Creature;
     wad: IWeaponAttackDamages;
+}
+
+interface AttackEffectEvent extends DefeatEffectEvent{
     preventAttack: ()=>void;
 }
 
@@ -27,7 +31,7 @@ interface BattleTemporaryEffectBag{
     onAddBonuses?: (stats:ICreatureStatSet,roundsLeft:number)=>void;
     onAttack?: (event:AttackEffectEvent)=>void;
     onDefend?: (event:AttackEffectEvent)=>void;
-    onDefeat?: (event:AttackEffectEvent)=>void;
+    onDefeat?: (event:DefeatEffectEvent)=>void;
 }
 
 export default class BattleTemporaryEffect implements BattleTemporaryEffectBag{
@@ -40,7 +44,7 @@ export default class BattleTemporaryEffect implements BattleTemporaryEffectBag{
     onAddBonuses?: (stats:ICreatureStatSet,roundsLeft:number)=>void;
     onAttack?: (event:AttackEffectEvent)=>void;
     onDefend?: (event:AttackEffectEvent)=>void;
-    onDefeat?: (event:AttackEffectEvent)=>void;
+    onDefeat?: (event:DefeatEffectEvent)=>void;
 
     constructor(bag:BattleTemporaryEffectBag){
         this.id = bag.id;

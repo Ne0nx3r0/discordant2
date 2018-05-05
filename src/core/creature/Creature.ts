@@ -86,7 +86,9 @@ export default class Creature{
 
         this.equipment.forEach(function(item:ItemEquippable,slot:EquipmentSlot){
             if(item.onAddBonuses){
-               item.onAddBonuses(stats);
+                item.onAddBonuses({
+                   target:this
+                });
             }
         });
 
