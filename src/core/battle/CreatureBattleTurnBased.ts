@@ -724,7 +724,7 @@ export default class CreatureBattleTurnBased{
             const winningTeam = result == BattleResult.Team1Won ? 1 : 2;
 
             survivors = this.participants.filter(function(p){
-                return !p.defeated && p.teamNumber == winningTeam;
+                return !p.defeated && p.teamNumber == winningTeam && p.creature instanceof PlayerCharacter;
             })
             .map(function(bc){
                 return bc.creature;
