@@ -84,7 +84,7 @@ export default class Creature{
             dodgeAlways: false,
         };
 
-        this.equipment.forEach(function(item:ItemEquippable,slot:EquipmentSlot){
+        this.equipment.forEach((item:ItemEquippable,slot:EquipmentSlot)=>{
             if(item.onAddBonuses){
                 item.onAddBonuses({
                    target:this
