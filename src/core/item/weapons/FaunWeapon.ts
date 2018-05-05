@@ -19,8 +19,8 @@ export const FaunWeapon = new Weapon({
     chanceToCritical: 0.2,
     showInItems: false,
     goldValue: 0,
-    onAddBonuses: function(creature){
-        creature.stats.resistances.dark += 30;
+    onAddBonuses: function(e){
+        e.target.stats.resistances.dark += 30;
     },
     attacks: [
         new WeaponAttack({

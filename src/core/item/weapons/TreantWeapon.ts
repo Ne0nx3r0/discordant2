@@ -22,10 +22,10 @@ export default new Weapon({
     useRequirements:{},
     goldValue:0,
     onAddBonuses: (e)=>{
-        e.stats.resistances.dark += 20;
-        e.stats.resistances.thunder += 20;
-        e.stats.resistances.physical += 20;
-        e.stats.resistances.fire -= 20;
+        e.target.stats.resistances.dark += 20;
+        e.target.stats.resistances.thunder += 20;
+        e.target.stats.resistances.physical += 20;
+        e.target.stats.resistances.fire -= 20;
     },
     onBattleBegin: (e)=>{
         e.battle.addTemporaryEffect(e.target,EffectTreantRageTrigger,-1);

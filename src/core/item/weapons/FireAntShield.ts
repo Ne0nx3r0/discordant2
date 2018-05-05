@@ -22,10 +22,10 @@ export const FireAntShield = new Weapon({
         strength: 24
     },
     onAddBonuses: (e)=>{
-        e.stats.resistances.physical += 4;
-        e.stats.resistances.fire += 4;
-        e.stats.resistances.thunder += 4;
-        e.stats.resistances.dark += 4;
+        e.target.stats.resistances.physical += 4;
+        e.target.stats.resistances.fire += 4;
+        e.target.stats.resistances.thunder += 4;
+        e.target.stats.resistances.dark += 4;
     },
     recipe: {
         wishes: 150,

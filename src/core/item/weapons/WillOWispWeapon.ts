@@ -22,8 +22,8 @@ export default new Weapon({
     useRequirements:{},
     goldValue:0,
     onAddBonuses: (e)=>{
-        e.stats.resistances.dark -= 20;
-        e.stats.resistances.thunder += 20;
+        e.target.stats.resistances.dark -= 20;
+        e.target.stats.resistances.thunder += 20;
     },
     onBattleBegin: (e)=>{
         e.battle.addTemporaryEffect(e.target,EffectWillOWispDodge,-1);

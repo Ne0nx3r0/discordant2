@@ -22,10 +22,10 @@ export const WoodShield = new Weapon({
         strength: 16
     },
     onAddBonuses: function(e){
-        e.stats.resistances.physical += 2;
-        e.stats.resistances.fire += 2;
-        e.stats.resistances.thunder += 2;
-        e.stats.resistances.dark += 2;
+        e.target.stats.resistances.physical += 2;
+        e.target.stats.resistances.fire += 2;
+        e.target.stats.resistances.thunder += 2;
+        e.target.stats.resistances.dark += 2;
     },
     attacks: [
         new WeaponAttack({

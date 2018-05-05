@@ -1,6 +1,6 @@
 import WeaponAttack from './WeaponAttack';
 import Creature from '../creature/Creature';
-import ItemEquippable, { BattleBeginEvent } from './ItemEquippable';
+import ItemEquippable, { BattleBeginEvent, AddBonusesEvent } from './ItemEquippable';
 import { ItemEquippableBag, UseRequirements } from './ItemEquippable';
 import {EquipmentSlot} from './CreatureEquipment';
 import Use from '../../bot/commands/Use';
@@ -16,7 +16,7 @@ interface ItemWeaponBag{
     criticalMultiplier?: number;
     useRequirements:UseRequirements;
     attacks:Array<WeaponAttack>;    
-    onAddBonuses?: (creature:Creature)=>void;
+    onAddBonuses?: (e:AddBonusesEvent)=>void;
     onBattleBegin?: (e:BattleBeginEvent)=>void;
     showInItems?:boolean;
     recipe?:ItemRecipe;
