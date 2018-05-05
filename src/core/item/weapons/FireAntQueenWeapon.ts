@@ -5,7 +5,6 @@ import { DamageType } from '../WeaponAttackStep';
 import { Attribute } from '../../creature/AttributeSet';
 import { ScalingLevel } from '../WeaponAttack';
 import WeaponAttackStep from '../WeaponAttackStep';
-import { OnAddBonusesHandler } from '../ItemEquippable';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
 import { DefaultDamageFunc } from "../../damage/DefaultDamageFunc";

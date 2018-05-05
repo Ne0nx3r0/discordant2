@@ -9,7 +9,7 @@ import { DamageFuncBag, DamageType } from '../WeaponAttackStep';
 import { Attribute } from '../../creature/AttributeSet';
 import { ScalingLevel, WeaponDamageType } from '../WeaponAttack';
 import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
-import { ICreatureStatSet } from '../../creature/Creature';
+
 
 //TODO: Add passive resistances to shields
 export const FireAntShield = new Weapon({
@@ -21,11 +21,11 @@ export const FireAntShield = new Weapon({
     useRequirements: {
         strength: 24
     },
-    onAddBonuses: function(stats:ICreatureStatSet){
-        stats.resistances.physical += 4;
-        stats.resistances.fire += 4;
-        stats.resistances.thunder += 4;
-        stats.resistances.dark += 4;
+    onAddBonuses: (e)=>{
+        e.stats.resistances.physical += 4;
+        e.stats.resistances.fire += 4;
+        e.stats.resistances.thunder += 4;
+        e.stats.resistances.dark += 4;
     },
     recipe: {
         wishes: 150,

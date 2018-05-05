@@ -5,13 +5,14 @@ import { Attribute } from '../../creature/AttributeSet';
 export const EffectShieldGrey = new BattleTemporaryEffect({
     id: EffectId.MagicShieldGrey,
     title: 'Grey Shield',
-    onAdded:function(effectBag){
-        effectbag.battle.queueBattleMessage([`+${effectBag.target.title} gains +100 physical resistance!`]);
+    dispellable: true,
+    onAdded:(e)=>{
+        e.battle.queueBattleMessage([`+${e.target.title} gains +100 physical resistance!`]);
     },
-    onRemoved:function(effectBag){
-        effectbag.battle.queueBattleMessage([`-${effectBag.target.title}'s physical shield broke`]);
+    onRemoved:(e)=>{
+        e.battle.queueBattleMessage([`-${e.target.title}'s physical shield broke`]);
     },
-    onAddBonuses:function(stats){
+    onAddBonuses:(stats)=>{
         stats.resistances.physical += 100;
     }
 });

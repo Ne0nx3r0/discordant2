@@ -1,7 +1,5 @@
 import ItemEquippable from '../ItemEquippable';
 import ItemId from '../ItemId';
-import { EquipmentSlot } from '../CreatureEquipment';
-import { ICreatureStatSet } from '../../creature/Creature';
 
 export const AmuletOfHealth = new ItemEquippable({
     id: ItemId.AmuletOfHealth,
@@ -9,7 +7,7 @@ export const AmuletOfHealth = new ItemEquippable({
     description: `(+2 Vitality) Wealthy elites will pay anything to prolong their lives as they come to an end. So it was no surprise after the birth of wishes that a variety of jewelry was comissioned to improve the health of the wearer.\n\nThis particular example is quite inferior and was likely discarded or sold to a buyer ignorant of its poor quality.`,
     goldValue: 100,
     slotType:'amulet',
-    onAddBonuses:function(stats:ICreatureStatSet){
-        stats.vitality += 2;
+    onAddBonuses:(e)=>{
+        e.target.stats.vitality += 2;
     }
 });

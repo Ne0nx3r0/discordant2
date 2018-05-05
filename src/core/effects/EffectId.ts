@@ -23,6 +23,7 @@ enum EffectId {
     TreantRage,
     TreantRageTrigger,
     BottleFairy,
+    WillOWispDodge,
 }
 
 export default EffectId;

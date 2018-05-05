@@ -11,6 +11,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
 import { EffectTreantRage } from '../../effects/types/EffectTreantRage';
+import { EffectTreantRageTrigger } from '../../effects/types/EffectTreantRageTrigger';
 
 export default new Weapon({
     id: ItemId.TreantWeapon,
@@ -20,24 +21,14 @@ export default new Weapon({
     chanceToCritical: 0.2,
     useRequirements:{},
     goldValue:0,
-    onAddBonuses: function(stats:ICreatureStatSet){
-        stats.resistances.dark += 20;
-        stats.resistances.thunder += 20;
-        stats.resistances.physical += 20;
-        stats.resistances.fire -= 20;
+    onAddBonuses: (e)=>{
+        e.stats.resistances.dark += 20;
+        e.stats.resistances.thunder += 20;
+        e.stats.resistances.physical += 20;
+        e.stats.resistances.fire -= 20;
     },
-    onDefend: function(bag){
-        const creature = bag.wad.target.creature;
-        
-        if(bag.wad.type === DamageType.fire && !creature.tempEffects.has(EffectTreantRage)){
-            bag.battle.queueBattleMessage([
-                `+ ${creature.title} flies into a rage from being set on fire!`
-            ]);
-
-            bag.battle.addTemporaryEffect(bag.wad.target.creature,EffectTreantRage,5);
-        }
-
-        return true;
+    onBattleBegin: (e)=>{
+        e.battle.addTemporaryEffect(e.target,EffectTreantRageTrigger,-1);
     },
     attacks: [
         new WeaponAttack({

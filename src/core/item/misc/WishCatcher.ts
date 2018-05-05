@@ -1,7 +1,5 @@
 import ItemEquippable from '../ItemEquippable';
 import ItemId from '../ItemId';
-import { EquipmentSlot } from '../CreatureEquipment';
-import { ICreatureStatSet } from '../../creature/Creature';
 
 export const WishCatcher = new ItemEquippable({
     id: ItemId.WishCatcher,
@@ -10,7 +8,7 @@ export const WishCatcher = new ItemEquippable({
     goldValue: 250,
     showInItems: true,
     slotType:'pouch',
-    onAddBonuses:function(stats:ICreatureStatSet){
-        stats.wishBonus += 0.02;
+    onAddBonuses:(e)=>{
+        e.target.stats.wishBonus += 0.02;
     }
 });

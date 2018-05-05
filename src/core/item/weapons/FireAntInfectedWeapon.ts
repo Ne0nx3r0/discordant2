@@ -10,6 +10,7 @@ import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
 import BattleTemporaryEffect from '../../effects/BattleTemporaryEffect';
 import EffectId from '../../effects/EffectId';
 import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
+import { EffectFireAntInfection, FIRE_ANT_INFECTION_STEPS } from '../../effects/types/EffectFireAntInfection';
 
 export const FireAntInfectedWeapon = new Weapon({
     id: ItemId.FireAntInfectedWeapon,
@@ -64,9 +65,9 @@ export const FireAntInfectedWeapon = new Weapon({
                 new WeaponAttackStep({
                     attackMessage: '{attacker} tramples over {defender}',
                     damageFunc: function(bag){
-                        if(!bag.defender.creature.tempEffects.has(FireAntInfectionEffect)){
+                        if(!bag.defender.creature.tempEffects.has(EffectFireAntInfection)){
                             //add infection
-                            bag.battle.addTemporaryEffect(bag.defender.creature,FireAntInfectionEffect,FIRE_ANT_INFECTION_STEPS);
+                            bag.battle.addTemporaryEffect(bag.defender.creature,EffectFireAntInfection,FIRE_ANT_INFECTION_STEPS);
                         }
                             
                         return [];

@@ -11,7 +11,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 import { EffectShieldRed } from '../../effects/types/EffectShieldRed';
 import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
-import { OnBattlEventHandlerBag } from '../ItemEquippable';
+import { EffectWillOWispDodge } from '../../effects/types/EffectWillOWispDodge';
 
 export default new Weapon({
     id: ItemId.WillOWispWeapon,
@@ -21,18 +21,12 @@ export default new Weapon({
     chanceToCritical: 0.2,
     useRequirements:{},
     goldValue:0,
-    onAddBonuses: function(stats: ICreatureStatSet){
-        stats.resistances.dark -= 20;
-        stats.resistances.thunder += 20;
+    onAddBonuses: (e)=>{
+        e.stats.resistances.dark -= 20;
+        e.stats.resistances.thunder += 20;
     },
-    onDefend: function(bag: OnBattlEventHandlerBag){
-        if(Math.random() <= 10.3){
-            bag.battle.queueBattleMessage([
-                `${bag.wad.target.creature.title} blinked out of existence and the attack MISSED!`
-            ]);
-            return false;
-        }
-        return true;
+    onBattleBegin: (e)=>{
+        e.battle.addTemporaryEffect(e.target,EffectWillOWispDodge,-1);
     },
     attacks: [
         new WeaponAttack({
