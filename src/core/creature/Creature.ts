@@ -62,7 +62,7 @@ export default class Creature{
     }
 
     updateStats(){
-        const stats:ICreatureStatSet = {
+        this.stats = {
             redEye: 3,
             strength: this.attributes.strength,
             agility: this.attributes.agility,
@@ -92,34 +92,32 @@ export default class Creature{
             }
         });
 
-        this.tempEffects.forEach(function(roundsLeft:number,effect:BattleTemporaryEffect){
+        this.tempEffects.forEach((roundsLeft:number,effect:BattleTemporaryEffect)=>{
             if(effect.onAddBonuses){
-                effect.onAddBonuses(stats,roundsLeft);
+                effect.onAddBonuses(this.stats,roundsLeft);
             }
         });
 
         //If an effect increased HP directly then they get that added to current HP immediately
         //vitality increases on the other hand don't get this benefit to prevent re-requip exploits
-        this.hpCurrent += stats.hpTotal;
+        this.hpCurrent += this.stats.hpTotal;
 
         //These could be adjusted by bonuses
-        stats.hpTotal += stats.vitality * 10;
+        this.stats.hpTotal += this.stats.vitality * 10;
 
-        stats.resistances.fire += Math.floor(stats.agility/5);
-        stats.resistances.thunder += Math.floor(stats.luck/5);
-        stats.resistances.dark += Math.floor(stats.vitality/10);
+        this.stats.resistances.fire += Math.floor(this.stats.agility/5);
+        this.stats.resistances.thunder += Math.floor(this.stats.luck/5);
+        this.stats.resistances.dark += Math.floor(this.stats.vitality/10);
 
         //1% per 10 luck points
-        stats.wishBonus += GetLuckXPBonus(stats.luck);
+        this.stats.wishBonus += GetLuckXPBonus(this.stats.luck);
 
-        stats.resistances.chaos = Math.min(
-            stats.resistances.physical,
-            stats.resistances.fire,
-            stats.resistances.thunder,
-            stats.resistances.dark,
+        this.stats.resistances.chaos = Math.min(
+            this.stats.resistances.physical,
+            this.stats.resistances.fire,
+            this.stats.resistances.thunder,
+            this.stats.resistances.dark,
         );
-
-        this.stats = stats;
 
         if(this.hpCurrent>this.stats.hpTotal) this.hpCurrent = this.stats.hpTotal;
     }
