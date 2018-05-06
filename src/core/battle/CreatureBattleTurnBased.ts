@@ -632,7 +632,9 @@ export default class CreatureBattleTurnBased{
                     });
 
                     if(attackWasAllowed){
-                        const damageBlocked = GetDamageBlocked(wad.target.creature,wad.amount);
+                        const damageBlocked = wad.target.blocking ?
+                            GetDamageBlocked(wad.target.creature,wad.amount) : 0;
+
                         const blockedStr = damageBlocked == 0 ? '' : `, blocked ${damageBlocked}`;
                         
                         const damageAfterBlock = wad.amount - damageBlocked;
@@ -645,7 +647,7 @@ export default class CreatureBattleTurnBased{
                         wad.target.creature.hpCurrent -= finalDamage;
     
                         damagesMsgs.push(
-                            `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageResisted} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}`
+                            `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${finalDamage} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}${blockedStr}`
                         );
 
                         if(wad.hpSteal){
@@ -808,9 +810,7 @@ export default class CreatureBattleTurnBased{
     }
 
     queueBattleMessage(msgBlock:string[]){
-        const newMsg:string = msgBlock.map(function(block){
-            return '```diff\n'+msgBlock.join('\n')+'```';
-        }).join('');
+        const newMsg:string = '```diff\n'+msgBlock.join('\n')+'```';
 
         const newMsgLength = this.queuedBattleMessagesStr.length + newMsg.length;
 
