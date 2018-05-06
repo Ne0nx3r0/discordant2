@@ -12,7 +12,7 @@ import { SocketCreature } from '../creature/Creature';
 import { IWeaponAttackDamages, DamageType } from '../item/WeaponAttackStep';
 import { GetDodgePercent } from '../../util/GetDodgePercent';
 import { Attribute } from '../creature/AttributeSet';
-import ResistDamage from "../../util/ResistDamage";
+import { GetDamageBlocked, GetDamageResisted } from "../../util/ResistDamage";
 import ItemEquippable from '../item/ItemEquippable';
 import { EquipmentSlot } from '../creature/EquipmentSlot';
 import Game from '../../gameserver/game/Game';
@@ -632,18 +632,22 @@ export default class CreatureBattleTurnBased{
                     });
 
                     if(attackWasAllowed){
-                        const damageTaken = ResistDamage(wad.target.creature,wad.amount,wad.type);
+                        const damageBlocked = GetDamageBlocked(wad.target.creature,wad.amount);
+                        const blockedStr = damageBlocked == 0 ? '' : `, blocked ${damageBlocked}`;
+                        
+                        const damageAfterBlock = wad.amount - damageBlocked;
 
-                        const damageResisted = wad.amount - damageTaken;
-    
+                        const damageResisted = GetDamageResisted(wad.target.creature,damageAfterBlock,wad.type);
                         const resistedStr = damageResisted == 0 ? '' : `, resisted ${damageResisted}`;
-    
-                        wad.target.creature.hpCurrent -= damageTaken;
+                        
+                        const finalDamage = damageAfterBlock - damageResisted;
+
+                        wad.target.creature.hpCurrent -= finalDamage;
     
                         damagesMsgs.push(
-                            `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}`
+                            `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageResisted} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}`
                         );
-    
+
                         if(wad.hpSteal){
                             attacker.creature.hpCurrent = Math.min(
                                 attacker.creature.hpCurrent+wad.hpSteal,
@@ -843,11 +847,11 @@ export default class CreatureBattleTurnBased{
 
         const msgToSend = this.queuedBattleMessagesStr;
 
+        this.queuedBattleMessagesStr = '';
+
         new SendMessageClientRequest({
             channelId: this.channelId,
             message: msgToSend,
         }).send(this.game.getClient());
-
-        this.queuedBattleMessagesStr = '';
     }
 }

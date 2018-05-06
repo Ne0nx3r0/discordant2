@@ -195,7 +195,7 @@ export default class PlayerParty{
             party: this,
             partyMembers: partyMembers,
             opponentId: monsterId,
-            startDelay: 2000,
+            startDelay: 1000,
             runChance: 1 / (this.timesRun+1)
         });
 

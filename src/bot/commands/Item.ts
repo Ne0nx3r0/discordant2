@@ -64,12 +64,12 @@ export default class Item extends Command{
                 weapon.criticalMultiplier+'x damage',
                 true
             );
-/*
+
             embed.addField(
                 'Damage Blocked',
                 weapon.damageBlocked*100+'%',
                 true
-            );*/
+            );
 
             let useRequirementsStr = Object.keys(weapon.useRequirements)
             .map(function(key){

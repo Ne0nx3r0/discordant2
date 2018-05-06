@@ -1,7 +1,7 @@
 import Creature from "../core/creature/Creature";
 import { DamageType } from "../core/item/WeaponAttackStep";
 
-export default function ResistDamage(creature:Creature,amount:number,type:DamageType):number{    
+export function GetDamageResisted(creature:Creature,amount:number,type:DamageType):number{    
     const damageTypeStr = DamageType[type];
     
     const resistance = creature.stats.resistances[damageTypeStr];
@@ -13,5 +13,14 @@ export default function ResistDamage(creature:Creature,amount:number,type:Damage
         damageTaken = minDamage;
     }
 
-    return Math.round(damageTaken);
+    return Math.round(amount - damageTaken);
+}
+
+export function GetDamageBlocked(creature:Creature,amount:number):number{
+    const weaponBlock = 0 + (creature.equipment.weapon && creature.equipment.weapon.damageBlocked);
+    const offhandBlock = 0 + (creature.equipment.offhand && creature.equipment.offhand.damageBlocked);
+    
+    const totalBlock = weaponBlock + offhandBlock;
+    
+    return Math.round( amount * ( 1 - totalBlock ) );
 }
