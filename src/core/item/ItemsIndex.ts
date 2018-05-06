@@ -103,3 +103,4 @@ export { PrismBlade } from './weapons/PrismBlade';
 export { WishCatcher } from './misc/WishCatcher';
 export { WishTrapper } from './misc/WishTrapper';
 export { FairyInABottle } from './misc/FairyInABottle';
+export { PixieItem } from './pets/Pixie';
