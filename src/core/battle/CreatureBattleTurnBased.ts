@@ -17,6 +17,8 @@ import ItemEquippable from '../item/ItemEquippable';
 import { EquipmentSlot } from '../creature/EquipmentSlot';
 import Game from '../../gameserver/game/Game';
 
+const DISCORD_MAX_MESSAGE_LENGTH:number = 2000;
+
 export enum BattleResult{
     Team1Won,
     Team2Won,
@@ -76,11 +78,11 @@ export default class CreatureBattleTurnBased{
     participantsLookup: Map<Creature,IBattleCreature>;
     activeTeam: number;
     runChance: number;
-    queuedBattleMessages: Array<Array<string>>;
+    queuedBattleMessagesStr: string;
 
     constructor(bag:CreatureBattleTurnBasedBag){
         this.queueBattleMessage = this.queueBattleMessage.bind(this);
-        this.queuedBattleMessages = [];
+        this.queuedBattleMessagesStr = '';
         this.channelId = bag.channelId;
         this.game = bag.game;
         this.battleCleanup = bag.battleCleanup;
@@ -309,7 +311,7 @@ export default class CreatureBattleTurnBased{
         this.participants.forEach((p)=>{
             if(!p.defeated){
                 if(friendly && p.teamNumber === attacker.teamNumber
-                || p.teamNumber !== attacker.teamNumber){
+                || !friendly && p.teamNumber !== attacker.teamNumber){
                     targets.push(p);
                 }
             } 
@@ -801,12 +803,24 @@ export default class CreatureBattleTurnBased{
         bc.creature.hpCurrent = Math.min(hpAmount,bc.creature.stats.hpTotal);
     }
 
-    queueBattleMessage(msg:string[]){
-        this.queuedBattleMessages.push(msg);
+    queueBattleMessage(msgBlock:string[]){
+        const newMsg:string = msgBlock.map(function(block){
+            return '```diff\n'+msgBlock.join('\n')+'```';
+        }).join('');
+
+        const newMsgLength = this.queuedBattleMessagesStr.length + newMsg.length;
+
+        if(newMsgLength > DISCORD_MAX_MESSAGE_LENGTH){
+            this.flushBattleMessages();
+            this.queuedBattleMessagesStr = newMsg;
+        }
+        else{
+            this.queuedBattleMessagesStr += newMsg;
+        }
     }
 
     flushBattleMessagesCheck(){
-        if(this.queuedBattleMessages.length == 0){
+        if(this.queuedBattleMessagesStr.length == 0){
             return;
         }
 
@@ -823,19 +837,17 @@ export default class CreatureBattleTurnBased{
     }
 
     flushBattleMessages(){   
-        if(this.queuedBattleMessages.length == 0){
+        if(this.queuedBattleMessagesStr.length == 0){
             return;
         }
 
-        const msgToSend = this.queuedBattleMessages.map(function(block){
-            return '```diff\n'+block.join('\n')+'\n```';
-        }).join('\n');
+        const msgToSend = this.queuedBattleMessagesStr;
 
         new SendMessageClientRequest({
             channelId: this.channelId,
             message: msgToSend,
         }).send(this.game.getClient());
 
-        this.queuedBattleMessages = [];
+        this.queuedBattleMessagesStr = '';
     }
 }
