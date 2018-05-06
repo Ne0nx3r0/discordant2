@@ -26,7 +26,7 @@ export default new Weapon({
         e.target.stats.resistances.physical += 20;
     },
     onBattleBegin: (e)=>{
-        e.battle.addTemporaryEffect(e.target,EffectRegeneration,-1);
+        e.battle.addTemporaryEffect(e.target.creature,EffectRegeneration,-1);
     },
     attacks: [
         new WeaponAttack({
