@@ -103,7 +103,13 @@ export default class ExplorableMap{
     }
 
     getForagableTile(x:number,y:number):EventTile | null{
-        const tileType:number = this.mapJson.layers[this.foragablesLayer].data[this._fromXY(x,y)];
+        const foragablesLayer = this.mapJson.layers[this.foragablesLayer];
+
+        if(!foragablesLayer){
+            return null;
+        }
+
+        const tileType:number = foragablesLayer.data[this._fromXY(x,y)];
 
         switch(tileType){
             case 0:
@@ -139,6 +145,8 @@ export default class ExplorableMap{
             //case 32: // Loot Common
             //case 34: // Loot Rare
         }
+
+        return null;
     }
 
     _fromXY(x:number,y:number):number{

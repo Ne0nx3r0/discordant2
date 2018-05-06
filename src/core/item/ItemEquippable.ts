@@ -17,7 +17,7 @@ export interface UseRequirements{
 
 export interface BattleBeginEvent{
     battle: CreatureBattleTurnBased;
-    target: Creature;
+    target: IBattleCreature;
 }
 
 export interface AddBonusesEvent{

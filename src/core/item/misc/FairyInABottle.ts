@@ -14,6 +14,6 @@ export const FairyInABottle = new ItemEquippable({
     showInItems: true,
     slotType:'pouch',
     onBattleBegin:(e)=>{
-        e.battle.addTemporaryEffect(e.target,EffectFairyBottle,-1);
+        e.battle.addTemporaryEffect(e.target.creature,EffectFairyBottle,-1);
     }
 });

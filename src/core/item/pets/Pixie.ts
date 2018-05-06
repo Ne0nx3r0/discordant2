@@ -14,8 +14,6 @@ export const PixieItem = new ItemEquippable({
     showInItems: true,
     slotType:'pouch',
     onBattleBegin:(e)=>{
-        const bpc = e.battle.getBattleCreatureForAction(e.target);
-
-        e.battle.addParticipant(new PixieCreature(),bpc.teamNumber);
+        e.battle.addParticipant(new PixieCreature(),e.target.teamNumber);
     }
 });

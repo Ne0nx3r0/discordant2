@@ -130,7 +130,7 @@ export default class CreatureBattleTurnBased{
         participant.creature.equipment.forEach((item)=>{
             if(item.onBattleBegin){
                 item.onBattleBegin({
-                    target: participant.creature,
+                    target: participant,
                     battle: this,
                 });
             }
@@ -282,18 +282,10 @@ export default class CreatureBattleTurnBased{
             
             if(p.teamNumber == this.activeTeam && p.creature instanceof CreatureAIControlled){
                 if(!p.exhausted){
-                    const opponents = [];
+                    const randomAttack = p.creature.getRandomAttack();
+                    const randomOpponent = this.getRandomTarget(p,randomAttack.isFriendly);
 
-                    this.participants.forEach(function(opponent){
-                        if(!opponent.defeated && opponent.teamNumber != p.teamNumber){
-                            opponents.push(opponent);
-                        }
-                    });
-
-                    if(opponents.length > 0){
-                        const randomAttack = p.creature.getRandomAttack();
-                        const randomOpponent = opponents[Math.floor(Math.random() * opponents.length)];
-
+                    if(randomAttack && randomOpponent){
                         this._creatureAttack(p,randomAttack,randomOpponent);
 
                         this.exhaustParticipant(p);
@@ -309,6 +301,25 @@ export default class CreatureBattleTurnBased{
                 }
             }
         });
+    }
+
+    getRandomTarget(attacker:IBattleCreature,friendly:boolean):IBattleCreature | null{
+        const targets:IBattleCreature[] = [];
+
+        this.participants.forEach((p)=>{
+            if(!p.defeated){
+                if(friendly && p.teamNumber === attacker.teamNumber
+                || p.teamNumber !== attacker.teamNumber){
+                    targets.push(p);
+                }
+            } 
+        });
+
+        if(targets.length === 0){
+            return null;
+        }
+
+        return targets[Math.floor(Math.random() * targets.length)];
     }
 
     playerActionRun(pc:PlayerCharacter){

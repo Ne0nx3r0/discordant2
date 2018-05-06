@@ -4,6 +4,7 @@ import CreatureEquipment from '../../item/CreatureEquipment';
 import {BareHands, TabletOfFaith, TabletOfHealing} from '../../item/ItemsIndex';
 import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
+import { PixieWeapon } from '../../item/weapons/PixieWeapon';
 
 export default class PixieCreature extends CreatureAIControlled{
     constructor(){
@@ -19,8 +20,7 @@ export default class PixieCreature extends CreatureAIControlled{
                 luck: 0,
             }),
             equipment: new CreatureEquipment({
-                weapon: TabletOfHealing,
-                offhand: TabletOfFaith,
+                weapon: PixieWeapon,
             }),
             wishesDropped: 0,
         });
