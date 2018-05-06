@@ -283,23 +283,25 @@ export default class CreatureBattleTurnBased{
             }
             
             if(p.teamNumber == this.activeTeam && p.creature instanceof CreatureAIControlled){
-                if(!p.exhausted){
-                    const randomAttack = p.creature.getRandomAttack();
-                    const randomOpponent = this.getRandomTarget(p,randomAttack.isFriendly);
-
-                    if(randomAttack && randomOpponent){
-                        this._creatureAttack(p,randomAttack,randomOpponent);
-
+                if(!p.defeated){
+                    if(!p.exhausted){
+                        const randomAttack = p.creature.getRandomAttack();
+                        const randomOpponent = this.getRandomTarget(p,randomAttack.isFriendly);
+    
+                        if(randomAttack && randomOpponent){
+                            this._creatureAttack(p,randomAttack,randomOpponent);
+    
+                            this.exhaustParticipant(p);
+                        }
+                    }
+                    else if(p.queuedAttackSteps.length > 0){
+                        this._sendNextAttackStep(p);
+                    }
+                    else{
+                        this.queueBattleMessage([`${p.creature.title} is exhausted!`]);
+    
                         this.exhaustParticipant(p);
                     }
-                }
-                else if(p.queuedAttackSteps.length > 0){
-                    this._sendNextAttackStep(p);
-                }
-                else{
-                    this.queueBattleMessage([`${p.creature.title} is exhausted!`]);
-
-                    this.exhaustParticipant(p);
                 }
             }
         });
