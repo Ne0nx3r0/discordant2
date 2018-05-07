@@ -26,6 +26,7 @@ enum EffectId {
     WillOWispDodge,
     Regeneration,
     Unhittable,
+    EffectShieldBlack,
 }
 
 export default EffectId;
