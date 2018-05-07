@@ -104,7 +104,7 @@ export default new Weapon({
                     damageFunc: (e)=>{
                         e.battle.participants.forEach((p)=>{
                             if(p.teamNumber !== e.attacker.teamNumber){
-
+                                
                             }
                         });
 
