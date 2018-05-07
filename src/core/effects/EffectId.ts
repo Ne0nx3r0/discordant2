@@ -25,6 +25,7 @@ enum EffectId {
     BottleFairy,
     WillOWispDodge,
     Regeneration,
+    Unhittable,
 }
 
 export default EffectId;

@@ -11,6 +11,7 @@ import { DefaultDamageFunc } from '../../damage/DefaultDamageFunc';
 import { DefaultNoDamageFunc } from '../../damage/DefaultNoDamageFunc';
 import { DefaultDamageAllFunc } from '../../damage/DefaultDamageAllFunc';
 import { EffectRegeneration } from '../../effects/types/EffectRegeneration';
+import { EffectUnhittable } from '../../effects/types/EffectUnhittable';
 
 export default new Weapon({
     id: ItemId.WerewolfWeapon,
@@ -31,36 +32,55 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'slash',
-            minBaseDamage: 30,
-            maxBaseDamage: 50,
+            minBaseDamage: 20,
+            maxBaseDamage: 40,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} slashes {defender} with huge claws',
+                    attackMessage: '{attacker} slashes {defender} with its huge claws',
                     damageFunc: DefaultDamageFunc
                 }),
             ],
-            aiUseWeight: 1
+            aiUseWeight: 3
         }),
         new WeaponAttack({
-            title: 'howl',
-            minBaseDamage: 0,
-            maxBaseDamage: 0,
+            title: 'bite',
+            minBaseDamage: 30,
+            maxBaseDamage: 50,
             damageType: DamageType.special,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} howls loudly sapping the courage of the party!',
-                    damageFunc: (e)=>{
+                    attackMessage: '{attacker} jumps and bites down on {defender}',
+                    damageFunc: DefaultDamageFunc
+                }),
+            ],
+            aiUseWeight: 2
+        }),
+        new WeaponAttack({
+            title: 'hide',
+            minBaseDamage: 60,
+            maxBaseDamage: 100,
+            damageType: DamageType.physical,
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.No,
+            steps: [
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} leaps into the trees and disappears',
+                    damageFunc: function(e){
+                        e.battle.addTemporaryEffect(e.attacker.creature,EffectUnhittable,1);
                         return [];
                     }
+                }),
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} leaps down on {defender} and tears into them',
+                    damageFunc: DefaultDamageFunc
                 }),
             ],
             aiUseWeight: 1
         }),
-
     ]
 });
