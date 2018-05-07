@@ -14,7 +14,7 @@ export default class Werewolf extends CreatureAIControlled{
             attributes: new AttributeSet({
                 strength: 50,
                 agility: 10,
-                vitality: 30,
+                vitality: 40,
                 spirit: 40,
                 luck: 0,
             }),
