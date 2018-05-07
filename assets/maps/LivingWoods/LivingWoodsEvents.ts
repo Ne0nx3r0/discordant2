@@ -27,6 +27,12 @@ export const LivingWoodsEvents:IMapData = {
     ],
     eventTiles: [
         {
+            event: new EventTileMonster(`Out of the trees comes a dark growling figure!`,CreatureId.Werewolf),
+            coords: [
+                {x:14,y:16},
+            ],
+        },
+        {
             event: new EventTileLootable({
                 lootGenerator: lootGenerator,
                 lootSettings:{
@@ -37,6 +43,11 @@ export const LivingWoodsEvents:IMapData = {
                 goldMax: 200,
             }),
             coords: [
+                {x:12, y:3},
+                {x:9, y:19},
+                {x:26, y:5},
+                {x:27, y:8},
+                {x:27, y:20},
             ],
         },
         {
@@ -50,6 +61,9 @@ export const LivingWoodsEvents:IMapData = {
                 goldMax: 250,
             }),
             coords: [
+                {x:6, y:8},
+                {x:13, y:15},
+                {x:24, y:11},
             ],
         },
         {
