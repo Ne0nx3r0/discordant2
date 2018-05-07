@@ -27,6 +27,7 @@ enum EffectId {
     Regeneration,
     Unhittable,
     EffectShieldBlack,
+    EnchantWeaponsDark,
 }
 
 export default EffectId;

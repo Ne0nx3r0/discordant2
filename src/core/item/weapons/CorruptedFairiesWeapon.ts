@@ -15,6 +15,7 @@ import { EffectUnhittable } from '../../effects/types/EffectUnhittable';
 import { EffectShieldGold } from '../../effects/types/EffectShieldGold';
 import { EffectShieldRed } from '../../effects/types/EffectShieldRed';
 import { EffectShieldBlack } from '../../effects/types/EffectShieldBlack';
+import { EffectEnchantWeaponsDark } from '../../effects/types/EffectEnchantWeaponsDark';
 
 export default new Weapon({
     id: ItemId.CorruptedFairiesWeapon,
@@ -25,7 +26,7 @@ export default new Weapon({
     useRequirements:{},
     goldValue:0,
     onAddBonuses: (e)=>{
-        e.target.stats.resistances.dark += 40;
+        e.target.stats.resistances.dark += 60;
         e.target.stats.resistances.physical += 20;
     },
     attacks: [
@@ -38,7 +39,7 @@ export default new Weapon({
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} all begin to glow BRIGHT ORANGE',
+                    attackMessage: 'The fairies begin to glow BRIGHT ORANGE',
                     damageFunc: (e)=>{
                         e.battle.addTemporaryEffect(e.attacker.creature,EffectShieldGold,3);
 
@@ -46,11 +47,11 @@ export default new Weapon({
                     },
                 }),
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} swirl around generating a loud humming noise',
+                    attackMessage: 'The fairies swirl around generating a loud humming noise',
                     damageFunc: DefaultNoDamageFunc
                 }),
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} flash brightly throwing arcs of electricity everywhere',
+                    attackMessage: 'The fairies flash brightly throwing arcs of electricity everywhere',
                     damageFunc: DefaultDamageAllFunc
                 }),
             ],
@@ -59,13 +60,13 @@ export default new Weapon({
         new WeaponAttack({
             title: 'red',
             minBaseDamage: 40,
-            maxBaseDamage: 60,
+            maxBaseDamage: 70,
             damageType: DamageType.thunder,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} all huddle up and glow BRIGHT RED',
+                    attackMessage: 'The fairies huddle up and glow BRIGHT RED',
                     damageFunc: (e)=>{
                         e.battle.addTemporaryEffect(e.attacker.creature,EffectShieldRed,3);
 
@@ -73,7 +74,7 @@ export default new Weapon({
                     },
                 }),
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} let loose long whips of flame in the area',
+                    attackMessage: 'The fairies let loose long whips of flame in the area',
                     damageFunc: DefaultDamageAllFunc
                 }),
             ],
@@ -81,14 +82,14 @@ export default new Weapon({
         }),
         new WeaponAttack({
             title: 'black',
-            minBaseDamage: 0,
-            maxBaseDamage: 0,
+            minBaseDamage: 30,
+            maxBaseDamage: 40,
             damageType: DamageType.special,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} all DIM as the area falls dark',
+                    attackMessage: 'The fairies DIM as the area falls dark',
                     damageFunc: (e)=>{
                         e.battle.addTemporaryEffect(e.attacker.creature,EffectShieldBlack,3);
 
@@ -96,19 +97,19 @@ export default new Weapon({
                     },
                 }),
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} begin reciting the legend of their corruption',
+                    attackMessage: 'The fairies begin reciting the legend of their corruption',
                     damageFunc: DefaultNoDamageFunc
                 }),
                 new WeaponAttackStep({
-                    attackMessage: '{attacker} ',
+                    attackMessage: 'Dark magic floods from the faires corrupting the area',
                     damageFunc: (e)=>{
                         e.battle.participants.forEach((p)=>{
-                            if(p.teamNumber !== e.attacker.teamNumber){
-                                
+                            if(p.teamNumber !== e.attacker.teamNumber && Math.random() > 0.5){
+                                e.battle.addTemporaryEffect(p.creature,EffectEnchantWeaponsDark,10);
                             }
                         });
 
-                        return [];
+                        return DefaultDamageAllFunc(e);
                     },
                 }),
             ],
