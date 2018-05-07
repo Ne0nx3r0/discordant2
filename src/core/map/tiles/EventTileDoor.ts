@@ -5,7 +5,7 @@ import ItemBase from "../../item/ItemBase";
 import ExplorableMap from "../ExplorableMap";
 import { WorldMaps } from "../Maps";
 import { DamageType } from "../../item/WeaponAttackStep";
-import ResistDamage from "../../../util/ResistDamage";
+import { GetDamageResisted } from '../../../util/ResistDamage';
 
 interface IsOpenFunction{
     (bag:EventTileHandlerBag):boolean;
@@ -80,7 +80,7 @@ export class EventTileDoor extends EventTile{
                 trapResults.push(`${bag.party.leader.title} triggered a trap!`);
 
                 bag.party.members.forEach((member)=>{
-                    let damageTaken = ResistDamage(member,this.trap.amount,this.trap.type);
+                    let damageTaken = GetDamageResisted(member,this.trap.amount,this.trap.type);
 
                     if(damageTaken >= member.hpCurrent){
                         damageTaken = member.hpCurrent-1;
