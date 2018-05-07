@@ -439,6 +439,33 @@ export default class CreatureBattleTurnBased{
         this.exhaustParticipant(bc);
     }
 
+    playerActionAttackSlot(attacker:Creature,attack:WeaponAttack,slot:number){
+        const bc = this.participantsLookup.get(attacker);
+        const teamNumber = attack.isFriendly ? bc.teamNumber : bc.teamNumber == 1 ? 2 : 1;
+
+        let teamSlot = 0;
+        let target:Creature;
+
+        for(let i=0;i<this.participants.length;i++){
+            const participant = this.participants[i];
+
+            if(participant.teamNumber == teamNumber){
+                teamSlot++;
+
+                if(teamSlot == slot){
+                    target = participant.creature;
+                    break;
+                }
+            }
+        }
+
+        if(!target){
+            throw 'Invalid slot number for team '+teamNumber;
+        }
+
+        this.playerActionAttack(attacker,attack,target);
+    }
+
     playerActionAttack(attacker:Creature,attack:WeaponAttack,target:Creature){
         const bca = this.getBattleCreatureForAction(attacker);
         
