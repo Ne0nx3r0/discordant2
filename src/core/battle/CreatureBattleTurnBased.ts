@@ -615,8 +615,8 @@ export default class CreatureBattleTurnBased{
                 let dodged = wad.target.creature.stats.dodgeAlways;
 
                 //check if they dodged the attack
-                //only players can dodge
-                if(wad.target.creature instanceof PlayerCharacter){
+                //only players can dodge by stats
+                if(!dodged && wad.target.creature instanceof PlayerCharacter){
                     const scalingAttribute = Attribute[queuedAttackStep.step.attack.scalingAttribute];
 
                     const attackerStat = attacker.creature.stats[scalingAttribute];
