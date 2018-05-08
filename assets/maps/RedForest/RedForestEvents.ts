@@ -40,7 +40,7 @@ lootGenerator.addLootItem('rare',ItemsIndex.RingOfFortune,0.02);
 export const RedForestEvents:IMapData = {
     startX: 26,
     startY: 19,
-    encounterChance: 0.2,
+    encounterChance: 0.15,
     encounters:[
         { id:CreatureId.FireAntMite,    weight: 0.3 },
         { id:CreatureId.FireAntWorker,  weight: 0.3 },
