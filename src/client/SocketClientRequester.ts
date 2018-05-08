@@ -219,12 +219,24 @@ export default class SocketClientRequester{
         return request.send(this.sioc);
     }
 
-    sendBattleAttack(playerUid:string,targetUid:string,attackTitle:string,offhand:boolean):Promise<void>{
+
+    sendBattleAttackSlot(playerUid:string,targetSlot:number,attackTitle:string,offhand:boolean):Promise<void>{
         const request = new BattleAttackRequest({
             uid: playerUid,
-            target: targetUid,
-            attackTitle: attackTitle,
-            offhand: offhand
+            targetSlot,
+            attackTitle,
+            offhand
+        });
+
+        return request.send(this.sioc);
+    }
+
+    sendBattleAttackUID(playerUid:string,targetUid:string,attackTitle:string,offhand:boolean):Promise<void>{
+        const request = new BattleAttackRequest({
+            uid: playerUid,
+            targetUid,
+            attackTitle,
+            offhand,
         });
 
         return request.send(this.sioc);

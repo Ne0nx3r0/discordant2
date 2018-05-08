@@ -83,7 +83,6 @@ export default class PlayerInventory{
         const inventoryItems:SocketPlayerInventory = [];
 
         this.items.forEach(function(item,itemId){
-            console.log(item,itemId);
             inventoryItems.push({
                 id:item.base.id,
                 amount:item.amount

@@ -1,4 +1,4 @@
-import EventTile from "./EventTile";
+import {EventTile} from "./EventTile";
 
 interface MapEventTile {
     event: EventTile;

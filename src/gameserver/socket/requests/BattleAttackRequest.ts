@@ -3,19 +3,31 @@ import ServerRequest from '../ServerRequest';
 import { SocketPlayerCharacter } from '../../../core/creature/player/PlayerCharacter';
 import PlayerCharacter from '../../../core/creature/player/PlayerCharacter';
 
-export interface BattleAttackData extends ServerRequestData{
+interface BattleAttackRequestBase extends ServerRequestData{
     uid: string;
-    target:string;
     attackTitle:string;
     offhand:boolean;
+}
+
+export interface BattleAttackUIDData extends BattleAttackRequestBase{
+    targetUid:string;
+}
+
+export interface BattleAttackSlotData extends BattleAttackRequestBase{
+    targetSlot: number;
+}
+
+function instanceOfBattleAttackSlotData(object:any): object is BattleAttackSlotData{
+    return 'targetSlot' in object;
 }
 
 export interface BattleAttackResponse extends ServerResponse{
 
 }
 
+
 export default class BattleAttackRequest extends ServerRequest{
-    constructor(data:BattleAttackData){
+    constructor(data:BattleAttackSlotData | BattleAttackUIDData){
         super('BattleAttack',data);
     }
 
@@ -23,9 +35,14 @@ export default class BattleAttackRequest extends ServerRequest{
         await this._send(sioc) as BattleAttackResponse;
     }
 
-    async receive(bag:ServerRequestReceiveBag,data:BattleAttackData):Promise<BattleAttackResponse>{
-        await bag.game.sendBattleAttack(data.uid,data.target,data.attackTitle,data.offhand);
-
+    async receive(bag:ServerRequestReceiveBag,data:BattleAttackSlotData | BattleAttackUIDData):Promise<BattleAttackResponse>{
+        if(instanceOfBattleAttackSlotData(data)){
+            await bag.game.sendBattleAttackSlot(data.uid,data.targetSlot,data.attackTitle,data.offhand);
+        }
+        else{
+            await bag.game.sendBattleAttack(data.uid,data.targetUid,data.attackTitle,data.offhand);
+        }
+        
         return {
             success: true,
         };

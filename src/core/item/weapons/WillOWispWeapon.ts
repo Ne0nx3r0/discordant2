@@ -26,7 +26,7 @@ export default new Weapon({
         e.target.stats.resistances.thunder += 20;
     },
     onBattleBegin: (e)=>{
-        e.battle.addTemporaryEffect(e.target,EffectWillOWispDodge,-1);
+        e.battle.addTemporaryEffect(e.target.creature,EffectWillOWispDodge,-1);
     },
     attacks: [
         new WeaponAttack({

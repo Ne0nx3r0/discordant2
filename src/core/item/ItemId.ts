@@ -94,5 +94,12 @@ enum ItemId {BareHands,HandAxe,//keeping these two up here allows you to identif
     GreedyDagger,
     FaunWeapon,
     PointyMageHat,
+    WerewolfWeapon,
+    Pixie,
+    PixieWeapon,
+    CorruptedFairiesWeapon,
+    OldWillowWeapon,
+    StuddedHelmet,
+    StuddedLeather,
 }
 export default ItemId;

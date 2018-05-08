@@ -6,6 +6,7 @@ import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import Weapon from "../../core/item/Weapon";
 import WeaponAttack from '../../core/item/WeaponAttack';
 import { BareHands } from '../../core/item/weapons/BareHands';
+import { isNumber } from 'util';
 
 export default class BattleAttack extends Command{
     constructor(bag:CommandBag){
@@ -27,6 +28,18 @@ export default class BattleAttack extends Command{
 
 export async function BotAttackCommand(bag:CommandRunBag,offhand:boolean){
     const target = bag.message.mentions.users.first();
+    let targetSlot:number;
+    
+    if(!target){
+        const slotStr:number = Number(bag.params[bag.params.length-1]);
+        
+        if(!isNaN(slotStr)){
+            if(slotStr < 1){
+                throw `Invalid slot ${slotStr}`;
+            }
+            targetSlot = slotStr;
+        }
+    }
 
     const player = await bag.socket.getPlayer(bag.message.author.id);
 
@@ -52,15 +65,11 @@ export async function BotAttackCommand(bag:CommandRunBag,offhand:boolean){
     let attack:WeaponAttack;
     let wantedAttackStr;
     
-    if(target && bag.params.length > 1){
-        wantedAttackStr = bag.params.slice(0,-1).join(' ').toUpperCase();
-        attack = weapon.findAttack(wantedAttackStr);    
-    }
-    else if(target || bag.params.length == 0){
+    if(bag.params.length == 0 || (target || targetSlot) && bag.params.length == 1){
         attack = weapon.attacks[0];
     }
     else{
-        wantedAttackStr = bag.params.join(' ').toUpperCase();
+        wantedAttackStr = bag.params[0].toUpperCase();
         attack = weapon.findAttack(wantedAttackStr);
     }
 
@@ -74,10 +83,20 @@ export async function BotAttackCommand(bag:CommandRunBag,offhand:boolean){
         return;
     }
 
-    await bag.socket.sendBattleAttack(
-        player.uid,
-        target?target.id:player.uid,
-        attack.title,
-        offhand
-    );    
+    if(targetSlot){
+        await bag.socket.sendBattleAttackSlot(
+            player.uid,
+            targetSlot,
+            attack.title,    
+            offhand
+        );  
+    }
+    else{
+        await bag.socket.sendBattleAttackUID(
+            player.uid,
+            target?target.id:player.uid,
+            attack.title,
+            offhand
+        );  
+    }
 }

@@ -12,10 +12,12 @@ import { SocketCreature } from '../creature/Creature';
 import { IWeaponAttackDamages, DamageType } from '../item/WeaponAttackStep';
 import { GetDodgePercent } from '../../util/GetDodgePercent';
 import { Attribute } from '../creature/AttributeSet';
-import ResistDamage from "../../util/ResistDamage";
+import { GetDamageBlocked, GetDamageResisted } from "../../util/ResistDamage";
 import ItemEquippable from '../item/ItemEquippable';
 import { EquipmentSlot } from '../creature/EquipmentSlot';
 import Game from '../../gameserver/game/Game';
+
+const DISCORD_MAX_MESSAGE_LENGTH:number = 2000;
 
 export enum BattleResult{
     Team1Won,
@@ -76,11 +78,11 @@ export default class CreatureBattleTurnBased{
     participantsLookup: Map<Creature,IBattleCreature>;
     activeTeam: number;
     runChance: number;
-    queuedBattleMessages: Array<Array<string>>;
+    queuedBattleMessagesStr: string;
 
     constructor(bag:CreatureBattleTurnBasedBag){
         this.queueBattleMessage = this.queueBattleMessage.bind(this);
-        this.queuedBattleMessages = [];
+        this.queuedBattleMessagesStr = '';
         this.channelId = bag.channelId;
         this.game = bag.game;
         this.battleCleanup = bag.battleCleanup;
@@ -130,7 +132,7 @@ export default class CreatureBattleTurnBased{
         participant.creature.equipment.forEach((item)=>{
             if(item.onBattleBegin){
                 item.onBattleBegin({
-                    target: participant.creature,
+                    target: participant,
                     battle: this,
                 });
             }
@@ -281,34 +283,47 @@ export default class CreatureBattleTurnBased{
             }
             
             if(p.teamNumber == this.activeTeam && p.creature instanceof CreatureAIControlled){
-                if(!p.exhausted){
-                    const opponents = [];
-
-                    this.participants.forEach(function(opponent){
-                        if(!opponent.defeated && opponent.teamNumber != p.teamNumber){
-                            opponents.push(opponent);
-                        }
-                    });
-
-                    if(opponents.length > 0){
+                if(!p.defeated){
+                    if(!p.exhausted){
                         const randomAttack = p.creature.getRandomAttack();
-                        const randomOpponent = opponents[Math.floor(Math.random() * opponents.length)];
-
-                        this._creatureAttack(p,randomAttack,randomOpponent);
-
+                        const randomOpponent = this.getRandomTarget(p,randomAttack.isFriendly);
+    
+                        if(randomAttack && randomOpponent){
+                            this._creatureAttack(p,randomAttack,randomOpponent);
+    
+                            this.exhaustParticipant(p);
+                        }
+                    }
+                    else if(p.queuedAttackSteps.length > 0){
+                        this._sendNextAttackStep(p);
+                    }
+                    else{
+                        this.queueBattleMessage([`${p.creature.title} is exhausted!`]);
+    
                         this.exhaustParticipant(p);
                     }
                 }
-                else if(p.queuedAttackSteps.length > 0){
-                    this._sendNextAttackStep(p);
-                }
-                else{
-                    this.queueBattleMessage([`${p.creature.title} is exhausted!`]);
-
-                    this.exhaustParticipant(p);
-                }
             }
         });
+    }
+
+    getRandomTarget(attacker:IBattleCreature,friendly:boolean):IBattleCreature | null{
+        const targets:IBattleCreature[] = [];
+
+        this.participants.forEach((p)=>{
+            if(!p.defeated){
+                if(friendly && p.teamNumber === attacker.teamNumber
+                || !friendly && p.teamNumber !== attacker.teamNumber){
+                    targets.push(p);
+                }
+            } 
+        });
+
+        if(targets.length === 0){
+            return null;
+        }
+
+        return targets[Math.floor(Math.random() * targets.length)];
     }
 
     playerActionRun(pc:PlayerCharacter){
@@ -422,6 +437,33 @@ export default class CreatureBattleTurnBased{
         this.queueBattleMessage([`+ ${bc.creature.title} blocks!`]);
         
         this.exhaustParticipant(bc);
+    }
+
+    playerActionAttackSlot(attacker:Creature,attack:WeaponAttack,slot:number){
+        const bc = this.participantsLookup.get(attacker);
+        const teamNumber = attack.isFriendly ? bc.teamNumber : bc.teamNumber == 1 ? 2 : 1;
+
+        let teamSlot = 0;
+        let target:Creature;
+
+        for(let i=0;i<this.participants.length;i++){
+            const participant = this.participants[i];
+
+            if(participant.teamNumber == teamNumber){
+                teamSlot++;
+
+                if(teamSlot == slot){
+                    target = participant.creature;
+                    break;
+                }
+            }
+        }
+
+        if(!target){
+            throw 'Invalid slot number for team '+teamNumber;
+        }
+
+        this.playerActionAttack(attacker,attack,target);
     }
 
     playerActionAttack(attacker:Creature,attack:WeaponAttack,target:Creature){
@@ -573,8 +615,8 @@ export default class CreatureBattleTurnBased{
                 let dodged = wad.target.creature.stats.dodgeAlways;
 
                 //check if they dodged the attack
-                //only players can dodge
-                if(wad.target.creature instanceof PlayerCharacter){
+                //only players can dodge by stats
+                if(!dodged && wad.target.creature instanceof PlayerCharacter){
                     const scalingAttribute = Attribute[queuedAttackStep.step.attack.scalingAttribute];
 
                     const attackerStat = attacker.creature.stats[scalingAttribute];
@@ -619,18 +661,24 @@ export default class CreatureBattleTurnBased{
                     });
 
                     if(attackWasAllowed){
-                        const damageTaken = ResistDamage(wad.target.creature,wad.amount,wad.type);
+                        const damageBlocked = wad.target.blocking ?
+                            GetDamageBlocked(wad.target.creature,wad.amount) : 0;
 
-                        const damageResisted = wad.amount - damageTaken;
-    
+                        const blockedStr = damageBlocked == 0 ? '' : `, blocked ${damageBlocked}`;
+                        
+                        const damageAfterBlock = wad.amount - damageBlocked;
+
+                        const damageResisted = GetDamageResisted(wad.target.creature,damageAfterBlock,wad.type);
                         const resistedStr = damageResisted == 0 ? '' : `, resisted ${damageResisted}`;
-    
-                        wad.target.creature.hpCurrent -= damageTaken;
+                        
+                        const finalDamage = damageAfterBlock - damageResisted;
+
+                        wad.target.creature.hpCurrent -= finalDamage;
     
                         damagesMsgs.push(
-                            `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${damageTaken} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}`
+                            `- ${wadc.title} (${wadc.hpCurrent}/${wadc.stats.hpTotal}) took ${finalDamage} ${DamageType[wad.type].toUpperCase()} damage${resistedStr}${blockedStr}`
                         );
-    
+
                         if(wad.hpSteal){
                             attacker.creature.hpCurrent = Math.min(
                                 attacker.creature.hpCurrent+wad.hpSteal,
@@ -724,7 +772,7 @@ export default class CreatureBattleTurnBased{
             const winningTeam = result == BattleResult.Team1Won ? 1 : 2;
 
             survivors = this.participants.filter(function(p){
-                return !p.defeated && p.teamNumber == winningTeam;
+                return !p.defeated && p.teamNumber == winningTeam && p.creature instanceof PlayerCharacter;
             })
             .map(function(bc){
                 return bc.creature;
@@ -790,12 +838,22 @@ export default class CreatureBattleTurnBased{
         bc.creature.hpCurrent = Math.min(hpAmount,bc.creature.stats.hpTotal);
     }
 
-    queueBattleMessage(msg:string[]){
-        this.queuedBattleMessages.push(msg);
+    queueBattleMessage(msgBlock:string[]){
+        const newMsg:string = '```diff\n'+msgBlock.join('\n')+'```';
+
+        const newMsgLength = this.queuedBattleMessagesStr.length + newMsg.length;
+
+        if(newMsgLength > DISCORD_MAX_MESSAGE_LENGTH){
+            this.flushBattleMessages();
+            this.queuedBattleMessagesStr = newMsg;
+        }
+        else{
+            this.queuedBattleMessagesStr += newMsg;
+        }
     }
 
     flushBattleMessagesCheck(){
-        if(this.queuedBattleMessages.length == 0){
+        if(this.queuedBattleMessagesStr.length == 0){
             return;
         }
 
@@ -812,19 +870,17 @@ export default class CreatureBattleTurnBased{
     }
 
     flushBattleMessages(){   
-        if(this.queuedBattleMessages.length == 0){
+        if(this.queuedBattleMessagesStr.length == 0){
             return;
         }
 
-        const msgToSend = this.queuedBattleMessages.map(function(block){
-            return '```diff\n'+block.join('\n')+'\n```';
-        }).join('\n');
+        const msgToSend = this.queuedBattleMessagesStr;
+
+        this.queuedBattleMessagesStr = '';
 
         new SendMessageClientRequest({
             channelId: this.channelId,
             message: msgToSend,
         }).send(this.game.getClient());
-
-        this.queuedBattleMessages = [];
     }
 }

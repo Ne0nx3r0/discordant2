@@ -44,7 +44,7 @@ export const MapLivingWoods = new ExplorableMap({
     mapJson: require('../../../assets/maps/LivingWoods/LivingWoodsLayout.json'),
     mapData: LivingWoodsEvents,
     pieceItem: LivingWoodsMapPiece,
-    mapItem: GoblinSneakWeapon,
+    mapItem: LivingWoodsMap,
 });
 
 export const WorldMaps = {

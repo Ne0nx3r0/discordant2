@@ -715,6 +715,34 @@ export default class Game {
         this.pvpInvites.delete(receiver.uid);*/
     }
 
+    //TODO: combine shared logic between this and sendBattleAttack
+    async sendBattleAttackSlot(uid:string,targetSlot:number,attackTitle:string,offhand:boolean):Promise<void>{
+        const attacker = await this.getPlayerCharacter(uid);
+
+        if(!attacker){
+            throw 'You are not registered yet';
+        }
+
+        if(attacker.status != 'inBattle'){
+            throw 'You are not currently in a battle';
+        }
+
+        let weapon = offhand ? attacker.equipment.offhand : attacker.equipment.weapon;
+
+        if(weapon == undefined){
+            weapon = BareHands;
+        }
+
+        const weaponAttack = weapon.findAttack(attackTitle);
+
+        if(!weaponAttack){
+            throw attackTitle+' is not a valid attack for '+weapon.title;
+        }
+
+        attacker.battle.playerActionAttackSlot(attacker,weaponAttack,targetSlot);
+    }
+
+    //TODO: combine shared logic between this and sendBattleAttackSlot
     async sendBattleAttack(uid:string,targetPlayerUid:string,attackTitle:string,offhand:boolean):Promise<void>{
         const attacker = await this.getPlayerCharacter(uid);
 

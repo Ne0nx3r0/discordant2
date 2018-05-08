@@ -11,7 +11,7 @@ import LootGenerator from '../../../src/core/loot/LootGenerator';
 import { MapRedForest } from "../../../src/core/map/Maps";
 import { EventTileDoor } from "../../../src/core/map/tiles/EventTileDoor";
 import { DamageType } from "../../../src/core/item/WeaponAttackStep";
-import EventTile, { EventTileHandlerBag } from "../../../src/core/map/EventTile";
+import { EventTile,EventTileHandlerBag } from "../../../src/core/map/EventTile";
 import { ExiledMagicianWeapon } from '../../../src/core/item/weapons/ExiledMagicianWeapon';
 
 class EventTileGetRedCastleLever extends EventTile{
@@ -52,23 +52,21 @@ class EventTileGetRedCastleLever extends EventTile{
 
 export const lootGenerator = new LootGenerator();
 
-lootGenerator.addLootItem('uncommon',ItemsIndex.Revive,1);
-lootGenerator.addLootItem('uncommon',ItemsIndex.Tent,1);
-lootGenerator.addLootItem('uncommon',ItemsIndex.RedForestCastleMapPiece,1);
-lootGenerator.addLootItem('uncommon',ItemsIndex.MageRobe,0.25);
+lootGenerator.addLootItem('uncommon',ItemsIndex.Revive,0.5);
+lootGenerator.addLootItem('uncommon',ItemsIndex.Tent,0.5);
+lootGenerator.addLootItem('uncommon',ItemsIndex.RedForestCastleMapPiece,0.5);
+lootGenerator.addLootItem('uncommon',ItemsIndex.MageRobe,0.1);
 lootGenerator.addLootItem('uncommon',ItemsIndex.SonicLongsword,0.1);
-lootGenerator.addLootItem('uncommon',ItemsIndex.StoneDagger,0.1);
-lootGenerator.addLootItem('uncommon',ItemsIndex.FireAxe,0.25);
 lootGenerator.addLootItem('uncommon',ItemsIndex.RedEyeRing,0.1);
-lootGenerator.addLootItem('uncommon',ItemsIndex.WishCatcher,0.1);
+lootGenerator.addLootItem('uncommon',ItemsIndex.RingOfHealth,1);
+lootGenerator.addLootItem('uncommon',ItemsIndex.RingOfLuck,1);
 
 lootGenerator.addLootItem('rare',ItemsIndex.TabletOfFaith,0.1);
+lootGenerator.addLootItem('rare',ItemsIndex.StoneDagger,0.1);
 lootGenerator.addLootItem('rare',ItemsIndex.StoneAxe,0.1);
 lootGenerator.addLootItem('rare',ItemsIndex.FireSpear,0.1);
-lootGenerator.addLootItem('rare',ItemsIndex.WishCatcher,0.05);
 lootGenerator.addLootItem('rare',ItemsIndex.FireDagger,0.1);
 lootGenerator.addLootItem('rare',ItemsIndex.FireMace,0.1);
-lootGenerator.addLootItem('rare',ItemsIndex.RedForestCastleMapPiece,0.5);
 
 export const RedForestCastleEvents:IMapData = {
     startX: 5,

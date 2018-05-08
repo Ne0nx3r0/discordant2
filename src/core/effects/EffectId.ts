@@ -24,6 +24,11 @@ enum EffectId {
     TreantRageTrigger,
     BottleFairy,
     WillOWispDodge,
+    Regeneration,
+    Unhittable,
+    EffectShieldBlack,
+    EnchantWeaponsDark,
+    ToxicSporePoison,
 }
 
 export default EffectId;

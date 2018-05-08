@@ -13,6 +13,9 @@ export { FireAntArmor } from './clothing/FireAntArmor';
 export { ClothHood } from './clothing/ClothHood';
 export { ClothTunic } from './clothing/ClothTunic';
 
+export { StuddedHelmet } from './clothing/LeatherHelmet';
+export { StuddedLeather } from './clothing/LeatherArmor';
+
 export {MageRobe} from './clothing/MageRobe';
 export {PointyMageHat} from './clothing/PointyMageHat';
 
@@ -103,3 +106,4 @@ export { PrismBlade } from './weapons/PrismBlade';
 export { WishCatcher } from './misc/WishCatcher';
 export { WishTrapper } from './misc/WishTrapper';
 export { FairyInABottle } from './misc/FairyInABottle';
+export { PixieItem } from './pets/Pixie';

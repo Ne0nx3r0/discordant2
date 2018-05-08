@@ -18,9 +18,10 @@ enum CreatureId{
     WillOWisp,
     Treant,
     Faun,
-    ElderFaun,
-    CorruptedOldWillow,
+    Werewolf,
+    OldWillow,
     CorruptedFairies,
+    Pixie,
 }
 
 export default CreatureId;

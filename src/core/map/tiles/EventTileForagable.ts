@@ -1,4 +1,4 @@
-import EventTile, { EventTileHandlerBag } from '../EventTile';
+import {EventTile, EventTileHandlerBag} from '../EventTile';
 import ItemId from '../../item/ItemId';
 
 export class EventTileForagable extends EventTile{

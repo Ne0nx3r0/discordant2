@@ -28,7 +28,7 @@ export default new Weapon({
         e.target.stats.resistances.fire -= 20;
     },
     onBattleBegin: (e)=>{
-        e.battle.addTemporaryEffect(e.target,EffectTreantRageTrigger,-1);
+        e.battle.addTemporaryEffect(e.target.creature,EffectTreantRageTrigger,-1);
     },
     attacks: [
         new WeaponAttack({

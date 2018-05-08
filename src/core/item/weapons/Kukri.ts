@@ -15,7 +15,7 @@ export const Kukri = new Weapon({
     description: '(Doubles damage when wielding two) Inspired by the curved blades once used by elite soldiers in the Eastern armies, these simple blades are devastating when used by a skilled wielder.',
     damageBlocked: 0.01,
     criticalMultiplier: 2,
-    chanceToCritical: 0.1,
+    chanceToCritical: 0.2,
     goldValue: 10,
     useRequirements: {
         agility: 28,
