@@ -28,6 +28,7 @@ export default new Weapon({
     onAddBonuses: (e)=>{
         e.target.stats.resistances.dark += 60;
         e.target.stats.resistances.physical += 20;
+        e.target.stats.resistances.fire += 20;
     },
     attacks: [
         new WeaponAttack({
