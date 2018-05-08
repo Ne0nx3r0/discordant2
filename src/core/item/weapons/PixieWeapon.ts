@@ -39,7 +39,7 @@ export const PixieWeapon = new Weapon({
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: `{attacker} heals {defender}`,
+                    attackMessage: `{attacker} creates a magical barrier around {defender}`,
                     damageFunc: DefaultDamageFunc,
                 }),
             ],
