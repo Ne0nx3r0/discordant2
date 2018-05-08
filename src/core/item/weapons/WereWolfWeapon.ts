@@ -49,7 +49,7 @@ export default new Weapon({
             title: 'bite',
             minBaseDamage: 30,
             maxBaseDamage: 50,
-            damageType: DamageType.special,
+            damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,
             steps: [

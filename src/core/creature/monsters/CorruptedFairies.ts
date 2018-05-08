@@ -21,7 +21,7 @@ export default class CorruptedFairies extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: CorruptedFairiesWeapon,
             }),
-            wishesDropped: 1600,
+            wishesDropped: 1200,
         });
     }
 }
