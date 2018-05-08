@@ -29,14 +29,15 @@ export default class BattleAttack extends Command{
 export async function BotAttackCommand(bag:CommandRunBag,offhand:boolean){
     const target = bag.message.mentions.users.first();
     let targetSlot:number;
+    
     if(!target){
         const slotStr:number = Number(bag.params[bag.params.length-1]);
-
-        if(!isNaN(slotStr) && slotStr > 0){
+        
+        if(!isNaN(slotStr)){
+            if(slotStr < 1){
+                throw `Invalid slot ${slotStr}`;
+            }
             targetSlot = slotStr;
-        }
-        else{
-            throw `Invalid slot ${slotStr}`;
         }
     }
 
