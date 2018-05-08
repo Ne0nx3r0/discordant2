@@ -31,12 +31,12 @@ export default class FireAntSoldier extends CreatureAIControlled{
                 bag.party.members.forEach(function(member){
                     const roll = Math.random() - Math.min(0.2,member.stats.magicFind/100);
 
-                    if(roll < 0.1){
+                    if(roll < 0.01){
                         droppedCarapacesMsgs.push(`${member.title} found 2 fire ant carapaces`);
                         
                         bag.party.game.grantPlayerItem(member.uid,ItemId.FireAntCarapace,2);
                     }
-                    else if(roll < 0.3){
+                    else if(roll < 0.1){
                         droppedCarapacesMsgs.push(`${member.title} found a fire ant carapace`);
                         
                         bag.party.game.grantPlayerItem(member.uid,ItemId.FireAntCarapace,1);
