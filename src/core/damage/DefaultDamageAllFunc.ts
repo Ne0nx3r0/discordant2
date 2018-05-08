@@ -3,26 +3,27 @@ import { Attribute } from "../creature/AttributeSet";
 import { WeaponDamageType } from "../item/WeaponAttack";
 import { GetScalingBonusFor } from './DamageScaling';
 
-export function DefaultDamageAllFunc(bag: DamageFuncBag): Array<IWeaponAttackDamages> {
-    const attack = bag.step.attack;
+export function DefaultDamageAllFunc(e): Array<IWeaponAttackDamages> {
+    const attack = e.step.attack;
     const weapon = attack.weapon;
 
     const damages = [];
 
-    bag.battle.participants.forEach(function(p){
-        if(bag.attacker.teamNumber == p.teamNumber){
+    e.battle.participants.forEach(function(p){
+        if(e.attacker.teamNumber == p.teamNumber
+        || e.attacker.defeated){
             return;
         }
 
         let damageAmount = Math.random() * (attack.maxBaseDamage - attack.minBaseDamage) + attack.minBaseDamage;
 
-        if(bag.isCritical){
+        if(e.isCritical){
             damageAmount = damageAmount * weapon.criticalMultiplier; 
         }
 
         const scalingAttribute = Attribute[attack.scalingAttribute];
 
-        damageAmount = damageAmount * GetScalingBonusFor(bag.attacker.creature,attack);
+        damageAmount = damageAmount * GetScalingBonusFor(e.attacker.creature,attack);
         
         damages.push({
             target: p,
