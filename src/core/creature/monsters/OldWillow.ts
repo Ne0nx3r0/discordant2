@@ -3,25 +3,25 @@ import CreatureId from '../CreatureId';
 import CreatureEquipment from '../../item/CreatureEquipment';
 import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
-import TreantWeapon from '../../item/weapons/TreantWeapon';
+import OldWillowWeapon from '../../item/weapons/OldWillowWeapon';
 
-export default class Treant extends CreatureAIControlled{
+export default class OldWillow extends CreatureAIControlled{
     constructor(){
         super({
-            id: CreatureId.Treant,
-            title: 'Treant',
-            description: 'A tree thingy',
+            id: CreatureId.OldWillow,
+            title: 'Old Willow',
+            description: 'A tree',
             attributes: new AttributeSet({
-                strength: 50,
-                agility: 10,
-                vitality: 32,
-                spirit: 40,
+                strength: 40,
+                agility: 4,
+                vitality: 62,
+                spirit: 60,
                 luck: 0,
             }),
             equipment: new CreatureEquipment({
-                weapon: TreantWeapon,
+                weapon: OldWillowWeapon,
             }),
-            wishesDropped: 180,
+            wishesDropped: 900,
         });
     }
 }

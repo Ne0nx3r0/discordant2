@@ -19,7 +19,7 @@ enum CreatureId{
     Treant,
     Faun,
     Werewolf,
-    CorruptedOldWillow,
+    OldWillow,
     CorruptedFairies,
     Pixie,
 }

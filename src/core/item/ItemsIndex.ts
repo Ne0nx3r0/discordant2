@@ -13,6 +13,9 @@ export { FireAntArmor } from './clothing/FireAntArmor';
 export { ClothHood } from './clothing/ClothHood';
 export { ClothTunic } from './clothing/ClothTunic';
 
+export { StuddedHelmet } from './clothing/LeatherHelmet';
+export { StuddedLeather } from './clothing/LeatherArmor';
+
 export {MageRobe} from './clothing/MageRobe';
 export {PointyMageHat} from './clothing/PointyMageHat';
 

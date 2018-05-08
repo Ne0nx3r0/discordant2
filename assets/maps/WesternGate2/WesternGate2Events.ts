@@ -22,7 +22,6 @@ lootGenerator.addLootItem('common',ItemsIndex.ClothTunic,0.3);
 lootGenerator.addLootItem('common',ItemsIndex.ClothHood,0.3);
 lootGenerator.addLootItem('common',ItemsIndex.Dagger,0.3);
 lootGenerator.addLootItem('common',ItemsIndex.Vial,1);
-lootGenerator.addLootItem('common',ItemsIndex.RedForestMapPiece,0.6);
 
 lootGenerator.addLootItem('rare',ItemsIndex.RingOfAgility,0.1);
 lootGenerator.addLootItem('rare',ItemsIndex.RingOfHealth,0.1);
@@ -31,7 +30,6 @@ lootGenerator.addLootItem('rare',ItemsIndex.RingOfLuck,0.1);
 lootGenerator.addLootItem('rare',ItemsIndex.RingOfSpirit,0.1);
 lootGenerator.addLootItem('rare',ItemsIndex.TabletOfPoison,0.1);
 lootGenerator.addLootItem('rare',ItemsIndex.Tent,0.1);
-lootGenerator.addLootItem('rare',ItemsIndex.RedForestMapPiece,0.4);
 lootGenerator.addLootItem('rare',ItemsIndex.PaddedHood,0.1);
 lootGenerator.addLootItem('rare',ItemsIndex.PaddedArmor,0.1);
 
