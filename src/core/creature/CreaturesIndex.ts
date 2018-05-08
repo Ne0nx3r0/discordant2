@@ -17,3 +17,4 @@ export { default as Treant } from './monsters/Treant';
 export { default as Faun } from './monsters/Faun';
 export { default as Werewolf } from './monsters/Werewolf';
 export { default as CorruptedFairies } from './monsters/CorruptedFairies';
+export { default as OldWillow } from './monsters/OldWillow';
