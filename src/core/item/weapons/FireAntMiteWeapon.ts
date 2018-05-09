@@ -17,8 +17,8 @@ export const FireAntMiteWeapon = new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'bite',
-            minBaseDamage: 15,
-            maxBaseDamage: 30,
+            minBaseDamage: 10,
+            maxBaseDamage: 20,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,

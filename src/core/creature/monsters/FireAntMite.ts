@@ -13,7 +13,7 @@ export default class FireAntMite extends CreatureAIControlled{
             attributes: new AttributeSet({
                 strength: 12,
                 agility: 40,
-                vitality: 8,
+                vitality: 6,
                 spirit: 0,
                 luck: 0,
             }),
