@@ -7,7 +7,7 @@ import CreatureAIControlled from '../creature/CreatureAIControlled';
 import { getDamagesLine } from '../../bot/util/ChatHelpers';
 import SendMessageClientRequest from '../../client/requests/SendMessageClientRequest';
 import WeaponAttackStep from '../item/WeaponAttackStep';
-import BattleTemporaryEffect from '../effects/BattleTemporaryEffect';
+import BattleTemporaryEffect, { AttackEffectEvent } from '../effects/BattleTemporaryEffect';
 import { SocketCreature } from '../creature/Creature';
 import { IWeaponAttackDamages, DamageType } from '../item/WeaponAttackStep';
 import { GetDodgePercent } from '../../util/GetDodgePercent';
@@ -638,11 +638,12 @@ export default class CreatureBattleTurnBased{
                 if(!dodged){ 
                     let attackWasAllowed:boolean = true;
 
-                    const attackEvent = {
+                    const attackEvent:AttackEffectEvent = {
                         battle: this,
                         defender: wad.target.creature,
                         attacker: attacker.creature,
                         wad,
+                        step: queuedAttackStep.step,
                         preventAttack:()=>{
                             attackWasAllowed = false;
                         }
