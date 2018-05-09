@@ -8,7 +8,7 @@ export interface RespecPlayerData extends ServerRequestData{
 }
 
 export interface RespecPlayerResponse extends ServerResponse{
-
+    msg: string;
 }
 
 export default class RespecPlayerRequest extends ServerRequest{
@@ -16,15 +16,16 @@ export default class RespecPlayerRequest extends ServerRequest{
         super('RespecPlayer',data);
     }
 
-    async send(sioc:SocketIOClient.Socket):Promise<void>{
-        await this._send(sioc) as RespecPlayerResponse;
+    async send(sioc:SocketIOClient.Socket):Promise<string>{
+        return (await this._send(sioc) as RespecPlayerResponse).msg;
     }
 
     async receive(bag:ServerRequestReceiveBag,data:RespecPlayerData):Promise<RespecPlayerResponse>{
-        await bag.game.respecPlayer(data.uid);
+        const msg = await bag.game.respecPlayer(data.uid);
 
         return {
             success: true,
+            msg,
         };
     }
 }

@@ -22,7 +22,7 @@ export default new Weapon({
     title: 'CorruptedFairies Weapon',
     description: 'A creature item',
     damageBlocked: 0.05,
-    chanceToCritical: 0.2,
+    chanceToCritical: 0,
     useRequirements:{},
     goldValue:0,
     onAddBonuses: (e)=>{
@@ -34,7 +34,7 @@ export default new Weapon({
         new WeaponAttack({
             title: 'orange',
             minBaseDamage: 10,
-            maxBaseDamage: 160,
+            maxBaseDamage: 150,
             damageType: DamageType.thunder,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
@@ -62,7 +62,7 @@ export default new Weapon({
             title: 'red',
             minBaseDamage: 40,
             maxBaseDamage: 70,
-            damageType: DamageType.thunder,
+            damageType: DamageType.fire,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
             steps: [
@@ -79,7 +79,7 @@ export default new Weapon({
                     damageFunc: DefaultDamageAllFunc
                 }),
             ],
-            aiUseWeight: 1
+            aiUseWeight: 2
         }),
         new WeaponAttack({
             title: 'black',

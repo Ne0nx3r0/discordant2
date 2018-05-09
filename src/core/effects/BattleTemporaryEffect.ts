@@ -1,8 +1,9 @@
 import Creature from '../creature/Creature';
 import EffectId from './EffectId';
 import { ICreatureStatSet } from '../creature/Creature';
-import { IWeaponAttackDamages } from '../item/WeaponAttackStep';
+import WeaponAttackStep, { IWeaponAttackDamages } from '../item/WeaponAttackStep';
 import CreatureBattleTurnBased, { IBattleCreature } from '../battle/CreatureBattleTurnBased';
+import WeaponAttack from '../item/WeaponAttack';
 
 export interface EffectEvent{
     target:Creature;
@@ -17,7 +18,8 @@ interface DefeatEffectEvent{
     wad: IWeaponAttackDamages;
 }
 
-interface AttackEffectEvent extends DefeatEffectEvent{
+export interface AttackEffectEvent extends DefeatEffectEvent{
+    step: WeaponAttackStep;
     preventAttack: ()=>void;
 }
 

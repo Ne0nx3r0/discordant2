@@ -44,9 +44,9 @@ export default class SetRole extends Command{
         }
 
         if(wishType == 'RESPEC'){ 
-            await bag.socket.respecPlayer(bag.message.author.id);
+            const resultMsg = await bag.socket.respecPlayer(bag.message.author.id);
 
-            bag.message.channel.send(`You use your wishes to realign your strengths`);
+            bag.message.channel.send(resultMsg);
 
             return;
         }

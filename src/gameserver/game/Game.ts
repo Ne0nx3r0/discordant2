@@ -1233,14 +1233,21 @@ export default class Game {
         pc.inventory._addItem(item,amount);
     }
 
-    async respecPlayer(playerUid:string):Promise<void>{
+    async respecPlayer(playerUid:string):Promise<string>{
         const pc = await this.getPlayerCharacter(playerUid);
 
         if(!pc){
             throw 'You are not registered';
         }
 
-        const wishesNeeded = XPToLevel[pc.level];
+        let hadScarabToken = false;
+
+        if(pc.inventory.hasItem(ItemId.ScarabToken,1)){
+            await this.takePlayerItem(pc.uid,ItemId.ScarabToken,1);
+            hadScarabToken = true;
+        }
+
+        const wishesNeeded = hadScarabToken ? 0 : XPToLevel[pc.level];
 
         if(pc.wishes < wishesNeeded){
             throw `You only have ${pc.wishes} wishes, you need at least ${wishesNeeded}`;
@@ -1258,6 +1265,12 @@ export default class Game {
         pc.attributes.luck = pc.class.startingAttributes.luck;
         pc.level = 1;
         pc.updateStats();
+
+        if(hadScarabToken){
+            return `You a scarab token to realign your strengths`;
+        }
+        
+        return `You use your wishes to realign your strengths`;
     }
 
     async useItem(playerUid:string,targetUid:string,itemId:number):Promise<string>{

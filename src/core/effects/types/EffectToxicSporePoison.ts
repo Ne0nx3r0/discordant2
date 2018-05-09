@@ -8,7 +8,7 @@ export const EffectToxicSporePoison = new BattleTemporaryEffect({
     id: EffectId.ToxicSporePoison,
     title: 'Toxic Spore Poison',
     onRoundBegin:(e)=>{
-        const damage = Math.abs(e.roundsLeft - TOXIC_SPORES_ROUNDS + 1) * 5;
+        const damage = Math.abs(e.roundsLeft - TOXIC_SPORES_ROUNDS) * 5;
 
         e.target.hpCurrent -= damage;
 
