@@ -76,6 +76,7 @@ export { TabletOfFire } from './weapons/TabletOfFire';
 export { TabletOfThunder } from './weapons/TabletOfThunder';
 export { TabletOfLuck } from './weapons/TabletOfLuck';
 export { TabletOfSpirit } from './weapons/TabletOfSpirit';
+export { TabletOfSanctuary } from './weapons/TabletOfSanctuary';
 
 //Collectables
 export { ScarabToken } from './misc/ScarabToken';
@@ -107,3 +108,4 @@ export { WishCatcher } from './misc/WishCatcher';
 export { WishTrapper } from './misc/WishTrapper';
 export { FairyInABottle } from './misc/FairyInABottle';
 export { PixieItem } from './pets/Pixie';
+export { ChargedOrb } from './misc/ChargedOrb';

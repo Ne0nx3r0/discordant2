@@ -29,6 +29,8 @@ enum EffectId {
     EffectShieldBlack,
     EnchantWeaponsDark,
     ToxicSporePoison,
+    Sanctuary,
+    Barrier,
 }
 
 export default EffectId;
