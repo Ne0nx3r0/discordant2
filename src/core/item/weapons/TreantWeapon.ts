@@ -18,7 +18,6 @@ export default new Weapon({
     title: 'Treant Weapon',
     description: 'A creature item',
     damageBlocked: 0.05,
-    chanceToCritical: 0.2,
     useRequirements:{},
     goldValue:0,
     onAddBonuses: (e)=>{
