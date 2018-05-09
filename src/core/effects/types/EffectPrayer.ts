@@ -5,11 +5,16 @@ import BattleTemporaryEffect from '../BattleTemporaryEffect';
 export const EffectPrayer = new BattleTemporaryEffect({
     id: EffectId.Prayer,
     title: 'Prayer',
-    onRoundBegin: function(bag){
-        let hpHealed = Math.min(15,bag.target.stats.hpTotal-bag.target.hpCurrent);
+    onRoundBegin: (e)=>{
+        let hpHealed = Math.min(15,e.target.stats.hpTotal-e.target.hpCurrent);
 
-        bag.target.hpCurrent += hpHealed;
+        e.target.hpCurrent += hpHealed;
 
-        bag.battle.queueBattleMessage([`+ Prayer heals ${bag.target.title} +${hpHealed}HP`]);
-    }
+        e.battle.queueBattleMessage([`+ Prayer heals ${e.target.title} +${hpHealed}HP`]);
+    },
+    onRemoved: (e)=>{
+        e.battle.queueBattleMessage([
+            `${e.target.title}'s prayer effect wore off`
+        ]);
+    },
 });
