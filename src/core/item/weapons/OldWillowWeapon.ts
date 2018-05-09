@@ -35,8 +35,8 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'whip',
-            minBaseDamage: 10,
-            maxBaseDamage: 30,
+            minBaseDamage: 20,
+            maxBaseDamage: 40,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,
