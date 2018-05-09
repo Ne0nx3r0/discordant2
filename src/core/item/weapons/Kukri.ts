@@ -14,17 +14,17 @@ export const Kukri = new Weapon({
     title: 'Kukri',
     description: '(Doubles damage when wielding two) Inspired by the curved blades once used by elite soldiers in the Eastern armies, these simple blades are devastating when used by a skilled wielder.',
     damageBlocked: 0.01,
-    criticalMultiplier: 2,
-    chanceToCritical: 0.2,
+    criticalMultiplier: 3,
+    chanceToCritical: 0.25,
     goldValue: 10,
     useRequirements: {
-        agility: 28,
+        agility: 32,
     },
     attacks: [
         new WeaponAttack({
             title: 'slash',
             minBaseDamage: 5,
-            maxBaseDamage: 11,
+            maxBaseDamage: 15,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.A,

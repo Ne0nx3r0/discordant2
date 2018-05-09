@@ -22,14 +22,15 @@ lootGenerator.addLootItem('common',ItemsIndex.RingOfStrength,1);
 lootGenerator.addLootItem('common',ItemsIndex.StuddedLeather,1);
 lootGenerator.addLootItem('common',ItemsIndex.StuddedHelmet,1);
 lootGenerator.addLootItem('common',ItemsIndex.WoodShield,1);
+lootGenerator.addLootItem('common',ItemsIndex.PointyMageHat,1);
 
-lootGenerator.addLootItem('rare',ItemsIndex.Tent,3);
-lootGenerator.addLootItem('rare',ItemsIndex.PointyMageHat,2);
+lootGenerator.addLootItem('rare',ItemsIndex.Tent,1);
 lootGenerator.addLootItem('rare',ItemsIndex.Revive,1);
 lootGenerator.addLootItem('rare',ItemsIndex.GreedyDagger,0.5);
 lootGenerator.addLootItem('rare',ItemsIndex.Kukri,1);
 lootGenerator.addLootItem('rare',ItemsIndex.FireSpear,1);
 lootGenerator.addLootItem('rare',ItemsIndex.TabletOfThunder,1);
+lootGenerator.addLootItem('rare',ItemsIndex.TabletOfHealing,1);
 
 export const LivingWoodsEvents:IMapData = {
     startX: 27,

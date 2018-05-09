@@ -35,8 +35,8 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'whip',
-            minBaseDamage: 10,
-            maxBaseDamage: 30,
+            minBaseDamage: 20,
+            maxBaseDamage: 40,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,
@@ -55,6 +55,9 @@ export default new Weapon({
             damageType: DamageType.special,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.No,
+            aiShouldIUseThisAttack: (e)=>{
+                return !e.tempEffects.has(EffectToxicSporePoison);
+            },
             steps: [
                 new WeaponAttackStep({
                     attackMessage: `{attacker} shakes its branches sending toxic spores everywhere`,
