@@ -47,6 +47,21 @@ export default new Weapon({
             aiUseWeight: 3
         }),
         new WeaponAttack({
+            title: 'shake ground',
+            minBaseDamage: 10,
+            maxBaseDamage: 20,
+            damageType: DamageType.physical,
+            scalingAttribute: Attribute.strength,
+            scalingLevel: ScalingLevel.No,
+            steps: [
+                new WeaponAttackStep({
+                    attackMessage: '{attacker} sways about shaking the ground',
+                    damageFunc: DefaultDamageAllFunc
+                }),
+            ],
+            aiUseWeight: 3
+        }),
+        new WeaponAttack({
             title: 'animate',
             minBaseDamage: 40,
             maxBaseDamage: 60,
