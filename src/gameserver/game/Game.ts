@@ -1267,7 +1267,7 @@ export default class Game {
         pc.updateStats();
 
         if(hadScarabToken){
-            return `You a scarab token to realign your strengths`;
+            return `You use a scarab token to realign your strengths`;
         }
         
         return `You use your wishes to realign your strengths`;
