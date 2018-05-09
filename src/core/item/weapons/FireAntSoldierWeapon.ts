@@ -50,50 +50,5 @@ export const FireAntSoldierWeapon = new Weapon({
             ],
             aiUseWeight: 0.6
         }),
-        new WeaponAttack({
-            title: 'explode',
-            minBaseDamage: 80,
-            maxBaseDamage: 100,
-            damageType: DamageType.fire,
-            scalingAttribute: Attribute.agility,
-            scalingLevel: ScalingLevel.No,
-            steps: [
-                new WeaponAttackStep({
-                    attackMessage: '{attacker} wraps its arms around itself and begins flexing',
-                    damageFunc: function(){return[];},
-                }),
-                new WeaponAttackStep({
-                    attackMessage: '{attacker} flexes its stomach muscles together tightly',
-                    damageFunc: function(){return[];},
-                }),
-                new WeaponAttackStep({
-                    attackMessage: '{attacker} explodes spraying a firey liquid everywhere',
-                    damageFunc: function(bag){
-                        const damages:Array<IWeaponAttackDamages> = [];
-                        const minDamage = bag.step.attack.minBaseDamage;
-                        const maxDamage = bag.step.attack.maxBaseDamage;
-
-                        bag.battle.participants.forEach(function(p){
-                            if(p.teamNumber != bag.attacker.teamNumber){
-                                const damageAmount = Math.round(Math.random() * (maxDamage - minDamage) + minDamage);
-
-                                damages.push({
-                                    type: DamageType.fire,
-                                    amount: damageAmount,
-                                    target: p,
-                                });
-                            }
-                        });
-
-                        return damages.concat({
-                            type: DamageType.physical,
-                            amount: bag.attacker.creature.hpCurrent * 2,
-                            target: bag.attacker,
-                        });
-                    },
-                })
-            ],
-            aiUseWeight: 0.1
-        })
     ]
 });
