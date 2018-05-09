@@ -76,6 +76,7 @@ export { TabletOfFire } from './weapons/TabletOfFire';
 export { TabletOfThunder } from './weapons/TabletOfThunder';
 export { TabletOfLuck } from './weapons/TabletOfLuck';
 export { TabletOfSpirit } from './weapons/TabletOfSpirit';
+export { TabletOfSanctuary } from './weapons/TabletOfSanctuary';
 
 //Collectables
 export { ScarabToken } from './misc/ScarabToken';

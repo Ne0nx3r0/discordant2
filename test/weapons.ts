@@ -8,7 +8,7 @@ import { ScalingLevel } from '../src/core/item/WeaponAttack';
 
 const items = new AllItems();
 
-console.log("Weapon	Attack	Min Damage	Max Damage	Charges Needed	Damage Type	Friendly	Scaling Level	Scaling Attibute	Critical Multiplier	Crit %	DPR	Stat Required");
+console.log("Weapon	Attack	Min Damage	Max Damage	Charges Needed	Damage Type	Friendly	Scaling Level	Scaling Stat	Scaling Attibute	Critical Multiplier	Crit %	DPR	Stat Required");
 
 items.items.forEach(function(item){
     if(item instanceof Weapon){
@@ -31,7 +31,7 @@ items.items.forEach(function(item){
             }
             catch(ex){}
 
-                console.log(`${weapon.title}	${attack.title}	${attack.minBaseDamage}	${attack.maxBaseDamage}	${attack.chargesRequired}	${DamageType[attack.damageType]}	${attack.isFriendly}	${ScalingLevel[attack.scalingLevel]}	${Attribute[attack.scalingAttribute]}	${attack.weapon.criticalMultiplier}	${attack.weapon.chanceToCritical}	${dpr}	${statsRequired}`);
+                console.log(`${weapon.title}	${attack.title}	${attack.minBaseDamage}	${attack.maxBaseDamage}	${attack.chargesRequired}	${DamageType[attack.damageType]}	${attack.isFriendly}	${ScalingLevel[attack.scalingLevel]}	${attack.weapon.useRequirements[Attribute[attack.scalingAttribute]]}	${Attribute[attack.scalingAttribute]}	${attack.weapon.criticalMultiplier}	${attack.weapon.chanceToCritical}	${dpr}	${statsRequired}`);
         });
     }    
 });
