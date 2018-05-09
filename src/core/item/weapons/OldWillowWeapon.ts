@@ -55,9 +55,6 @@ export default new Weapon({
             damageType: DamageType.special,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.No,
-            aiShouldIUseThisAttack: (e)=>{
-                return !e.tempEffects.has(EffectToxicSporePoison);
-            },
             steps: [
                 new WeaponAttackStep({
                     attackMessage: `{attacker} shakes its branches sending toxic spores everywhere`,
