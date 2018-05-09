@@ -44,22 +44,26 @@ export default new Weapon({
                     damageFunc: DefaultDamageFunc
                 }),
             ],
-            aiUseWeight: 0.5
+            aiUseWeight: 3
         }),
         new WeaponAttack({
             title: 'animate',
-            minBaseDamage: 30,
-            maxBaseDamage: 50,
+            minBaseDamage: 40,
+            maxBaseDamage: 60,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
+                    attackMessage: `{attacker} begins reciting the legend of the living woods`,
+                    damageFunc: DefaultNoDamageFunc,
+                }),
+                new WeaponAttackStep({
                     attackMessage: `{attacker} causes nearby trees to assault the party!`,
                     damageFunc: DefaultDamageAllFunc,
                 }),
             ],
-            aiUseWeight: 0.5
+            aiUseWeight: 1
         }),
     ]
 });
