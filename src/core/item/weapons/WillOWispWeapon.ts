@@ -24,6 +24,7 @@ export default new Weapon({
     onAddBonuses: (e)=>{
         e.target.stats.resistances.dark -= 20;
         e.target.stats.resistances.thunder += 20;
+        e.target.stats.dodge += 100;
     },
     onBattleBegin: (e)=>{
         e.battle.addTemporaryEffect(e.target.creature,EffectWillOWispDodge,-1);
