@@ -33,8 +33,8 @@ export default new Weapon({
     attacks: [
         new WeaponAttack({
             title: 'orange',
-            minBaseDamage: 10,
-            maxBaseDamage: 150,
+            minBaseDamage: 20,
+            maxBaseDamage: 120,
             damageType: DamageType.thunder,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,
