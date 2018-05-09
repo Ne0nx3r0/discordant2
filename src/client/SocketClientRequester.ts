@@ -339,8 +339,8 @@ export default class SocketClientRequester{
         return response.player;
     }
 
-    async respecPlayer(playerUid:string):Promise<void>{
-        await new RespecPlayerRequest({
+    async respecPlayer(playerUid:string):Promise<string>{
+        return await new RespecPlayerRequest({
             uid: playerUid
         })
         .send(this.sioc);
