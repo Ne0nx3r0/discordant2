@@ -24,7 +24,7 @@ lootGenerator.addLootItem('common',ItemsIndex.StuddedHelmet,1);
 lootGenerator.addLootItem('common',ItemsIndex.WoodShield,1);
 lootGenerator.addLootItem('common',ItemsIndex.PointyMageHat,1);
 
-lootGenerator.addLootItem('rare',ItemsIndex.Tent,3);
+lootGenerator.addLootItem('rare',ItemsIndex.Tent,1);
 lootGenerator.addLootItem('rare',ItemsIndex.Revive,1);
 lootGenerator.addLootItem('rare',ItemsIndex.GreedyDagger,0.5);
 lootGenerator.addLootItem('rare',ItemsIndex.Kukri,1);
