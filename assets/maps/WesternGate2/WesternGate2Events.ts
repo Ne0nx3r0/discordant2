@@ -36,7 +36,7 @@ lootGenerator.addLootItem('rare',ItemsIndex.PaddedArmor,0.1);
 export const WesternGate2Events:IMapData = {
     startX: 25,
     startY: 22,
-    encounterChance: 0.2,
+    encounterChance: 0.15,
     encounters:[
         { id:CreatureId.Goblin,        weight:0.4 },
         { id:CreatureId.GoblinSoldier, weight:0.1 },

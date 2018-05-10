@@ -23,9 +23,6 @@ export default class Challenge extends Command{
     }
 
     async run(bag:CommandRunBag){
-        if(1==1){
-            throw 'Temporarily disabled';
-        }
         //Accepting a pending challenge
         if(bag.params[0] == 'accept' || bag.params[0] == 'a'){
             const invite:SocketPvPInvite = await bag.socket.getPvPInvite(bag.message.author.id);
@@ -48,7 +45,7 @@ export default class Challenge extends Command{
                 throw ex;
             }
 
-            bag.message.channel.send(`The duel between <@${invite.sender.uid}> and <@${invite.receiver.uid}> begins in 30 seconds in <#${channel.id}>`);
+            bag.message.channel.send(`The duel between <@${invite.sender.uid}> and <@${invite.receiver.uid}> begins in <#${channel.id}>`);
 
             return;
         }
@@ -63,7 +60,7 @@ export default class Challenge extends Command{
         }
 
         if(tagUserId == bag.message.author.id){
-            throw 'You cannot challenge yourself';
+            throw 'You will need to challenge someone else to grow';
         }
 
         //Will throw error if something goes wrong

@@ -646,8 +646,7 @@ export default class Game {
     }
 
     async createPvPBattle(player1Uid:string,player2Uid:string,channelId:string):Promise<void>{
-        throw 'Temporarily disabled';
-        /*const sender = await this.getPlayerCharacter(player1Uid);
+        const sender = await this.getPlayerCharacter(player1Uid);
         const receiver = await this.getPlayerCharacter(player2Uid);
 
         if(this.activeBattles.has(channelId)){
@@ -670,11 +669,13 @@ export default class Game {
             throw `${receiver.title} cannot join the battle now`;
         }
 
-        const battle = new CreatureBattle({
+        const battle = new CreatureBattleTurnBased({
             channelId: channelId,
             team1: [sender],
             team2: [receiver],
-            getClient: this.getClient.bind(this),
+            game: this,
+            startDelay: 1000,
+            runChance: 1,
             battleCleanup: (bag:IPostBattleBag)=>{
                 sender.status = 'inCity';
                 receiver.status = 'inCity';
@@ -712,7 +713,7 @@ export default class Game {
         this.activeBattles.set(channelId,battle);
 
         this.pvpInvites.delete(sender.uid);
-        this.pvpInvites.delete(receiver.uid);*/
+        this.pvpInvites.delete(receiver.uid);
     }
 
     //TODO: combine shared logic between this and sendBattleAttack

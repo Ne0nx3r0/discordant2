@@ -52,8 +52,8 @@ export const FireAntSoldierWeapon = new Weapon({
         }),
         new WeaponAttack({
             title: 'explode',
-            minBaseDamage: 80,
-            maxBaseDamage: 100,
+            minBaseDamage: 30,
+            maxBaseDamage: 50,
             damageType: DamageType.fire,
             scalingAttribute: Attribute.agility,
             scalingLevel: ScalingLevel.No,

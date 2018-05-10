@@ -16,7 +16,7 @@ export default class FireAntSoldier extends CreatureAIControlled{
             attributes: new AttributeSet({
                 strength: 20,
                 agility: 30,
-                vitality: 20,
+                vitality: 12,
                 spirit: 0,
                 luck: 0,
             }),
@@ -24,7 +24,7 @@ export default class FireAntSoldier extends CreatureAIControlled{
                 weapon: FireAntSoldierWeapon,
                 armor: FireAntSkin,
             }),
-            wishesDropped: 70,
+            wishesDropped: 60,
             onDefeated: function(bag){
                 let droppedCarapacesMsgs = [];
 

@@ -281,6 +281,8 @@ export default class Bot{
 
         const channel:TextChannel = await guild.createChannel(channelname,'text',overwrites) as TextChannel;
 
+        channel.setParent(BotConstants.PVP_CATEGORY_ID);
+
         await channel.overwritePermissions(this.client.user.id,{
             SEND_MESSAGES: true
         });
