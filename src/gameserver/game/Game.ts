@@ -73,6 +73,7 @@ import { DBSetPlayerMetaData } from '../db/api/DBSetPlayerMetaData';
 import { BareHands } from '../../core/item/weapons/BareHands';
 import moment = require("moment");
 import { getFilteredDescription } from '../socket/requests/SetPlayerDescriptionRequest';
+import { GetWinnerRollAgility } from '../../util/GetWinnerRollAgility';
 
 //how often players can get a daily reward
 // Sssh 23 hours
@@ -602,6 +603,14 @@ export default class Game {
             throw 'You cannot send challenges now';
         }
 
+        if(sender.status !== 'inCity'){
+            throw `You cannot be in a party or in a battle already`;
+        }
+
+        if(receiver.status !== 'inCity'){
+            throw `${receiver.title} is in a party or in a battle already`;
+        }
+
         if(this.pvpInvites.has(receiver.uid)){
             throw `${receiver.title} cannot receive challenges right now`;
         }
@@ -661,18 +670,21 @@ export default class Game {
             throw 'That player is not registered';
         }
 
-        if(sender.status != 'invitedToPVPBattle'){
+        if(sender.status !== 'invitedToPVPBattle'){
             throw 'You have no pending challenge';
         }
 
-        if(receiver.status != 'invitedToPVPBattle'){
+        if(receiver.status !== 'invitedToPVPBattle'){
             throw `${receiver.title} cannot join the battle now`;
         }
+ 
+        const goesFirst = GetWinnerRollAgility(sender,receiver);
+        const goesSecond = goesFirst === sender ? receiver : sender;
 
         const battle = new CreatureBattleTurnBased({
             channelId: channelId,
-            team1: [sender],
-            team2: [receiver],
+            team1: [goesFirst],
+            team2: [goesSecond],
             game: this,
             startDelay: 1000,
             runChance: 1,
@@ -698,12 +710,20 @@ export default class Game {
                         loser = sender;
                     }
 
+                    const client = this.getClient();
+
                     new PvPBattleEndedClientRequest({
                         winner: winner.toSocket(),
                         loser: loser.toSocket(),
-                        channelId: channelId
+                        channelId,
                     })
-                    .send(this.getClient());   
+                    .send(client);   
+
+                    new SendMessageClientRequest({
+                        channelId,
+                        message: `${goesFirst.title} goes first!`,
+                    })
+                    .send(client);
                 }
 
                 this.activeBattles.delete(channelId);
