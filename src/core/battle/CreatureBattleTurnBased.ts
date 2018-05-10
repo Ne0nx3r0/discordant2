@@ -140,6 +140,8 @@ export default class CreatureBattleTurnBased{
     }
 
     turnBegin(){
+        let currentTeamHasActivePlayerCharacter = false;
+
 // Run any onRoundBegin effects
         for(var i=0;i<this.participants.length;i++){
             const p = this.participants[i];
@@ -150,6 +152,10 @@ export default class CreatureBattleTurnBased{
 
             if(p.defeated){
                 continue;
+            }
+
+            if(p instanceof PlayerCharacter){
+                currentTeamHasActivePlayerCharacter = true;
             }
 
             p.exhausted = false;
@@ -187,7 +193,7 @@ export default class CreatureBattleTurnBased{
 
         this.flushBattleMessagesCheck();
 
-        if(this.activeTeam == 1){     
+        if(currentTeamHasActivePlayerCharacter){     
             function formatbc(bc:IBattleCreature){
                 const blocking = bc.blocking ? ' | Blocking' : '';
                 const charges = bc.charges>0?' | Charges: '+bc.charges:'';
@@ -230,14 +236,14 @@ export default class CreatureBattleTurnBased{
             .join(', ');
 
             this.queueBattleMessage([
-                '--- YOUR MOVE ---',
+                '---',
                 team1Msg,
                 '',
                 team2Msg
             ]);
 
             for(const participant of this.participants){
-                if(participant.teamNumber == 1){
+                if(participant.teamNumber == this.activeTeam){
                     if(participant.queuedAttackSteps.length > 0){
                         this._sendNextAttackStep(participant);
 
