@@ -683,8 +683,8 @@ export default class Game {
 
         const battle = new CreatureBattleTurnBased({
             channelId: channelId,
-            team1: [goesFirst],
-            team2: [goesSecond],
+            team1: [goesSecond],
+            team2: [goesFirst],
             game: this,
             startDelay: 1000,
             runChance: 1,
