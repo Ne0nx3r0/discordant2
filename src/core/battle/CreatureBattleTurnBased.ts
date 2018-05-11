@@ -154,7 +154,7 @@ export default class CreatureBattleTurnBased{
                 continue;
             }
 
-            if(p instanceof PlayerCharacter){
+            if(p.creature instanceof PlayerCharacter){
                 currentTeamHasActivePlayerCharacter = true;
             }
 
@@ -238,7 +238,7 @@ export default class CreatureBattleTurnBased{
             this.queueBattleMessage([
                 '---',
                 team1Msg,
-                '',
+                '---',
                 team2Msg
             ]);
 
