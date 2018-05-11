@@ -45,7 +45,7 @@ export default class Challenge extends Command{
                 throw ex;
             }
 
-            bag.message.channel.send(`The duel between <@${invite.sender.uid}> and <@${invite.receiver.uid}> begins in <#${channel.id}>`);
+            bag.message.channel.send(`The duel between <@${invite.sender.uid}> and <@${invite.receiver.uid}> will be in <#${channel.id}>`);
 
             return;
         }
