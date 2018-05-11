@@ -710,20 +710,12 @@ export default class Game {
                         loser = sender;
                     }
 
-                    const client = this.getClient();
-
                     new PvPBattleEndedClientRequest({
                         winner: winner.toSocket(),
                         loser: loser.toSocket(),
                         channelId,
                     })
-                    .send(client);   
-
-                    new SendMessageClientRequest({
-                        channelId,
-                        message: `${goesFirst.title} goes first!`,
-                    })
-                    .send(client);
+                    .send(this.getClient());   
                 }
 
                 this.activeBattles.delete(channelId);
@@ -734,6 +726,12 @@ export default class Game {
 
         this.pvpInvites.delete(sender.uid);
         this.pvpInvites.delete(receiver.uid);
+
+        new SendMessageClientRequest({
+            channelId,
+            message: `${goesFirst.title} goes first!`,
+        })
+        .send(this.getClient());
     }
 
     //TODO: combine shared logic between this and sendBattleAttack
