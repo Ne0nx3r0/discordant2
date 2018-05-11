@@ -16,6 +16,9 @@ export default class Challenge extends Command{
             minParams: 1,
         });
 
+        this.aliases.set('duel','challenge');
+        this.aliases.set('duelyes','challenge accept');
+        this.aliases.set('duelno','challenge deny');
         this.aliases.set('challengeaccept','challenge accept');
         this.aliases.set('challengedeny','challenge deny');
         this.aliases.set('caccept','challenge accept');
