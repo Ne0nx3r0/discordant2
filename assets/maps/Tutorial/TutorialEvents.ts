@@ -6,7 +6,7 @@ import * as ItemsIndex from '../../../src/core/item/ItemsIndex';
 import { EventTileSpecificItem } from "../../../src/core/map/tiles/EventTileSpecificItem";
 
 export const TutorialEvents:IMapData = {
-    startX: 6,
+    startX: 3,
     startY: 17,
     encounterChance: 0,
     encounters:[
