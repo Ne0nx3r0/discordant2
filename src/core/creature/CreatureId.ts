@@ -22,6 +22,8 @@ enum CreatureId{
     OldWillow,
     CorruptedFairies,
     Pixie,
+    GiantFly,
+    GiantWasp,
 }
 
 export default CreatureId;
