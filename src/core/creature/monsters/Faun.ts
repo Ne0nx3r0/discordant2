@@ -4,6 +4,7 @@ import CreatureEquipment from '../../item/CreatureEquipment';
 import {BareHands} from '../../item/ItemsIndex';
 import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
+import { FaunWeapon } from '../../item/weapons/FaunWeapon';
 
 export default class Faun extends CreatureAIControlled{
     constructor(){
@@ -19,7 +20,7 @@ export default class Faun extends CreatureAIControlled{
                 luck: 22,
             }),
             equipment: new CreatureEquipment({
-                weapon: BareHands
+                weapon: FaunWeapon
             }),
             wishesDropped: 120,
         });

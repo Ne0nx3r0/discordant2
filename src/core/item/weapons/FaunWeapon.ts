@@ -26,7 +26,7 @@ export const FaunWeapon = new Weapon({
         new WeaponAttack({
             title: 'scratch',
             minBaseDamage: 15,
-            maxBaseDamage: 35,
+            maxBaseDamage: 30,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,
@@ -36,11 +36,11 @@ export const FaunWeapon = new Weapon({
                     damageFunc: DefaultDamageFunc,
                 }),
             ],
-            aiUseWeight: 0.5
+            aiUseWeight: 1
         }),
         new WeaponAttack({
             title: 'ram',
-            minBaseDamage: 50,
+            minBaseDamage: 40,
             maxBaseDamage: 80,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
@@ -55,7 +55,7 @@ export const FaunWeapon = new Weapon({
                     damageFunc: DefaultDamageFunc,
                 }),
             ],
-            aiUseWeight: 0.5
+            aiUseWeight: 1
         }),
         new WeaponAttack({
             title: 'heal up',           
