@@ -17,11 +17,18 @@ export const GiantFlyWeapon = new Weapon({
     useRequirements: {
         strength: 0
     },
+    onBattleBegin: (e)=>{
+        setTimeout(() => {
+            e.battle.queueBattleMessage([
+                'You can fight back with `dattack` or `da`!',
+            ]);
+        }, 2000);
+    },
     attacks: [
         new WeaponAttack({
             title: 'nip',
             minBaseDamage: 1,
-            maxBaseDamage: 5,
+            maxBaseDamage: 3,
             damageType: DamageType.physical,
             scalingAttribute: Attribute.strength,
             scalingLevel: ScalingLevel.No,

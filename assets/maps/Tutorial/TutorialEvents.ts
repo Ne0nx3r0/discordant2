@@ -123,7 +123,7 @@ export const TutorialEvents:IMapData = {
             ],
             event: new EventTileSpecificItem({
                 enterMessage: 'You can collect plants like this one with `dinteract` or just `di`',
-                interactMessage: 'You got an acai berry! You can use it in battle or run `dcraft vial` to turn it into a health vial!',
+                interactMessage: 'You got an acai berry! \n\nDuring a battle type `duse acai` to heal with it!',
                 item: ItemsIndex.Acai,
             }),
         },
