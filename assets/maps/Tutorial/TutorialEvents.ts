@@ -58,7 +58,7 @@ export const TutorialEvents:IMapData = {
             ],
             event: new EventTileEnterMessage({
                 stopsPlayer: true,
-                message: 'Ran into a wall? No worries! Why not explore a bit?',
+                message: 'Ran into a wall? No worries! Why not explore a bit?\n\nTip: You can use `dpm u` (or d / l / r) instead of typing up / down / left / right`',
             }),
         },
         {
