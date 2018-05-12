@@ -11,12 +11,24 @@ import EventTileWarp from "../../../src/core/map/tiles/EventTileWarp";
 
 export const Tutorial2Events:IMapData = {
     startX: 8,
-    startY: 9,
+    startY: 10,
     encounterChance: 0.25,
     encounters:[
         { id:CreatureId.GiantFly, weight: 1 },
     ],
     eventTiles: [
+        {
+            coords: [
+                {
+                    x: 8,
+                    y: 10,
+                },
+            ],
+            event: new EventTileEnterMessage({
+                stopsPlayer: true,
+                message: 'You arrived at the next map!',
+            }),
+        },
         {
             event: new EventTileWarp({
                 warpOnEnter: true,
