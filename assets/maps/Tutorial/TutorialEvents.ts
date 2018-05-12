@@ -133,7 +133,7 @@ export const TutorialEvents:IMapData = {
                 mapTitle: 'Tutorial2',
                 toCoordinate: {
                     x: 8,
-                    y: 10,
+                    y: 9,
                 },
                 message: 'Onward to the next map!',
             }),

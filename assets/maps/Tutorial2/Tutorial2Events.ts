@@ -21,7 +21,7 @@ export const Tutorial2Events:IMapData = {
             coords: [
                 {
                     x: 8,
-                    y: 10,
+                    y: 9,
                 },
             ],
             event: new EventTileEnterMessage({
