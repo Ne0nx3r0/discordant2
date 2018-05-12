@@ -4,6 +4,31 @@ import EventTileLootable from "../../../src/core/map/tiles/EventTileLootable";
 import LootGenerator from "../../../src/core/loot/LootGenerator";
 import * as ItemsIndex from '../../../src/core/item/ItemsIndex';
 import { EventTileSpecificItem } from "../../../src/core/map/tiles/EventTileSpecificItem";
+import { EventTile, EventTileHandlerBag } from "../../../src/core/map/EventTile";
+
+class EventTileTutorialBegin extends EventTile{
+    welcomeMessage:string = 'Welcome to the tutorial!\n\nThe PARTY marker shows where you are!\n\nTry typing `dpmove left`';
+
+    constructor(){
+        super({
+            stopsPlayer: false,
+        });
+    }
+    
+    onEnter(e:EventTileHandlerBag):boolean{
+        e.party.sendChannelMessage(this.welcomeMessage);
+
+        const gotXP = e.metadata.getMapData("welcomeXP");
+
+        if(!gotXP && e.player.wishes < 5){
+            e.metadata.setMapData("welcomeXP",true);
+        
+            e.party.game.grantPlayerWishes(e.player.uid,5);
+        }
+
+        return true;
+    }
+}
 
 export const TutorialEvents:IMapData = {
     startX: 3,
@@ -20,10 +45,7 @@ export const TutorialEvents:IMapData = {
                     y: 13,
                 },
             ],
-            event: new EventTileEnterMessage({
-                stopsPlayer: true,
-                message: 'Welcome to the tutorial!\n\nThe PARTY marker shows where you are!\n\nTry typing `dpmove left`',
-            }),
+            event: new EventTileTutorialBegin(),
         },
         {
             coords: [
@@ -69,8 +91,8 @@ export const TutorialEvents:IMapData = {
                 },
             ],
             event: new EventTileSpecificItem({
-                enterMessage: 'Hey you found some loot!\n\n`dinteract` to grab it!',
-                interactMessage: 'You got a mace!\n\nTry `dequip mace` to use it!',
+                enterMessage: 'Hey you found some loot!\n\n`dinteract` (or just `di`) to grab it!',
+                interactMessage: 'You found a mace!\n\nTry `dequip mace` to use it!\n\n`dpmap` if you want to see the map again!',
                 item: ItemsIndex.Mace,
             }),
         },
@@ -82,7 +104,7 @@ export const TutorialEvents:IMapData = {
                 },
             ],
             event: new EventTileSpecificItem({
-                enterMessage: 'You found a hidden item! Sometimes these are scattered about. `dinteract` to grab it!',
+                enterMessage: 'You found a hidden item! \n\nSometimes these are scattered about. \n\n`dinteract` or `di` to grab it!',
                 interactMessage: 'You found a cloth tunic! You can use `ditem cloth tunic` to read about it or `dequip cloth tunic` to put it on!',
                 item: ItemsIndex.ClothTunic,
             }),
@@ -99,7 +121,7 @@ export const TutorialEvents:IMapData = {
                 },
             ],
             event: new EventTileSpecificItem({
-                enterMessage: 'You can collect plants like this one with `dinteract`!',
+                enterMessage: 'You can collect plants like this one with `dinteract` or just `di`',
                 interactMessage: 'You got an acai berry! You can use it in battle or run `dcraft vial` to turn it into a health vial!',
                 item: ItemsIndex.Acai,
             }),  

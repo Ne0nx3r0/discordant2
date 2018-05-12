@@ -14,7 +14,7 @@ export const Mace = new Weapon({
     title: 'Mace',
     description: 'Derivative of the club, the mace consists of a wooden shaft with a metal head at the end of it used to bash things.',
     damageBlocked: 0.05,
-    goldValue: 10,
+    goldValue: 1,
     useRequirements: {
         strength: 6
     },
