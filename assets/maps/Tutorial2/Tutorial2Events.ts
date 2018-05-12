@@ -7,15 +7,37 @@ import { EventTileSpecificItem } from "../../../src/core/map/tiles/EventTileSpec
 import { EventTile, EventTileHandlerBag } from "../../../src/core/map/EventTile";
 import CreatureId from "../../../src/core/creature/CreatureId";
 import EventTileMonster from "../../../src/core/map/tiles/EventTileMonster";
+import EventTileWarp from "../../../src/core/map/tiles/EventTileWarp";
 
-export const TutorialEvents:IMapData = {
+export const Tutorial2Events:IMapData = {
     startX: 8,
     startY: 9,
     encounterChance: 0.25,
     encounters:[
-        { id:CreatureId.GiantFly, weight: 1 },s
+        { id:CreatureId.GiantFly, weight: 1 },
     ],
     eventTiles: [
+        {
+            event: new EventTileWarp({
+                warpOnEnter: true,
+                mapTitle: 'Tutorial',
+                toCoordinate: {
+                    x: 4,
+                    y: 2,
+                },
+                message: 'You head back to the first map',
+            }),
+            coords: [
+                {
+                    x: 8,
+                    y: 10,
+                },
+                {
+                    x: 9,
+                    y: 10,
+                },
+            ],
+        },  
         {
             coords:[
                 {
@@ -25,7 +47,7 @@ export const TutorialEvents:IMapData = {
             ],
             event: new EventTileSpecificItem({
                 enterMessage: 'You found some loot! Collect it with `dinteract` or just `di`',
-                interactMessage: 'You found a cloth hood! You can equip it with `dequip cloth hood`',
+                interactMessage: 'You found a cloth hood!\n\nYou can equip it with `dequip cloth hood`',
                 item: ItemsIndex.ClothHood,
             }),  
         },
@@ -37,6 +59,19 @@ export const TutorialEvents:IMapData = {
                     y: 3,
                 },
             ],
+        },
+        {
+            coords:[
+                {
+                    x: 5,
+                    y: 2,
+                },
+            ],
+            event: new EventTileSpecificItem({
+                enterMessage: 'You found some loot! Collect it with `dinteract` or just `di`',
+                interactMessage: 'You found an amulet of health!\n\nYou can equip it with `dequip amulet of health`\n\nNice job completing the tutorial!\n\nWhen you\'re ready, you can use `dpdisband` to exit the tutorial!',
+                item: ItemsIndex.AmuletOfHealth,
+            }),  
         },
     ],
 };

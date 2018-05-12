@@ -17,9 +17,6 @@ export const GiantWaspWeapon = new Weapon({
     useRequirements: {
         strength: 0
     },
-    onBattleBegin: (e)=>{
-
-    },
     attacks: [
         new WeaponAttack({
             title: 'bite',

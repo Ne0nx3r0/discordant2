@@ -5,6 +5,7 @@ import LootGenerator from "../../../src/core/loot/LootGenerator";
 import * as ItemsIndex from '../../../src/core/item/ItemsIndex';
 import { EventTileSpecificItem } from "../../../src/core/map/tiles/EventTileSpecificItem";
 import { EventTile, EventTileHandlerBag } from "../../../src/core/map/EventTile";
+import EventTileWarp from "../../../src/core/map/tiles/EventTileWarp";
 
 class EventTileTutorialBegin extends EventTile{
     welcomeMessage:string = 'Welcome to the tutorial!\n\nThe PARTY marker shows where you are!\n\nTry typing `dpmove left`';
@@ -124,7 +125,28 @@ export const TutorialEvents:IMapData = {
                 enterMessage: 'You can collect plants like this one with `dinteract` or just `di`',
                 interactMessage: 'You got an acai berry! You can use it in battle or run `dcraft vial` to turn it into a health vial!',
                 item: ItemsIndex.Acai,
-            }),  
+            }),
         },
+        {
+            event: new EventTileWarp({
+                warpOnEnter: true,
+                mapTitle: 'Tutorial2',
+                toCoordinate: {
+                    x: 8,
+                    y: 10,
+                },
+                message: 'Onward to the next map!',
+            }),
+            coords: [
+                {
+                    x: 4,
+                    y: 2,
+                },
+                {
+                    x: 5,
+                    y: 2,
+                },
+            ],
+        },  
     ],
 };

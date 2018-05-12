@@ -19,6 +19,11 @@ export default class GiantWasp extends CreatureAIControlled{
                 spirit: 4,
                 luck: 4,
             }),
+            onDefeated: (e)=>{
+                setTimeout(() => {                
+                   e.party.sendChannelMessage('You won! Now you can grab the treasure!');
+                }, 1000);
+            },
             equipment: new CreatureEquipment({
                 weapon: GiantWaspWeapon
             }),
