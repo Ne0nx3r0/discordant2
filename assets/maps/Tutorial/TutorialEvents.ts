@@ -7,7 +7,7 @@ import { EventTileSpecificItem } from "../../../src/core/map/tiles/EventTileSpec
 
 export const TutorialEvents:IMapData = {
     startX: 3,
-    startY: 17,
+    startY: 13,
     encounterChance: 0,
     encounters:[
         
