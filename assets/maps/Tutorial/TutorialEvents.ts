@@ -28,7 +28,7 @@ export const TutorialEvents:IMapData = {
         {
             coords: [
                 {
-                    x: 3,
+                    x: 2,
                     y: 13,
                 },
             ],
