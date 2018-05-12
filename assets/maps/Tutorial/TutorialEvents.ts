@@ -12,14 +12,50 @@ export const TutorialEvents:IMapData = {
         {
             coords: [
                 {
-                    x: 6,
-                    y: 17,
+                    x: 3,
+                    y: 13,
                 },
             ],
             event: new EventTileEnterMessage({
                 stopsPlayer: true,
-                message: 'Here\'s where you are right now!\n\nTry typing `dpm left`',
+                message: 'Welcome to the tutorial!\n\nHere\'s where you are right now!\n\nTry typing `dpm left`',
             }),
-        }
+        },
+        {
+            coords: [
+                {
+                    x: 3,
+                    y: 13,
+                },
+            ],
+            event: new EventTileEnterMessage({
+                stopsPlayer: true,
+                message: 'Now try `dpm up 3`',
+            }),
+        },
+        {
+            coords: [
+                {
+                    x: 2,
+                    y: 10,
+                },
+            ],
+            event: new EventTileEnterMessage({
+                stopsPlayer: true,
+                message: 'Nice job! What about `dpm right 200`?',
+            }),
+        },
+        {
+            coords: [
+                {
+                    x: 8,
+                    y: 10,
+                },
+            ],
+            event: new EventTileEnterMessage({
+                stopsPlayer: true,
+                message: 'Ran into a wall? No worries! Why not explore a bit?',
+            }),
+        },
     ],
 };
