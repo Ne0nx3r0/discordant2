@@ -10,8 +10,14 @@ import { LivingWoodsMapPiece } from '../item/maps/LivingWoodsMapPiece';
 import { LivingWoodsMap } from '../item/maps/LivingWoodsMap';
 import { RedForestCastleMapPiece } from '../item/maps/RedForestCastleMapPiece';
 import { RedForestCastleMap } from '../item/maps/RedForestCastleMap';
-import { GoblinSneak } from '../creature/CreaturesIndex';
-import GoblinSneakWeapon from '../item/weapons/GoblinSneakWeapon';
+import { TutorialEvents } from '../../../assets/maps/Tutorial/TutorialEvents';
+
+export const Tutorial = new ExplorableMap({
+    fileName: 'Tutorial',
+    title: 'Tutorial',
+    mapJson: require('../../../assets/maps/Tutorial/TutorialLayout.json'),
+    mapData: TutorialEvents,
+});
 
 export const MapWesternGate = new ExplorableMap({
     fileName: 'WesternGate2',
@@ -52,4 +58,5 @@ export const WorldMaps = {
     'RED FOREST CASTLE': MapRedForestCastle,
     'WESTERN GATE': MapWesternGate, 
     'LIVING WOODS': MapLivingWoods,
+    'TUTORIAL': Tutorial,
 };
