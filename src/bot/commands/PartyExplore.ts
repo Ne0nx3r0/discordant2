@@ -23,7 +23,7 @@ export default class PartyExplore extends Command{
         const pc = await bag.socket.getPlayer(bag.message.author.id);
 
         if(!pc.partyChannelId){
-            throw 'You are not in a party';
+            throw 'You are not in a party (form one with `dpnew <name>`)';
         }
 
         if(pc.partyChannelId != bag.message.channel.id){
