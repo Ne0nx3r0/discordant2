@@ -22,7 +22,7 @@ export const TutorialEvents:IMapData = {
             ],
             event: new EventTileEnterMessage({
                 stopsPlayer: true,
-                message: 'Welcome to the tutorial!\n\nHere\'s where you are right now!\n\nTry typing `dpm left`',
+                message: 'Welcome to the tutorial!\n\nHere\'s where you are right now!\n\nTry typing `dpmove left`',
             }),
         },
         {
@@ -34,7 +34,7 @@ export const TutorialEvents:IMapData = {
             ],
             event: new EventTileEnterMessage({
                 stopsPlayer: true,
-                message: 'Now try `dpm up 3`',
+                message: 'Now try `dpmove up 3`',
             }),
         },
         {
@@ -46,7 +46,7 @@ export const TutorialEvents:IMapData = {
             ],
             event: new EventTileEnterMessage({
                 stopsPlayer: true,
-                message: 'Nice job! What about `dpm right 200`?',
+                message: 'Nice job! What about `dpmove right 200`?',
             }),
         },
         {
@@ -82,9 +82,9 @@ export const TutorialEvents:IMapData = {
                 },
             ],
             event: new EventTileSpecificItem({
-                enterMessage: 'You found a hidden item, nice job! Sometimes these are scattered about',
-                interactMessage: 'You can run `duse vial` to use this during a battle!',
-                item: ItemsIndex.Vial,
+                enterMessage: 'You found a hidden item! Sometimes these are scattered about. `dinteract` to grab it!',
+                interactMessage: 'You found a cloth tunic! You can use `ditem cloth tunic` to read about it or `dequip cloth tunic` to put it on!',
+                item: ItemsIndex.ClothTunic,
             }),
         },
         {
@@ -99,7 +99,7 @@ export const TutorialEvents:IMapData = {
                 },
             ],
             event: new EventTileSpecificItem({
-                enterMessage: 'You can collect plants like this one!',
+                enterMessage: 'You can collect plants like this one with `dinteract`!',
                 interactMessage: 'You got an acai berry! You can use it in battle or run `dcraft vial` to turn it into a health vial!',
                 item: ItemsIndex.Acai,
             }),  
