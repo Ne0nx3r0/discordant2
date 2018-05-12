@@ -12,7 +12,7 @@ import EventTileWarp from "../../../src/core/map/tiles/EventTileWarp";
 export const Tutorial2Events:IMapData = {
     startX: 8,
     startY: 10,
-    encounterChance: 0.25,
+    encounterChance: 0.10,
     encounters:[
         { id:CreatureId.GiantFly, weight: 1 },
     ],
