@@ -13,7 +13,7 @@ export const TutorialEvents:IMapData = {
     startY: 9,
     encounterChance: 0.25,
     encounters:[
-        { id:CreatureId.GiantFly, weight: 1 },
+        { id:CreatureId.GiantFly, weight: 1 },s
     ],
     eventTiles: [
         {
@@ -30,9 +30,12 @@ export const TutorialEvents:IMapData = {
             }),  
         },
         {
-            event: new EventTileMonster(`You found a boss!`,CreatureId),
+            event: new EventTileMonster(`You found a boss!`,CreatureId.GiantWasp),
             coords: [
-                {x:3,y:11},
+                {
+                    x: 5,
+                    y: 3,
+                },
             ],
         },
     ],

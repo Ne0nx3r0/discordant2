@@ -4,23 +4,23 @@ import CreatureEquipment from '../../item/CreatureEquipment';
 import {BareHands} from '../../item/ItemsIndex';
 import AttributeSet from '../AttributeSet';
 import CreatureAIControlled from '../CreatureAIControlled';
-import { GiantFlyWeapon } from '../../item/weapons/GiantFlyWeapon';
+import { GiantWaspWeapon } from '../../item/weapons/GiantWaspWeapon';
 
-export default class Nooblet extends CreatureAIControlled{
+export default class GiantWasp extends CreatureAIControlled{
     constructor(){
         super({
-            id: CreatureId.GiantFly,
-            title: 'Giant Fly',
+            id: CreatureId.GiantWasp,
+            title: 'Large Wasp',
             description: 'A low level generic creature',
             attributes: new AttributeSet({
                 strength: 4,
                 agility: 4,
-                vitality: 1,
+                vitality: 2,
                 spirit: 4,
                 luck: 4,
             }),
             equipment: new CreatureEquipment({
-                weapon: GiantFlyWeapon
+                weapon: GiantWaspWeapon
             }),
             wishesDropped: 5,
         });
