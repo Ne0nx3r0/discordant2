@@ -22,6 +22,9 @@ export default class Nooblet extends CreatureAIControlled{
             equipment: new CreatureEquipment({
                 weapon: GiantFlyWeapon
             }),
+            onDefeated: (e)=>{
+                e.party.sendChannelMessage(`Tip: Wishes are like XP, but you can use them for other things as well`);
+            },
             wishesDropped: 5,
         });
     }

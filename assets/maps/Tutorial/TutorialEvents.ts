@@ -57,7 +57,7 @@ export const TutorialEvents:IMapData = {
             ],
             event: new EventTileEnterMessage({
                 stopsPlayer: true,
-                message: 'Now try `dpmove up 3`',
+                message: 'Now try `dpmove up 2`',
             }),
         },
         {
@@ -81,7 +81,7 @@ export const TutorialEvents:IMapData = {
             ],
             event: new EventTileEnterMessage({
                 stopsPlayer: true,
-                message: 'Ran into a wall? No worries! Why not explore a bit?\n\nTip: You can use `dpm u` (or d / l / r) instead of typing up / down / left / right`',
+                message: 'Ran into a wall? No worries! Why not explore a bit?\n\nTip: You can use `dpm u` (or d / l / r)',
             }),
         },
         {
@@ -92,8 +92,8 @@ export const TutorialEvents:IMapData = {
                 },
             ],
             event: new EventTileSpecificItem({
-                enterMessage: 'Hey you found some loot!\n\n`dinteract` (or just `di`) to grab it!',
-                interactMessage: 'You found a mace!\n\nTry `dequip mace` to use it!\n\n`dpmap` if you want to see the map again!',
+                enterMessage: 'Hey you found some loot!\n\nType `dinteract` (or just `di`) to grab it!',
+                interactMessage: 'You found a mace!\n\nTry `dequip mace` to use it!\n\nType `dpmap` if you want to see the map again!',
                 item: ItemsIndex.Mace,
             }),
         },
@@ -105,7 +105,7 @@ export const TutorialEvents:IMapData = {
                 },
             ],
             event: new EventTileSpecificItem({
-                enterMessage: 'You found a hidden item! \n\nSometimes these are scattered about. \n\n`dinteract` or `di` to grab it!',
+                enterMessage: 'You found a hidden item! \n\nSometimes these are scattered about. \n\nType `dinteract` or `di` to grab it!',
                 interactMessage: 'You found a cloth tunic! You can use `ditem cloth tunic` to read about it or `dequip cloth tunic` to put it on!',
                 item: ItemsIndex.ClothTunic,
             }),
@@ -140,11 +140,11 @@ export const TutorialEvents:IMapData = {
             coords: [
                 {
                     x: 4,
-                    y: 2,
+                    y: 3,
                 },
                 {
                     x: 5,
-                    y: 2,
+                    y: 3,
                 },
             ],
         },  
