@@ -17,7 +17,7 @@ class EventTileTutorialBegin extends EventTile{
     }
     
     onEnter(e:EventTileHandlerBag):boolean{
-        e.party.sendChannelMessage(this.welcomeMessage);
+        e.party.sendCurrentMapImageFile(this.welcomeMessage);
 
         const gotXP = e.metadata.getMapData("welcomeXP");
 
