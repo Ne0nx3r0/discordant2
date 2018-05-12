@@ -35,7 +35,7 @@ export const Tutorial2Events:IMapData = {
                 mapTitle: 'Tutorial',
                 toCoordinate: {
                     x: 4,
-                    y: 2,
+                    y: 4,
                 },
                 message: 'You head back to the first map',
             }),
