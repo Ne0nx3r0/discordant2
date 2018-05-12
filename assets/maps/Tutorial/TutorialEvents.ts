@@ -82,10 +82,27 @@ export const TutorialEvents:IMapData = {
                 },
             ],
             event: new EventTileSpecificItem({
-                enterMessage: 'You found a (sort of) hidden item, nice job!',
+                enterMessage: 'You found a hidden item, nice job! Sometimes these are scattered about',
                 interactMessage: 'You can run `duse vial` to use this during a battle!',
                 item: ItemsIndex.Vial,
             }),
+        },
+        {
+            coords:[
+                {
+                    x: 5,
+                    y: 4,
+                },
+                {
+                    x: 6,
+                    y: 4,
+                },
+            ],
+            event: new EventTileSpecificItem({
+                enterMessage: 'You can collect plants like this one!',
+                interactMessage: 'You got an acai berry! You can use it in battle or run `dcraft vial` to turn it into a health vial!',
+                item: ItemsIndex.Acai,
+            }),  
         },
     ],
 };
