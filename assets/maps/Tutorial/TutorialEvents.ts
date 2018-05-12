@@ -22,7 +22,7 @@ export const TutorialEvents:IMapData = {
             ],
             event: new EventTileEnterMessage({
                 stopsPlayer: true,
-                message: 'Welcome to the tutorial!\n\nHere\'s where you are right now!\n\nTry typing `dpmove left`',
+                message: 'Welcome to the tutorial!\n\nThe PARTY marker shows where you are!\n\nTry typing `dpmove left`',
             }),
         },
         {
