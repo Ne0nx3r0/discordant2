@@ -134,7 +134,9 @@ export default class PlayerParty{
             this.exploration.moveTo(x,y);
         }
 
-        this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + ` at ${map.title}...`);
+        if(!this.exploration.onEnterCurrentTile()){
+            this.sendCurrentMapImageFile(this.partyPlural('You arrive','Your party arrives') + ` at ${map.title}...`);
+        }
     }
 
     move(direction:PartyMoveDirection,steps:number){
