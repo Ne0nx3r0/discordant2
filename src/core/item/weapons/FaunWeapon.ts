@@ -32,7 +32,7 @@ export const FaunWeapon = new Weapon({
             scalingLevel: ScalingLevel.No,
             steps: [
                 new WeaponAttackStep({
-                    attackMessage: `{attacker} swings at {defender} with it's paw`,
+                    attackMessage: `{attacker} swings at {defender} with its paw`,
                     damageFunc: DefaultDamageFunc,
                 }),
             ],
