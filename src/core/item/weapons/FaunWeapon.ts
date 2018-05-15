@@ -16,7 +16,7 @@ export const FaunWeapon = new Weapon({
     description: 'Kind of a faun weapon',
     damageBlocked: 0.01,
     useRequirements: {},
-    chanceToCritical: 0.2,
+    chanceToCritical: 0,
     showInItems: false,
     goldValue: 0,
     onAddBonuses: function(e){
@@ -62,8 +62,9 @@ export const FaunWeapon = new Weapon({
             damageType: DamageType.healing,
             scalingAttribute: Attribute.spirit,
             scalingLevel: ScalingLevel.No,
+            isFriendly: true,
             minBaseDamage: 5,
-            maxBaseDamage: 50,
+            maxBaseDamage: 40,
             aiShouldIUseThisAttack: function(bag){
                 return bag.hpCurrent < bag.stats.hpTotal * 0.2;
             },
