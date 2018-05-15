@@ -25,7 +25,7 @@ export default class MarketSearch extends Command{
     async run(bag:CommandRunBag){
         const itemName = bag.params.join(' ');
 
-        const item = bag.items.findByName(itemName);
+        const item = bag.items.findByNameFuzzy(itemName);
 
         if(!item){
             throw `Unknown item "${itemName}"`;

@@ -37,7 +37,7 @@ export default class Item extends Command{
 
         const itemName = bag.params.join(' ');
 
-        const item = bag.items.findByName(itemName);
+        const item = bag.items.findByNameFuzzy(itemName);
 
         if(!item){
             bag.message.channel.send(itemName+' not found, '+bag.message.author.username);
