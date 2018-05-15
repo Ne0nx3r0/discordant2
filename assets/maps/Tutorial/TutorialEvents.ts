@@ -57,7 +57,7 @@ export const TutorialEvents:IMapData = {
             ],
             event: new EventTileEnterMessage({
                 stopsPlayer: true,
-                message: 'Now try `dpmove up 2`',
+                message: 'Now try `dpmove up 3`',
             }),
         },
         {
