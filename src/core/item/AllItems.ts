@@ -24,7 +24,7 @@ export default class AllItems{
         const nameUpper = name.toUpperCase();
 
         for(const [itemId, item] of this.items){
-            if(item.title.toUpperCase() == nameUpper){
+            if(item.title.toUpperCase().indexOf(nameUpper)> -1){
                 return item;
             }
         }
