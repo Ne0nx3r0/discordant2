@@ -23,6 +23,9 @@
   },
   "devDependencies": {
     "cli-table": "^0.3.1",
-    "concurrently": "^3.4.0"
+    "concurrently": "^3.4.0",
+    "prettier": "1.12.1",
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.12.0"
   }
 }
