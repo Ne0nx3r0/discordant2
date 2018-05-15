@@ -65,8 +65,8 @@ export const FaunWeapon = new Weapon({
             isFriendly: true,
             minBaseDamage: 5,
             maxBaseDamage: 40,
-            aiShouldIUseThisAttack: function(bag){
-                return bag.hpCurrent < bag.stats.hpTotal * 0.2;
+            aiShouldIUseThisAttack: (e)=>{
+                return e.hpCurrent < e.stats.hpTotal * 0.2;
             },
             steps: [
                 new WeaponAttackStep({
