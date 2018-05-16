@@ -194,7 +194,7 @@ export const RedForestEvents:IMapData = {
                 warpOnEnter: true,
             }),
             coords:[
-                { x:5, y:2 },
+                { x:5, y:3 },
             ],
         },
         {
