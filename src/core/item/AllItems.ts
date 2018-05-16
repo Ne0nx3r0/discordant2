@@ -2,24 +2,33 @@ import ItemBase from './ItemBase';
 import * as ItemsIndex from './ItemsIndex';
 import * as Fuse from 'fuse.js';
 
+interface FuseResult{
+    id: number;
+    title: string;
+}
+
 export default class AllItems{
     fuse: Fuse;
     items:Map<number,ItemBase>;
 
     constructor(){
         this.items = new Map();
-        const itemsFuse:ItemBase[] = [];
+        const itemsFuse:FuseResult[] = [];
 
         Object.keys(ItemsIndex).forEach((itemKey)=>{
             const item:ItemBase = ItemsIndex[itemKey];
         
             this.items.set(item.id,item);
-            itemsFuse.push(item);
+            
+            itemsFuse.push({
+                id: item.id,
+                title: item.title,
+            });
         });
 
         this.fuse = new Fuse(itemsFuse,{
             shouldSort: true,
-            threshold: 0.6,
+            threshold: 0.4,
             location: 0,
             distance: 100,
             maxPatternLength: 32,
@@ -51,11 +60,13 @@ export default class AllItems{
         if(!name) return null;
 
         const results = this.fuse.search(name);
+        
+        if(results.length < 1){
+            return null;
+        }
 
-        console.log(results);
+        const resultId:number = (results[0] as FuseResult).id;
 
-        console.log(results[0]);
-
-        return results[0] as ItemBase || null;
+        return this.items.get(resultId);
     }
 }
