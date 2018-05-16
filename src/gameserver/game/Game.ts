@@ -399,6 +399,16 @@ export default class Game {
 
         player.updateStats();
 
+        //check if they have any "illegal" equips
+        const removedItems2 = await this.equipCheck(player);
+
+        if(removedItems2.length > 0){
+            throw 'The following items were removed because you no longer meet their requirements: '
+            +removedItems.map(function(item){
+                return item.title;
+            }).join(', ')+'\n\nYou can try to equip your item again now';
+        }
+
         return itemUnequippedId;
     }
 
