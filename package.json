@@ -14,6 +14,7 @@
     "@types/socket.io": "^1.4.28",
     "@types/socket.io-client": "^1.4.29",
     "discord.js": "^11.0.0",
+    "fuse.js": "^3.2.0",
     "hashids": "^1.1.1",
     "moment": "^2.18.1",
     "pg": "^6.1.2",
@@ -23,6 +24,9 @@
   },
   "devDependencies": {
     "cli-table": "^0.3.1",
-    "concurrently": "^3.4.0"
+    "concurrently": "^3.4.0",
+    "prettier": "1.12.1",
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.12.0"
   }
 }

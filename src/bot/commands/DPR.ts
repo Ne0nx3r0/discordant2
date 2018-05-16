@@ -21,7 +21,7 @@ export default class DPR extends Command{
     async run(bag:CommandRunBag){
         const weaponName = bag.params.join(' ');
 
-        const item = bag.items.findByName(weaponName);
+        const item = bag.items.findByNameFuzzy(weaponName);
 
         if(!item){
             throw 'Unknown item '+weaponName;
