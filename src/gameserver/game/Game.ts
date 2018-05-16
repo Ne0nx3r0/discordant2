@@ -404,7 +404,7 @@ export default class Game {
 
         if(removedItems2.length > 0){
             throw 'The following items were removed because you no longer meet their requirements: '
-            +removedItems.map(function(item){
+            +removedItems2.map(function(item){
                 return item.title;
             }).join(', ')+'\n\nYou can try to equip your item again now';
         }
@@ -517,10 +517,10 @@ export default class Game {
         player.updateStats();
 
         if(removedItems.length > 0){
-            throw 'The following items were also removed because you no longer meet their requirements: '
+            throw 'The following items were removed: '
             +removedItems.map(function(item){
                 return item.title;
-            }).join(', ');
+            }).join(', ') + itemUnequipped.title;
         }
 
         return itemUnequipped.id;
