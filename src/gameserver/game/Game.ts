@@ -74,6 +74,7 @@ import { BareHands } from '../../core/item/weapons/BareHands';
 import moment = require("moment");
 import { getFilteredDescription } from '../socket/requests/SetPlayerDescriptionRequest';
 import { GetWinnerRollAgility } from '../../util/GetWinnerRollAgility';
+import { CreaturePet } from '../../core/creature/CreaturePet';
 
 //how often players can get a daily reward
 // Sssh 23 hours
@@ -212,6 +213,7 @@ export default class Game {
             karma: 0,
             lastDaily: new Date().getTime(),
             metadata: {},
+            stalls: 0,
         });
 
         return player;
@@ -462,6 +464,18 @@ export default class Game {
         pc.wishes = dbPlayer.wishes;
         pc.role = this.permissions.getRole(dbPlayer.role);
         pc.karma = dbPlayer.karma;
+        pc.stalls = dbPlayer.stalls;
+        
+        if(dbPlayer.active_pet_id){
+            const pcPet = this.creatures.create(dbPlayer.active_pet_id);
+            
+            if(pcPet instanceof CreaturePet){
+                pcPet.setOwner(pc);
+            }
+            else{
+                throw `Unable to create a pet from creature ID${dbPlayer.active_pet_id}`;
+            }
+        }
 
         pc.updateStats();
     }
