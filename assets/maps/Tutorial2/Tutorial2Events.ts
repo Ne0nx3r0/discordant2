@@ -16,6 +16,7 @@ export const Tutorial2Events:IMapData = {
     encounters:[
         { id:CreatureId.GiantFly, weight: 1 },
     ],
+    pets: [],
     eventTiles: [
         {
             coords: [

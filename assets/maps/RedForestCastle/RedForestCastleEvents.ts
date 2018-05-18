@@ -72,6 +72,7 @@ export const RedForestCastleEvents:IMapData = {
     startX: 5,
     startY: 29,
     encounterChance: 0.25,
+    pets: [],
     encounters:[
         { id:CreatureId.GhostHound, weight: 0.1 },
         { id:CreatureId.GhostGuardian,  weight: 0.3 },

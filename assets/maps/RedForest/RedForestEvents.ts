@@ -41,6 +41,7 @@ export const RedForestEvents:IMapData = {
     startX: 26,
     startY: 19,
     encounterChance: 0.15,
+    pets: [],
     encounters:[
         { id:CreatureId.FireAntMite,    weight: 0.3 },
         { id:CreatureId.FireAntWorker,  weight: 0.3 },

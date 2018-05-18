@@ -10,8 +10,14 @@ interface IMapEncounter {
     weight: number;//relative percent chance to spawn this mob
 }
 
+interface IPetEncounter{
+    id: number;
+    chance: number;//percent chance per tile move to generate a pet
+}
+
 export interface IMapData{
     encounterChance: number;//percent change to spawn an encounter
+    pets: IPetEncounter[];
     encounters: IMapEncounter[];
     eventTiles: MapEventTile[];
     startX: number;

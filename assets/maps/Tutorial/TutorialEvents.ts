@@ -35,6 +35,7 @@ export const TutorialEvents:IMapData = {
     startX: 3,
     startY: 13,
     encounterChance: 0,
+    pets: [],
     encounters:[
         
     ],
