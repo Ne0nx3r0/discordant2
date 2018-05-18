@@ -13,7 +13,7 @@ interface OnDefeatedFunc{
     (bag: IOnDefeatedBag):void;
 }
 
-interface CreatureAIBag extends CreatureBag{
+export interface CreatureAIBag extends CreatureBag{
     wishesDropped:number;
     onDefeated?:OnDefeatedFunc;
     allowRun?: boolean;
