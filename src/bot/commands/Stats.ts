@@ -136,6 +136,11 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                     name: 'Stalls',
                     value: pc.stalls,
                     inline: true,
+                },            
+                {
+                    name: 'Active Pet',
+                    value: '-',
+                    inline: true,
                 },
                 {
                     name: 'Weapons',
