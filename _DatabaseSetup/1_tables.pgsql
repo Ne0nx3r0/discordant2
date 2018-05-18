@@ -23,7 +23,13 @@ CREATE TABLE public.player
     role character varying COLLATE pg_catalog."default" NOT NULL DEFAULT 'player'::character varying,
     created time without time zone DEFAULT now(),
     metadata2 json NOT NULL DEFAULT "{}",
-    CONSTRAINT player_uid PRIMARY KEY (uid)
+    stalls smallint NOT NULL DEFAULT 0,
+    active_pet_id bigint DEFAULT NULL,
+    CONSTRAINT player_uid PRIMARY KEY (uid),
+    CONSTRAINT pet_id_fk FOREIGN KEY (active_pet_id)
+        REFERENCES public.player_pet (id) MATCH SIMPLE
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
 )
 WITH (
     OIDS = FALSE
