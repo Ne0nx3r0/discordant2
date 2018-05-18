@@ -99,6 +99,7 @@ export default class PlayerCharacter extends Creature{
             level: this.level,
             karma: this.karma,
             wishes: this.wishes,
+            stalls: this.stalls,
             role: this.role.title,
             status: this.status,
             //inventory: this.inventory.toSocket(),
@@ -117,6 +118,7 @@ export interface SocketPlayerCharacter extends SocketCreature{
     level: number;
     karma: number;
     wishes: number;
+    stalls: number;
     role: string;
     status: PlayerStatus;
     battleChannelId?: string;

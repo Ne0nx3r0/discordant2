@@ -131,6 +131,11 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                     name: 'Karma',
                     value: pc.karma,
                     inline: true,
+                },            
+                {
+                    name: 'Stalls',
+                    value: pc.stalls,
+                    inline: true,
                 },
                 {
                     name: 'Weapons',
