@@ -89,6 +89,47 @@ CREATE INDEX player_items_player_uid
 
 
 
+-- player pets table
+
+CREATE TABLE public.player_pet
+(
+    id bigserial NOT NULL,
+    stall smallint NOT NULL,
+    catcher_uid bigint NOT NULL,
+    owner_uid bigint NOT NULL,
+    level smallint NOT NULL,
+    base_id smallint NOT NULL,
+    title text NOT NULL,
+    loyalty smallint NOT NULL,
+    attribute_strength smallint NOT NULL,
+    attribute_agility smallint NOT NULL,
+    attribute_vitality smallint NOT NULL,
+    attribute_spirit smallint NOT NULL,
+    attribute_luck smallint NOT NULL,
+    personality_id smallint NOT NULL,
+    attack1 smallint NOT NULL,
+    attack2 smallint NOT NULL,
+    attack3 smallint NOT NULL,
+    attack4 smallint NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT stall_and_owner_uq UNIQUE (stall, owner_uid),
+    CONSTRAINT owner_uid_fk FOREIGN KEY (owner_uid)
+        REFERENCES public.player (uid) MATCH SIMPLE
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT,
+    CONSTRAINT catcher_uid_fk FOREIGN KEY (catcher_uid)
+        REFERENCES public.player (uid) MATCH SIMPLE
+        ON UPDATE RESTRICT
+        ON DELETE RESTRICT
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.player_pet
+    OWNER to discordant;
+
 
 
 
