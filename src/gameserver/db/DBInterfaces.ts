@@ -20,6 +20,8 @@ export interface DBPlayer{
     equipment:Array<DBEquipmentItem>;
     last_daily: number;
     metadata: any;
+    stalls: number;
+    active_pet_id: number;
 }
 
 export interface DBEquipmentItem{
