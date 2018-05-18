@@ -164,10 +164,21 @@ export default class Game {
                 karma: dbPlayer.karma,
                 lastDaily: dbPlayer.last_daily*1,
                 metadata: dbPlayer.metadata,
+                stalls: dbPlayer.stalls,
             });
 
-            this.cachedPCs.set(player.uid,player);
-        }
+            if(dbPlayer.active_pet_id){
+                const pcPet = this.creatures.create(dbPlayer.active_pet_id);
+                
+                if(pcPet instanceof CreaturePet){
+                    pcPet.setOwner(player);
+                }
+                else{
+                    throw `Unable to create a pet from creature ID${dbPlayer.active_pet_id}`;
+                }
+            }
+                this.cachedPCs.set(player.uid,player);
+            }
 
         if(expectedUsername && player.title != expectedUsername){
             await DBSetPlayerUsername(this.db,player.uid,expectedUsername);
