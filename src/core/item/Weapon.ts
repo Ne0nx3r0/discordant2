@@ -43,8 +43,8 @@ export default class Weapon extends ItemEquippable{
         });
 
         this.damageBlocked = bag.damageBlocked;
-        this.chanceToCritical = bag.chanceToCritical === undefined ? 0.05 : bag.chanceToCritical;
-        this.criticalMultiplier = bag.criticalMultiplier === undefined ? 2 : bag.criticalMultiplier;
+        this.chanceToCritical = typeof bag.chanceToCritical === "undefined" ? 0.05 : bag.chanceToCritical;
+        this.criticalMultiplier = typeof bag.criticalMultiplier === "undefined" ? 2 : bag.criticalMultiplier;
         this.attacks = bag.attacks;
         this.attacks.forEach((attack)=>{
             attack.weapon = this;
