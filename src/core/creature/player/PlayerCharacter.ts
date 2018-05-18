@@ -10,6 +10,7 @@ import { SocketCreatureEquipment } from '../../item/CreatureEquipment';
 import { ICreatureStatSet, SocketCreature } from '../Creature';
 import PlayerParty from '../../party/PlayerParty';
 import CreatureBattleTurnBased from '../../battle/CreatureBattleTurnBased';
+import { CreaturePet } from '../CreaturePet';
 
 type PlayerStatus = 'inCity' | 'invitedToPVPBattle' | 'inBattle' | 'invitedToParty' | 'inParty';
 
@@ -34,6 +35,8 @@ interface PCConfig{
     role:PermissionRole;
     karma:number;
     lastDaily:number;
+    stalls:number;
+    activePet?: CreaturePet;
     metadata:any;
 }
 
@@ -50,6 +53,8 @@ export default class PlayerCharacter extends Creature{
     role:PermissionRole;
     karma:number;
     lastDaily:number;
+    stalls:number;
+    activePet?: CreaturePet;
     metadata:any;
 
     constructor(o:PCConfig){
@@ -74,6 +79,8 @@ export default class PlayerCharacter extends Creature{
         this.party = null;
         this.battle = null;
         this.lastDaily = o.lastDaily;
+        this.stalls = o.stalls;
+        this.activePet = o.activePet;
         this.metadata = o.metadata;
     }
 
