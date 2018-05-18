@@ -3,10 +3,11 @@ import CreatureId from '../CreatureId';
 import CreatureEquipment from '../../item/CreatureEquipment';
 import {BareHands, TabletOfFaith, TabletOfHealing} from '../../item/ItemsIndex';
 import AttributeSet from '../AttributeSet';
-import CreatureAIControlled from '../CreatureAIControlled';
 import { PixieWeapon } from '../../item/weapons/PixieWeapon';
+import { CreaturePet } from '../CreaturePet';
+import PlayerCharacter from '../player/PlayerCharacter';
 
-export default class PixieCreature extends CreatureAIControlled{
+export default class PixieCreature extends CreaturePet{
     constructor(){
         super({
             id: CreatureId.Pixie,
