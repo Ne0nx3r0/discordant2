@@ -115,6 +115,7 @@ export default class PlayerCharacter extends Creature{
             battleChannelId: this.battle?this.battle.channelId:null,
             partyChannelId: this.party?this.party.channelId:null,
             joinedDateStr: this.joinedDateStr,
+            activePetName: !this.activePet ? "-" : this.activePet.title,  
         };
     }
 }
@@ -131,4 +132,5 @@ export interface SocketPlayerCharacter extends SocketCreature{
     battleChannelId?: string;
     partyChannelId?: string;
     joinedDateStr: string;
+    activePetName: string;
 }

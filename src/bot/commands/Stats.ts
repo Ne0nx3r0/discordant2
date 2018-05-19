@@ -140,7 +140,7 @@ function getEmbed(pc:SocketPlayerCharacter,items:AllItems){
                 },            
                 {
                     name: 'Active Pet',
-                    value: '-',
+                    value: pc.activePetName,
                     inline: true,
                 },
                 {
