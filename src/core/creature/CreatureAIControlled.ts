@@ -22,7 +22,7 @@ export interface CreatureAIBag extends CreatureBag{
 export default class CreatureAIControlled extends Creature{
     wishesDropped:number;
     onDefeated: OnDefeatedFunc;
-    attacks:Array<WeaponAttack>;
+    attacks:WeaponAttack[];
     allowRun: boolean;
     
     constructor(bag:CreatureAIBag){
