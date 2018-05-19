@@ -115,7 +115,7 @@ export default class PlayerCharacter extends Creature{
             battleChannelId: this.battle?this.battle.channelId:null,
             partyChannelId: this.party?this.party.channelId:null,
             joinedDateStr: this.joinedDateStr,
-            activePetName: !this.activePet ? "-" : this.activePet.title,  
+            activePetName: !this.activePet ? "-" : this.activePet.getDisplayName(),  
         };
     }
 }

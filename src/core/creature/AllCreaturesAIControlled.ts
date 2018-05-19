@@ -3,11 +3,11 @@ import * as CreaturesIndex from './CreaturesIndex';
 import CreatureAIControlled from './CreatureAIControlled';
 import { CreaturePet } from './CreaturePet';
 import PlayerCharacter from './player/PlayerCharacter';
+import { DBPlayerPet } from '../../gameserver/db/DBInterfaces';
 
 export interface PlayerPetBag{
-    creatureId: number;
     owner: PlayerCharacter;
-    dbId: string;
+    dbPet: DBPlayerPet;
 }
 
 export default class AllCreaturesAIControlled{
@@ -36,20 +36,22 @@ export default class AllCreaturesAIControlled{
     }
 
     createPlayerPet(bag:PlayerPetBag):CreaturePet{
-        const petClass = this.creatures.get(bag.creatureId);
+        const dbPet = bag.dbPet;
+        const petClass = this.creatures.get(dbPet.base_id);
 
         if(!petClass){
-            throw 'Invalid creature ID: '+bag.creatureId;
+            throw 'Invalid creature ID: '+dbPet.base_id;
         }
 
         const pet = new petClass();
 
         if(!(pet instanceof CreaturePet)){
-            throw `Creature ID ${bag.creatureId} is not a pet`;
+            throw `Creature ID ${dbPet.base_id} is not a pet`;
         }
 
         pet.owner = bag.owner;
-        pet.dbId = bag.dbId;
+        pet.dbId = dbPet.id;
+        pet.customName = dbPet.title;
 
         return pet;
     }

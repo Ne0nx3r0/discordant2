@@ -173,8 +173,7 @@ export default class Game {
             dbPlayer.pets.forEach((dbPet:DBPlayerPet)=>{
                 const pet = this.creatures.createPlayerPet({
                     owner: player,
-                    creatureId: dbPet.base_id,
-                    dbId: dbPet.id,
+                    dbPet,
                 });
 
                 if(pet.dbId == dbPlayer.active_pet_id){
@@ -487,8 +486,7 @@ export default class Game {
         dbPlayer.pets.forEach((dbPet:DBPlayerPet)=>{
             const pet = this.creatures.createPlayerPet({
                 owner: pc,
-                creatureId: dbPet.base_id,
-                dbId: dbPet.id,
+                dbPet,
             }); 
 
             if(pet.dbId == dbPlayer.active_pet_id){
