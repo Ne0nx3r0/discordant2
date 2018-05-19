@@ -69,6 +69,10 @@ export default class AllCreaturesAIControlled{
             attacks,
         });
 
+        // Attach any onbattlebegin events from the pet
+        petWeapon.onBattleBegin = pet.onBattleBegin;
+
+        // Attach the dynamic pet attacks
         pet.attacks = attacks;
 
         return pet;
