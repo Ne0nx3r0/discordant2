@@ -194,7 +194,7 @@ export default class CreatureBattleTurnBased{
         this.flushBattleMessagesCheck();
 
         if(currentTeamHasActivePlayerCharacter){     
-            function formatbc(bc:IBattleCreature){
+            function formatbc(bc:IBattleCreature,index:number){
                 const blocking = bc.blocking ? ' | Blocking' : '';
                 const charges = bc.charges>0?' | Charges: '+bc.charges:'';
                 let exhausted = '';
@@ -218,7 +218,7 @@ export default class CreatureBattleTurnBased{
                     exhausted = bc.exhausted ? ' | Exhausted' : '';
                 }
 
-                return prefix+' '+creatureTitle+charges+blocking+exhausted;
+                return prefix+' '+index+' '+creatureTitle+charges+blocking+exhausted;
             }
 
             const team1Msg = this.participants
