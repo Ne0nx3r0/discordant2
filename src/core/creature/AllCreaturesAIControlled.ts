@@ -4,6 +4,9 @@ import CreatureAIControlled from './CreatureAIControlled';
 import { CreaturePet } from './CreaturePet';
 import PlayerCharacter from './player/PlayerCharacter';
 import { DBPlayerPet } from '../../gameserver/db/DBInterfaces';
+import { PetWeaponAttack } from '../pets/petattacks/PetWeaponAttack';
+import { AllPetAttacks } from '../pets/petattacks/AllPetAttacks';
+import { DynamicPetWeapon } from '../pets/petattacks/DynamicPetWeapon';
 
 export interface PlayerPetBag{
     owner: PlayerCharacter;
@@ -53,6 +56,27 @@ export default class AllCreaturesAIControlled{
         pet.dbId = dbPet.id;
         pet.customName = dbPet.title;
 
+        const attacks = getAttacks([
+            dbPet.attack1,
+            dbPet.attack2,
+            dbPet.attack3,
+            dbPet.attack4,
+        ]);
+
+        const petWeapon = new DynamicPetWeapon({
+            attacks,
+        });
+
         return pet;
     }
+}
+
+function getAttacks(attackIds:number[]):PetWeaponAttack[]{
+    return attackIds
+    .filter((id)=>{
+        return typeof id === "number";
+    })
+    .map((id):PetWeaponAttack=>{
+        return AllPetAttacks.getAttack(id);
+    });
 }
