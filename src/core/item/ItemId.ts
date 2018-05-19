@@ -105,5 +105,6 @@ enum ItemId {BareHands,HandAxe,//keeping these two up here allows you to identif
     ChargedOrb,
     GiantFlyWeapon,
     GiantWaspWeapon,
+    DynamicPetWeapon,
 }
 export default ItemId;

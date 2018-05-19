@@ -168,14 +168,11 @@ export default class Game {
             });
 
             if(dbPlayer.active_pet_id){
-                const pcPet = this.creatures.create(dbPlayer.active_pet_id);
+                const pcPet = this.creatures.createPlayerPet({
+                    creatureId: dbPlayer.active_pet_id,
+                });
                 
-                if(pcPet instanceof CreaturePet){
-                    pcPet.setOwner(player);
-                }
-                else{
-                    throw `Unable to create a pet from creature ID${dbPlayer.active_pet_id}`;
-                }
+                pcPet.setOwner(player);
             }
                 this.cachedPCs.set(player.uid,player);
             }
@@ -478,14 +475,11 @@ export default class Game {
         pc.stalls = dbPlayer.stalls;
         
         if(dbPlayer.active_pet_id){
-            const pcPet = this.creatures.create(dbPlayer.active_pet_id);
+            const pcPet = this.creatures.createPlayerPet({
+                creatureId: dbPlayer.active_pet_id,
+            });
             
-            if(pcPet instanceof CreaturePet){
-                pcPet.setOwner(pc);
-            }
-            else{
-                throw `Unable to create a pet from creature ID${dbPlayer.active_pet_id}`;
-            }
+            pcPet.setOwner(pc);
         }
 
         pc.updateStats();
@@ -900,7 +894,7 @@ export default class Game {
     }
 
     createMonsterBattle(bag:CreateMonsterBattleBag){
-        const opponent = this.creatures.create(bag.opponentId);
+        const opponent = this.creatures.createMonster(bag.opponentId);
         const partySize = bag.partyMembers.length;
         const highestLevel = Math.max(...bag.partyMembers.map(pc => pc.level));
 
