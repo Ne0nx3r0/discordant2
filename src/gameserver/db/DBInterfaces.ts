@@ -23,6 +23,7 @@ export interface DBPlayer{
     stalls: number;
     active_pet_id: number;
     pets: DBPlayerPet[];
+    created: string;
 }
 
 export interface DBPlayerPet{

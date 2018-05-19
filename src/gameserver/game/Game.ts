@@ -167,6 +167,7 @@ export default class Game {
                 metadata: dbPlayer.metadata,
                 stalls: dbPlayer.stalls,
                 pets: [],
+                joinedDateStr: dbPlayer.created,
             });
 
             dbPlayer.pets.forEach((dbPet:DBPlayerPet)=>{
@@ -229,6 +230,7 @@ export default class Game {
             metadata: {},
             stalls: 0,
             pets: [],
+            joinedDateStr: new Date().toISOString(),
         });
 
         return player;

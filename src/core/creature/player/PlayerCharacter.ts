@@ -39,6 +39,7 @@ interface PCConfig{
     activePet?: CreaturePet;
     pets: CreaturePet[];
     metadata:any;
+    joinedDateStr: string;
 }
 
 export default class PlayerCharacter extends Creature{
@@ -58,6 +59,7 @@ export default class PlayerCharacter extends Creature{
     activePet?: CreaturePet;
     pets: CreaturePet[];
     metadata:any;
+    joinedDateStr: string;
 
     constructor(o:PCConfig){
         super({
@@ -85,6 +87,7 @@ export default class PlayerCharacter extends Creature{
         this.activePet = o.activePet;
         this.pets = o.pets;
         this.metadata = o.metadata;
+        this.joinedDateStr = o.joinedDateStr;
     }
 
     get isPartyLeader():boolean{
@@ -111,6 +114,7 @@ export default class PlayerCharacter extends Creature{
             stats: this.stats,
             battleChannelId: this.battle?this.battle.channelId:null,
             partyChannelId: this.party?this.party.channelId:null,
+            joinedDateStr: this.joinedDateStr,
         };
     }
 }
@@ -126,4 +130,5 @@ export interface SocketPlayerCharacter extends SocketCreature{
     status: PlayerStatus;
     battleChannelId?: string;
     partyChannelId?: string;
+    joinedDateStr: string;
 }

@@ -117,6 +117,7 @@ CREATE TABLE public.player_pet
     attack2 smallint,
     attack3 smallint,
     attack4 smallint,
+    created time without time zone DEFAULT now(),
     PRIMARY KEY (id),
     CONSTRAINT stall_and_owner_uq UNIQUE (stall, owner_uid),
     CONSTRAINT owner_uid_fk FOREIGN KEY (owner_uid)

@@ -9,6 +9,7 @@ import { SocketPlayerCharacter } from '../../core/creature/player/PlayerCharacte
 import AllItems from '../../core/item/AllItems';
 import { XPToLevel } from "../../util/XPToLevel";
 import { GetLuckXPBonus } from '../../util/GetLuckXPBonus';
+import * as moment from 'moment';
 
 export default class Begin extends Command{
     constructor(bag:CommandBag){
@@ -163,6 +164,11 @@ ${items.get(pc.equipment.offhand || 0).title} (Offhand)`,
                     value: equipmentStr,
                     inline: true,
                 },
+                {
+                    name: 'Joined',
+                    value: moment(pc.joinedDateStr).format('MMMM Do YYYY, h:mm a'),
+                    inline: true,
+                },   
             ]
         }
     }
