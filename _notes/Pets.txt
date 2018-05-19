@@ -1,7 +1,17 @@
-Pets.
+New commands to add:
 
-Subclasses creature.
+dpet buystall - show next stall price
+dpet buystall yes - buy new stall
 
-stored in database
+dpet - show active pet stats
+dpet # - Show pet slot stats
+dpet stable - list pet slots
 
+dpet choose # - pick active pet
 
+dpet move # # - move a pet to a new stall
+
+dpet give # @user - give a pet away
+
+dpet gift # item - give a pet an item
+dpet sell # price - put a pet for sale on the pet market
