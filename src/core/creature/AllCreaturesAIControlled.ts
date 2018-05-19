@@ -2,9 +2,11 @@ import Creature from './Creature';
 import * as CreaturesIndex from './CreaturesIndex';
 import CreatureAIControlled from './CreatureAIControlled';
 import { CreaturePet } from './CreaturePet';
+import PlayerCharacter from './player/PlayerCharacter';
 
 export interface PlayerPetBag{
     creatureId: number;
+    owner: PlayerCharacter;
 }
 
 export default class AllCreaturesAIControlled{
@@ -44,6 +46,8 @@ export default class AllCreaturesAIControlled{
         if(!(pet instanceof CreaturePet)){
             throw `Creature ID ${bag.creatureId} is not a pet`;
         }
+
+        pet.setOwner(bag.owner);
 
         return pet;
     }

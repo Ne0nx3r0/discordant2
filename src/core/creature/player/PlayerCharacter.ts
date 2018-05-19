@@ -37,6 +37,7 @@ interface PCConfig{
     lastDaily:number;
     stalls:number;
     activePet?: CreaturePet;
+    pets: CreaturePet[];
     metadata:any;
 }
 
@@ -55,6 +56,7 @@ export default class PlayerCharacter extends Creature{
     lastDaily:number;
     stalls:number;
     activePet?: CreaturePet;
+    pets: CreaturePet[];
     metadata:any;
 
     constructor(o:PCConfig){
@@ -81,6 +83,7 @@ export default class PlayerCharacter extends Creature{
         this.lastDaily = o.lastDaily;
         this.stalls = o.stalls;
         this.activePet = o.activePet;
+        this.pets = o.pets;
         this.metadata = o.metadata;
     }
 

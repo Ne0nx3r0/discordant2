@@ -16,6 +16,11 @@ const getPlayerQuery = `
         SELECT * FROM player_inventory_item WHERE player_uid = $1
         ) as equipment_row) as inventory,
 
+        (SELECT array_agg(row_to_json(pet_row))
+        FROM (
+        SELECT * FROM player_pet WHERE owner_uid = $1
+        ) as pet_row) as pets,
+
         *
     FROM player WHERE uid = $1;
 `;

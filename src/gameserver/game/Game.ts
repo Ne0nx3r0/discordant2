@@ -75,6 +75,7 @@ import moment = require("moment");
 import { getFilteredDescription } from '../socket/requests/SetPlayerDescriptionRequest';
 import { GetWinnerRollAgility } from '../../util/GetWinnerRollAgility';
 import { CreaturePet } from '../../core/creature/CreaturePet';
+import { DBPlayerPet } from '../db/DBInterfaces';
 
 //how often players can get a daily reward
 // Sssh 23 hours
@@ -165,17 +166,22 @@ export default class Game {
                 lastDaily: dbPlayer.last_daily*1,
                 metadata: dbPlayer.metadata,
                 stalls: dbPlayer.stalls,
+                pets: [],
             });
 
-            if(dbPlayer.active_pet_id){
-                const pcPet = this.creatures.createPlayerPet({
-                    creatureId: dbPlayer.active_pet_id,
-                });
-                
-                pcPet.setOwner(player);
-            }
-                this.cachedPCs.set(player.uid,player);
-            }
+            dbPlayer.pets.forEach((dbPet:DBPlayerPet)=>{
+                const pet = this.creatures.createPlayerPet({
+                    owner: player,
+                    creatureId: dbPet.base_id,
+                }); 
+
+                if(pet.id === dbPlayer.active_pet_id){
+                    player.activePet = pet;
+                }
+            });
+
+            this.cachedPCs.set(player.uid,player);
+        }
 
         if(expectedUsername && player.title != expectedUsername){
             await DBSetPlayerUsername(this.db,player.uid,expectedUsername);
@@ -222,6 +228,7 @@ export default class Game {
             lastDaily: new Date().getTime(),
             metadata: {},
             stalls: 0,
+            pets: [],
         });
 
         return player;
@@ -473,14 +480,17 @@ export default class Game {
         pc.role = this.permissions.getRole(dbPlayer.role);
         pc.karma = dbPlayer.karma;
         pc.stalls = dbPlayer.stalls;
-        
-        if(dbPlayer.active_pet_id){
-            const pcPet = this.creatures.createPlayerPet({
-                creatureId: dbPlayer.active_pet_id,
-            });
-            
-            pcPet.setOwner(pc);
-        }
+
+        dbPlayer.pets.forEach((dbPet:DBPlayerPet)=>{
+            const pet = this.creatures.createPlayerPet({
+                owner: pc,
+                creatureId: dbPet.base_id,
+            }); 
+
+            if(pet.id === dbPlayer.active_pet_id){
+                pc.activePet = pet;
+            }
+        });
 
         pc.updateStats();
     }

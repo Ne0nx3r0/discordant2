@@ -114,9 +114,9 @@ CREATE TABLE public.player_pet
     attribute_luck smallint NOT NULL,
     personality_id smallint NOT NULL,
     attack1 smallint NOT NULL,
-    attack2 smallint NOT NULL,
-    attack3 smallint NOT NULL,
-    attack4 smallint NOT NULL,
+    attack2 smallint,
+    attack3 smallint,
+    attack4 smallint,
     PRIMARY KEY (id),
     CONSTRAINT stall_and_owner_uq UNIQUE (stall, owner_uid),
     CONSTRAINT owner_uid_fk FOREIGN KEY (owner_uid)
