@@ -11,10 +11,10 @@ const getPlayerQuery = `
         SELECT * FROM player_equipment_item WHERE player_uid = $1
         ) as inventory_row) as equipment,
 
-        (SELECT array_agg(row_to_json(inventory_row))
+        (SELECT array_agg(row_to_json(equipment_row))
         FROM (
         SELECT * FROM player_inventory_item WHERE player_uid = $1
-        ) as inventory_row) as inventory,
+        ) as equipment_row) as inventory,
 
         *
     FROM player WHERE uid = $1;
