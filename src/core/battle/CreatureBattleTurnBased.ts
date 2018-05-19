@@ -28,8 +28,8 @@ export enum BattleResult{
 
 export interface CreatureBattleTurnBasedBag{
     channelId:string;
-    team1:Array<Creature>;
-    team2:Array<Creature>;
+    team1:Creature[];
+    team2:Creature[];
     game:Game;
     battleCleanup:BattleCleanupFunc;
     startDelay:number;
@@ -43,7 +43,7 @@ export interface IBattleCreature{
     exhausted:boolean;
     charges:number;
     teamNumber: number;
-    queuedAttackSteps:Array<BattleCreatureAttackStep>;
+    queuedAttackSteps:BattleCreatureAttackStep[];
 }
 
 interface BattleCreatureAttackStep{
