@@ -63,9 +63,13 @@ export default class AllCreaturesAIControlled{
             dbPet.attack4,
         ]);
 
+        // Create a weapon to be the host for the attacks
+        // Important for things like critical rate
         const petWeapon = new DynamicPetWeapon({
             attacks,
         });
+
+        pet.attacks = attacks;
 
         return pet;
     }

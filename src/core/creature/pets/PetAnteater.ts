@@ -20,9 +20,7 @@ export default class PetAnteater extends CreaturePet{
                 spirit: 8,
                 luck: 8,
             }),
-            equipment: new CreatureEquipment({
-                weapon: PixieWeapon,
-            }),
+            equipment: new CreatureEquipment({}),
             wishesDropped: 0,
         });
     }
