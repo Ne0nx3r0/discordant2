@@ -20,3 +20,4 @@ export { default as CorruptedFairies } from './monsters/CorruptedFairies';
 export { default as OldWillow } from './monsters/OldWillow';
 export { default as GiantFly } from './monsters/GiantFly';
 export { default as GiantWasp } from './monsters/GiantWasp';
+export { default as PetAnteater } from './pets/PetAnteater';
