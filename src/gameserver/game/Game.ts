@@ -174,9 +174,10 @@ export default class Game {
                 const pet = this.creatures.createPlayerPet({
                     owner: player,
                     creatureId: dbPet.base_id,
-                }); 
+                    dbId: dbPet.id,
+                });
 
-                if(pet.id === dbPlayer.active_pet_id){
+                if(pet.dbId == dbPlayer.active_pet_id){
                     player.activePet = pet;
                 }
             });
@@ -487,9 +488,10 @@ export default class Game {
             const pet = this.creatures.createPlayerPet({
                 owner: pc,
                 creatureId: dbPet.base_id,
+                dbId: dbPet.id,
             }); 
 
-            if(pet.id === dbPlayer.active_pet_id){
+            if(pet.dbId == dbPlayer.active_pet_id){
                 pc.activePet = pet;
             }
         });

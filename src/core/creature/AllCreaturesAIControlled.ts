@@ -7,6 +7,7 @@ import PlayerCharacter from './player/PlayerCharacter';
 export interface PlayerPetBag{
     creatureId: number;
     owner: PlayerCharacter;
+    dbId: string;
 }
 
 export default class AllCreaturesAIControlled{
@@ -47,7 +48,8 @@ export default class AllCreaturesAIControlled{
             throw `Creature ID ${bag.creatureId} is not a pet`;
         }
 
-        pet.setOwner(bag.owner);
+        pet.owner = bag.owner;
+        pet.dbId = bag.dbId;
 
         return pet;
     }

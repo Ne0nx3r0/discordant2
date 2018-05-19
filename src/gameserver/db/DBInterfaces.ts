@@ -21,7 +21,7 @@ export interface DBPlayer{
     last_daily: number;
     metadata: any;
     stalls: number;
-    active_pet_id: number;
+    active_pet_id: string;
     pets: DBPlayerPet[];
     created: string;
 }
