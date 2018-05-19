@@ -13,7 +13,7 @@ export default class BattleAttack extends Command{
         super({
             name: 'attack',
             description: '(during battle) send an attack',
-            usage: 'attack',
+            usage: 'attack [attackName] [@user or slot #]',
             permissionNode: PermissionId.BattleAttack,
             minParams: 0,
         });

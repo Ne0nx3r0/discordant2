@@ -12,7 +12,7 @@ export default class BattleAttack extends Command{
         super({
             name: 'offhand',
             description: '(during battle) send an offhand attack',
-            usage: 'offhand',
+            usage: 'offhand [attackName] [@user or slot #]',
             permissionNode: PermissionId.BattleAttack,
             minParams: 0,
         });
