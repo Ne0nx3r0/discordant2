@@ -76,6 +76,7 @@ import { getFilteredDescription } from '../socket/requests/SetPlayerDescriptionR
 import { GetWinnerRollAgility } from '../../util/GetWinnerRollAgility';
 import { CreaturePet } from '../../core/creature/CreaturePet';
 import { DBPlayerPet } from '../db/DBInterfaces';
+import Creature from '../../core/creature/Creature';
 
 //how often players can get a daily reward
 // Sssh 23 hours
@@ -910,10 +911,20 @@ export default class Game {
         const partySize = bag.partyMembers.length;
         const highestLevel = Math.max(...bag.partyMembers.map(pc => pc.level));
 
+        const team1:Creature[] = [];
+
+        bag.partyMembers.forEach((pc:PlayerCharacter)=>{
+            team1.push(pc);
+
+            if(pc.activePet){
+                team1.push(pc.activePet);
+            }
+        });
+
         const battle = new CreatureBattleTurnBased({
             channelId: bag.party.channelId,
             startDelay: bag.startDelay,
-            team1: bag.partyMembers,
+            team1,
             team2: [opponent],
             runChance: bag.runChance,
             game: this,
