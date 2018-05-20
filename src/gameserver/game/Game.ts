@@ -1334,7 +1334,7 @@ export default class Game {
         const goldNeeded = getStableUpgradeCost(pc.stalls);
 
         if(pc.gold < goldNeeded){
-            throw `You need at least ${goldNeeded} wishes to purchase a new stable stall`;
+            throw `You need at least ${goldNeeded}GP to purchase a new stable stall`;
         }        
 
         await DBBuyStableStall(this.db,pc.uid,goldNeeded);
