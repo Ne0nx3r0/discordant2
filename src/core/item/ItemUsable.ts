@@ -16,12 +16,14 @@ interface ItemUsableBag extends ItemBaseBag{
     onUse: ItemUseFunction;
     canUseInbattle:boolean;
     canUseInParty:boolean;
+    isConsumed?:boolean;
 }
 
 export default class ItemUsable extends ItemBase{
     canUse: ItemCanUseFunction;
     canUseInbattle:boolean;
     canUseInParty:boolean;
+    isConsumed:boolean;
     onUse: ItemUseFunction;
     battleExhaustion: number;
 
@@ -33,5 +35,6 @@ export default class ItemUsable extends ItemBase{
         this.canUse = bag.canUse;
         this.onUse = bag.onUse;
         this.battleExhaustion = bag.battleExhaustion || 0;
+        this.isConsumed = typeof bag.isConsumed === "undefined" ? true : bag.isConsumed;
     }
 }

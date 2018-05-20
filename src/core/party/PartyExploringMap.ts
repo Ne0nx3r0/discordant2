@@ -40,6 +40,7 @@ export default class PartyExploringMap{
 
         this.sendPartyMessage = bag.sendPartyMessage;
         this.metadata = new MapMetaDataCache();
+        this.spawnedPet = null;
     }
 
     getCurrentLocationImage(){
@@ -94,6 +95,10 @@ export default class PartyExploringMap{
         }
 
         return false;
+    }
+
+    mapHasAPetSpawned():boolean{
+        return this.spawnedPet === null;
     }
 
     onEnterCurrentTile():boolean{

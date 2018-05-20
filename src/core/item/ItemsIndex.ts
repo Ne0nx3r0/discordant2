@@ -40,6 +40,9 @@ export { RedEyeRing } from './jewelry/RedEyeRing';
 export { RedEyeAmulet } from './jewelry/RedEyeAmulet';
 
 
+//Misc
+export { GoldenCompass } from './misc/GoldenCompass';
+
 //Consumables
 export { Vial } from './misc/Vial';
 export { Sage } from './misc/Sage';
