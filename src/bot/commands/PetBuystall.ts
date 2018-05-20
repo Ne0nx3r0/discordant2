@@ -25,7 +25,7 @@ export default class PetBuystall extends Command{
             const upgradeCost = getStableUpgradeCost(player.stalls);
 
             if(player.stalls < MAX_STALLS){
-                bag.message.channel.send(`You have ${player.stalls} stalls, it will cost **${upgradeCost} wishes** to create another stall\n\n\`${bag.commandPrefix}pet buystall yes\` to create another stall`);
+                bag.message.channel.send(`You have ${player.stalls} stalls, it will cost **${upgradeCost}GP** to create another stall\n\n\`${bag.commandPrefix}pet buystall yes\` to create another stall`);
             }
             else{
                 bag.message.channel.send(`You have ${player.stalls} stalls, you cannot create anymore.`);
