@@ -1,4 +1,4 @@
-export const STABLE_COST_TO_UPGRADE:number[] = [0,/*not used*/ 1000,//1 stall cost to buy 2nd
+const STABLE_COST_TO_UPGRADE:number[] = [0,/*not used*/ 1000,//1 stall cost to buy 2nd
     2500,//2 stalls cost to buy a third
     5000,
     7500,
@@ -9,3 +9,7 @@ export const STABLE_COST_TO_UPGRADE:number[] = [0,/*not used*/ 1000,//1 stall co
     50000,
     100000,
 ];
+
+export function getStableUpgradeCost(currentStalls:number):number{
+    return STABLE_COST_TO_UPGRADE[currentStalls];
+}

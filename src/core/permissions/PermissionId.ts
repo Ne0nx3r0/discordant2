@@ -66,6 +66,7 @@ enum PermissionId{
     PartyTransfer,
     Tester,
     PartyReturn,
+    PetBuyStall,
 }
 
 export default PermissionId;

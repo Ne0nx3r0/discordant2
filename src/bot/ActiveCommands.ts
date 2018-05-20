@@ -59,3 +59,4 @@ export { default as PartyKick } from './commands/PartyKick';
 export { default as PartyTransfer } from './commands/PartyTransfer';
 export { default as PartyReturn } from './commands/PartyReturn';
 export { default as Tester } from './commands/Tester';
+export { default as PetBuyStall } from './commands/PetBuyStall';

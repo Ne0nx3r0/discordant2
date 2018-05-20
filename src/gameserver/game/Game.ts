@@ -171,16 +171,20 @@ export default class Game {
                 joinedDateStr: dbPlayer.created,
             });
 
-            dbPlayer.pets.forEach((dbPet:DBPlayerPet)=>{
-                const pet = this.creatures.createPlayerPet({
-                    owner: player,
-                    dbPet,
-                });
+            if(dbPlayer.pets){
+                dbPlayer.pets.forEach((dbPet:DBPlayerPet)=>{
+                    const pet = this.creatures.createPlayerPet({
+                        owner: player,
+                        dbPet,
+                    });
 
-                if(pet.dbId == dbPlayer.active_pet_id){
-                    player.activePet = pet;
-                }
-            });
+                    player.pets.push(pet);
+
+                    if(pet.dbId == dbPlayer.active_pet_id){
+                        player.activePet = pet;
+                    }
+                });
+            }
 
             this.cachedPCs.set(player.uid,player);
         }
@@ -484,16 +488,22 @@ export default class Game {
         pc.karma = dbPlayer.karma;
         pc.stalls = dbPlayer.stalls;
 
-        dbPlayer.pets.forEach((dbPet:DBPlayerPet)=>{
-            const pet = this.creatures.createPlayerPet({
-                owner: pc,
-                dbPet,
-            }); 
+        pc.pets = [];
 
-            if(pet.dbId == dbPlayer.active_pet_id){
-                pc.activePet = pet;
-            }
-        });
+        if(dbPlayer.pets){
+            dbPlayer.pets.forEach((dbPet:DBPlayerPet)=>{
+                const pet = this.creatures.createPlayerPet({
+                    owner: pc,
+                    dbPet,
+                }); 
+
+                pc.pets.push(pet);
+
+                if(pet.dbId == dbPlayer.active_pet_id){
+                    pc.activePet = pet;
+                }
+            });
+        }
 
         pc.updateStats();
     }
