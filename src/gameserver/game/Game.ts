@@ -1444,7 +1444,9 @@ export default class Game {
             onUseMsg = item.onUse(pc,target);//allowed to throw error
         }
         
-        await this.takePlayerItem(pc.uid,item.id,1);//May throw error
+        if(item.isConsumed){
+            await this.takePlayerItem(pc.uid,item.id,1);//May throw error
+        }
 
         return onUseMsg;
     }
