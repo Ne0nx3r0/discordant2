@@ -4,7 +4,7 @@ import PermissionId from '../../core/permissions/PermissionId';
 import CharacterClass from '../../core/creature/player/CharacterClass';
 import CharacterClasses from '../../core/creature/player/CharacterClasses';
 import { BotConstants } from '../BotConstants';
-import { getStableUpgradeCost } from '../../core/pets/StableStallCosts';
+import { getStableUpgradeCost, MAX_STALLS } from '../../core/pets/StableStallCosts';
 
 export default class PetBuystall extends Command{
     constructor(bag:CommandBag){
@@ -24,7 +24,7 @@ export default class PetBuystall extends Command{
             const player = await bag.socket.getPlayer(bag.message.author.id);
             const upgradeCost = getStableUpgradeCost(player.stalls);
 
-            if(player.stalls < 10){
+            if(player.stalls < MAX_STALLS){
                 bag.message.channel.send(`You have ${player.stalls} stalls, it will cost **${upgradeCost} wishes** to create another stall\n\n\`${bag.commandPrefix}pet buystall yes\` to create another stall`);
             }
             else{

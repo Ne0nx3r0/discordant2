@@ -1331,13 +1331,13 @@ export default class Game {
             throw `You are not currently in town to work with your stables`;
         }
 
-        const wishesNeeded = getStableUpgradeCost(pc.stalls);
+        const goldNeeded = getStableUpgradeCost(pc.stalls);
 
-        if(pc.wishes < wishesNeeded){
-            throw `You need at least ${wishesNeeded} wishes to purchase a new stable stall`;
+        if(pc.gold < goldNeeded){
+            throw `You need at least ${goldNeeded} wishes to purchase a new stable stall`;
         }        
 
-        await DBBuyStableStall(this.db,pc.uid,wishesNeeded);
+        await DBBuyStableStall(this.db,pc.uid,goldNeeded);
 
         pc.stalls++;
 
