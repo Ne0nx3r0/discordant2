@@ -75,6 +75,7 @@ import AutoHealRequest from '../gameserver/socket/requests/AutoHealRequest';
 import PartyKickPlayerRequest from '../gameserver/socket/requests/PartyKickPlayerRequest';
 import PartyTransferLeadershipRequest from '../gameserver/socket/requests/PartyTransferLeadershipRequest';
 import ReturnPartyRequest from '../gameserver/socket/requests/ReturnPartyRequest';
+import BuyStallRequest from '../gameserver/socket/requests/BuyStallRequest';
 
 export type SocketClientPushType = 'PlayerRoleUpdated';
 
@@ -351,6 +352,13 @@ export default class SocketClientRequester{
             uid:playerUid,
             item:item.id,
             amount:amount
+        })
+        .send(this.sioc);
+    }
+    
+    async buyStableStall(playerUid:string):Promise<number>{
+        return await new BuyStallRequest({
+            uid:playerUid,
         })
         .send(this.sioc);
     }

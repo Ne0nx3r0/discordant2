@@ -22,10 +22,10 @@ export default class PetBuystall extends Command{
     async run(bag:CommandRunBag){
         if(bag.params.length == 0){
             const player = await bag.socket.getPlayer(bag.message.author.id);
-            const currentStalls = getStableUpgradeCost(player.stalls);
+            const upgradeCost = getStableUpgradeCost(player.stalls);
 
-            if(currentStalls < 10){
-                bag.message.channel.send(`You have ${player.stalls} stalls, it will cost ${currentStalls} wishes to create another stall\n\n\`${bag.commandPrefix}pet buystall yes\` to create another stall`);
+            if(player.stalls < 10){
+                bag.message.channel.send(`You have ${player.stalls} stalls, it will cost **${upgradeCost} wishes** to create another stall\n\n\`${bag.commandPrefix}pet buystall yes\` to create another stall`);
             }
             else{
                 bag.message.channel.send(`You have ${player.stalls} stalls, you cannot create anymore.`);
@@ -35,7 +35,7 @@ export default class PetBuystall extends Command{
         }
 
         if(bag.params[0] === "yes"){
-            const newStallCount:number = await bag.socket.buyStableStall(bag.message.author.id);
+            const newStallCount = await bag.socket.buyStableStall(bag.message.author.id);
 
             bag.message.channel.send(`You purchased a new stall! You now have ${newStallCount} stalls!`);
         }

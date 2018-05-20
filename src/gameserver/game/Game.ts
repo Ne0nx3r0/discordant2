@@ -77,6 +77,8 @@ import { GetWinnerRollAgility } from '../../util/GetWinnerRollAgility';
 import { CreaturePet } from '../../core/creature/CreaturePet';
 import { DBPlayerPet } from '../db/DBInterfaces';
 import Creature from '../../core/creature/Creature';
+import { getStableUpgradeCost } from '../../core/pets/StableStallCosts';
+import { DBBuyStableStall } from '../db/api/DBBuyStableStall';
 
 //how often players can get a daily reward
 // Sssh 23 hours
@@ -1312,6 +1314,34 @@ export default class Game {
 
         pc.gold -= goldNeeded;
         pc.inventory._addItem(item,amount);
+    }
+
+    async buyStableStall(playerUid:string):Promise<number>{
+        const pc = await this.getPlayerCharacter(playerUid);
+
+        if(!pc){
+            throw 'You are not registered';
+        }
+
+        if(pc.stalls == 10){
+            throw `You cannot buy anymore stalls`;
+        }
+
+        if(pc.status != 'inCity' && !pc.party){
+            throw `You are not currently in town to work with your stables`;
+        }
+
+        const wishesNeeded = getStableUpgradeCost(pc.stalls);
+
+        if(pc.wishes < wishesNeeded){
+            throw `You need at least ${wishesNeeded} wishes to purchase a new stable stall`;
+        }        
+
+        await DBBuyStableStall(this.db,pc.uid,wishesNeeded);
+
+        pc.stalls++;
+
+        return pc.stalls;
     }
 
     async respecPlayer(playerUid:string):Promise<string>{

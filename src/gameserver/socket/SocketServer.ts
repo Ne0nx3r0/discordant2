@@ -62,6 +62,7 @@ import AutoHealRequest from './requests/AutoHealRequest';
 import PartyKickPlayerRequest from './requests/PartyKickPlayerRequest';
 import PartyTransferLeadershipRequest from './requests/PartyTransferLeadershipRequest';
 import ReturnPartyRequest from './requests/ReturnPartyRequest';
+import BuyStallRequest from './requests/BuyStallRequest';
 
 interface SocketServerBag{
     port:number;
@@ -151,7 +152,7 @@ export default class SocketServer{
             this.registerHandler(registeredEvents,client,new PartyKickPlayerRequest(null));
             this.registerHandler(registeredEvents,client,new PartyTransferLeadershipRequest(null));
             this.registerHandler(registeredEvents,client,new ReturnPartyRequest(null));
-            
+            this.registerHandler(registeredEvents,client,new BuyStallRequest(null));
 
             var socket = client;
             var onevent = socket['onevent'];//using this syntax to avoid pissing off typescript

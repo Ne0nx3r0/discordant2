@@ -414,6 +414,26 @@ $$;
 
 
 
+CREATE OR REPLACE FUNCTION buy_stable_stall(playerUid bigint,wishesNeeded integer)
+RETURNS void LANGUAGE plpgsql AS
+$$
+
+DECLARE
+  currentWishes integer;
+BEGIN
+    SELECT wishes INTO currentWishes FROM player WHERE uid = playerUid LIMIT 1;
+
+    IF wishesNeeded > currentWishes THEN
+      RAISE EXCEPTION 'Player needs at least % wishes to level up', wishesNeeded
+            USING ERRCODE = 'P0002';
+    END IF;
+
+    UPDATE player SET wishes = player.wishes - wishesNeeded,stalls = player.stalls + 1 WHERE uid = playerUid;
+END
+$$;
+
+
+
 CREATE OR REPLACE FUNCTION transfer_player_gold(fromPlayerUID bigint,toPlayerUID bigint,transferAmount int) 
 RETURNS void LANGUAGE plpgsql AS
 $$
