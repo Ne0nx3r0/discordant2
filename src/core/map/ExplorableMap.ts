@@ -4,6 +4,8 @@ import ItemId from '../item/ItemId';
 import ItemBase from '../item/ItemBase';
 import { EventTileForagable } from "./tiles/EventTileForagable";
 import { Acai } from "../item/ItemsIndex";
+import CreatureId from "../creature/CreatureId";
+import { PetAttackId } from "../pets/petattacks/PetAttackId";
 
 interface StartingPoint {
     x:number;
@@ -159,6 +161,20 @@ export default class ExplorableMap{
 
     getTileEvent(xDashY:string){
         return this.eventTiles.get(xDashY);
+    }
+
+    tryGenerateRandomPet():CreatureId | null{
+        let petId:CreatureId = null;
+        
+        if(this.mapData.pets.length > 0){
+            this.mapData.pets.forEach((petChance)=>{
+                if(Math.random() < petChance.chance){
+                    petId = petChance.id;
+                }
+            });
+        }
+
+        return petId;
     }
 
     getRandomEncounterMonsterId(){

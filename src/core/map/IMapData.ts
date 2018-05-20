@@ -1,4 +1,5 @@
 import {EventTile} from "./EventTile";
+import CreatureId from "../creature/CreatureId";
 
 interface MapEventTile {
     event: EventTile;
@@ -11,7 +12,7 @@ interface IMapEncounter {
 }
 
 interface IPetEncounter{
-    id: number;
+    id: CreatureId;
     chance: number;//percent chance per tile move to generate a pet
 }
 

@@ -44,7 +44,7 @@ export const RedForestEvents:IMapData = {
     pets: [
         {
             id: CreatureId.PetAnteater,
-            chance: 0.01,
+            chance: 0.5,
         },
     ],
     encounters:[

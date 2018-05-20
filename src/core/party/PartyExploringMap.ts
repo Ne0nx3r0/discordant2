@@ -5,6 +5,8 @@ import PlayerCharacter from '../creature/player/PlayerCharacter';
 import LootGenerator from "../loot/LootGenerator";
 import PlayerParty from "./PlayerParty";
 import MapMetaDataCache from "../map/MapMetaDataCache";
+import { CreaturePet } from '../creature/CreaturePet';
+import CreatureId from '../creature/CreatureId';
 
 type PartyMoveDirection = 'U' | 'L' | 'D' | 'R';
 
@@ -23,6 +25,11 @@ export default class PartyExploringMap{
     party:PlayerParty;
     sendPartyMessage:SendPartyMessageFunc;
     metadata: MapMetaDataCache;
+    spawnedPet: {
+        x: number;
+        y: number;
+        id: CreatureId;
+    }
 
     constructor(bag:IPartyExploringMapBag){
         this.map = bag.map;
@@ -71,6 +78,22 @@ export default class PartyExploringMap{
 
     getRandomEncounterMonsterId():number{
         return this.map.getRandomEncounterMonsterId();
+    }
+
+    tryGenerateRandomPet():boolean{
+        const petIdToSpawn = this.map.tryGenerateRandomPet();
+
+        if(petIdToSpawn){
+            this.spawnedPet = {
+                id: petIdToSpawn,
+                x: this.currentX,
+                y: this.currentY,
+            }; 
+
+            return true;
+        }
+
+        return false;
     }
 
     onEnterCurrentTile():boolean{

@@ -16,6 +16,8 @@ import { BattleResult } from '../battle/CreatureBattleTurnBased';
 import LootGenerator from "../loot/LootGenerator";
 import CreatureAIControlled from "../creature/CreatureAIControlled";
 import RevokeChannelPermissionsClientRequest from '../../client/requests/RevokeChannelPermissionsRequest';
+import { CreaturePet } from '../creature/CreaturePet';
+import CreatureId from '../creature/CreatureId';
 
 const INVITE_EXPIRES_MS = 60000;
 
@@ -160,6 +162,12 @@ export default class PlayerParty{
                 }
 
                 return;
+            }
+
+            if(!this.exploration.spawnedPet){
+                if(this.exploration.tryGenerateRandomPet()){
+                    this.sendChannelMessage(`**Did you hear that? The call of a strange creature!**`);
+                }
             }
 
             this.exploration.move(direction);
