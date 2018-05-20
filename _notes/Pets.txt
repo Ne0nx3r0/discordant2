@@ -1,8 +1,5 @@
 New commands to add:
 
-dpet buystall - show next stall price
-dpet buystall yes - buy new stall
-
 dpet - show active pet stats
 dpet # - Show pet slot stats
 dpet stable - list pet slots
