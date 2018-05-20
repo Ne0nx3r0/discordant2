@@ -1,5 +1,5 @@
-const STABLE_COST_TO_UPGRADE:number[] = [0,/*not used*/ 1000,//1 stall cost to buy 2nd
-    2500,//2 stalls cost to buy a third
+const STABLE_COST_TO_UPGRADE:number[] = [1000,// Cost to buy first stall
+    2500,// cost to buy 2nd stall
     5000,
     7500,
     10000,
