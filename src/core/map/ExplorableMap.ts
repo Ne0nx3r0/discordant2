@@ -1,4 +1,4 @@
-import {EventTile} from "./EventTile";
+import {EventTile, Coordinate} from "./EventTile";
 import { IMapData } from './IMapData';
 import ItemId from '../item/ItemId';
 import ItemBase from '../item/ItemBase';
@@ -155,7 +155,7 @@ export default class ExplorableMap{
         return ( y - 1 ) * this.mapJson.width + x - 1;
     }
 
-    _fromIndex(index:number):{x:number,y:number}{
+    _fromIndex(index:number):Coordinate{
         const column = index % this.mapJson.width;
         const row = Math.floor(index / this.mapJson.width);
 

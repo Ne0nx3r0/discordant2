@@ -171,6 +171,10 @@ export default class PlayerParty{
             }
 
             this.exploration.move(direction);
+            
+            if(this.petEncounterCheck()){
+                return;
+            }
 
             //If an eventtile was encountered that stops the party
             if(this.currentTileStopsPlayer && this.exploration.onEnterCurrentTile()){
@@ -192,6 +196,19 @@ export default class PlayerParty{
         const monsterId = this.exploration.getRandomEncounterMonsterId();
         
         this.monsterEncounter(monsterId);
+    }
+
+    petEncounterCheck():boolean{
+        if(this.exploration.spawnedPet
+        && this.exploration.spawnedPet.x === this.exploration.currentX
+        && this.exploration.spawnedPet.y === this.exploration.currentY){
+            this.sendChannelMessage(`You found the source of the strange call!`);
+            
+            this.monsterEncounter(this.exploration.spawnedPet.id);
+
+            return true;
+        }
+        return false;
     }
 
     monsterEncounter(monsterId:number){

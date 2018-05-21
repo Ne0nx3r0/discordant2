@@ -292,11 +292,18 @@ export default class CreatureBattleTurnBased{
                 if(!p.defeated){
                     if(!p.exhausted){
                         const randomAttack = p.creature.getRandomAttack();
-                        const randomOpponent = this.getRandomTarget(p,randomAttack.isFriendly);
+                        if(randomAttack){
+                            const randomOpponent = this.getRandomTarget(p,randomAttack.isFriendly);
     
-                        if(randomAttack && randomOpponent){
-                            this._creatureAttack(p,randomAttack,randomOpponent);
-    
+                            if(randomOpponent){
+                                this._creatureAttack(p,randomAttack,randomOpponent);
+        
+                                this.exhaustParticipant(p);
+                            }
+                        }
+                        else{
+                            this.queueBattleMessage([`${p.creature.title} doesn't know what to do!`]);
+                        
                             this.exhaustParticipant(p);
                         }
                     }

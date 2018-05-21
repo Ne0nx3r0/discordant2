@@ -71,6 +71,6 @@ export default class CreatureAIControlled extends Creature{
             if(roll < currentWeight){
                 return attack;
             }
-        }
+        };
     }
 }

@@ -90,10 +90,20 @@ export default class PartyExploringMap{
             const walkableIndexes:number[] = [];
     
             pathData.forEach((value,index)=>{
-                if(value === 1){
-                    walkableIndexes.push(index);
+                if(value === 1){                    
+                    const xDashY = this.currentX+'-'+this.currentY;
+                    const event = this.map.getTileEvent(xDashY);
+                    
+                    //We only want tiles that are walkable but have no events
+                    if(!event){
+                        walkableIndexes.push(index);    
+                    }
                 }
             });
+
+            if(walkableIndexes.length === 0){
+                return false;
+            }
     
             const randomIndex = Math.round( Math.random() * walkableIndexes.length );
             
@@ -101,7 +111,9 @@ export default class PartyExploringMap{
 
             this.spawnedPet = {
                 id: petIdToSpawn,
-                ...coord,
+                //...coord,
+                x: this.currentX,
+                y: this.currentY,
             }; 
 
             return true;

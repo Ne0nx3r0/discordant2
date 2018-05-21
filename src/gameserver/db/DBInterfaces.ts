@@ -46,7 +46,7 @@ export interface DBPlayerPet{
     attack3: number;
     attack4: number;
     critical_rate: number;
-    critical_chance: number;
+    critical_multiplier: number;
 }
 
 export interface DBEquipmentItem{

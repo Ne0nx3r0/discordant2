@@ -67,8 +67,8 @@ export default class AllCreaturesAIControlled{
         // Important for things like critical rate
         const petWeapon = new DynamicPetWeapon({
             attacks,
-            criticalMultiplier: dbPet.critical_rate,
-            chanceToCritical: dbPet.critical_chance / 100,
+            criticalMultiplier: dbPet.critical_multiplier,
+            chanceToCritical: dbPet.critical_rate / 100,
         });
 
         // Attach any onbattlebegin events from the pet
@@ -76,7 +76,7 @@ export default class AllCreaturesAIControlled{
 
         // Attach the dynamic pet attacks
         pet.attacks = attacks;
-
+        
         return pet;
     }
 }
