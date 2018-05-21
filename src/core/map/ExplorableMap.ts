@@ -155,6 +155,16 @@ export default class ExplorableMap{
         return ( y - 1 ) * this.mapJson.width + x - 1;
     }
 
+    _fromIndex(index:number):{x:number,y:number}{
+        const column = index % this.mapJson.width;
+        const row = Math.floor(index / this.mapJson.width);
+
+        return {
+            x: column + 1,
+            y: row + 1,
+        };
+    }
+
     getEncounterChance(){
         return this.mapData.encounterChance;
     }
