@@ -85,10 +85,23 @@ export default class PartyExploringMap{
         const petIdToSpawn = this.map.tryGenerateRandomPet();
 
         if(petIdToSpawn){
+            const pathData = this.map.mapJson.layers[this.map.pathLayer].data;
+
+            const walkableIndexes:number[] = [];
+    
+            pathData.forEach((value,index)=>{
+                if(value === 1){
+                    walkableIndexes.push(index);
+                }
+            });
+    
+            const randomIndex = Math.round( Math.random() * walkableIndexes.length );
+            
+            const coord = this.map._fromIndex(randomIndex);
+
             this.spawnedPet = {
                 id: petIdToSpawn,
-                x: this.currentX,
-                y: this.currentY,
+                ...coord,
             }; 
 
             return true;
