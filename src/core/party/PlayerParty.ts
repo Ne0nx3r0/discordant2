@@ -204,7 +204,11 @@ export default class PlayerParty{
         && this.exploration.spawnedPet.y === this.exploration.currentY){
             this.sendChannelMessage(`You found the source of the strange call!`);
             
-            this.monsterEncounter(this.exploration.spawnedPet.id);
+            const spawnedPetId = this.exploration.spawnedPet.id;
+            
+            this.exploration.spawnedPet = null;
+
+            this.monsterEncounter(spawnedPetId);            
 
             return true;
         }
