@@ -57,6 +57,11 @@ export default class SetRole extends Command{
             return;
         }
 
+        const numLevels = parseInt(bag.params[1]) - 1;
+        for (let i = 0; i < numLevels; i++) {
+            await bag.socket.levelUp(bag.message.author.id,wishType as WishType);
+        }
+
         const pc = await bag.socket.levelUp(bag.message.author.id,wishType as WishType);
 
         let msg;
